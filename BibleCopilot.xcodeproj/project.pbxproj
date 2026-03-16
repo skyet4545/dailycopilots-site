@@ -1,0 +1,377 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0699AA62167C67136505D405 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D62753EB7324AF3ADEF3CCB9 /* Assets.xcassets */; };
+		13EDBE1199A41976A01FA215 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3B9A993C4AB99CEF15A1F7 /* ChatView.swift */; };
+		18178906F1495B4BC1410581 /* AIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059C9FA9C9B49578732892E0 /* AIService.swift */; };
+		5D1B36DA827C8687A11ADC1F /* SubscriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E96C21CFDEA609A28AB67F /* SubscriptionManager.swift */; };
+		7C18A5C82B0BA8BEDA66936E /* BibleCopilotApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7252163E03A5A92A1852A2C6 /* BibleCopilotApp.swift */; };
+		7DF106B4AF22A62C6DCD2CF7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922F5CBA6C43138FD54F4B39 /* ContentView.swift */; };
+		D9CEF73BFA2C3A1EC30293D7 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402478295A8CF73D793E4B50 /* PaywallView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		059C9FA9C9B49578732892E0 /* AIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIService.swift; sourceTree = "<group>"; };
+		08A20B78FED88832D4703E38 /* BibleCopilot.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = BibleCopilot.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		402478295A8CF73D793E4B50 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
+		43E96C21CFDEA609A28AB67F /* SubscriptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionManager.swift; sourceTree = "<group>"; };
+		5F364036ECF3A9B46DDCDE20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		7252163E03A5A92A1852A2C6 /* BibleCopilotApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleCopilotApp.swift; sourceTree = "<group>"; };
+		922F5CBA6C43138FD54F4B39 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		CD3B9A993C4AB99CEF15A1F7 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		D62753EB7324AF3ADEF3CCB9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		1B713654A703ED0BFCA38011 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				08A20B78FED88832D4703E38 /* BibleCopilot.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		253A4DBB09442A31694016EC /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				059C9FA9C9B49578732892E0 /* AIService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		563E4A28E1B77194EEAAE5BE /* BibleCopilot */ = {
+			isa = PBXGroup;
+			children = (
+				D8C961DBE67857287D35498A /* App */,
+				E97BEE3A256810FD389AB248 /* Models */,
+				714FA957F287298E4B9C7BB1 /* Resources */,
+				253A4DBB09442A31694016EC /* Services */,
+				AC3506813D6B2C3214F20024 /* Views */,
+			);
+			path = BibleCopilot;
+			sourceTree = "<group>";
+		};
+		714FA957F287298E4B9C7BB1 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D62753EB7324AF3ADEF3CCB9 /* Assets.xcassets */,
+				5F364036ECF3A9B46DDCDE20 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		AC3506813D6B2C3214F20024 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CD3B9A993C4AB99CEF15A1F7 /* ChatView.swift */,
+				402478295A8CF73D793E4B50 /* PaywallView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D8C961DBE67857287D35498A /* App */ = {
+			isa = PBXGroup;
+			children = (
+				7252163E03A5A92A1852A2C6 /* BibleCopilotApp.swift */,
+				922F5CBA6C43138FD54F4B39 /* ContentView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		E97BEE3A256810FD389AB248 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				43E96C21CFDEA609A28AB67F /* SubscriptionManager.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F1134C4C27773A5734A598E5 = {
+			isa = PBXGroup;
+			children = (
+				563E4A28E1B77194EEAAE5BE /* BibleCopilot */,
+				1B713654A703ED0BFCA38011 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A7ACD4302C3B5E840D492AEA /* BibleCopilot */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 68ECF6C50F2CB7690499268C /* Build configuration list for PBXNativeTarget "BibleCopilot" */;
+			buildPhases = (
+				DDD6356FF496C2E0E695CF2C /* Sources */,
+				0C6F6435591B071CA3B56455 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BibleCopilot;
+			packageProductDependencies = (
+			);
+			productName = BibleCopilot;
+			productReference = 08A20B78FED88832D4703E38 /* BibleCopilot.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		07AA8419C0CC0FA6C51E927F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					A7ACD4302C3B5E840D492AEA = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = FFCE49AB1A462C6305B8474F /* Build configuration list for PBXProject "BibleCopilot" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = F1134C4C27773A5734A598E5;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A7ACD4302C3B5E840D492AEA /* BibleCopilot */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0C6F6435591B071CA3B56455 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0699AA62167C67136505D405 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DDD6356FF496C2E0E695CF2C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18178906F1495B4BC1410581 /* AIService.swift in Sources */,
+				7C18A5C82B0BA8BEDA66936E /* BibleCopilotApp.swift in Sources */,
+				13EDBE1199A41976A01FA215 /* ChatView.swift in Sources */,
+				7DF106B4AF22A62C6DCD2CF7 /* ContentView.swift in Sources */,
+				D9CEF73BFA2C3A1EC30293D7 /* PaywallView.swift in Sources */,
+				5D1B36DA827C8687A11ADC1F /* SubscriptionManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1C80FD894E032FB76312DD04 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		24B16CB4FC443B859DB2A3E8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 88;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = BibleCopilot/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.5.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.scripturecopilot.app;
+				PRODUCT_NAME = "Bible Copilot";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		5FB0D7A673BA8108216EB145 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B37C1C81F0B4357489BA96D5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 88;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = BibleCopilot/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.5.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.scripturecopilot.app;
+				PRODUCT_NAME = "Bible Copilot";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		68ECF6C50F2CB7690499268C /* Build configuration list for PBXNativeTarget "BibleCopilot" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B37C1C81F0B4357489BA96D5 /* Debug */,
+				24B16CB4FC443B859DB2A3E8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		FFCE49AB1A462C6305B8474F /* Build configuration list for PBXProject "BibleCopilot" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5FB0D7A673BA8108216EB145 /* Debug */,
+				1C80FD894E032FB76312DD04 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 07AA8419C0CC0FA6C51E927F /* Project object */;
+}
