@@ -131,7 +131,7 @@
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					A7ACD4302C3B5E840D492AEA = {
-						DevelopmentTeam = "";
+						DevelopmentTeam = 846N5D6TMK;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -243,10 +243,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 88;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 846N5D6TMK;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = BibleCopilot/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -330,10 +331,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 88;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 846N5D6TMK;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = BibleCopilot/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;

@@ -5,8 +5,8 @@ import SwiftUI
 class SubscriptionManager: ObservableObject {
     static let shared = SubscriptionManager()
 
-    let monthlyProductID = "Bible Copilot Pro"
-    let annualProductID = "Bible Copilot Pro (Annual)"
+    let monthlyProductID = "bible_copilot_pro_monthly"
+    let annualProductID = "bible_copilot_pro_annual"
     let freeQuestionLimit = 5
 
     @Published var products: [Product] = []
