@@ -1,9 +1,17 @@
 import SwiftUI
 
+/// A simple in-memory chat message (not persisted via SwiftData).
+struct ChatBubbleMessage: Identifiable {
+    let id = UUID()
+    let text: String
+    let isUser: Bool
+    let timestamp = Date()
+}
+
 struct ChatView: View {
-    @StateObject private var subscriptionManager = SubscriptionManager.shared
-    @State private var messages: [ChatMessage] = [
-        ChatMessage(
+    @EnvironmentObject var subscriptionManager: SubscriptionManager
+    @State private var messages: [ChatBubbleMessage] = [
+        ChatBubbleMessage(
             text: "Hello! I'm Bible Copilot, your AI-powered Bible study companion. Ask me anything about Scripture, theology, or faith.",
             isUser: false
         )
@@ -11,6 +19,7 @@ struct ChatView: View {
     @State private var inputText: String = ""
     @State private var isLoading: Bool = false
     @State private var showPaywall: Bool = false
+    @State private var streamingText: String = ""
 
     var body: some View {
         VStack(spacing: 0) {
@@ -22,12 +31,36 @@ struct ChatView: View {
                             MessageBubble(message: message)
                                 .id(message.id)
                         }
-                        if isLoading {
+
+                        // Streaming response
+                        if !streamingText.isEmpty {
+                            HStack(alignment: .bottom, spacing: 8) {
+                                Image(systemName: "book.fill")
+                                    .font(.caption)
+                                    .foregroundColor(AppTheme.accent)
+                                    .frame(width: 28, height: 28)
+                                    .background(AppTheme.accent.opacity(0.1))
+                                    .clipShape(Circle())
+
+                                Text(streamingText)
+                                    .padding(.horizontal, 14)
+                                    .padding(.vertical, 10)
+                                    .background(AppTheme.surface)
+                                    .foregroundColor(AppTheme.textPrimary)
+                                    .cornerRadius(18)
+
+                                Spacer(minLength: 60)
+                            }
+                            .padding(.horizontal, 12)
+                            .id("streaming")
+                        }
+
+                        if isLoading && streamingText.isEmpty {
                             HStack {
                                 HStack(spacing: 6) {
-                                    ForEach(0..<3) { i in
+                                    ForEach(0..<3, id: \.self) { i in
                                         Circle()
-                                            .fill(Color.secondary)
+                                            .fill(AppTheme.textMuted)
                                             .frame(width: 7, height: 7)
                                             .scaleEffect(isLoading ? 1 : 0.5)
                                             .animation(
@@ -38,7 +71,7 @@ struct ChatView: View {
                                 }
                                 .padding(.horizontal, 16)
                                 .padding(.vertical, 12)
-                                .background(Color(.systemGray6))
+                                .background(AppTheme.surface)
                                 .cornerRadius(18)
                                 Spacer()
                             }
@@ -48,15 +81,20 @@ struct ChatView: View {
                     }
                     .padding(.vertical, 12)
                 }
-                .onChange(of: messages.count) { _ in
+                .onChange(of: messages.count) {
                     if let last = messages.last {
                         withAnimation {
                             proxy.scrollTo(last.id, anchor: .bottom)
                         }
                     }
                 }
-                .onChange(of: isLoading) { loading in
-                    if loading {
+                .onChange(of: streamingText) {
+                    withAnimation {
+                        proxy.scrollTo("streaming", anchor: .bottom)
+                    }
+                }
+                .onChange(of: isLoading) {
+                    if isLoading {
                         withAnimation {
                             proxy.scrollTo("loading", anchor: .bottom)
                         }
@@ -66,75 +104,39 @@ struct ChatView: View {
 
             Divider()
 
-            // Question count indicator
+            // Usage counter
             if !subscriptionManager.isPro {
-                let used = subscriptionManager.questionCount
-                let limit = subscriptionManager.freeQuestionLimit
-                let remaining = max(0, limit - used)
-
-                HStack {
-                    Image(systemName: remaining > 0 ? "questionmark.circle" : "lock.fill")
-                        .foregroundColor(remaining > 0 ? .secondary : .orange)
-                        .font(.caption)
-                    Text(remaining > 0
-                        ? "\(remaining) free question\(remaining == 1 ? "" : "s") remaining"
-                        : "Free questions used - upgrade to continue")
-                        .font(.caption)
-                        .foregroundColor(remaining > 0 ? .secondary : .orange)
-                    Spacer()
-                    if remaining == 0 {
-                        Button("Upgrade") {
-                            showPaywall = true
-                        }
-                        .font(.caption.bold())
-                        .foregroundColor(.blue)
-                    }
-                }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 6)
-                .background(Color(.systemGray6))
+                UsageCounterView()
             }
 
             // Input area
             HStack(alignment: .bottom, spacing: 10) {
-                if #available(iOS 16.0, *) {
-                    TextField("Ask a Bible question...", text: $inputText, axis: .vertical)
-                        .textFieldStyle(.roundedBorder)
-                        .lineLimit(1...5)
-                        .frame(minHeight: 36)
-                        .onSubmit {
-                            if !inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                                sendMessage()
-                            }
-                        }
-                } else {
-                    TextField("Ask a Bible question...", text: $inputText)
-                        .textFieldStyle(.roundedBorder)
-                        .frame(minHeight: 36)
-                        .onSubmit {
-                            if !inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                                sendMessage()
-                            }
-                        }
-                }
+                TextField("Ask a Bible question...", text: $inputText, axis: .vertical)
+                    .textFieldStyle(.roundedBorder)
+                    .lineLimit(1...5)
+                    .frame(minHeight: 36)
+                    .onSubmit {
+                        if canSend { sendMessage() }
+                    }
 
                 Button(action: sendMessage) {
                     Image(systemName: "arrow.up.circle.fill")
                         .font(.system(size: 32))
-                        .foregroundColor(canSend ? .blue : Color(.systemGray4))
+                        .foregroundColor(canSend ? AppTheme.accent : AppTheme.textMuted)
                 }
                 .disabled(!canSend)
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 10)
         }
+        .background(AppTheme.background)
         .navigationTitle("Bible Copilot")
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showPaywall) {
             PaywallView()
         }
-        .onChange(of: subscriptionManager.showPaywall) { newValue in
-            if newValue {
+        .onChange(of: subscriptionManager.showPaywall) {
+            if subscriptionManager.showPaywall {
                 showPaywall = true
                 subscriptionManager.showPaywall = false
             }
@@ -158,29 +160,35 @@ struct ChatView: View {
         }
 
         inputText = ""
-        messages.append(ChatMessage(text: text, isUser: true))
+        messages.append(ChatBubbleMessage(text: text, isUser: true))
         isLoading = true
+        streamingText = ""
 
         Task {
-            try? await Task.sleep(nanoseconds: 1_200_000_000)
-            let response = await AIService.shared.askQuestion(text)
+            do {
+                for try await chunk in AIService.shared.streamResponse(question: text) {
+                    await MainActor.run {
+                        streamingText += chunk
+                    }
+                }
+            } catch {
+                // Handled by AIService fallback
+            }
+
             await MainActor.run {
-                messages.append(ChatMessage(text: response, isUser: false))
+                let finalText = streamingText.isEmpty
+                    ? "I couldn't process that request. Please try again."
+                    : streamingText
+                messages.append(ChatBubbleMessage(text: finalText, isUser: false))
+                streamingText = ""
                 isLoading = false
             }
         }
     }
 }
 
-struct ChatMessage: Identifiable {
-    let id = UUID()
-    let text: String
-    let isUser: Bool
-    let timestamp = Date()
-}
-
 struct MessageBubble: View {
-    let message: ChatMessage
+    let message: ChatBubbleMessage
 
     var body: some View {
         HStack(alignment: .bottom, spacing: 8) {
@@ -189,17 +197,17 @@ struct MessageBubble: View {
             } else {
                 Image(systemName: "book.fill")
                     .font(.caption)
-                    .foregroundColor(.blue)
+                    .foregroundColor(AppTheme.accent)
                     .frame(width: 28, height: 28)
-                    .background(Color.blue.opacity(0.1))
+                    .background(AppTheme.accent.opacity(0.1))
                     .clipShape(Circle())
             }
 
             Text(message.text)
                 .padding(.horizontal, 14)
                 .padding(.vertical, 10)
-                .background(message.isUser ? Color.blue : Color(.systemGray6))
-                .foregroundColor(message.isUser ? .white : .primary)
+                .background(message.isUser ? AppTheme.accent : AppTheme.surface)
+                .foregroundColor(message.isUser ? .white : AppTheme.textPrimary)
                 .cornerRadius(18)
                 .cornerRadius(
                     message.isUser ? 4 : 18,
@@ -214,7 +222,7 @@ struct MessageBubble: View {
     }
 }
 
-// Extension to allow individual corner radius
+// Extension for individual corner radius
 extension View {
     func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
         clipShape(RoundedCorner(radius: radius, corners: corners))

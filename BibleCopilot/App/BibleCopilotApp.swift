@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 
 @main
 struct BibleCopilotApp: App {
@@ -8,6 +9,13 @@ struct BibleCopilotApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(subscriptionManager)
+                .preferredColorScheme(.dark)
         }
+        .modelContainer(for: [
+            ChatMessage.self,
+            JournalEntry.self,
+            SavedItem.self,
+            ReadingPlanProgress.self,
+        ])
     }
 }

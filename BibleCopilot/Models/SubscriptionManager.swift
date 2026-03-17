@@ -7,15 +7,14 @@ class SubscriptionManager: ObservableObject {
 
     let monthlyProductID = "bible_copilot_pro_monthly"
     let annualProductID = "bible_copilot_pro_annual"
-    let freeQuestionLimit = 5
 
     @Published var products: [Product] = []
     @Published var isPro: Bool = false
     @Published var showPaywall: Bool = false
 
-    private var updateListenerTask: Task<Void, Error>?
+    let usageTracker = UsageTracker.shared
 
-    @AppStorage("questionCount") var questionCount: Int = 0
+    private var updateListenerTask: Task<Void, Error>?
 
     init() {
         updateListenerTask = listenForTransactions()
@@ -24,6 +23,10 @@ class SubscriptionManager: ObservableObject {
             await updateSubscriptionStatus()
         }
     }
+
+    var questionCount: Int { usageTracker.questionCount }
+    var freeQuestionLimit: Int { usageTracker.freeQuestionLimit }
+    var remainingQuestions: Int { usageTracker.remainingQuestions }
 
     func loadProducts() async {
         do {
@@ -37,15 +40,13 @@ class SubscriptionManager: ObservableObject {
     /// Returns false if the question was counted successfully (proceed with AI response).
     func checkAndIncrementQuestion() -> Bool {
         if isPro {
-            questionCount += 1
             return false
         }
-        if questionCount >= freeQuestionLimit {
+        let limitReached = usageTracker.checkAndIncrement()
+        if limitReached {
             showPaywall = true
-            return true
         }
-        questionCount += 1
-        return false
+        return limitReached
     }
 
     func purchase(_ product: Product) async throws {
