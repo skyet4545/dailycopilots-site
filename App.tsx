@@ -1,8 +1,8 @@
 // Bible Copilot — Main App (All Screens)
-// Version 1.5.0 — IAP Fix Build
+// Version 1.5.1 — IAP Fix + API Fix Build
 // CRITICAL: Paywall shows on limit reached, NEVER an error
 
-import React, { useState, useEffect, useCallback, useRef, useMemo } from "react";
+import React, { useState, useEffect, useCallback, useRef, useMemo, useContext, createContext } from "react";
 import {
   View,
   Text,
@@ -30,13 +30,29 @@ import * as Haptics from "expo-haptics";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { COLORS, STUDY_CATEGORIES, QUICK_PICKS, BIBLE_TRANSLATIONS, API_URL, BIBLE_API_URL, FREE_QUESTIONS_PER_DAY, StudyMode } from "./src/constants/theme";
-import useTheme from "./src/hooks/useTheme";
-import { useOnboarding, useSavedPassages, useJournal, useSettings, SavedPassage, JournalEntry } from "./src/hooks/useStorage";
+import { useOnboarding, useSavedPassages, useJournal, useSettings, SavedPassage, JournalEntry, AppSettings } from "./src/hooks/useStorage";
 import SubscriptionService, { PRODUCT_IDS } from "./src/services/SubscriptionService";
 import UsageTracker from "./src/services/UsageTracker";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 const Tab = createBottomTabNavigator();
+
+// Shared state context to avoid stale initialParams
+interface AppContextType {
+  isPro: boolean;
+  entries: JournalEntry[];
+  passages: SavedPassage[];
+  settings: { translation: string; hapticFeedback: boolean; fontSize: string };
+  onShowPaywall: () => void;
+  onRemoveEntry: (id: string) => void;
+  onRemovePassage: (id: string) => void;
+  onSelectPassage: (verse: string) => void;
+  onSearchVerse: (verse: string) => void;
+  onSelectMode: (mode: StudyMode) => void;
+  onRestore: () => void;
+  onUpdateSetting: <K extends keyof AppSettings>(key: K, value: AppSettings[K]) => void;
+}
+const AppContext = createContext<AppContextType>({} as AppContextType);
 
 // =====================================================
 // ONBOARDING SCREEN
@@ -248,7 +264,7 @@ function PaywallScreen({
             ))}
           </View>
 
-          {/* Plan Cards */}
+          {/* Plan Cards — prices loaded dynamically from StoreKit via RevenueCat */}
           <TouchableOpacity
             style={[
               styles.planCard,
@@ -258,12 +274,11 @@ function PaywallScreen({
             activeOpacity={0.7}
           >
             <View style={styles.planCardBadge}>
-              <Text style={styles.planCardBadgeText}>SAVE 33%</Text>
+              <Text style={styles.planCardBadgeText}>BEST VALUE</Text>
             </View>
             <View style={styles.planCardContent}>
               <Text style={styles.planCardTitle}>Annual</Text>
-              <Text style={styles.planCardPrice}>$39.99/year</Text>
-              <Text style={styles.planCardSub}>Just $0.75/week</Text>
+              <Text style={styles.planCardSub}>Billed once per year</Text>
             </View>
             <View style={[styles.planRadio, selectedPlan === "annual" && styles.planRadioSelected]}>
               {selectedPlan === "annual" && <View style={styles.planRadioDot} />}
@@ -280,7 +295,7 @@ function PaywallScreen({
           >
             <View style={styles.planCardContent}>
               <Text style={styles.planCardTitle}>Monthly</Text>
-              <Text style={styles.planCardPrice}>$4.99/month</Text>
+              <Text style={styles.planCardSub}>Billed monthly</Text>
             </View>
             <View style={[styles.planRadio, selectedPlan === "monthly" && styles.planRadioSelected]}>
               {selectedPlan === "monthly" && <View style={styles.planRadioDot} />}
@@ -483,7 +498,15 @@ function StudyScreen({
       const ref = encodeURIComponent(verse);
       const res = await fetch(`${BIBLE_API_URL}/${ref}?translation=${translation}`);
       const data = await res.json();
-      if (data.text) {
+      if (data.verses && data.verses.length > 0) {
+        // Show verse numbers when multiple verses, or single verse number for single verse
+        const formatted = data.verses.length === 1
+          ? data.verses[0].text.trim()
+          : data.verses.map((v: { verse: number; text: string }) =>
+              `[${v.verse}] ${v.text.trim()}`
+            ).join("\n\n");
+        setVerseText(formatted);
+      } else if (data.text) {
         setVerseText(data.text.trim());
       } else {
         setVerseText("Verse not found. Try a different reference.");
@@ -520,18 +543,13 @@ function StudyScreen({
     } catch {}
 
     try {
-      const messages = [
-        {
-          role: "user",
-          content: `Study "${verse}" using the ${mode} method. Verse text: "${verseText}"`,
-        },
-      ];
+      const message = `Study "${verse}" using the ${mode} method. Verse text: "${verseText}"`;
 
       // SSE streaming
       const response = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages, mode }),
+        body: JSON.stringify({ message, passage: verse, mode }),
       });
 
       if (!response.ok) {
@@ -559,7 +577,8 @@ function StudyScreen({
             if (data === "[DONE]") continue;
             try {
               const parsed = JSON.parse(data);
-              const content = parsed.choices?.[0]?.delta?.content;
+              // Support both API formats: {content} and OpenAI {choices[0].delta.content}
+              const content = parsed.content ?? parsed.choices?.[0]?.delta?.content;
               if (content) {
                 fullText += content;
                 setAiResponse(fullText);
@@ -610,15 +629,7 @@ function StudyScreen({
 
   return (
     <ScrollView ref={scrollRef} style={styles.screen} contentContainerStyle={{ paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
-      {/* Usage Counter */}
-      {!isPro && (
-        <View style={styles.usageCounter}>
-          <Ionicons name="sparkles" size={14} color={COLORS.gold} />
-          <Text style={styles.usageText}>
-            {usedToday}/{FREE_QUESTIONS_PER_DAY} free questions today
-          </Text>
-        </View>
-      )}
+      {/* Usage Counter — removed to comply with App Store guideline 2.3.7 */}
 
       {/* Verse Display */}
       <View style={styles.verseCard}>
@@ -811,7 +822,7 @@ function JournalScreen({
   if (!isPro) {
     return (
       <View style={[styles.screen, styles.emptyScreen]}>
-        <MaterialCommunityIcons name="journal-multiple" size={64} color={COLORS.textMuted} />
+        <MaterialCommunityIcons name="notebook-multiple" size={64} color={COLORS.textMuted} />
         <Text style={styles.emptyTitle}>Study Journal</Text>
         <Text style={styles.emptySubtitle}>Save your AI study insights and reflections</Text>
         <TouchableOpacity style={styles.emptyButton} onPress={onShowPaywall}>
@@ -826,7 +837,7 @@ function JournalScreen({
   if (entries.length === 0) {
     return (
       <View style={[styles.screen, styles.emptyScreen]}>
-        <MaterialCommunityIcons name="journal-multiple" size={64} color={COLORS.textMuted} />
+        <MaterialCommunityIcons name="notebook-multiple" size={64} color={COLORS.textMuted} />
         <Text style={styles.emptyTitle}>No Journal Entries Yet</Text>
         <Text style={styles.emptySubtitle}>Study a verse and save the response to start your journal</Text>
       </View>
@@ -964,7 +975,7 @@ function SettingsScreen({
   onShowPaywall: () => void;
   onRestore: () => void;
   settings: { translation: string; hapticFeedback: boolean; fontSize: string };
-  onUpdateSetting: (key: string, value: any) => void;
+  onUpdateSetting: <K extends keyof AppSettings>(key: K, value: AppSettings[K]) => void;
 }) {
   return (
     <ScrollView style={styles.screen} contentContainerStyle={{ paddingBottom: 40 }}>
@@ -1014,7 +1025,7 @@ function SettingsScreen({
         <Text style={styles.settingsSectionTitle}>ABOUT</Text>
         <View style={styles.settingsCard}>
           <Text style={styles.settingsLabel}>Version</Text>
-          <Text style={styles.settingsValue}>1.5.0</Text>
+          <Text style={styles.settingsValue}>1.5.1</Text>
         </View>
         <TouchableOpacity style={styles.settingsCard} onPress={onRestore}>
           <Text style={styles.settingsLabel}>Restore Purchases</Text>
@@ -1032,34 +1043,34 @@ function SettingsScreen({
 // These wrapper components receive the shared state via context-like props
 // passed through the tab navigator's screenOptions
 
-function HomeTabScreen({ navigation, route }: any) {
-  const { onSearchVerse, onSelectMode } = route.params || {};
+function HomeTabScreen() {
+  const { onSearchVerse, onSelectMode } = useContext(AppContext);
   return <HomeScreen onSearchVerse={onSearchVerse} onSelectMode={onSelectMode} />;
 }
 
-function PlansTabScreen({ route }: any) {
-  const { isPro, onShowPaywall } = route.params || {};
+function PlansTabScreen() {
+  const { isPro, onShowPaywall } = useContext(AppContext);
   return <ReadingPlansScreen isPro={isPro} onShowPaywall={onShowPaywall} />;
 }
 
-function JournalTabScreen({ route }: any) {
-  const { entries, onRemoveEntry, isPro, onShowPaywall } = route.params || {};
-  return <JournalScreen entries={entries || []} onRemoveEntry={onRemoveEntry} isPro={isPro} onShowPaywall={onShowPaywall} />;
+function JournalTabScreen() {
+  const { entries, onRemoveEntry, isPro, onShowPaywall } = useContext(AppContext);
+  return <JournalScreen entries={entries} onRemoveEntry={onRemoveEntry} isPro={isPro} onShowPaywall={onShowPaywall} />;
 }
 
-function SavedTabScreen({ route }: any) {
-  const { passages, onRemovePassage, onSelectPassage } = route.params || {};
-  return <SavedScreen passages={passages || []} onRemovePassage={onRemovePassage} onSelectPassage={onSelectPassage} />;
+function SavedTabScreen() {
+  const { passages, onRemovePassage, onSelectPassage } = useContext(AppContext);
+  return <SavedScreen passages={passages} onRemovePassage={onRemovePassage} onSelectPassage={onSelectPassage} />;
 }
 
-function SettingsTabScreen({ route }: any) {
-  const { isPro, onShowPaywall, onRestore, settings, onUpdateSetting } = route.params || {};
+function SettingsTabScreen() {
+  const { isPro, onShowPaywall, onRestore, settings, onUpdateSetting } = useContext(AppContext);
   return (
     <SettingsScreen
       isPro={isPro}
       onShowPaywall={onShowPaywall}
       onRestore={onRestore}
-      settings={settings || { translation: "kjv", hapticFeedback: true, fontSize: "medium" }}
+      settings={settings}
       onUpdateSetting={onUpdateSetting}
     />
   );
@@ -1211,88 +1222,79 @@ export default function App() {
         onPurchaseSuccess={handlePurchaseSuccess}
       />
 
-      <NavigationContainer theme={navTheme}>
-        <Tab.Navigator
-          screenOptions={{
-            headerShown: false,
-            tabBarActiveTintColor: COLORS.accent,
-            tabBarInactiveTintColor: COLORS.textMuted,
-            tabBarStyle: {
-              backgroundColor: COLORS.tabBar,
-              borderTopColor: COLORS.tabBarBorder,
-              paddingBottom: Platform.OS === "ios" ? 24 : 8,
-              paddingTop: 8,
-              height: Platform.OS === "ios" ? 88 : 64,
-            },
-            tabBarLabelStyle: {
-              fontSize: 11,
-              fontWeight: "600",
-            },
-          }}
-        >
-          <Tab.Screen
-            name="Home"
-            component={HomeTabScreen}
-            initialParams={{
-              onSearchVerse: handleSearchVerse,
-              onSelectMode: handleSelectMode,
+      <AppContext.Provider
+        value={{
+          isPro,
+          entries,
+          passages,
+          settings,
+          onShowPaywall: handleShowPaywall,
+          onRemoveEntry: removeEntry,
+          onRemovePassage: removePassage,
+          onSelectPassage: handleSelectPassage,
+          onSearchVerse: handleSearchVerse,
+          onSelectMode: handleSelectMode,
+          onRestore: handleRestore,
+          onUpdateSetting: updateSetting,
+        }}
+      >
+        <NavigationContainer theme={navTheme}>
+          <Tab.Navigator
+            screenOptions={{
+              headerShown: false,
+              tabBarActiveTintColor: COLORS.accent,
+              tabBarInactiveTintColor: COLORS.textMuted,
+              tabBarStyle: {
+                backgroundColor: COLORS.tabBar,
+                borderTopColor: COLORS.tabBarBorder,
+                paddingBottom: Platform.OS === "ios" ? 24 : 8,
+                paddingTop: 8,
+                height: Platform.OS === "ios" ? 88 : 64,
+              },
+              tabBarLabelStyle: {
+                fontSize: 11,
+                fontWeight: "600",
+              },
             }}
-            options={{
-              tabBarIcon: ({ color, size }) => <Ionicons name="home" size={size} color={color} />,
-            }}
-          />
-          <Tab.Screen
-            name="Plans"
-            component={PlansTabScreen}
-            initialParams={{
-              isPro,
-              onShowPaywall: handleShowPaywall,
-            }}
-            options={{
-              tabBarIcon: ({ color, size }) => <Ionicons name="calendar" size={size} color={color} />,
-            }}
-          />
-          <Tab.Screen
-            name="Journal"
-            component={JournalTabScreen}
-            initialParams={{
-              entries,
-              onRemoveEntry: removeEntry,
-              isPro,
-              onShowPaywall: handleShowPaywall,
-            }}
-            options={{
-              tabBarIcon: ({ color, size }) => <Ionicons name="journal" size={size} color={color} />,
-            }}
-          />
-          <Tab.Screen
-            name="Saved"
-            component={SavedTabScreen}
-            initialParams={{
-              passages,
-              onRemovePassage: removePassage,
-              onSelectPassage: handleSelectPassage,
-            }}
-            options={{
-              tabBarIcon: ({ color, size }) => <Ionicons name="bookmark" size={size} color={color} />,
-            }}
-          />
-          <Tab.Screen
-            name="Settings"
-            component={SettingsTabScreen}
-            initialParams={{
-              isPro,
-              onShowPaywall: handleShowPaywall,
-              onRestore: handleRestore,
-              settings,
-              onUpdateSetting: updateSetting,
-            }}
-            options={{
-              tabBarIcon: ({ color, size }) => <Ionicons name="settings" size={size} color={color} />,
-            }}
-          />
-        </Tab.Navigator>
-      </NavigationContainer>
+          >
+            <Tab.Screen
+              name="Home"
+              component={HomeTabScreen}
+              options={{
+                tabBarIcon: ({ color, size }) => <Ionicons name="home" size={size} color={color} />,
+              }}
+            />
+            <Tab.Screen
+              name="Plans"
+              component={PlansTabScreen}
+              options={{
+                tabBarIcon: ({ color, size }) => <Ionicons name="calendar" size={size} color={color} />,
+              }}
+            />
+            <Tab.Screen
+              name="Journal"
+              component={JournalTabScreen}
+              options={{
+                tabBarIcon: ({ color, size }) => <Ionicons name="journal" size={size} color={color} />,
+              }}
+            />
+            <Tab.Screen
+              name="Saved"
+              component={SavedTabScreen}
+              options={{
+                tabBarIcon: ({ color, size }) => <Ionicons name="bookmark" size={size} color={color} />,
+              }}
+            />
+            <Tab.Screen
+              name="Settings"
+              component={SettingsTabScreen}
+              options={{
+                tabBarIcon: ({ color, size }) => <Ionicons name="settings" size={size} color={color} />,
+              }}
+            />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </AppContext.Provider>
     </SafeAreaProvider>
   );
 }

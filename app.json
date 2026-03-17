@@ -2,7 +2,7 @@
   "expo": {
     "name": "Bible Copilot",
     "slug": "scripture-copilot",
-    "version": "1.5.0",
+    "version": "1.5.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
@@ -11,10 +11,12 @@
       "resizeMode": "contain",
       "backgroundColor": "#0a1628"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "bundleIdentifier": "com.scripturecopilot.app",
-      "buildNumber": "60",
+      "buildNumber": "91",
       "supportsTablet": true,
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
@@ -28,11 +30,12 @@
             "newArchEnabled": true
           }
         }
-      ]
+      ],
+      "expo-font"
     ],
     "extra": {
       "eas": {
-        "projectId": "scripture-copilot"
+        "projectId": "8510dae5-546a-4956-bcf5-a85e0de66301"
       }
     }
   }
