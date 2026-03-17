@@ -16,7 +16,7 @@
     ],
     "ios": {
       "bundleIdentifier": "com.scripturecopilot.app",
-      "buildNumber": "91",
+      "buildNumber": "95",
       "supportsTablet": true,
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false

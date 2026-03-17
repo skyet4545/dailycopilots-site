@@ -7,7 +7,7 @@ class SubscriptionManager: ObservableObject {
 
     let monthlyProductID = "bible_copilot_pro_monthly"
     let annualProductID = "bible_copilot_pro_annual"
-    let freeQuestionLimit = 5
+    let freeQuestionLimit = 10
 
     @Published var products: [Product] = []
     @Published var isPro: Bool = false
