@@ -1,9 +1,11 @@
 import SwiftUI
 import SwiftData
+import Observation
 
 @MainActor
-class BookmarksViewModel: ObservableObject {
-    @Published var selectedFilter: SavedItemType? = nil
+@Observable
+class BookmarksViewModel {
+    var selectedFilter: SavedItemType? = nil
 
     func filteredItems(_ items: [SavedItem]) -> [SavedItem] {
         let sorted = items.sorted { $0.savedAt > $1.savedAt }

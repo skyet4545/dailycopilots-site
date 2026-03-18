@@ -1,13 +1,15 @@
 import SwiftUI
+import Observation
 
 @MainActor
-class BibleReaderViewModel: ObservableObject {
-    @Published var selectedTestament: BibleBook.Testament? = nil
-    @Published var selectedBook: BibleBook?
-    @Published var selectedChapter: Int?
-    @Published var chapterContent: BibleVerse?
-    @Published var isLoading = false
-    @Published var selectedTranslation: BibleTranslation = .kjv
+@Observable
+class BibleReaderViewModel {
+    var selectedTestament: BibleBook.Testament? = nil
+    var selectedBook: BibleBook?
+    var selectedChapter: Int?
+    var chapterContent: BibleVerse?
+    var isLoading = false
+    var selectedTranslation: BibleTranslation = .kjv
 
     var books: [BibleBook] {
         if let testament = selectedTestament {

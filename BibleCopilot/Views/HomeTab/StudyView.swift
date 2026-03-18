@@ -5,7 +5,7 @@ struct StudyView: View {
     let initialReference: String
     let initialMode: StudyMode?
 
-    @StateObject private var viewModel = StudyViewModel()
+    @State private var viewModel = StudyViewModel()
     @EnvironmentObject var subscriptionManager: SubscriptionManager
     @Environment(\.modelContext) private var modelContext
     @State private var showPaywall = false
@@ -72,6 +72,7 @@ struct StudyView: View {
                     HStack(spacing: AppTheme.spacingSM) {
                         ForEach(StudyMode.allCases) { mode in
                             Button {
+                                HapticManager.mediumImpact()
                                 let limitReached = subscriptionManager.checkAndIncrementQuestion()
                                 if limitReached {
                                     showPaywall = true
@@ -129,10 +130,40 @@ struct StudyView: View {
                             .foregroundColor(AppTheme.textSecondary)
                             .lineSpacing(4)
 
+                        // Cross References
+                        let crossRefs = CrossReferenceParser.extractReferences(from: viewModel.aiResponse)
+                        if !crossRefs.isEmpty && !viewModel.isLoadingAI {
+                            VStack(alignment: .leading, spacing: AppTheme.spacingSM) {
+                                Text("Cross References")
+                                    .font(AppTheme.labelFont)
+                                    .foregroundColor(AppTheme.textMuted)
+
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack(spacing: AppTheme.spacingSM) {
+                                        ForEach(crossRefs, id: \.self) { ref in
+                                            NavigationLink {
+                                                StudyView(initialReference: ref, initialMode: nil)
+                                            } label: {
+                                                Text(ref)
+                                                    .font(.system(size: 12, weight: .medium))
+                                                    .foregroundColor(AppTheme.accent)
+                                                    .padding(.horizontal, AppTheme.spacingSM)
+                                                    .padding(.vertical, AppTheme.spacingXS)
+                                                    .background(AppTheme.accent.opacity(0.15))
+                                                    .cornerRadius(AppTheme.cornerRadiusSM)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            .padding(.top, AppTheme.spacingSM)
+                        }
+
                         // Action Buttons
                         HStack(spacing: AppTheme.spacingMD) {
                             Button {
                                 saveResponse()
+                                HapticManager.success()
                             } label: {
                                 Label("Save", systemImage: "bookmark")
                                     .font(AppTheme.captionFont)

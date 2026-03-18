@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct BibleReaderView: View {
-    @StateObject private var viewModel = BibleReaderViewModel()
+    @State private var viewModel = BibleReaderViewModel()
     @State private var navigateToStudy = false
     @State private var selectedVerseRef = ""
 

@@ -55,8 +55,8 @@ final class ReadingPlanProgress {
 enum ReadingPlans {
     static let all: [ReadingPlanDefinition] = [
         ReadingPlanDefinition(
-            id: "romans-30",
-            name: "Romans in 30 Days",
+            id: "romans-deep-dive",
+            name: "Romans Deep Dive",
             description: "Journey through Paul's greatest theological letter.",
             days: (1...16).map { chapter in
                 ReadingPlanDefinition.ReadingDay(
@@ -82,7 +82,7 @@ enum ReadingPlans {
         ),
         ReadingPlanDefinition(
             id: "psalms-praise",
-            name: "Psalms of Praise",
+            name: "30 Days of Psalms",
             description: "30 days of worship through the Psalms.",
             days: [
                 ReadingPlanDefinition.ReadingDay(day: 1, reference: "Psalm 1", title: "The Blessed Life"),
@@ -117,6 +117,34 @@ enum ReadingPlans {
                 ReadingPlanDefinition.ReadingDay(day: 30, reference: "Psalm 150", title: "Let Everything Praise"),
             ],
             icon: "music.note"
+        ),
+        ReadingPlanDefinition(
+            id: "proverbs-31",
+            name: "Proverbs 31",
+            description: "A chapter a day through the wisdom of Solomon.",
+            days: (1...31).map { chapter in
+                ReadingPlanDefinition.ReadingDay(
+                    day: chapter,
+                    reference: "Proverbs \(chapter)",
+                    title: "Proverbs \(chapter)"
+                )
+            },
+            icon: "lightbulb.fill"
+        ),
+        ReadingPlanDefinition(
+            id: "sermon-on-mount",
+            name: "Sermon on the Mount",
+            description: "7 days through Jesus' most famous teaching.",
+            days: [
+                ReadingPlanDefinition.ReadingDay(day: 1, reference: "Matthew 5:1-16", title: "The Beatitudes"),
+                ReadingPlanDefinition.ReadingDay(day: 2, reference: "Matthew 5:17-48", title: "Fulfilling the Law"),
+                ReadingPlanDefinition.ReadingDay(day: 3, reference: "Matthew 6:1-18", title: "Prayer & Fasting"),
+                ReadingPlanDefinition.ReadingDay(day: 4, reference: "Matthew 6:19-34", title: "Treasures & Worry"),
+                ReadingPlanDefinition.ReadingDay(day: 5, reference: "Matthew 7:1-14", title: "Judging & Asking"),
+                ReadingPlanDefinition.ReadingDay(day: 6, reference: "Matthew 7:15-23", title: "True & False Prophets"),
+                ReadingPlanDefinition.ReadingDay(day: 7, reference: "Matthew 7:24-29", title: "The Wise Builder"),
+            ],
+            icon: "mountain.2.fill"
         ),
     ]
 }

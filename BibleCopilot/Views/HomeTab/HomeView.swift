@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    @StateObject private var viewModel = HomeViewModel()
+    @State private var viewModel = HomeViewModel()
     @EnvironmentObject var subscriptionManager: SubscriptionManager
     @State private var navigateToStudy = false
     @State private var selectedVerse = ""

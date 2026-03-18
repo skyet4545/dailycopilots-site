@@ -13,14 +13,16 @@ final class SavedItem {
     var verseReference: String
     var content: String
     var studyMode: String?
+    var notes: String?
     var savedAt: Date
 
-    init(type: SavedItemType, verseReference: String, content: String, studyMode: StudyMode? = nil) {
+    init(type: SavedItemType, verseReference: String, content: String, studyMode: StudyMode? = nil, notes: String? = nil) {
         self.id = UUID()
         self.type = type.rawValue
         self.verseReference = verseReference
         self.content = content
         self.studyMode = studyMode?.rawValue
+        self.notes = notes
         self.savedAt = Date()
     }
 

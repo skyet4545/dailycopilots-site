@@ -17,6 +17,7 @@ class AIService {
     /// Stream an AI response for the given question and optional study mode.
     func streamResponse(
         question: String,
+        passage: String? = nil,
         mode: StudyMode? = nil,
         translation: String = "KJV"
     ) -> AsyncThrowingStream<String, Error> {
@@ -28,6 +29,9 @@ class AIService {
                     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
                     var body: [String: Any] = ["message": question]
+                    if let passage = passage {
+                        body["passage"] = passage
+                    }
                     if let mode = mode {
                         body["mode"] = mode.rawValue
                     }

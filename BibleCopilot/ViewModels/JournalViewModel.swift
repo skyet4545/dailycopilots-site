@@ -1,9 +1,11 @@
 import SwiftUI
 import SwiftData
+import Observation
 
 @MainActor
-class JournalViewModel: ObservableObject {
-    @Published var searchText = ""
+@Observable
+class JournalViewModel {
+    var searchText = ""
 
     func filteredEntries(_ entries: [JournalEntry]) -> [JournalEntry] {
         if searchText.isEmpty {

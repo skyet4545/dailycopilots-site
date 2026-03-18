@@ -1,11 +1,13 @@
 import SwiftUI
+import Observation
 
 @MainActor
-class HomeViewModel: ObservableObject {
-    @Published var verseOfTheDay: BibleVerse?
-    @Published var isLoadingVerse = false
-    @Published var searchText = ""
-    @Published var selectedTranslation: BibleTranslation = .kjv
+@Observable
+class HomeViewModel {
+    var verseOfTheDay: BibleVerse?
+    var isLoadingVerse = false
+    var searchText = ""
+    var selectedTranslation: BibleTranslation = .kjv
 
     let quickPicks = ["John 3:16", "Psalm 23", "Romans 8:28", "Philippians 4:13"]
 

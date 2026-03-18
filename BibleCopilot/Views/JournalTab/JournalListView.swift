@@ -2,15 +2,19 @@ import SwiftUI
 import SwiftData
 
 struct JournalListView: View {
-    @StateObject private var viewModel = JournalViewModel()
+    @State private var viewModel = JournalViewModel()
+    @EnvironmentObject var subscriptionManager: SubscriptionManager
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \JournalEntry.updatedAt, order: .reverse) private var entries: [JournalEntry]
     @State private var showNewEntry = false
+    @State private var showPaywall = false
 
     var body: some View {
         NavigationStack {
             Group {
-                if entries.isEmpty {
+                if !subscriptionManager.isPro {
+                    proGateView
+                } else if entries.isEmpty {
                     emptyState
                 } else {
                     journalList
@@ -20,12 +24,14 @@ struct JournalListView: View {
             .navigationTitle("Journal")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        showNewEntry = true
-                    } label: {
-                        Image(systemName: "plus")
-                            .foregroundColor(AppTheme.accent)
+                if subscriptionManager.isPro {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            showNewEntry = true
+                        } label: {
+                            Image(systemName: "plus")
+                                .foregroundColor(AppTheme.accent)
+                        }
                     }
                 }
             }
@@ -33,6 +39,41 @@ struct JournalListView: View {
             .sheet(isPresented: $showNewEntry) {
                 JournalEntryView(entry: nil)
             }
+            .sheet(isPresented: $showPaywall) {
+                PaywallView()
+            }
+        }
+    }
+
+    private var proGateView: some View {
+        VStack(spacing: AppTheme.spacingLG) {
+            Spacer()
+            Image(systemName: "lock.fill")
+                .font(.system(size: 48))
+                .foregroundColor(AppTheme.gold)
+
+            Text("Study Journal")
+                .font(AppTheme.sectionFont)
+                .foregroundColor(AppTheme.textPrimary)
+
+            Text("Upgrade to Pro to save your reflections and build a personal study journal.")
+                .font(AppTheme.captionFont)
+                .foregroundColor(AppTheme.textMuted)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, AppTheme.spacing2XL)
+
+            Button {
+                showPaywall = true
+            } label: {
+                Text("Upgrade to Pro")
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundColor(.white)
+                    .padding(.horizontal, AppTheme.spacingXL)
+                    .padding(.vertical, AppTheme.spacingMD)
+                    .background(AppTheme.accent)
+                    .cornerRadius(AppTheme.cornerRadiusSM)
+            }
+            Spacer()
         }
     }
 

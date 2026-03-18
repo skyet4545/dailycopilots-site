@@ -2,7 +2,7 @@ import SwiftUI
 import SwiftData
 
 struct BookmarksView: View {
-    @StateObject private var viewModel = BookmarksViewModel()
+    @State private var viewModel = BookmarksViewModel()
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \SavedItem.savedAt, order: .reverse) private var items: [SavedItem]
 

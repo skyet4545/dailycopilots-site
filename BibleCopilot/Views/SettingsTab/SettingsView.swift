@@ -59,6 +59,27 @@ struct SettingsView: View {
                 }
                 .listRowBackground(AppTheme.surface)
 
+                // Preferences
+                Section {
+                    Toggle("Haptic Feedback", isOn: Binding(
+                        get: { UserDefaults.standard.object(forKey: "hapticFeedbackEnabled") as? Bool ?? true },
+                        set: { UserDefaults.standard.set($0, forKey: "hapticFeedbackEnabled") }
+                    ))
+                    .foregroundColor(AppTheme.textPrimary)
+                    .tint(AppTheme.accent)
+
+                    Picker("Font Size", selection: $viewModel.fontSize) {
+                        Text("Small").tag("small")
+                        Text("Medium").tag("medium")
+                        Text("Large").tag("large")
+                    }
+                    .foregroundColor(AppTheme.textPrimary)
+                } header: {
+                    Text("Preferences")
+                        .foregroundColor(AppTheme.textMuted)
+                }
+                .listRowBackground(AppTheme.surface)
+
                 // About
                 Section {
                     HStack {

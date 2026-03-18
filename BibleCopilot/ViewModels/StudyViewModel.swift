@@ -1,15 +1,17 @@
 import SwiftUI
 import SwiftData
+import Observation
 
 @MainActor
-class StudyViewModel: ObservableObject {
-    @Published var verseReference: String = ""
-    @Published var verse: BibleVerse?
-    @Published var selectedMode: StudyMode?
-    @Published var aiResponse: String = ""
-    @Published var isLoadingVerse = false
-    @Published var isLoadingAI = false
-    @Published var selectedTranslation: BibleTranslation = .kjv
+@Observable
+class StudyViewModel {
+    var verseReference: String = ""
+    var verse: BibleVerse?
+    var selectedMode: StudyMode?
+    var aiResponse: String = ""
+    var isLoadingVerse = false
+    var isLoadingAI = false
+    var selectedTranslation: BibleTranslation = .kjv
 
     private let bibleService = BibleAPIService.shared
     private let aiService = AIService.shared
@@ -39,10 +41,12 @@ class StudyViewModel: ObservableObject {
         aiResponse = ""
 
         let question = buildPrompt(for: mode)
+        let passageText = verse?.text
 
         do {
             for try await chunk in aiService.streamResponse(
                 question: question,
+                passage: passageText,
                 mode: mode,
                 translation: selectedTranslation.displayName
             ) {

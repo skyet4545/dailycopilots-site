@@ -18,6 +18,8 @@ enum AppTheme {
     static let textMuted = Color(hex: "8E8E93")
 
     static let tabBarBackground = Color(hex: "0D1F35")
+    static let success = Color(hex: "34D399")
+    static let error = Color(hex: "F87171")
 
     // MARK: - Study Mode Colors
 

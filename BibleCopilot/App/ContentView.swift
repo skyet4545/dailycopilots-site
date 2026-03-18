@@ -23,9 +23,9 @@ struct ContentView: View {
                     Label("Home", systemImage: "house.fill")
                 }
 
-            BibleReaderView()
+            PlansListView()
                 .tabItem {
-                    Label("Bible", systemImage: "book.fill")
+                    Label("Plans", systemImage: "calendar")
                 }
 
             JournalListView()
@@ -44,5 +44,14 @@ struct ContentView: View {
                 }
         }
         .tint(AppTheme.accent)
+        .onAppear {
+            let appearance = UITabBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = UIColor(AppTheme.tabBarBackground)
+            appearance.stackedLayoutAppearance.normal.iconColor = UIColor(AppTheme.textMuted)
+            appearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor(AppTheme.textMuted)]
+            UITabBar.appearance().standardAppearance = appearance
+            UITabBar.appearance().scrollEdgeAppearance = appearance
+        }
     }
 }
