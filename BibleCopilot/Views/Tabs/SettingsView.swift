@@ -1,0 +1,129 @@
+import SwiftUI
+
+struct SettingsView: View {
+    @Environment(SubscriptionService.self) private var subscriptionService
+    @AppStorage("translation") private var translation: String = "kjv"
+    @AppStorage("hapticFeedbackEnabled") private var hapticEnabled: Bool = true
+    @AppStorage("fontSizePreference") private var fontSizePref: String = "medium"
+
+    let onShowPaywall: () -> Void
+
+    private let translations = [
+        ("kjv", "King James Version"),
+        ("web", "World English Bible"),
+        ("bbe", "Bible in Basic English"),
+        ("asv", "American Standard Version")
+    ]
+
+    var body: some View {
+        NavigationStack {
+            List {
+                // Subscription
+                Section {
+                    if subscriptionService.isPro {
+                        HStack {
+                            Image(systemName: "crown.fill")
+                                .foregroundColor(AppTheme.gold)
+                            Text("Bible Copilot Pro")
+                                .foregroundColor(AppTheme.textPrimary)
+                            Spacer()
+                            Text("Active")
+                                .font(.caption)
+                                .foregroundColor(AppTheme.success)
+                        }
+                    } else {
+                        Button(action: onShowPaywall) {
+                            HStack {
+                                Image(systemName: "crown")
+                                    .foregroundColor(AppTheme.gold)
+                                Text("Upgrade to Pro")
+                                    .foregroundColor(AppTheme.textPrimary)
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(AppTheme.textMuted)
+                            }
+                        }
+                    }
+                } header: {
+                    Text("Subscription")
+                }
+
+                // Bible Translation
+                Section {
+                    ForEach(translations, id: \.0) { code, name in
+                        Button {
+                            translation = code
+                            HapticService.selection()
+                        } label: {
+                            HStack {
+                                Text(name)
+                                    .foregroundColor(AppTheme.textPrimary)
+                                Spacer()
+                                if translation == code {
+                                    Image(systemName: "checkmark")
+                                        .foregroundColor(AppTheme.accent)
+                                }
+                            }
+                        }
+                    }
+                } header: {
+                    Text("Bible Translation")
+                }
+
+                // Preferences
+                Section {
+                    Toggle(isOn: $hapticEnabled) {
+                        HStack {
+                            Image(systemName: "iphone.radiowaves.left.and.right")
+                                .foregroundColor(AppTheme.accent)
+                            Text("Haptic Feedback")
+                                .foregroundColor(AppTheme.textPrimary)
+                        }
+                    }
+                    .tint(AppTheme.accent)
+
+                    HStack {
+                        Image(systemName: "textformat.size")
+                            .foregroundColor(AppTheme.accent)
+                        Text("Font Size")
+                            .foregroundColor(AppTheme.textPrimary)
+                        Spacer()
+                        Picker("", selection: $fontSizePref) {
+                            ForEach(FontSizePreference.allCases, id: \.rawValue) { size in
+                                Text(size.label).tag(size.rawValue)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                        .frame(width: 180)
+                    }
+                } header: {
+                    Text("Preferences")
+                }
+
+                // About
+                Section {
+                    HStack {
+                        Text("Version")
+                            .foregroundColor(AppTheme.textPrimary)
+                        Spacer()
+                        Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "2.0.0")
+                            .foregroundColor(AppTheme.textMuted)
+                    }
+
+                    Button {
+                        Task { await subscriptionService.restore() }
+                    } label: {
+                        Text("Restore Purchases")
+                            .foregroundColor(AppTheme.accent)
+                    }
+                } header: {
+                    Text("About")
+                }
+            }
+            .scrollContentBackground(.hidden)
+            .background(AppTheme.background)
+            .navigationTitle("Settings")
+            .navigationBarTitleDisplayMode(.large)
+        }
+    }
+}
