@@ -2,17 +2,17 @@ import SwiftUI
 
 struct SettingsView: View {
     @Environment(SubscriptionService.self) private var subscriptionService
-    @AppStorage("translation") private var translation: String = "kjv"
+    @AppStorage("translation") private var translation: String = "asv"
     @AppStorage("hapticFeedbackEnabled") private var hapticEnabled: Bool = true
     @AppStorage("fontSizePreference") private var fontSizePref: String = "medium"
 
     let onShowPaywall: () -> Void
 
     private let translations = [
+        ("asv", "American Standard Version"),
         ("kjv", "King James Version"),
         ("web", "World English Bible"),
-        ("bbe", "Bible in Basic English"),
-        ("asv", "American Standard Version")
+        ("bbe", "Bible in Basic English")
     ]
 
     var body: some View {

@@ -6,7 +6,7 @@ actor BibleService {
     private let fallbackURL = "https://scripture-copilot-rust.vercel.app/api/chat"
     private var cache: [String: String] = [:]
 
-    func fetchVerse(_ reference: String, translation: String = "kjv") async throws -> String {
+    func fetchVerse(_ reference: String, translation: String = "asv") async throws -> String {
         let cacheKey = "\(reference)_\(translation)"
         if let cached = cache[cacheKey] {
             return cached

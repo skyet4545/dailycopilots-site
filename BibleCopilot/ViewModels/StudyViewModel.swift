@@ -18,7 +18,7 @@ final class StudyViewModel {
     var isBookmarked = false
 
     @ObservationIgnored
-    @AppStorage("translation") private var translation: String = "kjv"
+    @AppStorage("translation") private var translation: String = "asv"
 
     @ObservationIgnored
     private var streamTask: Task<Void, Never>?

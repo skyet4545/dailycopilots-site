@@ -7,7 +7,7 @@ struct VerseCardView: View {
     let isBookmarked: Bool
     let onBookmark: () -> Void
 
-    @AppStorage("translation") private var translation: String = "kjv"
+    @AppStorage("translation") private var translation: String = "asv"
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
