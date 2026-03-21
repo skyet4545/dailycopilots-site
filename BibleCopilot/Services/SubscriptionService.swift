@@ -33,10 +33,20 @@ final class SubscriptionService {
 
     @MainActor
     func loadProducts() async {
-        do {
-            products = try await Product.products(for: [monthlyProductID, annualProductID])
-        } catch {
-            print("Failed to load products: \(error)")
+        isLoading = true
+        defer { isLoading = false }
+
+        // Retry up to 3 times with delay (sandbox can be slow)
+        for attempt in 1...3 {
+            do {
+                products = try await Product.products(for: [monthlyProductID, annualProductID])
+                if !products.isEmpty { return }
+            } catch {
+                print("Failed to load products (attempt \(attempt)): \(error)")
+            }
+            if attempt < 3 {
+                try? await Task.sleep(for: .seconds(2))
+            }
         }
     }
 

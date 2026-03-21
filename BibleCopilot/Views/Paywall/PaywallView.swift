@@ -44,9 +44,23 @@ struct PaywallView: View {
 
                     // Plan cards
                     if subscriptionService.products.isEmpty {
-                        ProgressView("Loading plans...")
-                            .tint(AppTheme.accent)
-                            .padding()
+                        VStack(spacing: 12) {
+                            ProgressView("Loading plans...")
+                                .tint(AppTheme.accent)
+
+                            Button("Retry") {
+                                Task { await subscriptionService.loadProducts() }
+                            }
+                            .font(.caption)
+                            .foregroundColor(AppTheme.accent)
+                        }
+                        .padding()
+                        .task {
+                            // Auto-retry loading products when paywall appears
+                            if subscriptionService.products.isEmpty {
+                                await subscriptionService.loadProducts()
+                            }
+                        }
                     } else {
                         VStack(spacing: 12) {
                             // Annual
@@ -121,13 +135,36 @@ struct PaywallView: View {
                     .font(.footnote)
                     .foregroundColor(AppTheme.textMuted)
 
-                    // Legal
-                    Text("Subscriptions auto-renew unless canceled 24 hours before renewal. Cancel anytime in App Store Settings.")
-                        .font(.caption2)
-                        .foregroundColor(AppTheme.textMuted.opacity(0.7))
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 24)
-                        .padding(.bottom, 40)
+                    // Legal links (required by App Store 3.1.2)
+                    HStack(spacing: 16) {
+                        Link("Terms of Use (EULA)", destination: URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!)
+                            .font(.caption2)
+                            .foregroundColor(AppTheme.accent)
+
+                        Link("Privacy Policy", destination: URL(string: "https://scripturecopilot.com/privacy")!)
+                            .font(.caption2)
+                            .foregroundColor(AppTheme.accent)
+                    }
+
+                    // Subscription details (required by App Store 3.1.2)
+                    VStack(spacing: 4) {
+                        if let annual = subscriptionService.annualProduct {
+                            Text("Bible Copilot Pro (Annual): \(annual.displayPrice)/year")
+                                .font(.caption2)
+                                .foregroundColor(AppTheme.textMuted.opacity(0.7))
+                        }
+                        if let monthly = subscriptionService.monthlyProduct {
+                            Text("Bible Copilot Pro (Monthly): \(monthly.displayPrice)/month")
+                                .font(.caption2)
+                                .foregroundColor(AppTheme.textMuted.opacity(0.7))
+                        }
+                        Text("Subscriptions auto-renew unless canceled at least 24 hours before the end of the current period. Cancel anytime in App Store Settings. Payment is charged to your Apple ID account.")
+                            .font(.caption2)
+                            .foregroundColor(AppTheme.textMuted.opacity(0.7))
+                            .multilineTextAlignment(.center)
+                    }
+                    .padding(.horizontal, 24)
+                    .padding(.bottom, 40)
                 }
             }
             .background(AppTheme.background)

@@ -100,6 +100,37 @@ struct SettingsView: View {
                     Text("Preferences")
                 }
 
+                // Legal (required by App Store 3.1.2)
+                Section {
+                    Link(destination: URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!) {
+                        HStack {
+                            Image(systemName: "doc.text")
+                                .foregroundColor(AppTheme.accent)
+                            Text("Terms of Use (EULA)")
+                                .foregroundColor(AppTheme.textPrimary)
+                            Spacer()
+                            Image(systemName: "arrow.up.right")
+                                .font(.caption)
+                                .foregroundColor(AppTheme.textMuted)
+                        }
+                    }
+
+                    Link(destination: URL(string: "https://scripturecopilot.com/privacy")!) {
+                        HStack {
+                            Image(systemName: "hand.raised")
+                                .foregroundColor(AppTheme.accent)
+                            Text("Privacy Policy")
+                                .foregroundColor(AppTheme.textPrimary)
+                            Spacer()
+                            Image(systemName: "arrow.up.right")
+                                .font(.caption)
+                                .foregroundColor(AppTheme.textMuted)
+                        }
+                    }
+                } header: {
+                    Text("Legal")
+                }
+
                 // About
                 Section {
                     HStack {
