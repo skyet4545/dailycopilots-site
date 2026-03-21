@@ -45,18 +45,24 @@ struct PaywallView: View {
                     // Plan cards
                     if subscriptionService.products.isEmpty {
                         VStack(spacing: 12) {
-                            ProgressView("Loading plans...")
-                                .tint(AppTheme.accent)
+                            if subscriptionService.isLoading {
+                                ProgressView("Loading plans...")
+                                    .tint(AppTheme.accent)
+                            } else {
+                                Text("Unable to load subscription plans.\nPlease check your connection and try again.")
+                                    .font(.subheadline)
+                                    .foregroundColor(AppTheme.textMuted)
+                                    .multilineTextAlignment(.center)
 
-                            Button("Retry") {
-                                Task { await subscriptionService.loadProducts() }
+                                Button("Try Again") {
+                                    Task { await subscriptionService.loadProducts() }
+                                }
+                                .font(.body.bold())
+                                .foregroundColor(AppTheme.accent)
                             }
-                            .font(.caption)
-                            .foregroundColor(AppTheme.accent)
                         }
                         .padding()
                         .task {
-                            // Auto-retry loading products when paywall appears
                             if subscriptionService.products.isEmpty {
                                 await subscriptionService.loadProducts()
                             }
