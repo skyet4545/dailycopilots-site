@@ -20,7 +20,7 @@ struct OnboardingSlide: Identifiable {
             icon: "brain.head.profile",
             iconColor: Color(hex: "A78BFA"),
             title: "Not Just\nAny AI",
-            subtitle: "Trained on trusted commentaries and theological resources for accurate, faithful answers"
+            subtitle: "Every answer is rooted in Scripture alone. No opinions, no speculation — just faithful, Bible-grounded insight"
         ),
         OnboardingSlide(
             id: 2,
