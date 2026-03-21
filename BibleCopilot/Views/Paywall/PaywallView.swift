@@ -47,28 +47,46 @@ struct PaywallView: View {
 
                     // Plan cards
                     if subscriptionService.products.isEmpty {
-                        VStack(spacing: 12) {
+                        VStack(spacing: 16) {
                             if subscriptionService.isLoading {
-                                ProgressView("Loading plans...")
-                                    .tint(AppTheme.accent)
+                                VStack(spacing: 12) {
+                                    ProgressView()
+                                        .scaleEffect(1.2)
+                                        .tint(AppTheme.accent)
+                                    Text("Loading plans...")
+                                        .font(.subheadline)
+                                        .foregroundColor(AppTheme.textMuted)
+                                }
                             } else {
-                                Text("Unable to load subscription plans.\nPlease check your connection and try again.")
+                                Image(systemName: "wifi.exclamationmark")
+                                    .font(.system(size: 36))
+                                    .foregroundColor(AppTheme.textMuted)
+
+                                Text(subscriptionService.loadError ?? "Unable to load subscription plans.")
                                     .font(.subheadline)
                                     .foregroundColor(AppTheme.textMuted)
                                     .multilineTextAlignment(.center)
 
-                                Button("Try Again") {
+                                Button {
                                     Task { await subscriptionService.loadProducts() }
+                                } label: {
+                                    HStack(spacing: 6) {
+                                        Image(systemName: "arrow.clockwise")
+                                        Text("Try Again")
+                                    }
+                                    .font(.body.bold())
+                                    .foregroundColor(.white)
+                                    .padding(.horizontal, 24)
+                                    .padding(.vertical, 12)
+                                    .background(AppTheme.accent)
+                                    .clipShape(Capsule())
                                 }
-                                .font(.body.bold())
-                                .foregroundColor(AppTheme.accent)
                             }
                         }
-                        .padding()
-                        .task {
-                            if subscriptionService.products.isEmpty {
-                                await subscriptionService.loadProducts()
-                            }
+                        .padding(32)
+                        .onAppear {
+                            // Always try loading when paywall appears
+                            Task { await subscriptionService.loadProducts() }
                         }
                     } else {
                         VStack(spacing: 12) {

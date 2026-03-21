@@ -31,23 +31,37 @@ final class SubscriptionService {
 
     // MARK: - Products
 
+    var loadError: String?
+
     @MainActor
     func loadProducts() async {
         isLoading = true
+        loadError = nil
         defer { isLoading = false }
 
-        // Retry up to 3 times with delay (sandbox can be slow)
-        for attempt in 1...3 {
+        let productIDs: Set<String> = [monthlyProductID, annualProductID]
+
+        // Retry up to 5 times with exponential backoff (sandbox/network can be slow)
+        for attempt in 1...5 {
             do {
-                products = try await Product.products(for: [monthlyProductID, annualProductID])
-                if !products.isEmpty { return }
+                let fetched = try await Product.products(for: productIDs)
+                if !fetched.isEmpty {
+                    products = fetched
+                    loadError = nil
+                    print("✅ Loaded \(fetched.count) products on attempt \(attempt)")
+                    return
+                } else {
+                    print("⚠️ Empty product list on attempt \(attempt) — IDs may not match App Store Connect")
+                }
             } catch {
-                print("Failed to load products (attempt \(attempt)): \(error)")
+                print("❌ Product fetch attempt \(attempt): \(error.localizedDescription)")
             }
-            if attempt < 3 {
-                try? await Task.sleep(for: .seconds(2))
+            if attempt < 5 {
+                let delay = Double(attempt) * 1.5 // 1.5s, 3s, 4.5s, 6s
+                try? await Task.sleep(for: .seconds(delay))
             }
         }
+        loadError = "Unable to load plans. Please check your connection."
     }
 
     // MARK: - Purchase

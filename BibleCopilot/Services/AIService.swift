@@ -8,7 +8,12 @@ actor AIService {
         AsyncThrowingStream { continuation in
             Task {
                 do {
-                    let message = "Study '\(verse)' using the \(mode.rawValue) method. Verse text: '\(verseText)'"
+                    let message = """
+                    Study '\(verse)' using the \(mode.rawValue) method. \
+                    IMPORTANT: Always include verse numbers when quoting Scripture (e.g. "16 For God so loved..."). \
+                    When referencing related verses, write the full reference (e.g. Romans 8:28). \
+                    Verse text: '\(verseText)'
+                    """
 
                     var request = URLRequest(url: apiURL)
                     request.httpMethod = "POST"
