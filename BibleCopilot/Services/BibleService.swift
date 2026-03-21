@@ -25,9 +25,16 @@ actor BibleService {
 
         let result = try JSONDecoder().decode(BibleAPIResponse.self, from: data)
 
-        let verseText = result.verses
-            .map { $0.text.trimmingCharacters(in: .whitespacesAndNewlines) }
-            .joined(separator: " ")
+        let verseText: String
+        if result.verses.count == 1 {
+            // Single verse — no need for numbers
+            verseText = result.verses[0].text.trimmingCharacters(in: .whitespacesAndNewlines)
+        } else {
+            // Multiple verses — prepend verse numbers in superscript style
+            verseText = result.verses
+                .map { "\($0.verse) \($0.text.trimmingCharacters(in: .whitespacesAndNewlines))" }
+                .joined(separator: " ")
+        }
 
         cache[cacheKey] = verseText
         return verseText
