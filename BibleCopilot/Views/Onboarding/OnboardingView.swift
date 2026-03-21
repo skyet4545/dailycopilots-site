@@ -31,14 +31,24 @@ struct OnboardingView: View {
                 VStack(spacing: 24) {
                     let slide = slides[currentSlide]
 
-                    Circle()
-                        .fill(slide.iconColor.opacity(0.15))
-                        .frame(width: 100, height: 100)
-                        .overlay(
-                            Image(systemName: slide.icon)
-                                .font(.system(size: 40))
-                                .foregroundColor(slide.iconColor)
-                        )
+                    if currentSlide == 0 {
+                        // First slide shows the app logo
+                        Image("AppLogo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 100, height: 100)
+                            .clipShape(RoundedRectangle(cornerRadius: 22))
+                            .shadow(color: AppTheme.gold.opacity(0.3), radius: 10, y: 4)
+                    } else {
+                        Circle()
+                            .fill(slide.iconColor.opacity(0.15))
+                            .frame(width: 100, height: 100)
+                            .overlay(
+                                Image(systemName: slide.icon)
+                                    .font(.system(size: 40))
+                                    .foregroundColor(slide.iconColor)
+                            )
+                    }
 
                     Text(slide.title)
                         .font(.title.bold())

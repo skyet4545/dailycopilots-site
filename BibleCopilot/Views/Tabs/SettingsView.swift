@@ -134,11 +134,20 @@ struct SettingsView: View {
                 // About
                 Section {
                     HStack {
-                        Text("Version")
-                            .foregroundColor(AppTheme.textPrimary)
+                        Image("AppLogo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 44, height: 44)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Bible Copilot")
+                                .font(.headline)
+                                .foregroundColor(AppTheme.textPrimary)
+                            Text("Version \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "2.0.0")")
+                                .font(.caption)
+                                .foregroundColor(AppTheme.textMuted)
+                        }
                         Spacer()
-                        Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "2.0.0")
-                            .foregroundColor(AppTheme.textMuted)
                     }
 
                     Button {

@@ -14,9 +14,12 @@ struct PaywallView: View {
                 VStack(spacing: 24) {
                     // Header
                     VStack(spacing: 12) {
-                        Image(systemName: "book.fill")
-                            .font(.system(size: 56))
-                            .foregroundColor(AppTheme.gold)
+                        Image("AppLogo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 90, height: 90)
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                            .shadow(color: AppTheme.gold.opacity(0.3), radius: 10, y: 4)
                             .padding(.top, 40)
 
                         Text("Understand Scripture\nDeeply")

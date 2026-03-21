@@ -11,9 +11,12 @@ struct HomeView: View {
                 VStack(spacing: 28) {
                     // Header
                     VStack(spacing: 8) {
-                        Image(systemName: "safari")
-                            .font(.system(size: 48))
-                            .foregroundColor(AppTheme.gold)
+                        Image("AppLogo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 80, height: 80)
+                            .clipShape(RoundedRectangle(cornerRadius: 18))
+                            .shadow(color: AppTheme.gold.opacity(0.3), radius: 8, y: 4)
 
                         Text("Bible Copilot")
                             .font(.largeTitle.bold())
