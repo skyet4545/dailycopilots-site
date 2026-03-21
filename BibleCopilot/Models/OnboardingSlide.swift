@@ -11,37 +11,37 @@ struct OnboardingSlide: Identifiable {
         OnboardingSlide(
             id: 0,
             icon: "book.fill",
-            iconColor: AppTheme.gold,
+            iconColor: AppTheme.accent,
             title: "Welcome to\nBible Copilot",
-            subtitle: "Your AI-powered companion for deeper Bible study"
+            subtitle: "Your AI-powered Bible study companion"
         ),
         OnboardingSlide(
             id: 1,
             icon: "brain.head.profile",
-            iconColor: AppTheme.accent,
-            title: "Not Just AI",
-            subtitle: "Grounded in proven study methods used by theologians for centuries"
+            iconColor: Color(hex: "A78BFA"),
+            title: "Not Just\nAny AI",
+            subtitle: "Trained on trusted commentaries and theological resources for accurate, faithful answers"
         ),
         OnboardingSlide(
             id: 2,
-            icon: "text.magnifyingglass",
-            iconColor: Color(hex: "A78BFA"),
-            title: "Method Matters",
-            subtitle: "Observe, Interpret, Apply, and explore Theology & Apologetics"
+            icon: "safari",
+            iconColor: Color(hex: "34D399"),
+            title: "The Method\nMatters",
+            subtitle: "Five study modes guide you through observation, interpretation, theology, application, and apologetics"
         ),
         OnboardingSlide(
             id: 3,
-            icon: "arrow.down.doc.fill",
-            iconColor: AppTheme.success,
+            icon: "square.3.layers.3d",
+            iconColor: AppTheme.gold,
             title: "Go Deep",
-            subtitle: "Save insights to your journal and build a library of understanding"
+            subtitle: "Cross-references, original language insights, and historical context at your fingertips"
         ),
         OnboardingSlide(
             id: 4,
-            icon: "checkmark.circle.fill",
-            iconColor: AppTheme.gold,
-            title: "Ready to Begin",
-            subtitle: "Start with 10 free questions per day. Upgrade anytime for unlimited."
+            icon: "paperplane.fill",
+            iconColor: AppTheme.accent,
+            title: "Ready to\nStudy?",
+            subtitle: "Start with any verse. Ask any question. Grow in understanding."
         )
     ]
 }
