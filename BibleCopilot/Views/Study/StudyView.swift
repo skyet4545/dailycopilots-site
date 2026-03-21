@@ -6,6 +6,7 @@ struct StudyView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(SubscriptionService.self) private var subscriptionService
     @State private var viewModel: StudyViewModel
+    @State private var showShareSheet = false
 
     let onShowPaywall: () -> Void
 
@@ -24,7 +25,10 @@ struct StudyView: View {
                         text: viewModel.verseText,
                         isLoading: viewModel.verseLoading,
                         isBookmarked: viewModel.isBookmarked,
-                        onBookmark: { viewModel.savePassage(context: modelContext) }
+                        onBookmark: { viewModel.savePassage(context: modelContext) },
+                        onShare: {
+                            showShareSheet = true
+                        }
                     )
 
                     // Study Mode Pills
@@ -91,5 +95,8 @@ struct StudyView: View {
         }
         .task { await viewModel.fetchVerse() }
         .onDisappear { viewModel.cancelStream() }
+        .sheet(isPresented: $showShareSheet) {
+            ShareSheet(text: "\(viewModel.verse)\n\n\(viewModel.verseText)\n\n— Studied with Bible Copilot")
+        }
     }
 }

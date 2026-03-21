@@ -2,20 +2,23 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var viewModel = HomeViewModel()
+    @State private var streakService = StreakService.shared
+    @State private var showShareSheet = false
+    @State private var shareText = ""
     var onStudy: (String, StudyMode?) -> Void
     var onShowPaywall: () -> Void
 
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 28) {
-                    // Header
+                VStack(spacing: 24) {
+                    // Header + Streak
                     VStack(spacing: 8) {
                         Image("AppLogo")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 80, height: 80)
-                            .clipShape(RoundedRectangle(cornerRadius: 18))
+                            .frame(width: 72, height: 72)
+                            .clipShape(RoundedRectangle(cornerRadius: 16))
                             .shadow(color: AppTheme.gold.opacity(0.3), radius: 8, y: 4)
 
                         Text("Bible Copilot")
@@ -25,8 +28,36 @@ struct HomeView: View {
                         Text("AI-powered Bible study")
                             .font(.subheadline)
                             .foregroundColor(AppTheme.textMuted)
+
+                        // Streak badge
+                        if streakService.currentStreak > 0 {
+                            StreakBadge(
+                                streak: streakService.currentStreak,
+                                emoji: streakService.streakEmoji,
+                                studiedToday: streakService.studiedToday
+                            )
+                            .padding(.top, 4)
+                        }
                     }
-                    .padding(.top, 20)
+                    .padding(.top, 12)
+
+                    // Daily Verse
+                    DailyVerseCard(
+                        reference: viewModel.dailyVerseRef,
+                        text: viewModel.dailyVerseText,
+                        isLoading: viewModel.dailyVerseLoading,
+                        onStudy: {
+                            onStudy(viewModel.dailyVerseRef, nil)
+                        },
+                        onShare: {
+                            shareText = viewModel.shareText(
+                                for: viewModel.dailyVerseRef,
+                                text: viewModel.dailyVerseText
+                            )
+                            showShareSheet = true
+                        }
+                    )
+                    .padding(.horizontal)
 
                     // Search bar
                     HStack(spacing: 12) {
@@ -75,7 +106,6 @@ struct HomeView: View {
                             .tracking(1.2)
                             .padding(.horizontal)
 
-                        // 2x2 grid
                         LazyVGrid(columns: [
                             GridItem(.flexible(), spacing: 12),
                             GridItem(.flexible(), spacing: 12)
@@ -88,7 +118,6 @@ struct HomeView: View {
                         }
                         .padding(.horizontal)
 
-                        // Full-width Apologetics card
                         StudyModeCard(mode: .apologetics, isFullWidth: true) {
                             onStudy(viewModel.searchText.isEmpty ? "John 3:16" : viewModel.searchText, .apologetics)
                         }
@@ -100,6 +129,12 @@ struct HomeView: View {
             }
             .background(AppTheme.background)
             .scrollDismissesKeyboard(.immediately)
+            .sheet(isPresented: $showShareSheet) {
+                ShareSheet(text: shareText)
+            }
+        }
+        .task {
+            await viewModel.loadDailyVerse()
         }
     }
 
@@ -108,4 +143,16 @@ struct HomeView: View {
             onStudy(verse, nil)
         }
     }
+}
+
+// MARK: - Share Sheet
+
+struct ShareSheet: UIViewControllerRepresentable {
+    let text: String
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        UIActivityViewController(activityItems: [text], applicationActivities: nil)
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }

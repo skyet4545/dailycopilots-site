@@ -81,6 +81,8 @@ final class StudyViewModel {
                 // Extract cross-references after streaming completes
                 crossReferences = CrossReferenceParser.extractReferences(from: aiResponse)
                 usageService.recordQuestion()
+                StreakService.shared.recordStudy()
+                ReviewService.shared.recordStudyAndPromptIfReady()
                 HapticService.success()
             } catch {
                 if !Task.isCancelled {

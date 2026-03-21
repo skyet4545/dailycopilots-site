@@ -47,6 +47,12 @@
 		A10001000000000000000022 /* PlansListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000022 /* PlansListView.swift */; };
 		A10001000000000000000023 /* SavedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000023 /* SavedView.swift */; };
 		A10001000000000000000024 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000024 /* SettingsView.swift */; };
+		A10001000000000000000025 /* DailyVerseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000025 /* DailyVerseService.swift */; };
+		A10001000000000000000026 /* StreakService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000026 /* StreakService.swift */; };
+		A10001000000000000000027 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000027 /* NotificationService.swift */; };
+		A10001000000000000000028 /* ReviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000028 /* ReviewService.swift */; };
+		A10001000000000000000029 /* DailyVerseCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000029 /* DailyVerseCard.swift */; };
+		A1000100000000000000002A /* StreakBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000002A /* StreakBadge.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +98,12 @@
 		B10001000000000000000022 /* PlansListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlansListView.swift; sourceTree = "<group>"; };
 		B10001000000000000000023 /* SavedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedView.swift; sourceTree = "<group>"; };
 		B10001000000000000000024 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		B10001000000000000000025 /* DailyVerseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyVerseService.swift; sourceTree = "<group>"; };
+		B10001000000000000000026 /* StreakService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakService.swift; sourceTree = "<group>"; };
+		B10001000000000000000027 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		B10001000000000000000028 /* ReviewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewService.swift; sourceTree = "<group>"; };
+		B10001000000000000000029 /* DailyVerseCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyVerseCard.swift; sourceTree = "<group>"; };
+		B1000100000000000000002A /* StreakBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakBadge.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -112,6 +124,10 @@
 				B1000100000000000000000A /* HapticService.swift */,
 				B1000100000000000000000B /* SubscriptionService.swift */,
 				B1000100000000000000000C /* UsageService.swift */,
+				B10001000000000000000025 /* DailyVerseService.swift */,
+				B10001000000000000000026 /* StreakService.swift */,
+				B10001000000000000000027 /* NotificationService.swift */,
+				B10001000000000000000028 /* ReviewService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -218,6 +234,8 @@
 				B10001000000000000000015 /* QuickPickChip.swift */,
 				B10001000000000000000016 /* SavedPassageCard.swift */,
 				B10001000000000000000017 /* StudyModeCard.swift */,
+				B10001000000000000000029 /* DailyVerseCard.swift */,
+				B1000100000000000000002A /* StreakBadge.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -373,6 +391,12 @@
 				A10001000000000000000022 /* PlansListView.swift in Sources */,
 				A10001000000000000000023 /* SavedView.swift in Sources */,
 				A10001000000000000000024 /* SettingsView.swift in Sources */,
+				A10001000000000000000025 /* DailyVerseService.swift in Sources */,
+				A10001000000000000000026 /* StreakService.swift in Sources */,
+				A10001000000000000000027 /* NotificationService.swift in Sources */,
+				A10001000000000000000028 /* ReviewService.swift in Sources */,
+				A10001000000000000000029 /* DailyVerseCard.swift in Sources */,
+				A1000100000000000000002A /* StreakBadge.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

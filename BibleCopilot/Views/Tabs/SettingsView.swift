@@ -5,6 +5,7 @@ struct SettingsView: View {
     @AppStorage("translation") private var translation: String = "asv"
     @AppStorage("hapticFeedbackEnabled") private var hapticEnabled: Bool = true
     @AppStorage("fontSizePreference") private var fontSizePref: String = "medium"
+    @AppStorage("dailyReminderEnabled") private var reminderEnabled: Bool = false
 
     let onShowPaywall: () -> Void
 
@@ -72,6 +73,31 @@ struct SettingsView: View {
 
                 // Preferences
                 Section {
+                    Toggle(isOn: $reminderEnabled) {
+                        HStack {
+                            Image(systemName: "bell.fill")
+                                .foregroundColor(AppTheme.accent)
+                            Text("Daily Study Reminder")
+                                .foregroundColor(AppTheme.textPrimary)
+                        }
+                    }
+                    .tint(AppTheme.accent)
+                    .onChange(of: reminderEnabled) { _, enabled in
+                        if enabled {
+                            Task {
+                                let granted = await NotificationService.shared.requestPermission()
+                                if granted {
+                                    NotificationService.shared.scheduleDailyReminder()
+                                    NotificationService.shared.scheduleStreakReminder()
+                                } else {
+                                    reminderEnabled = false
+                                }
+                            }
+                        } else {
+                            NotificationService.shared.cancelAll()
+                        }
+                    }
+
                     Toggle(isOn: $hapticEnabled) {
                         HStack {
                             Image(systemName: "iphone.radiowaves.left.and.right")
@@ -129,6 +155,39 @@ struct SettingsView: View {
                     }
                 } header: {
                     Text("Legal")
+                }
+
+                // Stats
+                Section {
+                    HStack {
+                        Image(systemName: "flame.fill")
+                            .foregroundColor(AppTheme.gold)
+                        Text("Current Streak")
+                            .foregroundColor(AppTheme.textPrimary)
+                        Spacer()
+                        Text("\(StreakService.shared.currentStreak) days")
+                            .foregroundColor(AppTheme.textMuted)
+                    }
+                    HStack {
+                        Image(systemName: "star.fill")
+                            .foregroundColor(AppTheme.gold)
+                        Text("Longest Streak")
+                            .foregroundColor(AppTheme.textPrimary)
+                        Spacer()
+                        Text("\(StreakService.shared.longestStreak) days")
+                            .foregroundColor(AppTheme.textMuted)
+                    }
+                    HStack {
+                        Image(systemName: "book.fill")
+                            .foregroundColor(AppTheme.accent)
+                        Text("Total Studies")
+                            .foregroundColor(AppTheme.textPrimary)
+                        Spacer()
+                        Text("\(StreakService.shared.totalStudies)")
+                            .foregroundColor(AppTheme.textMuted)
+                    }
+                } header: {
+                    Text("Your Progress")
                 }
 
                 // About

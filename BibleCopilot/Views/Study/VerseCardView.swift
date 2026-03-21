@@ -6,8 +6,18 @@ struct VerseCardView: View {
     let isLoading: Bool
     let isBookmarked: Bool
     let onBookmark: () -> Void
+    var onShare: (() -> Void)? = nil
 
     @AppStorage("translation") private var translation: String = "asv"
+    @AppStorage("fontSizePreference") private var fontSizePref: String = "medium"
+
+    private var verseFontSize: Font {
+        switch fontSizePref {
+        case "small": return .callout
+        case "large": return .title3
+        default: return .body
+        }
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -26,6 +36,13 @@ struct VerseCardView: View {
                     .background(AppTheme.surfaceLight)
                     .clipShape(Capsule())
 
+                if let onShare {
+                    Button(action: onShare) {
+                        Image(systemName: "square.and.arrow.up")
+                            .foregroundColor(AppTheme.textMuted)
+                    }
+                }
+
                 Button(action: onBookmark) {
                     Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark")
                         .foregroundColor(isBookmarked ? AppTheme.gold : AppTheme.textMuted)
@@ -38,7 +55,7 @@ struct VerseCardView: View {
                     .frame(maxWidth: .infinity, minHeight: 60)
             } else if !text.isEmpty {
                 Text(formattedVerseText)
-                    .font(.body)
+                    .font(verseFontSize)
                     .italic()
                     .foregroundColor(AppTheme.textSecondary)
                     .lineSpacing(6)
