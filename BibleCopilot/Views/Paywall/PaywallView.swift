@@ -147,7 +147,7 @@ struct PaywallView: View {
                             .font(.caption2)
                             .foregroundColor(AppTheme.accent)
 
-                        Link("Privacy Policy", destination: URL(string: "https://scripturecopilot.com/privacy")!)
+                        Link("Privacy Policy", destination: URL(string: "https://scripturecopilot.netlify.app/privacy")!)
                             .font(.caption2)
                             .foregroundColor(AppTheme.accent)
                     }

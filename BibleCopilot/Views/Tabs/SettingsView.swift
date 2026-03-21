@@ -115,7 +115,7 @@ struct SettingsView: View {
                         }
                     }
 
-                    Link(destination: URL(string: "https://scripturecopilot.com/privacy")!) {
+                    Link(destination: URL(string: "https://scripturecopilot.netlify.app/privacy")!) {
                         HStack {
                             Image(systemName: "hand.raised")
                                 .foregroundColor(AppTheme.accent)
