@@ -40,11 +40,16 @@ final class SubscriptionService {
         defer { isLoading = false }
 
         let productIDs: Set<String> = [monthlyProductID, annualProductID]
+        print("🔄 SubscriptionService: Loading products for IDs: \(productIDs)")
 
-        // Retry up to 5 times with exponential backoff (sandbox/network can be slow)
+        // Retry up to 5 times with exponential backoff
         for attempt in 1...5 {
             do {
                 let fetched = try await Product.products(for: productIDs)
+                print("📦 Attempt \(attempt): Got \(fetched.count) products")
+                for p in fetched {
+                    print("   → \(p.id): \(p.displayName) \(p.displayPrice) (\(p.type))")
+                }
                 if !fetched.isEmpty {
                     products = fetched
                     loadError = nil
@@ -52,16 +57,19 @@ final class SubscriptionService {
                     return
                 } else {
                     print("⚠️ Empty product list on attempt \(attempt) — IDs may not match App Store Connect")
+                    print("   Bundle ID: \(Bundle.main.bundleIdentifier ?? "nil")")
                 }
             } catch {
-                print("❌ Product fetch attempt \(attempt): \(error.localizedDescription)")
+                print("❌ Product fetch attempt \(attempt): \(error)")
+                print("   Error type: \(type(of: error))")
             }
             if attempt < 5 {
-                let delay = Double(attempt) * 1.5 // 1.5s, 3s, 4.5s, 6s
+                let delay = Double(attempt) * 1.5
                 try? await Task.sleep(for: .seconds(delay))
             }
         }
         loadError = "Unable to load plans. Please check your connection."
+        print("🚨 All 5 attempts failed. Products array is empty.")
     }
 
     // MARK: - Purchase
