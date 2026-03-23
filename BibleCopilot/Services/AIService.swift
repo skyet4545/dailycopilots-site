@@ -4,7 +4,13 @@ actor AIService {
     static let shared = AIService()
     private let apiURL = URL(string: "https://scripture-copilot-rust.vercel.app/api/chat")!
 
-    func streamResponse(verse: String, verseText: String, mode: StudyMode) -> AsyncThrowingStream<String, Error> {
+    /// Chat history entry for follow-up questions
+    struct ChatMessage {
+        let role: String // "user" or "assistant"
+        let content: String
+    }
+
+    func streamResponse(verse: String, verseText: String, mode: StudyMode, history: [ChatMessage] = []) -> AsyncThrowingStream<String, Error> {
         AsyncThrowingStream { continuation in
             Task {
                 do {
@@ -19,10 +25,14 @@ actor AIService {
                     request.httpMethod = "POST"
                     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-                    let body: [String: String] = [
+                    // Build history for follow-up context
+                    let historyArray = history.map { ["role": $0.role, "content": $0.content] }
+
+                    let body: [String: Any] = [
                         "message": message,
                         "passage": verse,
-                        "mode": mode.rawValue
+                        "mode": mode.rawValue,
+                        "history": historyArray
                     ]
                     request.httpBody = try JSONSerialization.data(withJSONObject: body)
 

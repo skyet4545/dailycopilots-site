@@ -17,6 +17,11 @@ final class StudyViewModel {
     var crossReferences: [String] = []
     var isBookmarked = false
 
+    // Conversation history for follow-up questions
+    var chatHistory: [AIService.ChatMessage] = []
+    var followUpText = ""
+    var showFollowUp = false
+
     @ObservationIgnored
     @AppStorage("translation") private var translation: String = "asv"
 
@@ -63,6 +68,7 @@ final class StudyViewModel {
         aiLoading = true
         aiError = nil
         crossReferences = []
+        showFollowUp = false
 
         HapticService.lightImpact()
 
@@ -72,17 +78,85 @@ final class StudyViewModel {
                 let stream = await AIService.shared.streamResponse(
                     verse: verse,
                     verseText: verseText,
-                    mode: mode
+                    mode: mode,
+                    history: chatHistory
                 )
                 for try await chunk in stream {
                     guard !Task.isCancelled else { return }
                     aiResponse += chunk
                 }
-                // Extract cross-references after streaming completes
+                // Add to conversation history
+                chatHistory.append(AIService.ChatMessage(
+                    role: "user",
+                    content: "Study '\(verse)' using the \(mode.rawValue) method."
+                ))
+                chatHistory.append(AIService.ChatMessage(
+                    role: "assistant",
+                    content: aiResponse
+                ))
+                // Keep last 6 messages to avoid token overflow
+                if chatHistory.count > 6 {
+                    chatHistory = Array(chatHistory.suffix(6))
+                }
+
                 crossReferences = CrossReferenceParser.extractReferences(from: aiResponse)
                 usageService.recordQuestion()
                 StreakService.shared.recordStudy()
                 ReviewService.shared.recordStudyAndPromptIfReady()
+                showFollowUp = true
+                HapticService.success()
+            } catch {
+                if !Task.isCancelled {
+                    aiError = error.localizedDescription
+                }
+            }
+            aiLoading = false
+        }
+    }
+
+    // MARK: - Follow-Up Question
+
+    @MainActor
+    func askFollowUp(isPro: Bool, onShowPaywall: @escaping () -> Void) async {
+        let usageService = UsageService.shared
+        guard usageService.canAsk(isPro: isPro) else {
+            onShowPaywall()
+            return
+        }
+
+        let question = followUpText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !question.isEmpty, let mode = selectedMode else { return }
+
+        followUpText = ""
+        aiResponse = ""
+        aiLoading = true
+        aiError = nil
+        crossReferences = []
+
+        HapticService.lightImpact()
+
+        // Add the follow-up to history
+        chatHistory.append(AIService.ChatMessage(role: "user", content: question))
+
+        streamTask?.cancel()
+        streamTask = Task {
+            do {
+                let stream = await AIService.shared.streamResponse(
+                    verse: verse,
+                    verseText: verseText,
+                    mode: mode,
+                    history: chatHistory
+                )
+                for try await chunk in stream {
+                    guard !Task.isCancelled else { return }
+                    aiResponse += chunk
+                }
+                chatHistory.append(AIService.ChatMessage(role: "assistant", content: aiResponse))
+                if chatHistory.count > 6 {
+                    chatHistory = Array(chatHistory.suffix(6))
+                }
+                crossReferences = CrossReferenceParser.extractReferences(from: aiResponse)
+                usageService.recordQuestion()
                 HapticService.success()
             } catch {
                 if !Task.isCancelled {

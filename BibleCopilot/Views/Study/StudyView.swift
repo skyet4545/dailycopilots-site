@@ -51,6 +51,47 @@ struct StudyView: View {
                         )
                     }
 
+                    // Follow-up question
+                    if viewModel.showFollowUp && !viewModel.aiLoading {
+                        VStack(spacing: 8) {
+                            HStack(spacing: 10) {
+                                TextField("Ask a follow-up question...", text: $viewModel.followUpText)
+                                    .foregroundColor(AppTheme.textPrimary)
+                                    .submitLabel(.send)
+                                    .onSubmit {
+                                        Task {
+                                            await viewModel.askFollowUp(
+                                                isPro: subscriptionService.isPro,
+                                                onShowPaywall: onShowPaywall
+                                            )
+                                        }
+                                    }
+
+                                if !viewModel.followUpText.isEmpty {
+                                    Button {
+                                        Task {
+                                            await viewModel.askFollowUp(
+                                                isPro: subscriptionService.isPro,
+                                                onShowPaywall: onShowPaywall
+                                            )
+                                        }
+                                    } label: {
+                                        Image(systemName: "arrow.up.circle.fill")
+                                            .font(.title3)
+                                            .foregroundColor(AppTheme.accent)
+                                    }
+                                }
+                            }
+                            .padding()
+                            .background(AppTheme.surfaceLight)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke(AppTheme.surfaceBorder, lineWidth: 1)
+                            )
+                        }
+                    }
+
                     // Cross References
                     if !viewModel.crossReferences.isEmpty {
                         CrossReferencesView(references: viewModel.crossReferences) { ref in

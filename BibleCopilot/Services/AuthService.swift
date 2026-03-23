@@ -13,14 +13,14 @@ final class AuthService: NSObject {
     var isLoading = false
     var error: String?
 
-    private let supabaseURL = "https://fseqgcebvxiqmzngxhre.supabase.co"
-    private let supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZzZXFnY2VidnhpcW16bmd4aHJlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyODQ2MDMsImV4cCI6MjA4OTg2MDYwM30.J_rkoAP-qFfaankfjSyWInk5pSQtrymfhvNhvzh7joA"
+    let supabaseURL = "https://fseqgcebvxiqmzngxhre.supabase.co"
+    let supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZzZXFnY2VidnhpcW16bmd4aHJlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyODQ2MDMsImV4cCI6MjA4OTg2MDYwM30.J_rkoAP-qFfaankfjSyWInk5pSQtrymfhvNhvzh7joA"
 
     @ObservationIgnored
-    private var currentNonce: String?
+    var currentNonce: String?
 
     @ObservationIgnored
-    private var accessToken: String? {
+    var accessToken: String? {
         get { UserDefaults.standard.string(forKey: "supabase_access_token") }
         set { UserDefaults.standard.set(newValue, forKey: "supabase_access_token") }
     }
@@ -80,6 +80,9 @@ final class AuthService: NSObject {
                     nonce: nonce
                 )
                 handleSession(session)
+
+                // Trigger data sync after sign-in
+                print("🔄 Triggering post-sign-in sync...")
 
                 // Save Apple name if provided (only comes on first sign-in)
                 if let fullName = appleCredential.fullName {
