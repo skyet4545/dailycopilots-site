@@ -53,6 +53,8 @@
 		A10001000000000000000028 /* ReviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000028 /* ReviewService.swift */; };
 		A10001000000000000000029 /* DailyVerseCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000029 /* DailyVerseCard.swift */; };
 		A1000100000000000000002A /* StreakBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000002A /* StreakBadge.swift */; };
+		A1000100000000000000002B /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000002B /* AuthService.swift */; };
+		A1000100000000000000002C /* SignInWithAppleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000002C /* SignInWithAppleButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -104,6 +106,8 @@
 		B10001000000000000000028 /* ReviewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewService.swift; sourceTree = "<group>"; };
 		B10001000000000000000029 /* DailyVerseCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyVerseCard.swift; sourceTree = "<group>"; };
 		B1000100000000000000002A /* StreakBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakBadge.swift; sourceTree = "<group>"; };
+		B1000100000000000000002B /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		B1000100000000000000002C /* SignInWithAppleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -128,6 +132,7 @@
 				B10001000000000000000026 /* StreakService.swift */,
 				B10001000000000000000027 /* NotificationService.swift */,
 				B10001000000000000000028 /* ReviewService.swift */,
+				B1000100000000000000002B /* AuthService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -236,6 +241,7 @@
 				B10001000000000000000017 /* StudyModeCard.swift */,
 				B10001000000000000000029 /* DailyVerseCard.swift */,
 				B1000100000000000000002A /* StreakBadge.swift */,
+				B1000100000000000000002C /* SignInWithAppleButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -397,6 +403,8 @@
 				A10001000000000000000028 /* ReviewService.swift in Sources */,
 				A10001000000000000000029 /* DailyVerseCard.swift in Sources */,
 				A1000100000000000000002A /* StreakBadge.swift in Sources */,
+				A1000100000000000000002B /* AuthService.swift in Sources */,
+				A1000100000000000000002C /* SignInWithAppleButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -464,7 +472,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-
+				CODE_SIGN_ENTITLEMENTS = BibleCopilot/BibleCopilot.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 101;
@@ -553,7 +561,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-
+				CODE_SIGN_ENTITLEMENTS = BibleCopilot/BibleCopilot.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 101;

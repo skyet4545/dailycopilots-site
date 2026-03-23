@@ -19,6 +19,13 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             List {
+                // Account
+                Section {
+                    AccountSection()
+                } header: {
+                    Text("Account")
+                }
+
                 // Subscription
                 Section {
                     if subscriptionService.isPro {
