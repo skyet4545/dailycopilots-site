@@ -56,6 +56,7 @@
 		A1000100000000000000002B /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000002B /* AuthService.swift */; };
 		A1000100000000000000002C /* SignInWithAppleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000002C /* SignInWithAppleButton.swift */; };
 		A1000100000000000000002D /* SyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000002D /* SyncService.swift */; };
+		A1000100000000000000002F /* TopicStudyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000002F /* TopicStudyView.swift */; };
 		A1000100000000000000002E /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000002E /* KeychainService.swift */; };
 /* End PBXBuildFile section */
 
@@ -111,6 +112,7 @@
 		B1000100000000000000002B /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		B1000100000000000000002C /* SignInWithAppleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleButton.swift; sourceTree = "<group>"; };
 		B1000100000000000000002D /* SyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncService.swift; sourceTree = "<group>"; };
+		B1000100000000000000002F /* TopicStudyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicStudyView.swift; sourceTree = "<group>"; };
 		B1000100000000000000002E /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -276,6 +278,7 @@
 				B1000100000000000000001C /* StudyModePillsView.swift */,
 				B1000100000000000000001D /* StudyView.swift */,
 				B1000100000000000000001E /* VerseCardView.swift */,
+				B1000100000000000000002F /* TopicStudyView.swift */,
 			);
 			path = Study;
 			sourceTree = "<group>";
@@ -412,6 +415,7 @@
 				A1000100000000000000002B /* AuthService.swift in Sources */,
 				A1000100000000000000002C /* SignInWithAppleButton.swift in Sources */,
 				A1000100000000000000002D /* SyncService.swift in Sources */,
+				A1000100000000000000002F /* TopicStudyView.swift in Sources */,
 				A1000100000000000000002E /* KeychainService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

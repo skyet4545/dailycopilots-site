@@ -19,6 +19,17 @@ final class HomeViewModel {
         "Isaiah 40:31"
     ]
 
+    static let topicQuestions = [
+        "What does the Bible say about anxiety?",
+        "What does the Bible say about forgiveness?",
+        "What does the Bible say about purpose?",
+        "What does the Bible say about suffering?",
+        "What does the Bible say about love?",
+        "What does the Bible say about faith?",
+        "What does the Bible say about anger?",
+        "What does the Bible say about money?"
+    ]
+
     func searchVerse() -> String? {
         let trimmed = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return nil }

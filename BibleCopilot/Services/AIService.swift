@@ -76,6 +76,56 @@ actor AIService {
         }
     }
 
+    // MARK: - Topic Discovery
+
+    func streamTopicResponse(topic: String) -> AsyncThrowingStream<String, Error> {
+        AsyncThrowingStream { continuation in
+            Task {
+                do {
+                    let message = """
+                    \(topic) \
+                    Answer with 2-3 short paragraphs. For each key point, cite the specific Bible verse \
+                    (e.g. "In Romans 8:28, Paul writes..."). Include verse numbers when quoting Scripture. \
+                    End with 5-8 related Scripture cross-references in this format: \
+                    Related: Romans 8:28, Philippians 4:6-7, Matthew 6:25-34
+                    """
+
+                    var request = URLRequest(url: apiURL)
+                    request.httpMethod = "POST"
+                    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+                    let body: [String: Any] = [
+                        "message": message,
+                        "passage": topic,
+                        "mode": "theology"
+                    ]
+                    request.httpBody = try JSONSerialization.data(withJSONObject: body)
+
+                    let (bytes, response) = try await URLSession.shared.bytes(for: request)
+
+                    guard let httpResponse = response as? HTTPURLResponse,
+                          httpResponse.statusCode == 200 else {
+                        continuation.finish(throwing: AIServiceError.serverError)
+                        return
+                    }
+
+                    for try await line in bytes.lines {
+                        guard !Task.isCancelled else { return }
+                        guard line.hasPrefix("data: ") else { continue }
+                        let data = String(line.dropFirst(6))
+                        if data.contains("[DONE]") { break }
+                        if let content = parseSSEContent(data) {
+                            continuation.yield(content)
+                        }
+                    }
+                    continuation.finish()
+                } catch {
+                    continuation.finish(throwing: error)
+                }
+            }
+        }
+    }
+
     private func parseSSEContent(_ data: String) -> String? {
         guard let jsonData = data.data(using: .utf8) else { return nil }
 

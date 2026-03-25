@@ -16,6 +16,7 @@ actor BibleService {
         // Try primary source (bible-api.com) first
         if let text = try? await fetchFromBibleAPI(reference, translation: translation) {
             cache[cacheKey] = text
+            evictCacheIfNeeded()
             return text
         }
 

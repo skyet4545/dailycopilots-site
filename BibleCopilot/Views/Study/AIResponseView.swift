@@ -52,6 +52,14 @@ struct AIResponseView: View {
                     LoadingDotsView()
                         .padding(.top, 4)
                 }
+
+                // AI disclaimer
+                if !response.isEmpty && !isLoading {
+                    Text("AI-generated study aid. Always verify with Scripture and pastoral guidance.")
+                        .font(.caption2)
+                        .foregroundColor(AppTheme.textMuted.opacity(0.7))
+                        .padding(.top, 4)
+                }
             }
         }
         .padding()

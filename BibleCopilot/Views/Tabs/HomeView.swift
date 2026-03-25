@@ -5,6 +5,7 @@ struct HomeView: View {
     @State private var streakService = StreakService.shared
     @State private var showShareSheet = false
     @State private var shareText = ""
+    @State private var selectedTopic: TopicRequest?
     var onStudy: (String, StudyMode?) -> Void
     var onShowPaywall: () -> Void
 
@@ -98,6 +99,48 @@ struct HomeView: View {
                         .padding(.horizontal)
                     }
 
+                    // Topic discovery
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("EXPLORE BY TOPIC")
+                            .font(.caption.bold())
+                            .foregroundColor(AppTheme.textMuted)
+                            .tracking(1.2)
+                            .padding(.horizontal)
+
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 10) {
+                                ForEach(HomeViewModel.topicQuestions, id: \.self) { topic in
+                                    let label = topic
+                                        .replacingOccurrences(of: "What does the Bible say about ", with: "")
+                                        .replacingOccurrences(of: "?", with: "")
+                                        .capitalized
+
+                                    Button {
+                                        HapticService.lightImpact()
+                                        selectedTopic = TopicRequest(topic: topic)
+                                    } label: {
+                                        HStack(spacing: 4) {
+                                            Image(systemName: "sparkles")
+                                                .font(.caption2)
+                                            Text(label)
+                                                .font(.caption.bold())
+                                        }
+                                        .padding(.horizontal, 14)
+                                        .padding(.vertical, 8)
+                                        .background(AppTheme.accent.opacity(0.1))
+                                        .foregroundColor(AppTheme.accent)
+                                        .clipShape(Capsule())
+                                        .overlay(
+                                            Capsule()
+                                                .stroke(AppTheme.accent.opacity(0.3), lineWidth: 1)
+                                        )
+                                    }
+                                }
+                            }
+                            .padding(.horizontal)
+                        }
+                    }
+
                     // Study modes section
                     VStack(alignment: .leading, spacing: 16) {
                         Text("HOW DO YOU WANT TO STUDY?")
@@ -132,6 +175,11 @@ struct HomeView: View {
             .sheet(isPresented: $showShareSheet) {
                 ShareSheet(text: shareText)
             }
+            .sheet(item: $selectedTopic) { request in
+                TopicStudyView(topic: request.topic) { verse in
+                    onStudy(verse, nil)
+                }
+            }
         }
         .task {
             await viewModel.loadDailyVerse()
@@ -143,6 +191,13 @@ struct HomeView: View {
             onStudy(verse, nil)
         }
     }
+}
+
+// MARK: - Topic Request
+
+struct TopicRequest: Identifiable {
+    let id = UUID()
+    let topic: String
 }
 
 // MARK: - Share Sheet
