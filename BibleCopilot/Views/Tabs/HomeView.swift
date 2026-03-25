@@ -173,7 +173,7 @@ struct HomeView: View {
             .background(AppTheme.background)
             .scrollDismissesKeyboard(.immediately)
             .sheet(isPresented: $showShareSheet) {
-                ShareSheet(text: shareText)
+                ActivityView(activityItems: [shareText])
             }
             .sheet(item: $selectedTopic) { request in
                 TopicStudyView(topic: request.topic) { verse in
@@ -200,14 +200,23 @@ struct TopicRequest: Identifiable {
     let topic: String
 }
 
-// MARK: - Share Sheet
+// MARK: - Activity View (reliable share sheet for iMessage/social)
 
-struct ShareSheet: UIViewControllerRepresentable {
-    let text: String
+struct ActivityView: UIViewControllerRepresentable {
+    let activityItems: [Any]
 
     func makeUIViewController(context: Context) -> UIActivityViewController {
-        UIActivityViewController(activityItems: [text], applicationActivities: nil)
+        let controller = UIActivityViewController(
+            activityItems: activityItems,
+            applicationActivities: nil
+        )
+        // Exclude irrelevant actions
+        controller.excludedActivityTypes = [.assignToContact, .addToReadingList]
+        return controller
     }
 
     func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }
+
+// Legacy alias
+typealias ShareSheet = ActivityView

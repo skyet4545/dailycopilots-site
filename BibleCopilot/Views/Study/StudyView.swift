@@ -137,7 +137,8 @@ struct StudyView: View {
         .task { await viewModel.fetchVerse() }
         .onDisappear { viewModel.cancelStream() }
         .sheet(isPresented: $showShareSheet) {
-            ShareSheet(text: "\(viewModel.verse)\n\n\(viewModel.verseText)\n\n— Studied with Bible Copilot")
+            let text = "\(viewModel.verse)\n\n\(viewModel.verseText)\n\n— Studied with Bible Copilot"
+            ActivityView(activityItems: [text])
         }
     }
 }
