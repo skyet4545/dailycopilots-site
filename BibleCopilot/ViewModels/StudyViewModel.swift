@@ -36,14 +36,14 @@ final class StudyViewModel {
     // MARK: - Verse Fetching
 
     @MainActor
-    func fetchVerse() async {
+    func fetchVerse(isPro: Bool = false, onShowPaywall: @escaping () -> Void = {}) async {
         verseLoading = true
         verseError = nil
         do {
             verseText = try await BibleService.shared.fetchVerse(verse, translation: translation)
             // Auto-select mode if one was passed in
             if let mode = selectedMode {
-                await selectMode(mode, isPro: false, onShowPaywall: {})
+                await selectMode(mode, isPro: isPro, onShowPaywall: onShowPaywall)
             }
         } catch {
             verseError = error.localizedDescription
@@ -171,6 +171,17 @@ final class StudyViewModel {
 
     func savePassage(context: ModelContext) {
         guard !verseText.isEmpty else { return }
+
+        // Deduplicate — don't save same verse + translation twice
+        let ref = verse
+        let trans = translation
+        let descriptor = FetchDescriptor<SavedPassage>(predicate: #Predicate {
+            $0.reference == ref && $0.translation == trans
+        })
+        if let existing = try? context.fetch(descriptor), !existing.isEmpty {
+            isBookmarked = true
+            return
+        }
 
         let passage = SavedPassage(
             reference: verse,

@@ -5,6 +5,7 @@ actor BibleService {
     private let primaryURL = "https://bible-api.com"
     private let fallbackURL = "https://scripture-copilot-rust.vercel.app/api/chat"
     private var cache: [String: String] = [:]
+    private let maxCacheSize = 200
 
     func fetchVerse(_ reference: String, translation: String = "asv") async throws -> String {
         let cacheKey = "\(reference)_\(translation)"
@@ -21,10 +22,18 @@ actor BibleService {
         // Fallback: ask the AI backend to provide the verse text
         if let text = try? await fetchFromAIFallback(reference, translation: translation) {
             cache[cacheKey] = text
+            evictCacheIfNeeded()
             return text
         }
 
         throw BibleServiceError.verseNotFound
+    }
+
+    private func evictCacheIfNeeded() {
+        if cache.count > maxCacheSize {
+            let keysToRemove = Array(cache.keys.prefix(cache.count / 2))
+            for key in keysToRemove { cache.removeValue(forKey: key) }
+        }
     }
 
     // MARK: - Primary: bible-api.com (free, no key)

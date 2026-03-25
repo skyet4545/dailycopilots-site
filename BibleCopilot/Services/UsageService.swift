@@ -12,9 +12,12 @@ final class UsageService {
     @ObservationIgnored
     @AppStorage("usageCount") private var usageCount: Int = 0
 
-    var usedToday: Int {
+    init() {
         resetIfNewDay()
-        return usageCount
+    }
+
+    var usedToday: Int {
+        usageCount
     }
 
     func canAsk(isPro: Bool) -> Bool {

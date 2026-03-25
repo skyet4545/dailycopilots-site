@@ -21,14 +21,20 @@ final class AuthService: NSObject {
 
     @ObservationIgnored
     var accessToken: String? {
-        get { UserDefaults.standard.string(forKey: "supabase_access_token") }
-        set { UserDefaults.standard.set(newValue, forKey: "supabase_access_token") }
+        get { KeychainService.load(key: "supabase_access_token") }
+        set {
+            if let newValue { KeychainService.save(key: "supabase_access_token", value: newValue) }
+            else { KeychainService.delete(key: "supabase_access_token") }
+        }
     }
 
     @ObservationIgnored
     private var refreshToken: String? {
-        get { UserDefaults.standard.string(forKey: "supabase_refresh_token") }
-        set { UserDefaults.standard.set(newValue, forKey: "supabase_refresh_token") }
+        get { KeychainService.load(key: "supabase_refresh_token") }
+        set {
+            if let newValue { KeychainService.save(key: "supabase_refresh_token", value: newValue) }
+            else { KeychainService.delete(key: "supabase_refresh_token") }
+        }
     }
 
     override init() {
@@ -248,7 +254,9 @@ final class AuthService: NSObject {
         var randomBytes = [UInt8](repeating: 0, count: length)
         let errorCode = SecRandomCopyBytes(kSecRandomDefault, randomBytes.count, &randomBytes)
         if errorCode != errSecSuccess {
-            fatalError("Unable to generate nonce: \(errorCode)")
+            // Fallback to UUID-based randomness instead of crashing
+            let fallback = (0..<length).map { _ in UInt8.random(in: 0...255) }
+            randomBytes = fallback
         }
         let charset: [Character] = Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
         return String(randomBytes.map { charset[Int($0) % charset.count] })

@@ -31,7 +31,7 @@ final class StreakService {
             return
         }
 
-        let yesterday = dateString(for: Calendar.current.date(byAdding: .day, value: -1, to: .now)!)
+        let yesterday = dateString(for: Calendar.current.date(byAdding: .day, value: -1, to: .now) ?? .now)
 
         if lastDate == yesterday {
             // Consecutive day — extend streak
@@ -69,7 +69,7 @@ final class StreakService {
     private func checkMidnightReset() {
         let lastDate = defaults.string(forKey: "streak_lastDate") ?? ""
         let today = dateString(for: .now)
-        let yesterday = dateString(for: Calendar.current.date(byAdding: .day, value: -1, to: .now)!)
+        let yesterday = dateString(for: Calendar.current.date(byAdding: .day, value: -1, to: .now) ?? .now)
 
         if lastDate != today && lastDate != yesterday && !lastDate.isEmpty {
             // More than 1 day gap — streak is broken
@@ -81,6 +81,7 @@ final class StreakService {
     private func dateString(for date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
         return formatter.string(from: date)
     }
 

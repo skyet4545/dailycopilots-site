@@ -233,7 +233,7 @@ actor SyncService {
         let authService = AuthService.shared
         guard let token = authService.accessToken else { return nil }
 
-        guard let url = URL(string: "\(authService.supabaseURL)/rest/v1/\(table)?\(filter)&order=created_at.desc") else { return nil }
+        guard let url = URL(string: "\(authService.supabaseURL)/rest/v1/\(table)?\(filter)") else { return nil }
 
         var request = URLRequest(url: url)
         request.httpMethod = "GET"

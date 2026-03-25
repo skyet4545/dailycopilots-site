@@ -56,6 +56,7 @@
 		A1000100000000000000002B /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000002B /* AuthService.swift */; };
 		A1000100000000000000002C /* SignInWithAppleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000002C /* SignInWithAppleButton.swift */; };
 		A1000100000000000000002D /* SyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000002D /* SyncService.swift */; };
+		A1000100000000000000002E /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000002E /* KeychainService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -110,6 +111,7 @@
 		B1000100000000000000002B /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		B1000100000000000000002C /* SignInWithAppleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleButton.swift; sourceTree = "<group>"; };
 		B1000100000000000000002D /* SyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncService.swift; sourceTree = "<group>"; };
+		B1000100000000000000002E /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -136,6 +138,7 @@
 				B10001000000000000000028 /* ReviewService.swift */,
 				B1000100000000000000002B /* AuthService.swift */,
 				B1000100000000000000002D /* SyncService.swift */,
+				B1000100000000000000002E /* KeychainService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -409,6 +412,7 @@
 				A1000100000000000000002B /* AuthService.swift in Sources */,
 				A1000100000000000000002C /* SignInWithAppleButton.swift in Sources */,
 				A1000100000000000000002D /* SyncService.swift in Sources */,
+				A1000100000000000000002E /* KeychainService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

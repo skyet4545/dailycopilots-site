@@ -3,7 +3,7 @@ import SwiftUI
 struct ContentView: View {
     @AppStorage("onboardingComplete") private var onboardingComplete = false
     @State private var selectedTab = 0
-    @State private var studyVerse: String?
+    @State private var studyRequest: StudyRequest?
     @State private var studyMode: StudyMode?
     @State private var showPaywall = false
 
@@ -24,7 +24,7 @@ struct ContentView: View {
             Tab("Home", systemImage: "house.fill", value: 0) {
                 HomeView(
                     onStudy: { verse, mode in
-                        studyVerse = verse
+                        studyRequest = StudyRequest(verse: verse)
                         studyMode = mode
                     },
                     onShowPaywall: { showPaywall = true }
@@ -34,7 +34,7 @@ struct ContentView: View {
             Tab("Plans", systemImage: "calendar", value: 1) {
                 PlansListView(
                     onStudyVerse: { verse in
-                        studyVerse = verse
+                        studyRequest = StudyRequest(verse: verse)
                         studyMode = nil
                     },
                     onShowPaywall: { showPaywall = true }
@@ -47,7 +47,7 @@ struct ContentView: View {
 
             Tab("Saved", systemImage: "bookmark.fill", value: 3) {
                 SavedView(onStudyVerse: { verse in
-                    studyVerse = verse
+                    studyRequest = StudyRequest(verse: verse)
                     studyMode = nil
                 })
             }
@@ -57,9 +57,9 @@ struct ContentView: View {
             }
         }
         .tint(AppTheme.accent)
-        .fullScreenCover(item: $studyVerse) { verse in
+        .fullScreenCover(item: $studyRequest) { request in
             StudyView(
-                verse: verse,
+                verse: request.verse,
                 initialMode: studyMode,
                 onShowPaywall: { showPaywall = true }
             )
@@ -94,7 +94,8 @@ struct ContentView: View {
     }
 }
 
-// Make String identifiable for fullScreenCover
-extension String: @retroactive Identifiable {
-    public var id: String { self }
+// Wrapper for fullScreenCover to avoid String: Identifiable and allow re-study of same verse
+struct StudyRequest: Identifiable {
+    let id = UUID()
+    let verse: String
 }
