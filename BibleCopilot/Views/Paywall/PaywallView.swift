@@ -36,7 +36,7 @@ struct PaywallView: View {
                     VStack(alignment: .leading, spacing: 16) {
                         PaywallFeatureRow(icon: "infinity", text: "Unlimited questions & answers")
                         PaywallFeatureRow(icon: "book.fill", text: "Study Journal — save insights")
-                        PaywallFeatureRow(icon: "globe", text: "All Bible translations")
+                        PaywallFeatureRow(icon: "sparkles", text: "AI topical Bible discovery")
                         PaywallFeatureRow(icon: "calendar", text: "Guided Reading Plans")
                     }
                     .padding(.horizontal, 32)
