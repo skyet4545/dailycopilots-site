@@ -6,6 +6,7 @@ struct OnboardingView: View {
     @State private var currentSlide = 0
     @State private var isLoading = false
     @State private var errorMessage: String?
+    @State private var selectedPlanId: String = "" // empty = annual (default)
     let onComplete: () -> Void
 
     private let slides = OnboardingSlide.slides
@@ -172,24 +173,34 @@ struct OnboardingView: View {
                 // Plan cards
                 if let annual = subscriptionService.annualProduct {
                     VStack(spacing: 10) {
-                        // Annual — highlighted
-                        onboardingPlanCard(
-                            title: "Annual",
-                            price: annual.displayPrice + "/year",
-                            subtitle: "7-day free trial included",
-                            badge: "BEST VALUE",
-                            isSelected: true
-                        )
+                        // Annual — default selected
+                        Button {
+                            selectedPlanId = annual.id
+                        } label: {
+                            onboardingPlanCard(
+                                title: "Annual",
+                                price: annual.displayPrice + "/year",
+                                subtitle: "7-day free trial included",
+                                badge: "BEST VALUE",
+                                isSelected: selectedPlanId == annual.id || selectedPlanId.isEmpty
+                            )
+                        }
+                        .buttonStyle(.plain)
 
                         // Monthly
                         if let monthly = subscriptionService.monthlyProduct {
-                            onboardingPlanCard(
-                                title: "Monthly",
-                                price: monthly.displayPrice + "/month",
-                                subtitle: "Billed monthly",
-                                badge: nil,
-                                isSelected: false
-                            )
+                            Button {
+                                selectedPlanId = monthly.id
+                            } label: {
+                                onboardingPlanCard(
+                                    title: "Monthly",
+                                    price: monthly.displayPrice + "/month",
+                                    subtitle: "Billed monthly",
+                                    badge: nil,
+                                    isSelected: selectedPlanId == monthly.id
+                                )
+                            }
+                            .buttonStyle(.plain)
                         }
                     }
                     .padding(.horizontal, 24)
@@ -197,13 +208,15 @@ struct OnboardingView: View {
 
                 // CTA
                 Button {
-                    startTrial()
+                    purchaseSelectedPlan()
                 } label: {
                     HStack {
                         if isLoading {
                             ProgressView().tint(.white)
                         } else {
-                            Text("Start Free Trial")
+                            Text(selectedPlanId == subscriptionService.monthlyProductID
+                                 ? "Subscribe Monthly"
+                                 : "Start Free Trial")
                                 .font(.headline)
                         }
                     }
@@ -353,13 +366,20 @@ struct OnboardingView: View {
 
     // MARK: - Purchase
 
-    private func startTrial() {
-        guard let annual = subscriptionService.annualProduct else { return }
+    private func purchaseSelectedPlan() {
+        let product: Product?
+        if selectedPlanId == subscriptionService.monthlyProductID {
+            product = subscriptionService.monthlyProduct
+        } else {
+            product = subscriptionService.annualProduct
+        }
+        guard let product else { return }
+
         Task {
             isLoading = true
             errorMessage = nil
             do {
-                try await subscriptionService.purchase(annual)
+                try await subscriptionService.purchase(product)
                 if subscriptionService.isPro {
                     HapticService.success()
                     onComplete()
