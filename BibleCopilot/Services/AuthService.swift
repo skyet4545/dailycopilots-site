@@ -112,6 +112,87 @@ final class AuthService: NSObject {
         }
     }
 
+    // MARK: - Email + Password Auth
+
+    @MainActor
+    func signUpWithEmail(_ email: String, password: String) async {
+        isLoading = true
+        error = nil
+        defer { isLoading = false }
+
+        let url = URL(string: "\(supabaseURL)/auth/v1/signup")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(supabaseKey, forHTTPHeaderField: "apikey")
+
+        let body: [String: String] = ["email": email, "password": password]
+        request.httpBody = try? JSONSerialization.data(withJSONObject: body)
+
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard let httpResponse = response as? HTTPURLResponse else {
+                self.error = "No response from server"
+                return
+            }
+
+            let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+
+            if httpResponse.statusCode == 200, let json {
+                if json["access_token"] != nil {
+                    // Auto-confirmed — signed in immediately
+                    handleSession(json)
+                } else {
+                    // Email confirmation required
+                    self.error = "Check your email to confirm your account, then sign in."
+                }
+            } else {
+                let msg = (json?["msg"] as? String) ?? (json?["error_description"] as? String) ?? "Sign up failed"
+                self.error = msg
+            }
+        } catch {
+            self.error = "Sign up failed: \(error.localizedDescription)"
+        }
+    }
+
+    @MainActor
+    func signInWithEmail(_ email: String, password: String) async {
+        isLoading = true
+        error = nil
+        defer { isLoading = false }
+
+        let url = URL(string: "\(supabaseURL)/auth/v1/token?grant_type=password")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(supabaseKey, forHTTPHeaderField: "apikey")
+
+        let body: [String: String] = ["email": email, "password": password]
+        request.httpBody = try? JSONSerialization.data(withJSONObject: body)
+
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard let httpResponse = response as? HTTPURLResponse else {
+                self.error = "No response from server"
+                return
+            }
+
+            guard let json = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+                self.error = "Invalid response"
+                return
+            }
+
+            if httpResponse.statusCode == 200 {
+                handleSession(json)
+            } else {
+                let msg = (json["msg"] as? String) ?? (json["error_description"] as? String) ?? "Invalid email or password"
+                self.error = msg
+            }
+        } catch {
+            self.error = "Sign in failed: \(error.localizedDescription)"
+        }
+    }
+
     // MARK: - Supabase Auth API
 
     private func signInWithIdToken(provider: String, idToken: String, nonce: String) async throws -> [String: Any] {

@@ -150,6 +150,22 @@ struct PaywallView: View {
                         .font(.caption)
                         .foregroundColor(AppTheme.textMuted)
 
+                    // Sign in prompt (if not signed in)
+                    if !AuthService.shared.isSignedIn {
+                        VStack(spacing: 8) {
+                            Text("Sign in to sync your subscription across devices")
+                                .font(.caption)
+                                .foregroundColor(AppTheme.textMuted)
+                                .multilineTextAlignment(.center)
+
+                            HStack(spacing: 12) {
+                                SignInWithAppleCoordinator()
+                                    .frame(height: 36)
+                            }
+                        }
+                        .padding(.top, 4)
+                    }
+
                     // Restore
                     Button("Restore Purchases") {
                         Task {
