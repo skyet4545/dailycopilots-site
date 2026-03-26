@@ -37,7 +37,7 @@ struct PaywallView: View {
                         PaywallFeatureRow(icon: "infinity", text: "Unlimited questions & answers")
                         PaywallFeatureRow(icon: "book.fill", text: "Study Journal — save insights")
                         PaywallFeatureRow(icon: "sparkles", text: "AI topical Bible discovery")
-                        PaywallFeatureRow(icon: "calendar", text: "Guided Reading Plans")
+                        PaywallFeatureRow(icon: "calendar", text: "All 5 Reading Plans")
                     }
                     .padding(.horizontal, 32)
 

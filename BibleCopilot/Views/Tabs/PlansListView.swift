@@ -15,26 +15,36 @@ struct PlansListView: View {
             ZStack {
                 AppTheme.background.ignoresSafeArea()
 
-                if !subscriptionService.isPro {
-                    ProLockOverlay(
-                        title: "Reading Plans",
-                        subtitle: "Follow guided reading plans through Scripture",
-                        onUpgrade: onShowPaywall
-                    )
-                } else {
-                    ScrollView {
-                        LazyVStack(spacing: 14) {
-                            ForEach(ReadingPlan.allPlans) { plan in
+                ScrollView {
+                    LazyVStack(spacing: 14) {
+                        ForEach(ReadingPlan.allPlans) { plan in
+                            let canAccess = subscriptionService.isPro || plan.isFree
+
+                            if canAccess {
                                 PlanRowView(
                                     plan: plan,
-                                    progress: progressFor(plan)
+                                    progress: progressFor(plan),
+                                    badge: plan.isFree && !subscriptionService.isPro ? "FREE" : nil
                                 ) {
                                     selectedPlan = plan
                                 }
+                            } else {
+                                PlanRowView(
+                                    plan: plan,
+                                    progress: progressFor(plan),
+                                    badge: "PRO"
+                                ) {
+                                    onShowPaywall()
+                                }
+                                .opacity(0.6)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: AppTheme.cornerRadiusMedium)
+                                        .fill(Color.black.opacity(0.15))
+                                )
                             }
                         }
-                        .padding()
                     }
+                    .padding()
                 }
             }
             .navigationTitle("Reading Plans")
@@ -66,6 +76,7 @@ extension ReadingPlan: Hashable {
 struct PlanRowView: View {
     let plan: ReadingPlan
     let progress: ReadingPlanProgress?
+    var badge: String? = nil
     let action: () -> Void
 
     private var completedCount: Int { progress?.completedCount ?? 0 }
@@ -85,9 +96,21 @@ struct PlanRowView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 10))
 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(plan.title)
-                        .font(.headline)
-                        .foregroundColor(AppTheme.textPrimary)
+                    HStack(spacing: 6) {
+                        Text(plan.title)
+                            .font(.headline)
+                            .foregroundColor(AppTheme.textPrimary)
+
+                        if let badge {
+                            Text(badge)
+                                .font(.caption2.bold())
+                                .padding(.horizontal, 6)
+                                .padding(.vertical, 2)
+                                .background(badge == "FREE" ? AppTheme.success : AppTheme.gold)
+                                .foregroundColor(.white)
+                                .clipShape(Capsule())
+                        }
+                    }
 
                     Text(plan.description)
                         .font(.caption)

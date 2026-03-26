@@ -129,6 +129,25 @@ struct SettingsView: View {
                         .pickerStyle(.segmented)
                         .frame(width: 180)
                     }
+
+                    // Appearance
+                    HStack {
+                        Image(systemName: "moon.circle.fill")
+                            .foregroundColor(AppTheme.accent)
+                        Text("Appearance")
+                            .foregroundColor(AppTheme.textPrimary)
+                        Spacer()
+                        Picker("", selection: Binding(
+                            get: { ThemeManager.shared.themeMode },
+                            set: { ThemeManager.shared.themeMode = $0 }
+                        )) {
+                            ForEach(AppThemeMode.allCases, id: \.rawValue) { mode in
+                                Text(mode.label).tag(mode.rawValue)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                        .frame(width: 180)
+                    }
                 } header: {
                     Text("Preferences")
                 }

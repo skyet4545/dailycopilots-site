@@ -7,6 +7,7 @@ struct ReadingPlan: Identifiable {
     let icon: String
     let dayCount: Int
     let verses: [String]
+    let isFree: Bool
 
     static let allPlans: [ReadingPlan] = [
         ReadingPlan(
@@ -22,7 +23,8 @@ struct ReadingPlan: Identifiable {
                 "John 7:25-52", "John 8:1-30", "John 8:31-59", "John 9",
                 "John 10:1-21", "John 10:22-42", "John 11:1-44", "John 11:45-57",
                 "John 12"
-            ]
+            ],
+            isFree: true
         ),
         ReadingPlan(
             id: "30-days-of-psalms",
@@ -37,7 +39,8 @@ struct ReadingPlan: Identifiable {
                 "Psalm 63", "Psalm 84", "Psalm 86", "Psalm 90", "Psalm 91",
                 "Psalm 100", "Psalm 103", "Psalm 107:1-16", "Psalm 116", "Psalm 119:1-16",
                 "Psalm 121", "Psalm 136:1-9", "Psalm 139", "Psalm 145", "Psalm 150"
-            ]
+            ],
+            isFree: false
         ),
         ReadingPlan(
             id: "romans-deep-dive",
@@ -50,7 +53,8 @@ struct ReadingPlan: Identifiable {
                 "Romans 3:9-31", "Romans 4", "Romans 5:1-11", "Romans 5:12-21",
                 "Romans 6:1-14", "Romans 6:15-7:6", "Romans 7:7-25", "Romans 8:1-17",
                 "Romans 8:18-39", "Romans 9:1-29", "Romans 10", "Romans 11:1-36"
-            ]
+            ],
+            isFree: false
         ),
         ReadingPlan(
             id: "proverbs-31",
@@ -58,7 +62,8 @@ struct ReadingPlan: Identifiable {
             description: "One chapter of Proverbs each day for a full month",
             icon: "lightbulb.fill",
             dayCount: 31,
-            verses: (1...31).map { "Proverbs \($0)" }
+            verses: (1...31).map { "Proverbs \($0)" },
+            isFree: false
         ),
         ReadingPlan(
             id: "sermon-on-the-mount",
@@ -70,7 +75,8 @@ struct ReadingPlan: Identifiable {
                 "Matthew 5:1-16", "Matthew 5:17-32", "Matthew 5:33-48",
                 "Matthew 6:1-18", "Matthew 6:19-34", "Matthew 7:1-14",
                 "Matthew 7:15-29"
-            ]
+            ],
+            isFree: false
         )
     ]
 }

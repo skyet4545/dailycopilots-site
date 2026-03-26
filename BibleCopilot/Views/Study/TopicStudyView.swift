@@ -7,6 +7,7 @@ struct TopicStudyView: View {
     @State private var isLoading = true
     @State private var error: String?
     @State private var crossReferences: [String] = []
+    @State private var showCopied = false
     var onStudyVerse: (String) -> Void
 
     var body: some View {
@@ -46,6 +47,28 @@ struct TopicStudyView: View {
                             .foregroundColor(AppTheme.textPrimary)
                             .lineSpacing(6)
                             .padding(.horizontal)
+
+                        // Copy button
+                        HStack {
+                            Button {
+                                UIPasteboard.general.string = response
+                                showCopied = true
+                                HapticService.success()
+                                Task {
+                                    try? await Task.sleep(for: .seconds(1.5))
+                                    showCopied = false
+                                }
+                            } label: {
+                                HStack(spacing: 4) {
+                                    Image(systemName: showCopied ? "checkmark" : "doc.on.doc")
+                                    Text(showCopied ? "Copied!" : "Copy")
+                                }
+                                .font(.caption.weight(.medium))
+                                .foregroundColor(showCopied ? AppTheme.success : AppTheme.textMuted)
+                            }
+                            Spacer()
+                        }
+                        .padding(.horizontal)
 
                         // AI disclaimer
                         Text("AI-generated study aid. Verify with trusted commentaries and pastoral guidance.")

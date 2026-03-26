@@ -5,6 +5,7 @@ struct AIResponseView: View {
     let isLoading: Bool
     let error: String?
     let onSaveToJournal: () -> Void
+    @State private var showCopied = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -18,6 +19,25 @@ struct AIResponseView: View {
                 Spacer()
 
                 if !response.isEmpty && !isLoading {
+                    // Copy button
+                    Button {
+                        UIPasteboard.general.string = response
+                        showCopied = true
+                        HapticService.success()
+                        Task {
+                            try? await Task.sleep(for: .seconds(1.5))
+                            showCopied = false
+                        }
+                    } label: {
+                        HStack(spacing: 4) {
+                            Image(systemName: showCopied ? "checkmark" : "doc.on.doc")
+                            Text(showCopied ? "Copied!" : "Copy")
+                        }
+                        .font(.caption.weight(.medium))
+                        .foregroundColor(showCopied ? AppTheme.success : AppTheme.textMuted)
+                    }
+
+                    // Save button
                     Button(action: onSaveToJournal) {
                         HStack(spacing: 4) {
                             Image(systemName: "square.and.arrow.down")
