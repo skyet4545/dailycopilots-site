@@ -6,7 +6,7 @@ class UsageTracker: ObservableObject {
     static let shared = UsageTracker()
 
     private let storageKey = "dailyUsageData"
-    let freeQuestionLimit = 10
+    let freeQuestionLimit = 15
 
     @Published private(set) var questionCount: Int = 0
     @Published private(set) var lastQuestionDate: String = ""

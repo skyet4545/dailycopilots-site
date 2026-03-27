@@ -38,6 +38,11 @@
 		E1FE155D5A45D00493FB87CD /* StudyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6DBAD12716135A75497F3 /* StudyViewModel.swift */; };
 		E7D6A5511AC006A89603D6ED /* JournalEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9480CE00AC3834EE3E9396E /* JournalEntry.swift */; };
 		FB0E194BE12699D006281679 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C1C895D9C350905FF0D4ED /* AppTheme.swift */; };
+		AA1111111111111111111111 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2222222222222222222222 /* HapticManager.swift */; };
+		AA3333333333333333333333 /* CrossReferenceParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4444444444444444444444 /* CrossReferenceParser.swift */; };
+		AA5555555555555555555555 /* PlansListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6666666666666666666666 /* PlansListView.swift */; };
+		AA7777777777777777777777 /* PlanDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8888888888888888888888 /* PlanDetailView.swift */; };
+		AA9999999999999999999999 /* PlansViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAAAAAAAAAAAAAAAAAAAA00 /* PlansViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +79,11 @@
 		EBDD460F88C9D17C0E94310D /* BibleVerse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleVerse.swift; sourceTree = "<group>"; };
 		F284F430E08A22F837B1A7AC /* ReadingPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingPlan.swift; sourceTree = "<group>"; };
 		FB708462C249DB0E93EAEF64 /* JournalListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalListView.swift; sourceTree = "<group>"; };
+		AA2222222222222222222222 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
+		AA4444444444444444444444 /* CrossReferenceParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossReferenceParser.swift; sourceTree = "<group>"; };
+		AA6666666666666666666666 /* PlansListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlansListView.swift; sourceTree = "<group>"; };
+		AA8888888888888888888888 /* PlanDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanDetailView.swift; sourceTree = "<group>"; };
+		AAAAAAAAAAAAAAAAAAAAAA00 /* PlansViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlansViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -141,6 +151,7 @@
 				86E92F6BDB3E6880953C3907 /* BookmarksViewModel.swift */,
 				7CF3DDF3DF056CE8BB753003 /* HomeViewModel.swift */,
 				C7096CDE2EEE2C7A3061C2C3 /* JournalViewModel.swift */,
+				AAAAAAAAAAAAAAAAAAAAAA00 /* PlansViewModel.swift */,
 				52AD4544D962B2B15514DF1B /* SettingsViewModel.swift */,
 				BFD6DBAD12716135A75497F3 /* StudyViewModel.swift */,
 			);
@@ -185,8 +196,18 @@
 			children = (
 				812C0F8C9B454C6185D2DC86 /* Components */,
 				E95A0295D483B033A973FE78 /* Theme */,
+				AABB000000000000000000CC /* Utilities */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		AABB000000000000000000CC /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				AA2222222222222222222222 /* HapticManager.swift */,
+				AA4444444444444444444444 /* CrossReferenceParser.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		AC3506813D6B2C3214F20024 /* Views */ = {
@@ -198,10 +219,20 @@
 				54E408511DDB23754021164E /* JournalTab */,
 				271CAA8FF36FB328D8076A7C /* Onboarding */,
 				251D19F7E4451C98556DA922 /* Paywall */,
+				AABB111111111111111111DD /* PlansTab */,
 				B2945C3A7AF1B7D47DBA012D /* SavedTab */,
 				8D4755179A15ACF95165A5DB /* SettingsTab */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		AABB111111111111111111DD /* PlansTab */ = {
+			isa = PBXGroup;
+			children = (
+				AA6666666666666666666666 /* PlansListView.swift */,
+				AA8888888888888888888888 /* PlanDetailView.swift */,
+			);
+			path = PlansTab;
 			sourceTree = "<group>";
 		};
 		B2945C3A7AF1B7D47DBA012D /* SavedTab */ = {
@@ -369,6 +400,11 @@
 				5D1B36DA827C8687A11ADC1F /* SubscriptionManager.swift in Sources */,
 				0A1FFD14DACA0A154DCA4803 /* UsageCounterView.swift in Sources */,
 				4E056B80F4BBBB6AAF84E8A0 /* UsageTracker.swift in Sources */,
+				AA1111111111111111111111 /* HapticManager.swift in Sources */,
+				AA3333333333333333333333 /* CrossReferenceParser.swift in Sources */,
+				AA5555555555555555555555 /* PlansListView.swift in Sources */,
+				AA7777777777777777777777 /* PlanDetailView.swift in Sources */,
+				AA9999999999999999999999 /* PlansViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,7 +474,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 89;
+				CURRENT_PROJECT_VERSION = 106;
 				DEVELOPMENT_TEAM = 846N5D6TMK;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = BibleCopilot/Resources/Info.plist;
@@ -447,7 +483,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6.0;
+				MARKETING_VERSION = 1.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.scripturecopilot.app;
 				PRODUCT_NAME = "Bible Copilot";
 				SDKROOT = iphoneos;
@@ -526,7 +562,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 89;
+				CURRENT_PROJECT_VERSION = 106;
 				DEVELOPMENT_TEAM = 846N5D6TMK;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = BibleCopilot/Resources/Info.plist;
@@ -535,7 +571,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6.0;
+				MARKETING_VERSION = 1.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.scripturecopilot.app;
 				PRODUCT_NAME = "Bible Copilot";
 				SDKROOT = iphoneos;

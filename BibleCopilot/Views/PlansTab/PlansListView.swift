@@ -16,7 +16,7 @@ struct PlansListView: View {
                         let progress = viewModel.progress(for: plan.id, from: allProgress)
                         let completion = viewModel.completionPercentage(plan: plan, progress: progress)
 
-                        if subscriptionManager.isPro {
+                        if subscriptionManager.isPro || plan.isFree {
                             NavigationLink {
                                 PlanDetailView(plan: plan)
                             } label: {
@@ -54,9 +54,21 @@ struct PlansListView: View {
                     .cornerRadius(AppTheme.cornerRadiusSM)
 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(plan.name)
-                        .font(.system(size: 16, weight: .semibold))
-                        .foregroundColor(AppTheme.textPrimary)
+                    HStack(spacing: 6) {
+                        Text(plan.name)
+                            .font(.system(size: 16, weight: .semibold))
+                            .foregroundColor(AppTheme.textPrimary)
+
+                        if plan.isFree && !subscriptionManager.isPro {
+                            Text("FREE")
+                                .font(.system(size: 10, weight: .bold))
+                                .padding(.horizontal, 6)
+                                .padding(.vertical, 2)
+                                .background(AppTheme.success)
+                                .foregroundColor(.white)
+                                .cornerRadius(4)
+                        }
+                    }
 
                     Text("\(plan.days.count) days")
                         .font(AppTheme.captionFont)

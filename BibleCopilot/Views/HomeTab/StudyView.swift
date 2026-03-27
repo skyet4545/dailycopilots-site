@@ -10,6 +10,7 @@ struct StudyView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var showPaywall = false
     @State private var showSaveConfirmation = false
+    @State private var showCopied = false
 
     var body: some View {
         ScrollView {
@@ -170,6 +171,20 @@ struct StudyView: View {
                                     .foregroundColor(AppTheme.accent)
                             }
 
+                            Button {
+                                UIPasteboard.general.string = viewModel.aiResponse
+                                showCopied = true
+                                HapticManager.success()
+                                Task {
+                                    try? await Task.sleep(nanoseconds: 1_500_000_000)
+                                    showCopied = false
+                                }
+                            } label: {
+                                Label(showCopied ? "Copied!" : "Copy", systemImage: showCopied ? "checkmark" : "doc.on.doc")
+                                    .font(AppTheme.captionFont)
+                                    .foregroundColor(showCopied ? AppTheme.success : AppTheme.textMuted)
+                            }
+
                             Spacer()
 
                             ShareLink(item: viewModel.aiResponse) {
@@ -179,6 +194,12 @@ struct StudyView: View {
                             }
                         }
                         .padding(.top, AppTheme.spacingSM)
+
+                        // AI disclaimer
+                        Text("AI-generated study aid. Verify with trusted commentaries and pastoral guidance.")
+                            .font(.system(size: 10))
+                            .foregroundColor(AppTheme.textMuted)
+                            .padding(.top, AppTheme.spacingXS)
                     }
                     .padding(AppTheme.spacingLG)
                     .background(AppTheme.surface)

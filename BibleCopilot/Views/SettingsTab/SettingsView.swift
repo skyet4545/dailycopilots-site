@@ -3,6 +3,7 @@ import SwiftUI
 struct SettingsView: View {
     @StateObject private var viewModel = SettingsViewModel()
     @EnvironmentObject var subscriptionManager: SubscriptionManager
+    @EnvironmentObject var themeManager: ThemeManager
     @State private var showPaywall = false
 
     var body: some View {
@@ -55,6 +56,20 @@ struct SettingsView: View {
                     .foregroundColor(AppTheme.textPrimary)
                 } header: {
                     Text("Bible")
+                        .foregroundColor(AppTheme.textMuted)
+                }
+                .listRowBackground(AppTheme.surface)
+
+                // Appearance
+                Section {
+                    Picker("Appearance", selection: $themeManager.themeMode) {
+                        ForEach(AppThemeMode.allCases) { mode in
+                            Text(mode.displayName).tag(mode)
+                        }
+                    }
+                    .foregroundColor(AppTheme.textPrimary)
+                } header: {
+                    Text("Appearance")
                         .foregroundColor(AppTheme.textMuted)
                 }
                 .listRowBackground(AppTheme.surface)

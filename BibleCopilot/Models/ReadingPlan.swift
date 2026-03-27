@@ -8,6 +8,7 @@ struct ReadingPlanDefinition: Identifiable, Codable {
     let description: String
     let days: [ReadingDay]
     let icon: String
+    var isFree: Bool = false
 
     struct ReadingDay: Identifiable, Codable {
         let day: Int
@@ -78,7 +79,8 @@ enum ReadingPlans {
                     title: "John \(chapter)"
                 )
             },
-            icon: "text.book.closed.fill"
+            icon: "text.book.closed.fill",
+            isFree: true
         ),
         ReadingPlanDefinition(
             id: "psalms-praise",

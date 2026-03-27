@@ -42,7 +42,7 @@ struct PaywallView: View {
                         FeatureRow(icon: "infinity", text: "Unlimited questions & answers")
                         FeatureRow(icon: "brain.head.profile", text: "Deep theological insights")
                         FeatureRow(icon: "bookmark.fill", text: "Save your conversations")
-                        FeatureRow(icon: "globe", text: "Any verse, any translation")
+                        FeatureRow(icon: "calendar", text: "All 5 Reading Plans")
                         FeatureRow(icon: "lock.open.fill", text: "Cancel anytime — no pressure")
                     }
                     .padding(.horizontal, AppTheme.spacing2XL)
