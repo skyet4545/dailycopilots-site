@@ -14,7 +14,12 @@ enum KeychainService {
             kSecAttrAccount as String: key,
             kSecValueData as String: data
         ]
-        SecItemAdd(query as CFDictionary, nil)
+        let status = SecItemAdd(query as CFDictionary, nil)
+        #if DEBUG
+        if status != errSecSuccess {
+            print("⚠️ Keychain save failed for key '\(key)': \(status)")
+        }
+        #endif
     }
 
     static func load(key: String) -> String? {

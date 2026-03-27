@@ -124,6 +124,14 @@ struct TopicStudyView: View {
     }
 
     private func fetchTopicStudy() async {
+        let usageService = UsageService.shared
+        let isPro = SubscriptionService.shared.isPro
+        guard usageService.canAsk(isPro: isPro) else {
+            self.error = "You've used all 15 free questions today. Upgrade to Pro for unlimited access."
+            isLoading = false
+            return
+        }
+
         isLoading = true
         do {
             let stream = await AIService.shared.streamTopicResponse(topic: topic)
@@ -131,9 +139,10 @@ struct TopicStudyView: View {
                 response += chunk
             }
             crossReferences = CrossReferenceParser.extractReferences(from: response, limit: 8)
+            usageService.recordQuestion()
             HapticService.success()
         } catch {
-            self.error = "Unable to search Scripture for this topic."
+            self.error = "Unable to search Scripture for this topic. Check your internet connection."
         }
         isLoading = false
     }

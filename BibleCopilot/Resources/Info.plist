@@ -19,11 +19,9 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.7.0</string>
 	<key>CFBundleVersion</key>
-	<string>107</string>
+	<string>108</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Used for voice input to ask Bible questions</string>
 	<key>UILaunchScreen</key>
 	<dict>
 		<key>UIColorName</key>

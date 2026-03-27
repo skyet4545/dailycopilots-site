@@ -15,18 +15,22 @@ final class SubscriptionService {
     @ObservationIgnored
     private var updateTask: Task<Void, Never>?
 
+    @ObservationIgnored
+    private var loadTask: Task<Void, Never>?
+
     init() {
         updateTask = Task { [weak self] in
             await self?.listenForTransactions()
         }
-        Task {
-            await loadProducts()
-            await checkSubscriptionStatus()
+        loadTask = Task { [weak self] in
+            await self?.loadProducts()
+            await self?.checkSubscriptionStatus()
         }
     }
 
     deinit {
         updateTask?.cancel()
+        loadTask?.cancel()
     }
 
     // MARK: - Products
@@ -40,36 +44,35 @@ final class SubscriptionService {
         defer { isLoading = false }
 
         let productIDs: Set<String> = [monthlyProductID, annualProductID]
+        #if DEBUG
         print("🔄 SubscriptionService: Loading products for IDs: \(productIDs)")
+        #endif
 
-        // Retry up to 5 times with exponential backoff
-        for attempt in 1...5 {
+        // Retry up to 3 times with backoff, respecting cancellation
+        for attempt in 1...3 {
+            try? Task.checkCancellation()
             do {
                 let fetched = try await Product.products(for: productIDs)
+                #if DEBUG
                 print("📦 Attempt \(attempt): Got \(fetched.count) products")
-                for p in fetched {
-                    print("   → \(p.id): \(p.displayName) \(p.displayPrice) (\(p.type))")
-                }
+                #endif
                 if !fetched.isEmpty {
                     products = fetched
                     loadError = nil
-                    print("✅ Loaded \(fetched.count) products on attempt \(attempt)")
                     return
-                } else {
-                    print("⚠️ Empty product list on attempt \(attempt) — IDs may not match App Store Connect")
-                    print("   Bundle ID: \(Bundle.main.bundleIdentifier ?? "nil")")
                 }
+            } catch is CancellationError {
+                return
             } catch {
+                #if DEBUG
                 print("❌ Product fetch attempt \(attempt): \(error)")
-                print("   Error type: \(type(of: error))")
+                #endif
             }
-            if attempt < 5 {
-                let delay = Double(attempt) * 1.5
-                try? await Task.sleep(for: .seconds(delay))
+            if attempt < 3 {
+                try? await Task.sleep(for: .seconds(Double(attempt) * 1.5))
             }
         }
         loadError = "Unable to load plans. Please check your connection."
-        print("🚨 All 5 attempts failed. Products array is empty.")
     }
 
     // MARK: - Purchase

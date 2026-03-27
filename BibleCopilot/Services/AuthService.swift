@@ -42,9 +42,9 @@ final class AuthService: NSObject {
         // Check if we have a saved session
         if let token = accessToken, !token.isEmpty {
             isSignedIn = true
-            userId = UserDefaults.standard.string(forKey: "supabase_user_id")
-            displayName = UserDefaults.standard.string(forKey: "supabase_display_name")
-            email = UserDefaults.standard.string(forKey: "supabase_email")
+            userId = KeychainService.load(key: "supabase_user_id")
+            displayName = KeychainService.load(key: "supabase_display_name")
+            email = KeychainService.load(key: "supabase_email")
             // Try to refresh the session
             Task { await refreshSession() }
         }
@@ -88,7 +88,9 @@ final class AuthService: NSObject {
                 handleSession(session)
 
                 // Trigger data sync after sign-in
+                #if DEBUG
                 print("🔄 Triggering post-sign-in sync...")
+                #endif
 
                 // Save Apple name if provided (only comes on first sign-in)
                 if let fullName = appleCredential.fullName {
@@ -97,7 +99,7 @@ final class AuthService: NSObject {
                         .joined(separator: " ")
                     if !name.isEmpty {
                         displayName = name
-                        UserDefaults.standard.set(name, forKey: "supabase_display_name")
+                        KeychainService.save(key: "supabase_display_name", value: name)
                         await updateProfile(displayName: name)
                     }
                 }
@@ -237,12 +239,14 @@ final class AuthService: NSObject {
             }
         }
 
-        UserDefaults.standard.set(userId, forKey: "supabase_user_id")
-        UserDefaults.standard.set(displayName, forKey: "supabase_display_name")
-        UserDefaults.standard.set(email, forKey: "supabase_email")
+        if let userId { KeychainService.save(key: "supabase_user_id", value: userId) }
+        if let displayName { KeychainService.save(key: "supabase_display_name", value: displayName) }
+        if let email { KeychainService.save(key: "supabase_email", value: email) }
 
         isSignedIn = true
+        #if DEBUG
         print("✅ Signed in as \(displayName ?? email ?? userId ?? "unknown")")
+        #endif
     }
 
     @MainActor
@@ -269,7 +273,9 @@ final class AuthService: NSObject {
             }
             handleSession(json)
         } catch {
+            #if DEBUG
             print("⚠️ Session refresh failed: \(error)")
+            #endif
         }
     }
 
@@ -284,11 +290,13 @@ final class AuthService: NSObject {
         email = nil
         isSignedIn = false
 
-        UserDefaults.standard.removeObject(forKey: "supabase_user_id")
-        UserDefaults.standard.removeObject(forKey: "supabase_display_name")
-        UserDefaults.standard.removeObject(forKey: "supabase_email")
+        KeychainService.delete(key: "supabase_user_id")
+        KeychainService.delete(key: "supabase_display_name")
+        KeychainService.delete(key: "supabase_email")
 
+        #if DEBUG
         print("👋 Signed out")
+        #endif
     }
 
     // MARK: - Profile Sync

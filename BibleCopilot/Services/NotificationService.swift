@@ -11,7 +11,9 @@ final class NotificationService {
         do {
             return try await center.requestAuthorization(options: [.alert, .badge, .sound])
         } catch {
+            #if DEBUG
             print("Notification permission error: \(error)")
+            #endif
             return false
         }
     }
@@ -45,17 +47,20 @@ final class NotificationService {
         let center = UNUserNotificationCenter.current()
         center.removePendingNotificationRequests(withIdentifiers: ["streak_reminder"])
 
+        // Only schedule if user hasn't studied today
+        guard !StreakService.shared.studiedToday else { return }
+
         let content = UNMutableNotificationContent()
         content.title = "Don't Break Your Streak!"
         content.body = "Open Bible Copilot to keep your study streak alive."
         content.sound = .default
 
-        // Fire at 7pm if they haven't studied
+        // Fire at 7pm
         var dateComponents = DateComponents()
         dateComponents.hour = 19
         dateComponents.minute = 0
 
-        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
         let request = UNNotificationRequest(identifier: "streak_reminder", content: content, trigger: trigger)
 
         center.add(request)
