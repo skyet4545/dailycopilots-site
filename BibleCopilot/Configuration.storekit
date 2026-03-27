@@ -38,7 +38,7 @@
           "displayPrice" : "4.99",
           "familyShareable" : false,
           "groupNumber" : 1,
-          "internalID" : "bible_copilot_pro_monthly",
+          "internalID" : "biblecopilot_pro_monthly",
           "introductoryOffer" : null,
           "localizations" : [
             {
@@ -47,7 +47,7 @@
               "locale" : "en_US"
             }
           ],
-          "productID" : "bible_copilot_pro_monthly",
+          "productID" : "biblecopilot_pro_monthly",
           "recurringSubscriptionPeriod" : "P1M",
           "referenceName" : "Monthly",
           "subscriptionGroupID" : "bible_copilot_pro",
@@ -66,7 +66,7 @@
           "displayPrice" : "29.99",
           "familyShareable" : false,
           "groupNumber" : 1,
-          "internalID" : "bible_copilot_pro_annual",
+          "internalID" : "biblecopilot_pro_annual",
           "introductoryOffer" : {
             "internalID" : "annual_trial",
             "numberOfPeriods" : 1,
@@ -80,7 +80,7 @@
               "locale" : "en_US"
             }
           ],
-          "productID" : "bible_copilot_pro_annual",
+          "productID" : "biblecopilot_pro_annual",
           "recurringSubscriptionPeriod" : "P1Y",
           "referenceName" : "Annual",
           "subscriptionGroupID" : "bible_copilot_pro",

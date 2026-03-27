@@ -5,8 +5,8 @@ import StoreKit
 final class SubscriptionService {
     static let shared = SubscriptionService()
 
-    let monthlyProductID = "bible_copilot_pro_monthly"
-    let annualProductID = "bible_copilot_pro_annual"
+    let monthlyProductID = "biblecopilot_pro_monthly"
+    let annualProductID = "biblecopilot_pro_annual"
 
     var products: [Product] = []
     var isPro = false

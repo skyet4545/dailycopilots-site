@@ -7,12 +7,12 @@ final class SubscriptionServiceTests: XCTestCase {
 
     func testMonthlyProductID() {
         let service = SubscriptionService.shared
-        XCTAssertEqual(service.monthlyProductID, "bible_copilot_pro_monthly")
+        XCTAssertEqual(service.monthlyProductID, "biblecopilot_pro_monthly")
     }
 
     func testAnnualProductID() {
         let service = SubscriptionService.shared
-        XCTAssertEqual(service.annualProductID, "bible_copilot_pro_annual")
+        XCTAssertEqual(service.annualProductID, "biblecopilot_pro_annual")
     }
 
     // MARK: - Initial State
