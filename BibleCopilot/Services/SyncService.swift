@@ -15,7 +15,9 @@ actor SyncService {
         guard let uid = AuthService.shared.userId,
               AuthService.shared.isSignedIn else { return }
 
+        #if DEBUG
         print("🔄 Starting full sync for user \(uid)")
+        #endif
 
         // Push local data to Supabase
         await pushSavedPassages(context: context)
@@ -28,7 +30,9 @@ actor SyncService {
         await pullJournalEntries(context: context)
         await pullReadingPlanProgress(context: context)
 
+        #if DEBUG
         print("✅ Sync complete")
+        #endif
     }
 
     // MARK: - Push Local → Supabase
@@ -52,7 +56,9 @@ actor SyncService {
             ]
             await upsert(table: "saved_passages", body: body)
         }
+        #if DEBUG
         print("  📌 Pushed \(passages.count) saved passages")
+        #endif
     }
 
     @MainActor
@@ -74,7 +80,9 @@ actor SyncService {
             ]
             await upsert(table: "journal_entries", body: body)
         }
+        #if DEBUG
         print("  📓 Pushed \(entries.count) journal entries")
+        #endif
     }
 
     @MainActor
@@ -94,7 +102,9 @@ actor SyncService {
             ]
             await upsert(table: "reading_plan_progress", body: body, onConflict: "user_id,plan_id")
         }
+        #if DEBUG
         print("  📖 Pushed \(progress.count) reading plan progress")
+        #endif
     }
 
     private func pushStreakData() async {
@@ -104,7 +114,9 @@ actor SyncService {
             streakLongest: streak.longestStreak,
             totalStudies: streak.totalStudies
         )
+        #if DEBUG
         print("  🔥 Pushed streak data")
+        #endif
     }
 
     // MARK: - Pull Supabase → Local
@@ -140,7 +152,9 @@ actor SyncService {
             context.insert(passage)
             pulled += 1
         }
+        #if DEBUG
         print("  📌 Pulled \(pulled) new saved passages")
+        #endif
     }
 
     @MainActor
@@ -175,7 +189,9 @@ actor SyncService {
             context.insert(entry)
             pulled += 1
         }
+        #if DEBUG
         print("  📓 Pulled \(pulled) new journal entries")
+        #endif
     }
 
     @MainActor
@@ -203,7 +219,9 @@ actor SyncService {
             context.insert(progress)
             pulled += 1
         }
+        #if DEBUG
         print("  📖 Pulled \(pulled) new reading plan progress")
+        #endif
     }
 
     // MARK: - Supabase REST Helpers
