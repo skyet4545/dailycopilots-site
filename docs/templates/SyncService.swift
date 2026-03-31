@@ -4,10 +4,10 @@ import SwiftData
 actor SyncService {
     static let shared = SyncService()
 
-    nonisolated private var supabaseURL: String { AuthService.shared.supabaseURL }
-    nonisolated private var supabaseKey: String { AuthService.shared.supabaseKey }
-    nonisolated private var appId: String { AuthService.shared.appId }
-    nonisolated private var userId: String? { AuthService.shared.userId }
+    private var supabaseURL: String { AuthService.shared.supabaseURL }
+    private var supabaseKey: String { AuthService.shared.supabaseKey }
+    private var appId: String { AuthService.shared.appId }
+    private var userId: String? { AuthService.shared.userId }
 
     // MARK: - Full Sync (on sign-in)
 
@@ -17,29 +17,27 @@ actor SyncService {
               AuthService.shared.isSignedIn else { return }
 
         #if DEBUG
-        print("🔄 Starting full sync for user \(uid)")
+        print("Starting full sync for user \(uid) [\(appId)]")
         #endif
 
-        // Push local data to Supabase
-        await pushSavedPassages(context: context)
+        await pushSavedItems(context: context)
         await pushJournalEntries(context: context)
         await pushReadingPlanProgress(context: context)
         await pushStreakData()
 
-        // Pull remote data (for new device sign-in)
-        await pullSavedPassages(context: context)
+        await pullSavedItems(context: context)
         await pullJournalEntries(context: context)
         await pullReadingPlanProgress(context: context)
 
         #if DEBUG
-        print("✅ Sync complete")
+        print("Sync complete")
         #endif
     }
 
-    // MARK: - Push Local → Supabase
+    // MARK: - Push Local -> Supabase
 
     @MainActor
-    private func pushSavedPassages(context: ModelContext) async {
+    private func pushSavedItems(context: ModelContext) async {
         guard let uid = AuthService.shared.userId else { return }
 
         let descriptor = FetchDescriptor<SavedPassage>()
@@ -59,7 +57,7 @@ actor SyncService {
             await upsert(table: "saved_items", body: body)
         }
         #if DEBUG
-        print("  📌 Pushed \(passages.count) saved passages")
+        print("  Pushed \(passages.count) saved items")
         #endif
     }
 
@@ -84,7 +82,7 @@ actor SyncService {
             await upsert(table: "journal_entries", body: body)
         }
         #if DEBUG
-        print("  📓 Pushed \(entries.count) journal entries")
+        print("  Pushed \(entries.count) journal entries")
         #endif
     }
 
@@ -107,7 +105,7 @@ actor SyncService {
             await upsert(table: "reading_plan_progress", body: body, onConflict: "user_id,app_id,plan_id")
         }
         #if DEBUG
-        print("  📖 Pushed \(progress.count) reading plan progress")
+        print("  Pushed \(progress.count) reading plan progress")
         #endif
     }
 
@@ -118,15 +116,12 @@ actor SyncService {
             streakLongest: streak.longestStreak,
             totalStudies: streak.totalStudies
         )
-        #if DEBUG
-        print("  🔥 Pushed streak data")
-        #endif
     }
 
-    // MARK: - Pull Supabase → Local
+    // MARK: - Pull Supabase -> Local
 
     @MainActor
-    private func pullSavedPassages(context: ModelContext) async {
+    private func pullSavedItems(context: ModelContext) async {
         guard let uid = AuthService.shared.userId else { return }
 
         guard let data = await fetch(table: "saved_items", filter: "user_id=eq.\(uid)&app_id=eq.\(appId)") else { return }
@@ -147,7 +142,7 @@ actor SyncService {
                 id: id,
                 reference: reference,
                 text: text,
-                translation: item["translation"] as? String ?? "asv",
+                translation: item["translation"] as? String ?? "default",
                 notes: item["notes"] as? String
             )
             if let dateStr = item["saved_at"] as? String {
@@ -157,7 +152,7 @@ actor SyncService {
             pulled += 1
         }
         #if DEBUG
-        print("  📌 Pulled \(pulled) new saved passages")
+        print("  Pulled \(pulled) new saved items")
         #endif
     }
 
@@ -194,7 +189,7 @@ actor SyncService {
             pulled += 1
         }
         #if DEBUG
-        print("  📓 Pulled \(pulled) new journal entries")
+        print("  Pulled \(pulled) new journal entries")
         #endif
     }
 
@@ -224,14 +219,15 @@ actor SyncService {
             pulled += 1
         }
         #if DEBUG
-        print("  📖 Pulled \(pulled) new reading plan progress")
+        print("  Pulled \(pulled) new reading plan progress")
         #endif
     }
 
     // MARK: - Supabase REST Helpers
 
     private func upsert(table: String, body: [String: Any], onConflict: String? = nil) async {
-        guard let token = AuthService.shared.accessToken else { return }
+        let authService = AuthService.shared
+        guard let token = authService.accessToken else { return }
 
         var urlStr = "\(supabaseURL)/rest/v1/\(table)"
         if let conflict = onConflict {
@@ -251,7 +247,8 @@ actor SyncService {
     }
 
     private func fetch(table: String, filter: String) async -> Data? {
-        guard let token = AuthService.shared.accessToken else { return nil }
+        let authService = AuthService.shared
+        guard let token = authService.accessToken else { return nil }
 
         guard let url = URL(string: "\(supabaseURL)/rest/v1/\(table)?\(filter)") else { return nil }
 

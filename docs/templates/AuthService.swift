@@ -13,10 +13,12 @@ final class AuthService: NSObject {
     var isLoading = false
     var error: String?
 
-    // MARK: - Shared Supabase project (all Copilot apps)
+    // MARK: - CUSTOMIZE: Shared Supabase project
     let supabaseURL = "https://hfxaltbdagvwtrkfipqi.supabase.co"
     let supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhmeGFsdGJkYWd2d3Rya2ZpcHFpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NTk3MDMsImV4cCI6MjA5MDUzNTcwM30.59YQXCrNjHP9_smQUw24NbQJZND17wcam6ggKxd_uCg"
-    let appId = "bible_copilot"
+
+    // MARK: - CUSTOMIZE: Set to your app's identifier from the app_identifier enum
+    let appId = "APP_ID_HERE"  // e.g. "quran_copilot", "gita_copilot", etc.
 
     @ObservationIgnored
     var currentNonce: String?
@@ -41,13 +43,11 @@ final class AuthService: NSObject {
 
     override init() {
         super.init()
-        // Check if we have a saved session
         if let token = accessToken, !token.isEmpty {
             isSignedIn = true
             userId = KeychainService.load(key: "supabase_user_id")
             displayName = KeychainService.load(key: "supabase_display_name")
             email = KeychainService.load(key: "supabase_email")
-            // Try to refresh the session
             Task { await refreshSession() }
         }
     }
@@ -80,7 +80,6 @@ final class AuthService: NSObject {
                 return
             }
 
-            // Send to Supabase
             do {
                 let session = try await signInWithIdToken(
                     provider: "apple",
@@ -89,12 +88,6 @@ final class AuthService: NSObject {
                 )
                 handleSession(session)
 
-                // Trigger data sync after sign-in
-                #if DEBUG
-                print("🔄 Triggering post-sign-in sync...")
-                #endif
-
-                // Save Apple name if provided (only comes on first sign-in)
                 if let fullName = appleCredential.fullName {
                     let name = [fullName.givenName, fullName.familyName]
                         .compactMap { $0 }
@@ -144,10 +137,8 @@ final class AuthService: NSObject {
 
             if httpResponse.statusCode == 200, let json {
                 if json["access_token"] != nil {
-                    // Auto-confirmed — signed in immediately
                     handleSession(json)
                 } else {
-                    // Email confirmation required
                     self.error = "Check your email to confirm your account, then sign in."
                 }
             } else {
@@ -249,10 +240,6 @@ final class AuthService: NSObject {
 
         // Create/update profile with app_id
         Task { await ensureProfile() }
-
-        #if DEBUG
-        print("✅ Signed in as \(displayName ?? email ?? userId ?? "unknown") [\(appId)]")
-        #endif
     }
 
     // MARK: - Profile (with app_id)
@@ -280,58 +267,6 @@ final class AuthService: NSObject {
         _ = try? await URLSession.shared.data(for: request)
     }
 
-    @MainActor
-    func refreshSession() async {
-        guard let refresh = refreshToken else { return }
-
-        let url = URL(string: "\(supabaseURL)/auth/v1/token?grant_type=refresh_token")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue(supabaseKey, forHTTPHeaderField: "apikey")
-
-        let body: [String: String] = ["refresh_token": refresh]
-        request.httpBody = try? JSONSerialization.data(withJSONObject: body)
-
-        do {
-            let (data, response) = try await URLSession.shared.data(for: request)
-            guard let httpResponse = response as? HTTPURLResponse,
-                  httpResponse.statusCode == 200,
-                  let json = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
-                // Token expired — sign out
-                signOut()
-                return
-            }
-            handleSession(json)
-        } catch {
-            #if DEBUG
-            print("⚠️ Session refresh failed: \(error)")
-            #endif
-        }
-    }
-
-    // MARK: - Sign Out
-
-    @MainActor
-    func signOut() {
-        accessToken = nil
-        refreshToken = nil
-        userId = nil
-        displayName = nil
-        email = nil
-        isSignedIn = false
-
-        KeychainService.delete(key: "supabase_user_id")
-        KeychainService.delete(key: "supabase_display_name")
-        KeychainService.delete(key: "supabase_email")
-
-        #if DEBUG
-        print("👋 Signed out")
-        #endif
-    }
-
-    // MARK: - Profile Sync
-
     func updateProfile(displayName: String? = nil, isPro: Bool? = nil, streakCurrent: Int? = nil, streakLongest: Int? = nil, totalStudies: Int? = nil) async {
         guard let token = accessToken, let uid = userId else { return }
 
@@ -350,11 +285,57 @@ final class AuthService: NSObject {
         if let totalStudies { body["total_studies"] = totalStudies }
 
         request.httpBody = try? JSONSerialization.data(withJSONObject: body)
-
         _ = try? await URLSession.shared.data(for: request)
     }
 
-    // MARK: - Authenticated Headers (for sync)
+    // MARK: - Session Refresh
+
+    @MainActor
+    func refreshSession() async {
+        guard let refresh = refreshToken else { return }
+
+        let url = URL(string: "\(supabaseURL)/auth/v1/token?grant_type=refresh_token")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(supabaseKey, forHTTPHeaderField: "apikey")
+
+        let body: [String: String] = ["refresh_token": refresh]
+        request.httpBody = try? JSONSerialization.data(withJSONObject: body)
+
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard let httpResponse = response as? HTTPURLResponse,
+                  httpResponse.statusCode == 200,
+                  let json = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+                signOut()
+                return
+            }
+            handleSession(json)
+        } catch {
+            #if DEBUG
+            print("Session refresh failed: \(error)")
+            #endif
+        }
+    }
+
+    // MARK: - Sign Out
+
+    @MainActor
+    func signOut() {
+        accessToken = nil
+        refreshToken = nil
+        userId = nil
+        displayName = nil
+        email = nil
+        isSignedIn = false
+
+        KeychainService.delete(key: "supabase_user_id")
+        KeychainService.delete(key: "supabase_display_name")
+        KeychainService.delete(key: "supabase_email")
+    }
+
+    // MARK: - Authenticated Headers
 
     var authHeaders: [String: String] {
         var headers: [String: String] = [
@@ -374,9 +355,7 @@ final class AuthService: NSObject {
         var randomBytes = [UInt8](repeating: 0, count: length)
         let errorCode = SecRandomCopyBytes(kSecRandomDefault, randomBytes.count, &randomBytes)
         if errorCode != errSecSuccess {
-            // Fallback to UUID-based randomness instead of crashing
-            let fallback = (0..<length).map { _ in UInt8.random(in: 0...255) }
-            randomBytes = fallback
+            randomBytes = (0..<length).map { _ in UInt8.random(in: 0...255) }
         }
         let charset: [Character] = Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
         return String(randomBytes.map { charset[Int($0) % charset.count] })
@@ -388,8 +367,6 @@ final class AuthService: NSObject {
         return hash.compactMap { String(format: "%02x", $0) }.joined()
     }
 }
-
-// MARK: - Errors
 
 enum AuthError: LocalizedError {
     case serverError(String)
