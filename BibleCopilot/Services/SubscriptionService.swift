@@ -18,6 +18,9 @@ final class SubscriptionService {
     @ObservationIgnored
     private var loadTask: Task<Void, Never>?
 
+    @ObservationIgnored
+    private var isLoadingProducts = false
+
     init() {
         updateTask = Task { [weak self] in
             await self?.listenForTransactions()
@@ -39,18 +42,29 @@ final class SubscriptionService {
 
     @MainActor
     func loadProducts() async {
+        // Prevent overlapping loads
+        guard !isLoadingProducts else { return }
+        // Skip if already loaded
+        guard products.isEmpty else { return }
+
+        isLoadingProducts = true
         isLoading = true
         loadError = nil
-        defer { isLoading = false }
+        defer {
+            isLoading = false
+            isLoadingProducts = false
+        }
 
         let productIDs: Set<String> = [monthlyProductID, annualProductID]
         #if DEBUG
         print("🔄 SubscriptionService: Loading products for IDs: \(productIDs)")
         #endif
 
-        // Retry up to 3 times with backoff, respecting cancellation
-        for attempt in 1...3 {
-            try? Task.checkCancellation()
+        // Retry up to 5 times with exponential backoff
+        // Apple sandbox can be slow during review
+        let maxAttempts = 5
+        for attempt in 1...maxAttempts {
+            if Task.isCancelled { return }
             do {
                 let fetched = try await Product.products(for: productIDs)
                 #if DEBUG
@@ -68,8 +82,9 @@ final class SubscriptionService {
                 print("❌ Product fetch attempt \(attempt): \(error)")
                 #endif
             }
-            if attempt < 3 {
-                try? await Task.sleep(for: .seconds(Double(attempt) * 1.5))
+            if attempt < maxAttempts {
+                let delay = Double(min(attempt * 2, 8))
+                try? await Task.sleep(for: .seconds(delay))
             }
         }
         loadError = "Unable to load plans. Please check your connection."
