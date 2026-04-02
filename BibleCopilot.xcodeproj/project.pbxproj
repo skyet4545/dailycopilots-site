@@ -7,116 +7,134 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02F612115A3107FF2F2243C0 /* DailyVerseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1673C1E232B9139E5C1365 /* DailyVerseService.swift */; };
+		04CE0C15F25A2560DF2D1DBA /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8326D2616EE1B03D4DBDBBB9 /* Color+Hex.swift */; };
 		0699AA62167C67136505D405 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D62753EB7324AF3ADEF3CCB9 /* Assets.xcassets */; };
+		0749FC6D82FFE7A609074FD1 /* StudyModePillsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AEEB22A1CA868477329ACF /* StudyModePillsView.swift */; };
+		0D1BF3C4639353D0FC54A48C /* Configuration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 6AD3287D331AE696EB381A94 /* Configuration.storekit */; };
+		0E83ECE41430E67E2EA22066 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D5AA106C467D0EAB4FF145 /* HomeView.swift */; };
+		14649335782CF343CFCEFE05 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01276970FF74C555D8128560 /* AppTheme.swift */; };
+		178BE5AAADD3C7C0A9FBEE27 /* PlansListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84085A086F51F6FB6803E846 /* PlansListView.swift */; };
 		18178906F1495B4BC1410581 /* AIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059C9FA9C9B49578732892E0 /* AIService.swift */; };
+		18722C2C20F77319BF24F5A1 /* ReviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E47BAF9E4B03AA47EBC084 /* ReviewService.swift */; };
+		1AD0140591062A0E94A8DFC5 /* DailyVerseCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D284467BC69B7D0F51B9EDF9 /* DailyVerseCard.swift */; };
+		212F8B84D6A2E7EAB35494BC /* CrossReferenceParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D374DD0157DB6D3F999504 /* CrossReferenceParser.swift */; };
+		28D5D4DA5ED8EF76123562DA /* CrossReferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2DAD3AD94965C3805E0A68 /* CrossReferencesView.swift */; };
+		2A0806926BF9916E8544FEEF /* UsageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C7391170E60BC03DB1933B /* UsageService.swift */; };
+		2DA53702DA1A5DE10D40A726 /* SavedPassage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B2BE52F17D8833DC5EFF2B /* SavedPassage.swift */; };
+		32B94AE30A8AB21BA0D9839D /* JournalCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DDEAE0EAA806EC7483D364 /* JournalCardView.swift */; };
+		353E8CACD0E77CAC4848E3D3 /* LoadingDotsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC92E1F7C95FA9CD697B4DE7 /* LoadingDotsView.swift */; };
+		481A2D315752D2F69C98863E /* HapticService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136DD3E3B4C6C163CA67185D /* HapticService.swift */; };
+		487F0F5BB365644C192FE6CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04CA73846BF615DDE757AF9E /* Assets.xcassets */; };
+		4A724EA8B454E0295A0B7D9A /* StudyModeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DE4F18C93BDE5685A0D035 /* StudyModeTheme.swift */; };
+		542487F5DC45006B8B1DDD95 /* SignInWithAppleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9180BF1FC12F98B97EFE81C2 /* SignInWithAppleButton.swift */; };
+		5E998A1E36DE1939E6609AA7 /* SavedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B454B341D9CC542FCFEBAF3B /* SavedView.swift */; };
+		635BD0692AD9A7E1D51C8C94 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF0612395BA4D408286E1CD /* PaywallView.swift */; };
 		7C18A5C82B0BA8BEDA66936E /* BibleCopilotApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7252163E03A5A92A1852A2C6 /* BibleCopilotApp.swift */; };
 		7DF106B4AF22A62C6DCD2CF7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922F5CBA6C43138FD54F4B39 /* ContentView.swift */; };
-		A10001000000000000000001 /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000001 /* Color+Hex.swift */; };
-		A10001000000000000000002 /* Date+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000002 /* Date+Formatting.swift */; };
-		A10001000000000000000003 /* JournalEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000003 /* JournalEntry.swift */; };
-		A10001000000000000000004 /* OnboardingSlide.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000004 /* OnboardingSlide.swift */; };
-		A10001000000000000000005 /* ReadingPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000005 /* ReadingPlan.swift */; };
-		A10001000000000000000006 /* ReadingPlanProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000006 /* ReadingPlanProgress.swift */; };
-		A10001000000000000000007 /* SavedPassage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000007 /* SavedPassage.swift */; };
-		A10001000000000000000008 /* BibleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000008 /* BibleService.swift */; };
-		A10001000000000000000009 /* CrossReferenceParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000009 /* CrossReferenceParser.swift */; };
-		A1000100000000000000000A /* HapticService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000000A /* HapticService.swift */; };
-		A1000100000000000000000B /* SubscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000000B /* SubscriptionService.swift */; };
-		A1000100000000000000000C /* UsageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000000C /* UsageService.swift */; };
-		A1000100000000000000000D /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000000D /* AppTheme.swift */; };
-		A1000100000000000000000E /* StudyModeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000000E /* StudyModeTheme.swift */; };
-		A1000100000000000000000F /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000000F /* HomeViewModel.swift */; };
-		A10001000000000000000010 /* StudyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000010 /* StudyViewModel.swift */; };
-		A10001000000000000000011 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000011 /* EmptyStateView.swift */; };
-		A10001000000000000000012 /* JournalCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000012 /* JournalCardView.swift */; };
-		A10001000000000000000013 /* LoadingDotsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000013 /* LoadingDotsView.swift */; };
-		A10001000000000000000014 /* ProLockOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000014 /* ProLockOverlay.swift */; };
-		A10001000000000000000015 /* QuickPickChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000015 /* QuickPickChip.swift */; };
-		A10001000000000000000016 /* SavedPassageCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000016 /* SavedPassageCard.swift */; };
-		A10001000000000000000017 /* StudyModeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000017 /* StudyModeCard.swift */; };
-		A10001000000000000000018 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000018 /* OnboardingView.swift */; };
-		A10001000000000000000019 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000019 /* PaywallView.swift */; };
-		A1000100000000000000001A /* AIResponseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000001A /* AIResponseView.swift */; };
-		A1000100000000000000001B /* CrossReferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000001B /* CrossReferencesView.swift */; };
-		A1000100000000000000001C /* StudyModePillsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000001C /* StudyModePillsView.swift */; };
-		A1000100000000000000001D /* StudyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000001D /* StudyView.swift */; };
-		A1000100000000000000001E /* VerseCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000001E /* VerseCardView.swift */; };
-		A1000100000000000000001F /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000001F /* HomeView.swift */; };
-		A10001000000000000000020 /* JournalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000020 /* JournalView.swift */; };
-		A10001000000000000000021 /* PlanDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000021 /* PlanDetailView.swift */; };
-		A10001000000000000000022 /* PlansListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000022 /* PlansListView.swift */; };
-		A10001000000000000000023 /* SavedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000023 /* SavedView.swift */; };
-		A10001000000000000000024 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000024 /* SettingsView.swift */; };
-		A10001000000000000000025 /* DailyVerseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000025 /* DailyVerseService.swift */; };
-		A10001000000000000000026 /* StreakService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000026 /* StreakService.swift */; };
-		A10001000000000000000027 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000027 /* NotificationService.swift */; };
-		A10001000000000000000028 /* ReviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000028 /* ReviewService.swift */; };
-		A10001000000000000000029 /* DailyVerseCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001000000000000000029 /* DailyVerseCard.swift */; };
-		A1000100000000000000002A /* StreakBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000002A /* StreakBadge.swift */; };
-		A1000100000000000000002B /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000002B /* AuthService.swift */; };
-		A1000100000000000000002C /* SignInWithAppleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000002C /* SignInWithAppleButton.swift */; };
-		A1000100000000000000002D /* SyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000002D /* SyncService.swift */; };
-		A1000100000000000000002F /* TopicStudyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000002F /* TopicStudyView.swift */; };
-		A1000100000000000000002E /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000100000000000000002E /* KeychainService.swift */; };
+		7DF290A9685ACABA06D6FD1F /* QuickPickChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBDD98EB95C9459D7ACC1B5 /* QuickPickChip.swift */; };
+		898A0CB81121F6BFFCDE1985 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADC8B399122D37C3751DD69 /* OnboardingView.swift */; };
+		8CAFF5E5215B2FB8CE836B57 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF3DDF3DF056CE8BB753003 /* HomeViewModel.swift */; };
+		8CEEEE36ED9C778896D3373D /* JournalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BB0C84B1500618499BB14D /* JournalView.swift */; };
+		8D07CBFA3D4189D12E0E28F6 /* ProLockOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4438718821365AB5E0717D /* ProLockOverlay.swift */; };
+		9227A7B038F4AB5B8C778861 /* SavedPassageCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE11B40D5D9FD62BE15A301 /* SavedPassageCard.swift */; };
+		92992D7885BA4865E0D4E8F6 /* StreakService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0FF4A81096062AB53F8B027 /* StreakService.swift */; };
+		956EB159E6FA31AD2558E198 /* StudyModeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33DDA73C6C7E3EE533A48837 /* StudyModeCard.swift */; };
+		971AF5A6A128228FA9E8938F /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49BC56BD84C2A17A55E3E6E /* KeychainService.swift */; };
+		9B286DD908FE427E45803F27 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF983B9F10EAC837739D5F2F /* EmptyStateView.swift */; };
+		AC38E852287E12A48A200692 /* VerseCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B86C55E661E66B439846584 /* VerseCardView.swift */; };
+		B4893D3114BDD2DC8978B9C4 /* OnboardingSlide.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDD2B968D0F5F5199EEE4411 /* OnboardingSlide.swift */; };
+		BF97334F1535DABB678D14EC /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12C090E98291634DC02703F /* NotificationService.swift */; };
+		BFCD3CBC3F2FDE2A63024A14 /* BibleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5799C73EFA4E53177962EDB9 /* BibleService.swift */; };
+		C04A53DE5742AF9A956760C2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F913E8C1D57E32F785F666C3 /* SettingsView.swift */; };
+		C2C997F2FE4F3C15755E8862 /* AIResponseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D2CD7F99C6F326B650429D /* AIResponseView.swift */; };
+		D4FC064ACFD7C982DB5A7669 /* PlanDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FA98FA974456C8AF1DBF5 /* PlanDetailView.swift */; };
+		D831765B7E02496968851C3A /* ReadingPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = F284F430E08A22F837B1A7AC /* ReadingPlan.swift */; };
+		DA1F4A9EA8EB50BA68E95B9E /* Date+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31DFA410CAA8D7D4CD5C046 /* Date+Formatting.swift */; };
+		DE4808639E690C4DD686F3A4 /* ReadingPlanProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EA3191821E2806149ADC50 /* ReadingPlanProgress.swift */; };
+		E1FE155D5A45D00493FB87CD /* StudyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6DBAD12716135A75497F3 /* StudyViewModel.swift */; };
+		E300C66BBCF4B6BE4B40BACF /* SubscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70D7EC04333C5BB46EAE484 /* SubscriptionService.swift */; };
+		E7D6A5511AC006A89603D6ED /* JournalEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9480CE00AC3834EE3E9396E /* JournalEntry.swift */; };
+		EA8AA18AEED09D743E5A7423 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506F36E5723123FC328CB22C /* AuthService.swift */; };
+		EE4619EE6B7F71F77FE70B75 /* TopicStudyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9811C6C100DCAEEFF68F0A86 /* TopicStudyView.swift */; };
+		EF55AB84B2B11C6451318E35 /* StudyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F7A06A4693E8C138CA2299 /* StudyView.swift */; };
+		FB3A505663BD7E54C4281960 /* SyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFCA863DA4756D1599A8AD7C /* SyncService.swift */; };
+		FB5C090788FEF470DE8CBB7B /* StreakBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D74D69F97244843338F19F /* StreakBadge.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		01276970FF74C555D8128560 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		04CA73846BF615DDE757AF9E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		059C9FA9C9B49578732892E0 /* AIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIService.swift; sourceTree = "<group>"; };
 		08A20B78FED88832D4703E38 /* BibleCopilot.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = BibleCopilot.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		136DD3E3B4C6C163CA67185D /* HapticService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticService.swift; sourceTree = "<group>"; };
+		1A1673C1E232B9139E5C1365 /* DailyVerseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyVerseService.swift; sourceTree = "<group>"; };
+		1D2DAD3AD94965C3805E0A68 /* CrossReferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossReferencesView.swift; sourceTree = "<group>"; };
+		1FE11B40D5D9FD62BE15A301 /* SavedPassageCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedPassageCard.swift; sourceTree = "<group>"; };
+		25D374DD0157DB6D3F999504 /* CrossReferenceParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossReferenceParser.swift; sourceTree = "<group>"; };
+		2ADC8B399122D37C3751DD69 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		2EF0612395BA4D408286E1CD /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
+		33DDA73C6C7E3EE533A48837 /* StudyModeCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyModeCard.swift; sourceTree = "<group>"; };
+		39EA3191821E2806149ADC50 /* ReadingPlanProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingPlanProgress.swift; sourceTree = "<group>"; };
+		43D2CD7F99C6F326B650429D /* AIResponseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIResponseView.swift; sourceTree = "<group>"; };
+		44F7A06A4693E8C138CA2299 /* StudyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyView.swift; sourceTree = "<group>"; };
+		47D5AA106C467D0EAB4FF145 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		506F36E5723123FC328CB22C /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		5799C73EFA4E53177962EDB9 /* BibleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleService.swift; sourceTree = "<group>"; };
 		5F364036ECF3A9B46DDCDE20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		605D5B57063F29A812BB16EB /* BibleCopilot.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BibleCopilot.entitlements; sourceTree = "<group>"; };
+		6AD3287D331AE696EB381A94 /* Configuration.storekit */ = {isa = PBXFileReference; path = Configuration.storekit; sourceTree = "<group>"; };
+		71DE4F18C93BDE5685A0D035 /* StudyModeTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyModeTheme.swift; sourceTree = "<group>"; };
 		7252163E03A5A92A1852A2C6 /* BibleCopilotApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleCopilotApp.swift; sourceTree = "<group>"; };
+		77BB0C84B1500618499BB14D /* JournalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalView.swift; sourceTree = "<group>"; };
+		7B86C55E661E66B439846584 /* VerseCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseCardView.swift; sourceTree = "<group>"; };
+		7CF3DDF3DF056CE8BB753003 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		81B2BE52F17D8833DC5EFF2B /* SavedPassage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedPassage.swift; sourceTree = "<group>"; };
+		82DDEAE0EAA806EC7483D364 /* JournalCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalCardView.swift; sourceTree = "<group>"; };
+		8326D2616EE1B03D4DBDBBB9 /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
+		84085A086F51F6FB6803E846 /* PlansListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlansListView.swift; sourceTree = "<group>"; };
+		8A4438718821365AB5E0717D /* ProLockOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProLockOverlay.swift; sourceTree = "<group>"; };
+		9180BF1FC12F98B97EFE81C2 /* SignInWithAppleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleButton.swift; sourceTree = "<group>"; };
 		922F5CBA6C43138FD54F4B39 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		92C7391170E60BC03DB1933B /* UsageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageService.swift; sourceTree = "<group>"; };
+		92E47BAF9E4B03AA47EBC084 /* ReviewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewService.swift; sourceTree = "<group>"; };
+		9811C6C100DCAEEFF68F0A86 /* TopicStudyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicStudyView.swift; sourceTree = "<group>"; };
+		A49BC56BD84C2A17A55E3E6E /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		A9480CE00AC3834EE3E9396E /* JournalEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalEntry.swift; sourceTree = "<group>"; };
+		AF983B9F10EAC837739D5F2F /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
+		B0FF4A81096062AB53F8B027 /* StreakService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakService.swift; sourceTree = "<group>"; };
+		B454B341D9CC542FCFEBAF3B /* SavedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedView.swift; sourceTree = "<group>"; };
+		BFD6DBAD12716135A75497F3 /* StudyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyViewModel.swift; sourceTree = "<group>"; };
+		C12C090E98291634DC02703F /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		C31DFA410CAA8D7D4CD5C046 /* Date+Formatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Formatting.swift"; sourceTree = "<group>"; };
+		C3AEEB22A1CA868477329ACF /* StudyModePillsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyModePillsView.swift; sourceTree = "<group>"; };
+		CEBDD98EB95C9459D7ACC1B5 /* QuickPickChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickPickChip.swift; sourceTree = "<group>"; };
+		CFCA863DA4756D1599A8AD7C /* SyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncService.swift; sourceTree = "<group>"; };
+		D284467BC69B7D0F51B9EDF9 /* DailyVerseCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyVerseCard.swift; sourceTree = "<group>"; };
 		D62753EB7324AF3ADEF3CCB9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		B10001000000000000000001 /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
-		B10001000000000000000002 /* Date+Formatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Formatting.swift"; sourceTree = "<group>"; };
-		B10001000000000000000003 /* JournalEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalEntry.swift; sourceTree = "<group>"; };
-		B10001000000000000000004 /* OnboardingSlide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSlide.swift; sourceTree = "<group>"; };
-		B10001000000000000000005 /* ReadingPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingPlan.swift; sourceTree = "<group>"; };
-		B10001000000000000000006 /* ReadingPlanProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingPlanProgress.swift; sourceTree = "<group>"; };
-		B10001000000000000000007 /* SavedPassage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedPassage.swift; sourceTree = "<group>"; };
-		B10001000000000000000008 /* BibleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleService.swift; sourceTree = "<group>"; };
-		B10001000000000000000009 /* CrossReferenceParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossReferenceParser.swift; sourceTree = "<group>"; };
-		B1000100000000000000000A /* HapticService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticService.swift; sourceTree = "<group>"; };
-		B1000100000000000000000B /* SubscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionService.swift; sourceTree = "<group>"; };
-		B1000100000000000000000C /* UsageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageService.swift; sourceTree = "<group>"; };
-		B1000100000000000000000D /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
-		B1000100000000000000000E /* StudyModeTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyModeTheme.swift; sourceTree = "<group>"; };
-		B1000100000000000000000F /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
-		B10001000000000000000010 /* StudyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyViewModel.swift; sourceTree = "<group>"; };
-		B10001000000000000000011 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
-		B10001000000000000000012 /* JournalCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalCardView.swift; sourceTree = "<group>"; };
-		B10001000000000000000013 /* LoadingDotsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingDotsView.swift; sourceTree = "<group>"; };
-		B10001000000000000000014 /* ProLockOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProLockOverlay.swift; sourceTree = "<group>"; };
-		B10001000000000000000015 /* QuickPickChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickPickChip.swift; sourceTree = "<group>"; };
-		B10001000000000000000016 /* SavedPassageCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedPassageCard.swift; sourceTree = "<group>"; };
-		B10001000000000000000017 /* StudyModeCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyModeCard.swift; sourceTree = "<group>"; };
-		B10001000000000000000018 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
-		B10001000000000000000019 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
-		B1000100000000000000001A /* AIResponseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIResponseView.swift; sourceTree = "<group>"; };
-		B1000100000000000000001B /* CrossReferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossReferencesView.swift; sourceTree = "<group>"; };
-		B1000100000000000000001C /* StudyModePillsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyModePillsView.swift; sourceTree = "<group>"; };
-		B1000100000000000000001D /* StudyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyView.swift; sourceTree = "<group>"; };
-		B1000100000000000000001E /* VerseCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseCardView.swift; sourceTree = "<group>"; };
-		B1000100000000000000001F /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		B10001000000000000000020 /* JournalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalView.swift; sourceTree = "<group>"; };
-		B10001000000000000000021 /* PlanDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanDetailView.swift; sourceTree = "<group>"; };
-		B10001000000000000000022 /* PlansListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlansListView.swift; sourceTree = "<group>"; };
-		B10001000000000000000023 /* SavedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedView.swift; sourceTree = "<group>"; };
-		B10001000000000000000024 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		B10001000000000000000025 /* DailyVerseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyVerseService.swift; sourceTree = "<group>"; };
-		B10001000000000000000026 /* StreakService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakService.swift; sourceTree = "<group>"; };
-		B10001000000000000000027 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
-		B10001000000000000000028 /* ReviewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewService.swift; sourceTree = "<group>"; };
-		B10001000000000000000029 /* DailyVerseCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyVerseCard.swift; sourceTree = "<group>"; };
-		B1000100000000000000002A /* StreakBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakBadge.swift; sourceTree = "<group>"; };
-		B1000100000000000000002B /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
-		B1000100000000000000002C /* SignInWithAppleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleButton.swift; sourceTree = "<group>"; };
-		B1000100000000000000002D /* SyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncService.swift; sourceTree = "<group>"; };
-		B1000100000000000000002F /* TopicStudyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicStudyView.swift; sourceTree = "<group>"; };
-		B1000100000000000000002E /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		DDD2B968D0F5F5199EEE4411 /* OnboardingSlide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSlide.swift; sourceTree = "<group>"; };
+		E5D74D69F97244843338F19F /* StreakBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakBadge.swift; sourceTree = "<group>"; };
+		E70D7EC04333C5BB46EAE484 /* SubscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionService.swift; sourceTree = "<group>"; };
+		EC92E1F7C95FA9CD697B4DE7 /* LoadingDotsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingDotsView.swift; sourceTree = "<group>"; };
+		F284F430E08A22F837B1A7AC /* ReadingPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingPlan.swift; sourceTree = "<group>"; };
+		F913E8C1D57E32F785F666C3 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		FA0FA98FA974456C8AF1DBF5 /* PlanDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
+		04CBBE371944A2FB6B306CEB /* Study */ = {
+			isa = PBXGroup;
+			children = (
+				43D2CD7F99C6F326B650429D /* AIResponseView.swift */,
+				1D2DAD3AD94965C3805E0A68 /* CrossReferencesView.swift */,
+				C3AEEB22A1CA868477329ACF /* StudyModePillsView.swift */,
+				44F7A06A4693E8C138CA2299 /* StudyView.swift */,
+				9811C6C100DCAEEFF68F0A86 /* TopicStudyView.swift */,
+				7B86C55E661E66B439846584 /* VerseCardView.swift */,
+			);
+			path = Study;
+			sourceTree = "<group>";
+		};
 		1B713654A703ED0BFCA38011 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,39 +143,89 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		251D19F7E4451C98556DA922 /* Paywall */ = {
+			isa = PBXGroup;
+			children = (
+				2EF0612395BA4D408286E1CD /* PaywallView.swift */,
+			);
+			path = Paywall;
+			sourceTree = "<group>";
+		};
 		253A4DBB09442A31694016EC /* Services */ = {
 			isa = PBXGroup;
 			children = (
 				059C9FA9C9B49578732892E0 /* AIService.swift */,
-				B10001000000000000000008 /* BibleService.swift */,
-				B10001000000000000000009 /* CrossReferenceParser.swift */,
-				B1000100000000000000000A /* HapticService.swift */,
-				B1000100000000000000000B /* SubscriptionService.swift */,
-				B1000100000000000000000C /* UsageService.swift */,
-				B10001000000000000000025 /* DailyVerseService.swift */,
-				B10001000000000000000026 /* StreakService.swift */,
-				B10001000000000000000027 /* NotificationService.swift */,
-				B10001000000000000000028 /* ReviewService.swift */,
-				B1000100000000000000002B /* AuthService.swift */,
-				B1000100000000000000002D /* SyncService.swift */,
-				B1000100000000000000002E /* KeychainService.swift */,
+				506F36E5723123FC328CB22C /* AuthService.swift */,
+				5799C73EFA4E53177962EDB9 /* BibleService.swift */,
+				25D374DD0157DB6D3F999504 /* CrossReferenceParser.swift */,
+				1A1673C1E232B9139E5C1365 /* DailyVerseService.swift */,
+				136DD3E3B4C6C163CA67185D /* HapticService.swift */,
+				A49BC56BD84C2A17A55E3E6E /* KeychainService.swift */,
+				C12C090E98291634DC02703F /* NotificationService.swift */,
+				92E47BAF9E4B03AA47EBC084 /* ReviewService.swift */,
+				B0FF4A81096062AB53F8B027 /* StreakService.swift */,
+				E70D7EC04333C5BB46EAE484 /* SubscriptionService.swift */,
+				CFCA863DA4756D1599A8AD7C /* SyncService.swift */,
+				92C7391170E60BC03DB1933B /* UsageService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		271CAA8FF36FB328D8076A7C /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				2ADC8B399122D37C3751DD69 /* OnboardingView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		27B32ACB67C60009C10DA2BB /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				8326D2616EE1B03D4DBDBBB9 /* Color+Hex.swift */,
+				C31DFA410CAA8D7D4CD5C046 /* Date+Formatting.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		38FB3D8C9C4FAA823ED67067 /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				47D5AA106C467D0EAB4FF145 /* HomeView.swift */,
+				77BB0C84B1500618499BB14D /* JournalView.swift */,
+				FA0FA98FA974456C8AF1DBF5 /* PlanDetailView.swift */,
+				84085A086F51F6FB6803E846 /* PlansListView.swift */,
+				B454B341D9CC542FCFEBAF3B /* SavedView.swift */,
+				F913E8C1D57E32F785F666C3 /* SettingsView.swift */,
+			);
+			path = Tabs;
 			sourceTree = "<group>";
 		};
 		563E4A28E1B77194EEAAE5BE /* BibleCopilot */ = {
 			isa = PBXGroup;
 			children = (
+				04CA73846BF615DDE757AF9E /* Assets.xcassets */,
+				605D5B57063F29A812BB16EB /* BibleCopilot.entitlements */,
+				6AD3287D331AE696EB381A94 /* Configuration.storekit */,
 				D8C961DBE67857287D35498A /* App */,
-				C10001000000000000000001 /* Extensions */,
+				27B32ACB67C60009C10DA2BB /* Extensions */,
 				E97BEE3A256810FD389AB248 /* Models */,
 				714FA957F287298E4B9C7BB1 /* Resources */,
 				253A4DBB09442A31694016EC /* Services */,
-				C10001000000000000000002 /* Theme */,
-				C10001000000000000000003 /* ViewModels */,
+				E1CFC9CD97D812D5F4AFFFF6 /* Theme */,
+				585D210E100375AAFF3BCF37 /* ViewModels */,
 				AC3506813D6B2C3214F20024 /* Views */,
 			);
 			path = BibleCopilot;
+			sourceTree = "<group>";
+		};
+		585D210E100375AAFF3BCF37 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				7CF3DDF3DF056CE8BB753003 /* HomeViewModel.swift */,
+				BFD6DBAD12716135A75497F3 /* StudyViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		714FA957F287298E4B9C7BB1 /* Resources */ = {
@@ -169,14 +237,31 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		94AAFDB4F16CE69284B4C503 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				D284467BC69B7D0F51B9EDF9 /* DailyVerseCard.swift */,
+				AF983B9F10EAC837739D5F2F /* EmptyStateView.swift */,
+				82DDEAE0EAA806EC7483D364 /* JournalCardView.swift */,
+				EC92E1F7C95FA9CD697B4DE7 /* LoadingDotsView.swift */,
+				8A4438718821365AB5E0717D /* ProLockOverlay.swift */,
+				CEBDD98EB95C9459D7ACC1B5 /* QuickPickChip.swift */,
+				1FE11B40D5D9FD62BE15A301 /* SavedPassageCard.swift */,
+				9180BF1FC12F98B97EFE81C2 /* SignInWithAppleButton.swift */,
+				E5D74D69F97244843338F19F /* StreakBadge.swift */,
+				33DDA73C6C7E3EE533A48837 /* StudyModeCard.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		AC3506813D6B2C3214F20024 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				C10001000000000000000004 /* Components */,
-				C10001000000000000000005 /* Onboarding */,
-				C10001000000000000000006 /* Paywall */,
-				C10001000000000000000007 /* Study */,
-				C10001000000000000000008 /* Tabs */,
+				94AAFDB4F16CE69284B4C503 /* Components */,
+				271CAA8FF36FB328D8076A7C /* Onboarding */,
+				251D19F7E4451C98556DA922 /* Paywall */,
+				04CBBE371944A2FB6B306CEB /* Study */,
+				38FB3D8C9C4FAA823ED67067 /* Tabs */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -190,14 +275,23 @@
 			path = App;
 			sourceTree = "<group>";
 		};
+		E1CFC9CD97D812D5F4AFFFF6 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				01276970FF74C555D8128560 /* AppTheme.swift */,
+				71DE4F18C93BDE5685A0D035 /* StudyModeTheme.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
 		E97BEE3A256810FD389AB248 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				B10001000000000000000003 /* JournalEntry.swift */,
-				B10001000000000000000004 /* OnboardingSlide.swift */,
-				B10001000000000000000005 /* ReadingPlan.swift */,
-				B10001000000000000000006 /* ReadingPlanProgress.swift */,
-				B10001000000000000000007 /* SavedPassage.swift */,
+				A9480CE00AC3834EE3E9396E /* JournalEntry.swift */,
+				DDD2B968D0F5F5199EEE4411 /* OnboardingSlide.swift */,
+				F284F430E08A22F837B1A7AC /* ReadingPlan.swift */,
+				39EA3191821E2806149ADC50 /* ReadingPlanProgress.swift */,
+				81B2BE52F17D8833DC5EFF2B /* SavedPassage.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -208,92 +302,6 @@
 				563E4A28E1B77194EEAAE5BE /* BibleCopilot */,
 				1B713654A703ED0BFCA38011 /* Products */,
 			);
-			sourceTree = "<group>";
-		};
-		C10001000000000000000001 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				B10001000000000000000001 /* Color+Hex.swift */,
-				B10001000000000000000002 /* Date+Formatting.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		C10001000000000000000002 /* Theme */ = {
-			isa = PBXGroup;
-			children = (
-				B1000100000000000000000D /* AppTheme.swift */,
-				B1000100000000000000000E /* StudyModeTheme.swift */,
-			);
-			path = Theme;
-			sourceTree = "<group>";
-		};
-		C10001000000000000000003 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				B1000100000000000000000F /* HomeViewModel.swift */,
-				B10001000000000000000010 /* StudyViewModel.swift */,
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		C10001000000000000000004 /* Components */ = {
-			isa = PBXGroup;
-			children = (
-				B10001000000000000000011 /* EmptyStateView.swift */,
-				B10001000000000000000012 /* JournalCardView.swift */,
-				B10001000000000000000013 /* LoadingDotsView.swift */,
-				B10001000000000000000014 /* ProLockOverlay.swift */,
-				B10001000000000000000015 /* QuickPickChip.swift */,
-				B10001000000000000000016 /* SavedPassageCard.swift */,
-				B10001000000000000000017 /* StudyModeCard.swift */,
-				B10001000000000000000029 /* DailyVerseCard.swift */,
-				B1000100000000000000002A /* StreakBadge.swift */,
-				B1000100000000000000002C /* SignInWithAppleButton.swift */,
-			);
-			path = Components;
-			sourceTree = "<group>";
-		};
-		C10001000000000000000005 /* Onboarding */ = {
-			isa = PBXGroup;
-			children = (
-				B10001000000000000000018 /* OnboardingView.swift */,
-			);
-			path = Onboarding;
-			sourceTree = "<group>";
-		};
-		C10001000000000000000006 /* Paywall */ = {
-			isa = PBXGroup;
-			children = (
-				B10001000000000000000019 /* PaywallView.swift */,
-			);
-			path = Paywall;
-			sourceTree = "<group>";
-		};
-		C10001000000000000000007 /* Study */ = {
-			isa = PBXGroup;
-			children = (
-				B1000100000000000000001A /* AIResponseView.swift */,
-				B1000100000000000000001B /* CrossReferencesView.swift */,
-				B1000100000000000000001C /* StudyModePillsView.swift */,
-				B1000100000000000000001D /* StudyView.swift */,
-				B1000100000000000000001E /* VerseCardView.swift */,
-				B1000100000000000000002F /* TopicStudyView.swift */,
-			);
-			path = Study;
-			sourceTree = "<group>";
-		};
-		C10001000000000000000008 /* Tabs */ = {
-			isa = PBXGroup;
-			children = (
-				B1000100000000000000001F /* HomeView.swift */,
-				B10001000000000000000020 /* JournalView.swift */,
-				B10001000000000000000021 /* PlanDetailView.swift */,
-				B10001000000000000000022 /* PlansListView.swift */,
-				B10001000000000000000023 /* SavedView.swift */,
-				B10001000000000000000024 /* SettingsView.swift */,
-			);
-			path = Tabs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -356,7 +364,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				487F0F5BB365644C192FE6CB /* Assets.xcassets in Resources */,
 				0699AA62167C67136505D405 /* Assets.xcassets in Resources */,
+				0D1BF3C4639353D0FC54A48C /* Configuration.storekit in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,56 +377,56 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2C997F2FE4F3C15755E8862 /* AIResponseView.swift in Sources */,
 				18178906F1495B4BC1410581 /* AIService.swift in Sources */,
+				14649335782CF343CFCEFE05 /* AppTheme.swift in Sources */,
+				EA8AA18AEED09D743E5A7423 /* AuthService.swift in Sources */,
 				7C18A5C82B0BA8BEDA66936E /* BibleCopilotApp.swift in Sources */,
+				BFCD3CBC3F2FDE2A63024A14 /* BibleService.swift in Sources */,
+				04CE0C15F25A2560DF2D1DBA /* Color+Hex.swift in Sources */,
 				7DF106B4AF22A62C6DCD2CF7 /* ContentView.swift in Sources */,
-				A10001000000000000000001 /* Color+Hex.swift in Sources */,
-				A10001000000000000000002 /* Date+Formatting.swift in Sources */,
-				A10001000000000000000003 /* JournalEntry.swift in Sources */,
-				A10001000000000000000004 /* OnboardingSlide.swift in Sources */,
-				A10001000000000000000005 /* ReadingPlan.swift in Sources */,
-				A10001000000000000000006 /* ReadingPlanProgress.swift in Sources */,
-				A10001000000000000000007 /* SavedPassage.swift in Sources */,
-				A10001000000000000000008 /* BibleService.swift in Sources */,
-				A10001000000000000000009 /* CrossReferenceParser.swift in Sources */,
-				A1000100000000000000000A /* HapticService.swift in Sources */,
-				A1000100000000000000000B /* SubscriptionService.swift in Sources */,
-				A1000100000000000000000C /* UsageService.swift in Sources */,
-				A1000100000000000000000D /* AppTheme.swift in Sources */,
-				A1000100000000000000000E /* StudyModeTheme.swift in Sources */,
-				A1000100000000000000000F /* HomeViewModel.swift in Sources */,
-				A10001000000000000000010 /* StudyViewModel.swift in Sources */,
-				A10001000000000000000011 /* EmptyStateView.swift in Sources */,
-				A10001000000000000000012 /* JournalCardView.swift in Sources */,
-				A10001000000000000000013 /* LoadingDotsView.swift in Sources */,
-				A10001000000000000000014 /* ProLockOverlay.swift in Sources */,
-				A10001000000000000000015 /* QuickPickChip.swift in Sources */,
-				A10001000000000000000016 /* SavedPassageCard.swift in Sources */,
-				A10001000000000000000017 /* StudyModeCard.swift in Sources */,
-				A10001000000000000000018 /* OnboardingView.swift in Sources */,
-				A10001000000000000000019 /* PaywallView.swift in Sources */,
-				A1000100000000000000001A /* AIResponseView.swift in Sources */,
-				A1000100000000000000001B /* CrossReferencesView.swift in Sources */,
-				A1000100000000000000001C /* StudyModePillsView.swift in Sources */,
-				A1000100000000000000001D /* StudyView.swift in Sources */,
-				A1000100000000000000001E /* VerseCardView.swift in Sources */,
-				A1000100000000000000001F /* HomeView.swift in Sources */,
-				A10001000000000000000020 /* JournalView.swift in Sources */,
-				A10001000000000000000021 /* PlanDetailView.swift in Sources */,
-				A10001000000000000000022 /* PlansListView.swift in Sources */,
-				A10001000000000000000023 /* SavedView.swift in Sources */,
-				A10001000000000000000024 /* SettingsView.swift in Sources */,
-				A10001000000000000000025 /* DailyVerseService.swift in Sources */,
-				A10001000000000000000026 /* StreakService.swift in Sources */,
-				A10001000000000000000027 /* NotificationService.swift in Sources */,
-				A10001000000000000000028 /* ReviewService.swift in Sources */,
-				A10001000000000000000029 /* DailyVerseCard.swift in Sources */,
-				A1000100000000000000002A /* StreakBadge.swift in Sources */,
-				A1000100000000000000002B /* AuthService.swift in Sources */,
-				A1000100000000000000002C /* SignInWithAppleButton.swift in Sources */,
-				A1000100000000000000002D /* SyncService.swift in Sources */,
-				A1000100000000000000002F /* TopicStudyView.swift in Sources */,
-				A1000100000000000000002E /* KeychainService.swift in Sources */,
+				212F8B84D6A2E7EAB35494BC /* CrossReferenceParser.swift in Sources */,
+				28D5D4DA5ED8EF76123562DA /* CrossReferencesView.swift in Sources */,
+				1AD0140591062A0E94A8DFC5 /* DailyVerseCard.swift in Sources */,
+				02F612115A3107FF2F2243C0 /* DailyVerseService.swift in Sources */,
+				DA1F4A9EA8EB50BA68E95B9E /* Date+Formatting.swift in Sources */,
+				9B286DD908FE427E45803F27 /* EmptyStateView.swift in Sources */,
+				481A2D315752D2F69C98863E /* HapticService.swift in Sources */,
+				0E83ECE41430E67E2EA22066 /* HomeView.swift in Sources */,
+				8CAFF5E5215B2FB8CE836B57 /* HomeViewModel.swift in Sources */,
+				32B94AE30A8AB21BA0D9839D /* JournalCardView.swift in Sources */,
+				E7D6A5511AC006A89603D6ED /* JournalEntry.swift in Sources */,
+				8CEEEE36ED9C778896D3373D /* JournalView.swift in Sources */,
+				971AF5A6A128228FA9E8938F /* KeychainService.swift in Sources */,
+				353E8CACD0E77CAC4848E3D3 /* LoadingDotsView.swift in Sources */,
+				BF97334F1535DABB678D14EC /* NotificationService.swift in Sources */,
+				B4893D3114BDD2DC8978B9C4 /* OnboardingSlide.swift in Sources */,
+				898A0CB81121F6BFFCDE1985 /* OnboardingView.swift in Sources */,
+				635BD0692AD9A7E1D51C8C94 /* PaywallView.swift in Sources */,
+				D4FC064ACFD7C982DB5A7669 /* PlanDetailView.swift in Sources */,
+				178BE5AAADD3C7C0A9FBEE27 /* PlansListView.swift in Sources */,
+				8D07CBFA3D4189D12E0E28F6 /* ProLockOverlay.swift in Sources */,
+				7DF290A9685ACABA06D6FD1F /* QuickPickChip.swift in Sources */,
+				D831765B7E02496968851C3A /* ReadingPlan.swift in Sources */,
+				DE4808639E690C4DD686F3A4 /* ReadingPlanProgress.swift in Sources */,
+				18722C2C20F77319BF24F5A1 /* ReviewService.swift in Sources */,
+				2DA53702DA1A5DE10D40A726 /* SavedPassage.swift in Sources */,
+				9227A7B038F4AB5B8C778861 /* SavedPassageCard.swift in Sources */,
+				5E998A1E36DE1939E6609AA7 /* SavedView.swift in Sources */,
+				C04A53DE5742AF9A956760C2 /* SettingsView.swift in Sources */,
+				542487F5DC45006B8B1DDD95 /* SignInWithAppleButton.swift in Sources */,
+				FB5C090788FEF470DE8CBB7B /* StreakBadge.swift in Sources */,
+				92992D7885BA4865E0D4E8F6 /* StreakService.swift in Sources */,
+				956EB159E6FA31AD2558E198 /* StudyModeCard.swift in Sources */,
+				0749FC6D82FFE7A609074FD1 /* StudyModePillsView.swift in Sources */,
+				4A724EA8B454E0295A0B7D9A /* StudyModeTheme.swift in Sources */,
+				EF55AB84B2B11C6451318E35 /* StudyView.swift in Sources */,
+				E1FE155D5A45D00493FB87CD /* StudyViewModel.swift in Sources */,
+				E300C66BBCF4B6BE4B40BACF /* SubscriptionService.swift in Sources */,
+				FB3A505663BD7E54C4281960 /* SyncService.swift in Sources */,
+				EE4619EE6B7F71F77FE70B75 /* TopicStudyView.swift in Sources */,
+				2A0806926BF9916E8544FEEF /* UsageService.swift in Sources */,
+				AC38E852287E12A48A200692 /* VerseCardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -484,10 +494,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				CODE_SIGN_ENTITLEMENTS = BibleCopilot/BibleCopilot.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 110;
+				CURRENT_PROJECT_VERSION = 112;
 				DEVELOPMENT_TEAM = 846N5D6TMK;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = BibleCopilot/Resources/Info.plist;
@@ -496,7 +505,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.7.0;
+				MARKETING_VERSION = 1.7.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.scripturecopilot.app;
 				PRODUCT_NAME = "Bible Copilot";
 				SDKROOT = iphoneos;
@@ -573,10 +582,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				CODE_SIGN_ENTITLEMENTS = BibleCopilot/BibleCopilot.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 110;
+				CURRENT_PROJECT_VERSION = 112;
 				DEVELOPMENT_TEAM = 846N5D6TMK;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = BibleCopilot/Resources/Info.plist;
@@ -585,7 +593,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.7.0;
+				MARKETING_VERSION = 1.7.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.scripturecopilot.app;
 				PRODUCT_NAME = "Bible Copilot";
 				SDKROOT = iphoneos;
