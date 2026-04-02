@@ -6,8 +6,26 @@ struct SettingsView: View {
     @AppStorage("hapticFeedbackEnabled") private var hapticEnabled: Bool = true
     @AppStorage("fontSizePreference") private var fontSizePref: String = "medium"
     @AppStorage("dailyReminderEnabled") private var reminderEnabled: Bool = false
+    @AppStorage("reminderHour") private var reminderHour: Int = 8
+    @AppStorage("reminderMinute") private var reminderMinute: Int = 0
 
     let onShowPaywall: () -> Void
+
+    private var reminderTime: Binding<Date> {
+        Binding(
+            get: {
+                Calendar.current.date(bySettingHour: reminderHour, minute: reminderMinute, second: 0, of: Date()) ?? Date()
+            },
+            set: { date in
+                let components = Calendar.current.dateComponents([.hour, .minute], from: date)
+                reminderHour = components.hour ?? 8
+                reminderMinute = components.minute ?? 0
+                if reminderEnabled {
+                    NotificationService.shared.scheduleDailyReminder(hour: reminderHour, minute: reminderMinute)
+                }
+            }
+        )
+    }
 
     private let translations = [
         ("asv", "American Standard Version"),
@@ -94,7 +112,7 @@ struct SettingsView: View {
                             Task {
                                 let granted = await NotificationService.shared.requestPermission()
                                 if granted {
-                                    NotificationService.shared.scheduleDailyReminder()
+                                    NotificationService.shared.scheduleDailyReminder(hour: reminderHour, minute: reminderMinute)
                                     NotificationService.shared.scheduleStreakReminder()
                                 } else {
                                     reminderEnabled = false
@@ -103,6 +121,16 @@ struct SettingsView: View {
                         } else {
                             NotificationService.shared.cancelAll()
                         }
+                    }
+
+                    if reminderEnabled {
+                        DatePicker(
+                            "Reminder Time",
+                            selection: reminderTime,
+                            displayedComponents: .hourAndMinute
+                        )
+                        .foregroundColor(AppTheme.textPrimary)
+                        .tint(AppTheme.accent)
                     }
 
                     Toggle(isOn: $hapticEnabled) {
@@ -167,7 +195,7 @@ struct SettingsView: View {
                         }
                     }
 
-                    Link(destination: URL(string: "https://biblecopilot-app.netlify.app/privacy")!) {
+                    Link(destination: URL(string: "https://mybiblecopilot.com/privacy")!) {
                         HStack {
                             Image(systemName: "hand.raised")
                                 .foregroundColor(AppTheme.accent)
