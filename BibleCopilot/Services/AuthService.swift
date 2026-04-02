@@ -64,6 +64,13 @@ final class AuthService: NSObject {
         return request
     }
 
+    /// Generates a nonce, stores the plain version in currentNonce, returns the SHA256 hash.
+    func prepareNonce() -> String {
+        let nonce = randomNonceString()
+        currentNonce = nonce
+        return sha256(nonce)
+    }
+
     @MainActor
     func handleAppleSignIn(result: Result<ASAuthorization, Error>) async {
         isLoading = true

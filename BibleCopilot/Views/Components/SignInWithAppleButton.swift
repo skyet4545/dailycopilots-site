@@ -60,6 +60,7 @@ struct AccountSection: View {
 
                 // Sign in with Apple
                 SignInWithAppleCoordinator()
+                    .frame(height: 50)
 
                 // Email sign in
                 Button {
@@ -188,6 +189,7 @@ struct EmailAuthView: View {
                         .foregroundColor(AppTheme.textMuted)
 
                     SignInWithAppleCoordinator()
+                        .frame(height: 50)
                         .padding(.horizontal)
                 }
 
@@ -221,26 +223,54 @@ struct EmailAuthView: View {
 }
 
 // MARK: - Apple Sign In Coordinator
+// Uses UIViewRepresentable + ASAuthorizationController with an explicit presentationAnchor
+// so the sheet reliably appears when the button is inside a List/Section.
 
-struct SignInWithAppleCoordinator: View {
-    @State private var authService = AuthService.shared
+struct SignInWithAppleCoordinator: UIViewRepresentable {
+    func makeCoordinator() -> Coordinator {
+        Coordinator()
+    }
 
-    var body: some View {
-        AuthenticationServices.SignInWithAppleButton(
-            .signIn,
-            onRequest: { request in
-                let appleRequest = authService.signInWithApple()
-                request.requestedScopes = appleRequest.requestedScopes
-                request.nonce = appleRequest.nonce
-            },
-            onCompletion: { result in
-                Task {
-                    await authService.handleAppleSignIn(result: result)
-                }
-            }
-        )
-        .signInWithAppleButtonStyle(.white)
-        .frame(height: 50)
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+    func makeUIView(context: Context) -> ASAuthorizationAppleIDButton {
+        let button = ASAuthorizationAppleIDButton(type: .signIn, style: .white)
+        button.cornerRadius = 12
+        button.addTarget(context.coordinator, action: #selector(Coordinator.handleTap), for: .touchUpInside)
+        return button
+    }
+
+    func updateUIView(_ uiView: ASAuthorizationAppleIDButton, context: Context) {}
+
+    class Coordinator: NSObject, ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+        private let authService = AuthService.shared
+
+        @objc func handleTap() {
+            let hashedNonce = authService.prepareNonce()
+
+            let request = ASAuthorizationAppleIDProvider().createRequest()
+            request.requestedScopes = [.fullName, .email]
+            request.nonce = hashedNonce
+
+            let controller = ASAuthorizationController(authorizationRequests: [request])
+            controller.delegate = self
+            controller.presentationContextProvider = self
+            controller.performRequests()
+        }
+
+        func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+            UIApplication.shared.connectedScenes
+                .compactMap { $0 as? UIWindowScene }
+                .flatMap { $0.windows }
+                .first(where: { $0.isKeyWindow }) ?? UIWindow()
+        }
+
+        func authorizationController(controller: ASAuthorizationController,
+                                     didCompleteWithAuthorization authorization: ASAuthorization) {
+            Task { await authService.handleAppleSignIn(result: .success(authorization)) }
+        }
+
+        func authorizationController(controller: ASAuthorizationController,
+                                     didCompleteWithError error: Error) {
+            Task { await authService.handleAppleSignIn(result: .failure(error)) }
+        }
     }
 }
