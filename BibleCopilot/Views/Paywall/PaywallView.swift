@@ -184,7 +184,7 @@ struct PaywallView: View {
                             .font(.caption2)
                             .foregroundColor(AppTheme.accent)
 
-                        Link("Privacy Policy", destination: URL(string: "https://biblecopilot-app.netlify.app/privacy")!)
+                        Link("Privacy Policy", destination: URL(string: "https://mybiblecopilot.com/privacy")!)
                             .font(.caption2)
                             .foregroundColor(AppTheme.accent)
                     }

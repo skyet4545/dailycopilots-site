@@ -17,16 +17,23 @@ struct OnboardingView: View {
     @State private var isLoadingInsight = false
     @State private var selectedAhaVerse: String = "John 1:1"
 
+    // Notification step state
+    @State private var notificationRequested = false
+    @AppStorage("dailyReminderEnabled") private var reminderEnabled: Bool = false
+    @AppStorage("reminderHour") private var reminderHour: Int = 8
+    @AppStorage("reminderMinute") private var reminderMinute: Int = 0
+
     let onComplete: () -> Void
 
     private let slides = OnboardingSlide.slides
 
-    // Flow: 3 slides + goals + experience + aha moment + paywall = 7 steps
+    // Flow: 3 slides + goals + experience + aha moment + notification ask + paywall = 8 steps
     private let goalStep = 3
     private let experienceStep = 4
     private let ahaStep = 5
-    private let paywallStep = 6
-    private var totalSteps: Int { 7 }
+    private let notificationStep = 6
+    private let paywallStep = 7
+    private var totalSteps: Int { 8 }
 
     var body: some View {
         ZStack {
@@ -72,6 +79,8 @@ struct OnboardingView: View {
                         experienceLevelView
                     } else if currentStep == ahaStep {
                         ahaMomentView
+                    } else if currentStep == notificationStep {
+                        notificationAskView
                     } else if currentStep == paywallStep {
                         paywallSlideView
                     }
@@ -419,6 +428,100 @@ struct OnboardingView: View {
                 Spacer().frame(height: 40)
             }
         }
+    }
+
+    // MARK: - Notification Ask
+
+    private var notificationAskView: some View {
+        VStack(spacing: 0) {
+            Spacer()
+
+            VStack(spacing: 24) {
+                // Icon
+                ZStack {
+                    Circle()
+                        .fill(AppTheme.gold.opacity(0.15))
+                        .frame(width: 100, height: 100)
+                    Image(systemName: "bell.badge.fill")
+                        .font(.system(size: 42))
+                        .foregroundColor(AppTheme.gold)
+                }
+
+                VStack(spacing: 10) {
+                    Text("Build Your Daily Habit")
+                        .font(.title2.bold())
+                        .foregroundColor(AppTheme.textPrimary)
+                        .multilineTextAlignment(.center)
+
+                    Text("People who study Scripture daily remember 3× more. Get a gentle reminder so you never miss a day.")
+                        .font(.body)
+                        .foregroundColor(AppTheme.textMuted)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 32)
+                }
+
+                // Stats row
+                HStack(spacing: 0) {
+                    statPill(icon: "flame.fill", label: "Builds streaks", color: AppTheme.gold)
+                    statPill(icon: "clock.fill", label: "Your chosen time", color: AppTheme.accent)
+                    statPill(icon: "bell.slash.fill", label: "Cancel anytime", color: AppTheme.textMuted)
+                }
+                .padding(.horizontal, 16)
+            }
+
+            Spacer()
+
+            VStack(spacing: 12) {
+                // Primary CTA
+                Button {
+                    Task {
+                        let granted = await NotificationService.shared.requestPermission()
+                        if granted {
+                            reminderEnabled = true
+                            NotificationService.shared.scheduleDailyReminder(hour: reminderHour, minute: reminderMinute)
+                            HapticService.success()
+                        }
+                        notificationRequested = true
+                        withAnimation { currentStep += 1 }
+                    }
+                } label: {
+                    HStack(spacing: 8) {
+                        Image(systemName: "bell.fill")
+                        Text("Enable Daily Reminder")
+                            .font(.headline)
+                    }
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 16)
+                    .background(AppTheme.goldGradient)
+                    .clipShape(RoundedRectangle(cornerRadius: 14))
+                }
+                .padding(.horizontal, 24)
+
+                // Skip
+                Button {
+                    withAnimation { currentStep += 1 }
+                } label: {
+                    Text("Skip for now")
+                        .font(.subheadline)
+                        .foregroundColor(AppTheme.textMuted)
+                }
+            }
+            .padding(.bottom, 40)
+        }
+    }
+
+    private func statPill(icon: String, label: String, color: Color) -> some View {
+        VStack(spacing: 6) {
+            Image(systemName: icon)
+                .font(.system(size: 20))
+                .foregroundColor(color)
+            Text(label)
+                .font(.caption2)
+                .foregroundColor(AppTheme.textMuted)
+                .multilineTextAlignment(.center)
+        }
+        .frame(maxWidth: .infinity)
     }
 
     // MARK: - Paywall Slide
