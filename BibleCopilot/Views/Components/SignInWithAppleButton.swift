@@ -85,6 +85,14 @@ struct AccountSection: View {
             .sheet(isPresented: $showEmailAuth) {
                 EmailAuthView()
             }
+
+            if let error = authService.error {
+                Text(error)
+                    .font(.caption)
+                    .foregroundColor(AppTheme.error)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 4)
+            }
         }
     }
 }
@@ -122,6 +130,7 @@ struct EmailAuthView: View {
                         .textContentType(.emailAddress)
                         .autocorrectionDisabled()
                         .textInputAutocapitalization(.never)
+                        .onChange(of: email) { _, _ in authService.error = nil }
                         .padding()
                         .background(AppTheme.surfaceLight)
                         .foregroundColor(AppTheme.textPrimary)
@@ -160,6 +169,7 @@ struct EmailAuthView: View {
                             await authService.signInWithEmail(email, password: password)
                         }
                         if authService.isSignedIn {
+                            HapticService.success()
                             dismiss()
                         }
                     }
@@ -206,6 +216,12 @@ struct EmailAuthView: View {
             }
             .background(AppTheme.background)
             .navigationBarTitleDisplayMode(.inline)
+            .onChange(of: authService.isSignedIn) { _, signedIn in
+                if signedIn {
+                    HapticService.success()
+                    dismiss()
+                }
+            }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button { dismiss() } label: {
