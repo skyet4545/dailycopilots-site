@@ -70,6 +70,9 @@ struct ContentView: View {
         .onAppear {
             configureTabBarAppearance()
         }
+        .onChange(of: ThemeManager.shared.themeMode) {
+            configureTabBarAppearance()
+        }
     }
 
     private func configureTabBarAppearance() {

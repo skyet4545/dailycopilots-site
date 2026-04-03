@@ -6,14 +6,19 @@ import SwiftUI
 final class ThemeManager {
     static let shared = ThemeManager()
 
-    @ObservationIgnored
-    @AppStorage("appTheme") var themeMode: String = {
-        // Existing users (onboarding done) default to dark, new users to system
-        if UserDefaults.standard.bool(forKey: "onboardingComplete") {
-            return "dark"
+    var themeMode: String {
+        didSet { UserDefaults.standard.set(themeMode, forKey: "appTheme") }
+    }
+
+    private init() {
+        if let saved = UserDefaults.standard.string(forKey: "appTheme") {
+            themeMode = saved
+        } else if UserDefaults.standard.bool(forKey: "onboardingComplete") {
+            themeMode = "dark"
+        } else {
+            themeMode = "system"
         }
-        return "system"
-    }()
+    }
 
     var colorScheme: ColorScheme? {
         switch themeMode {
