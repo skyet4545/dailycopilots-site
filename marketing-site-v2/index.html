@@ -1,0 +1,798 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#0a0e1a" />
+<title>Bible Copilot — Study Scripture deeper, with AI that knows the original languages</title>
+<meta name="description" content="An AI Bible study companion for iPhone. Five study modes — Devotional, Historical, Cross-References, Greek & Hebrew, and Life Application. 1-week free trial. $4.99/mo or $29.99/yr." />
+
+<!-- Open Graph / Twitter -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Bible Copilot — AI Bible Study Companion" />
+<meta property="og:description" content="Study Scripture deeper. Five modes, AI that knows the original Greek & Hebrew. iPhone + iPad." />
+<meta property="og:url" content="https://apps.apple.com/app/id6758913373" />
+<meta property="og:image" content="./assets/appicon.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Bible Copilot — AI Bible Study Companion" />
+<meta name="twitter:description" content="Study Scripture deeper. With AI that knows the original languages." />
+<meta name="twitter:image" content="./assets/appicon.png" />
+
+<link rel="icon" type="image/png" href="./assets/appicon.png" />
+<link rel="apple-touch-icon" href="./assets/appicon.png" />
+
+<!-- Preconnect to font + 3D CDN -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://esm.sh" crossorigin />
+
+<!-- Fonts: Fraunces (serif heading), Inter (body) -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" />
+
+<!-- Structured data: SoftwareApplication -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MobileApplication",
+  "name": "Bible Copilot",
+  "operatingSystem": "iOS 17",
+  "applicationCategory": "LifestyleApplication",
+  "description": "AI Bible study companion with five modes: Devotional, Historical, Cross-References, Greek & Hebrew, and Life Application.",
+  "url": "https://apps.apple.com/app/id6758913373",
+  "image": "./assets/appicon.png",
+  "publisher": { "@type": "Organization", "name": "Republic Publishing LLC" },
+  "offers": [
+    { "@type": "Offer", "price": "0", "priceCurrency": "USD", "name": "Free — 15 questions/day" },
+    { "@type": "Offer", "price": "4.99", "priceCurrency": "USD", "name": "Pro Monthly" },
+    { "@type": "Offer", "price": "29.99", "priceCurrency": "USD", "name": "Pro Yearly" }
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5.0",
+    "reviewCount": "6"
+  }
+}
+</script>
+
+<style>
+  /* -------- Tokens -------- */
+  :root{
+    --bg-0:#0a0e1a;
+    --bg-1:#11172a;
+    --bg-2:#1a2341;
+    --gold:#d4a85a;
+    --gold-2:#f0c97a;
+    --parchment:#f5ecd9;
+    --parchment-dim:#cfc5ad;
+    --muted:#8a8fa3;
+    --line:rgba(255,255,255,.08);
+    --glass:rgba(255,255,255,.05);
+    --glass-strong:rgba(255,255,255,.08);
+    --maxw:1200px;
+    --serif:'Fraunces',Cormorant Garamond,Georgia,serif;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;
+    --r-sm:10px; --r-md:18px; --r-lg:28px;
+    --shadow-soft:0 30px 80px -20px rgba(0,0,0,.6), 0 8px 24px -8px rgba(0,0,0,.5);
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg-0);color:var(--parchment);font-family:var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  body{
+    background:
+      radial-gradient(1200px 700px at 70% -10%, rgba(212,168,90,.18), transparent 60%),
+      radial-gradient(900px 600px at 10% 30%, rgba(60,90,180,.15), transparent 60%),
+      linear-gradient(180deg, #0a0e1a 0%, #0c1227 50%, #0a0e1a 100%);
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  ::selection{background:rgba(212,168,90,.35);color:#fff}
+
+  /* -------- Layout helpers -------- */
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .row{display:flex;align-items:center;gap:24px}
+  .center{display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center}
+
+  /* -------- Nav -------- */
+  .nav{
+    position:sticky;top:0;z-index:30;
+    backdrop-filter:saturate(140%) blur(14px);
+    -webkit-backdrop-filter:saturate(140%) blur(14px);
+    background:linear-gradient(180deg,rgba(10,14,26,.78),rgba(10,14,26,.4));
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:500;letter-spacing:.01em;font-size:20px;color:var(--parchment)}
+  .brand-mark{
+    width:28px;height:28px;border-radius:8px;
+    background:radial-gradient(circle at 30% 30%, var(--gold-2), var(--gold) 55%, #6b4f1f 100%);
+    box-shadow:0 0 24px rgba(212,168,90,.5),inset 0 0 8px rgba(255,255,255,.25);
+  }
+  .nav-cta{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:10px 16px;border-radius:999px;
+    background:linear-gradient(180deg,#e8c277,#c89849);
+    color:#1a1407;font-weight:600;font-size:14px;letter-spacing:.02em;
+    box-shadow:0 6px 18px -6px rgba(212,168,90,.6),inset 0 1px 0 rgba(255,255,255,.4);
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .nav-cta:hover{transform:translateY(-1px);box-shadow:0 10px 24px -6px rgba(212,168,90,.7)}
+
+  /* -------- Hero -------- */
+  .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;z-index:0}
+  #r3f-canvas{position:absolute;inset:0;width:100%;height:100%}
+  .hero-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+  .hero-grain{
+    position:absolute;inset:0;pointer-events:none;opacity:.35;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+  .hero-content{position:relative;z-index:2;width:100%;padding:120px 0 80px}
+  .hero-scrim{
+    position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:
+      radial-gradient(60% 50% at 12% 55%, rgba(10,14,26,.72), transparent 65%),
+      linear-gradient(180deg, rgba(10,14,26,.55) 0%, transparent 30%, transparent 70%, rgba(10,14,26,.7) 100%);
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--gold);font-weight:600;
+    padding:8px 14px;border-radius:999px;
+    background:rgba(212,168,90,.08);border:1px solid rgba(212,168,90,.25);
+  }
+  .h1{
+    font-family:var(--serif);font-weight:400;
+    font-size:clamp(40px, 6.2vw, 76px);
+    line-height:1.04;letter-spacing:-.02em;
+    margin:24px 0 18px;max-width:18ch;
+    background:linear-gradient(180deg,#fff8e8 0%,#e6d6ac 70%, #b89656 120%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .h1 em{font-style:italic;color:var(--gold-2);-webkit-text-fill-color:var(--gold-2)}
+  .sub{font-size:clamp(15px, 1.6vw, 18px);max-width:60ch;color:var(--parchment-dim);line-height:1.55;margin:0 0 32px}
+  .cta-row{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+  .btn-store{
+    display:inline-flex;align-items:center;gap:12px;
+    padding:14px 22px;border-radius:14px;
+    background:#000;color:#fff;font-weight:600;font-size:15px;
+    border:1px solid rgba(255,255,255,.18);
+    box-shadow:var(--shadow-soft);
+    transition:transform .2s ease;
+  }
+  .btn-store:hover{transform:translateY(-2px)}
+  .btn-store .apple{width:22px;height:22px}
+  .btn-store small{display:block;font-size:11px;opacity:.7;font-weight:500;line-height:1}
+  .btn-ghost{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:14px 18px;border-radius:14px;
+    color:var(--parchment);font-weight:500;font-size:15px;
+    background:var(--glass);border:1px solid var(--line);
+    transition:background .2s ease;
+  }
+  .btn-ghost:hover{background:var(--glass-strong)}
+  .meta-row{margin-top:28px;display:flex;gap:18px;color:var(--muted);font-size:13px;flex-wrap:wrap}
+  .meta-row b{color:var(--parchment);font-weight:500}
+  .stars{color:var(--gold)}
+
+  /* -------- Section base -------- */
+  section.bordered{border-top:1px solid var(--line)}
+  .section{padding:120px 0;position:relative}
+  .section-head{max-width:680px;margin:0 auto 64px;text-align:center}
+  .kicker{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:600;display:block;margin-bottom:14px}
+  .h2{
+    font-family:var(--serif);font-weight:400;
+    font-size:clamp(32px, 4.4vw, 52px);line-height:1.08;letter-spacing:-.015em;
+    margin:0 0 16px;
+  }
+  .h2 em{font-style:italic;color:var(--gold-2)}
+  .lead{color:var(--parchment-dim);font-size:17px;line-height:1.6;max-width:60ch;margin:0 auto}
+
+  /* -------- 5 study modes -------- */
+  .modes{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+  .mode{
+    padding:28px 22px 24px;border-radius:var(--r-md);
+    background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.015));
+    border:1px solid var(--line);
+    position:relative;overflow:hidden;
+    transition:transform .25s ease, border-color .25s ease;
+  }
+  .mode:hover{transform:translateY(-4px);border-color:rgba(212,168,90,.35)}
+  .mode::before{
+    content:"";position:absolute;inset:-1px;border-radius:inherit;
+    background:radial-gradient(400px 200px at 50% -20%, rgba(212,168,90,.18), transparent 60%);
+    opacity:0;transition:opacity .3s ease;pointer-events:none;
+  }
+  .mode:hover::before{opacity:1}
+  .mode-icon{
+    width:46px;height:46px;border-radius:12px;display:grid;place-items:center;
+    background:linear-gradient(180deg,rgba(212,168,90,.22),rgba(212,168,90,.06));
+    border:1px solid rgba(212,168,90,.3);color:var(--gold-2);
+    margin-bottom:18px;
+  }
+  .mode-icon svg{width:22px;height:22px}
+  .mode-title{font-family:var(--serif);font-size:20px;font-weight:500;margin:0 0 8px;color:#fff}
+  .mode-body{font-size:14px;color:var(--parchment-dim);line-height:1.5;margin:0}
+
+  /* -------- Showcase (phones) -------- */
+  .showcase-grid{
+    display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center;
+  }
+  .phones{
+    position:relative;height:560px;
+    display:flex;align-items:center;justify-content:center;
+    perspective:1400px;
+  }
+  .phone{
+    position:absolute;width:240px;height:auto;
+    border-radius:38px;overflow:hidden;
+    box-shadow:0 50px 100px -30px rgba(0,0,0,.8), 0 12px 30px -10px rgba(0,0,0,.6), inset 0 0 0 2px rgba(255,255,255,.08);
+    background:#0c1024;
+    transition:transform .5s cubic-bezier(.2,.7,.2,1);
+  }
+  .phone img{display:block;width:100%;height:auto}
+  .phone-1{transform:translateX(-110px) translateY(20px) rotateY(14deg) rotateZ(-3deg);z-index:1}
+  .phone-2{transform:translateY(-10px) rotateY(-2deg) rotateZ(0deg);z-index:3}
+  .phone-3{transform:translateX(110px) translateY(40px) rotateY(-14deg) rotateZ(3deg);z-index:1}
+  .phone-glow{
+    position:absolute;width:520px;height:520px;border-radius:50%;
+    background:radial-gradient(circle, rgba(212,168,90,.35) 0%, rgba(212,168,90,0) 60%);
+    filter:blur(20px);z-index:0;
+  }
+  .showcase-copy h2{margin-bottom:18px}
+  .showcase-list{margin-top:22px;display:grid;gap:14px}
+  .showcase-list li{display:flex;gap:12px;align-items:flex-start;list-style:none;padding:0;color:var(--parchment-dim);font-size:15px;line-height:1.5}
+  .showcase-list ul{padding:0;margin:0}
+  .check{
+    flex-shrink:0;width:22px;height:22px;border-radius:50%;
+    background:rgba(212,168,90,.18);color:var(--gold-2);
+    display:grid;place-items:center;font-size:12px;margin-top:1px;
+  }
+
+  /* -------- Pricing -------- */
+  .pricing-card{
+    max-width:560px;margin:0 auto;padding:44px 40px;
+    border-radius:var(--r-lg);
+    background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+    border:1px solid rgba(212,168,90,.35);
+    position:relative;overflow:hidden;
+    box-shadow:var(--shadow-soft);
+  }
+  .pricing-card::before{
+    content:"";position:absolute;inset:-2px;border-radius:inherit;pointer-events:none;
+    background:radial-gradient(600px 240px at 50% -10%, rgba(212,168,90,.25), transparent 60%);
+  }
+  .pricing-eyebrow{font-family:var(--serif);font-style:italic;color:var(--gold-2);font-size:18px;text-align:center;margin:0 0 6px}
+  .pricing-h{font-family:var(--serif);font-size:34px;font-weight:400;text-align:center;margin:0 0 28px;letter-spacing:-.01em}
+  .price-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px;position:relative;z-index:1}
+  .price-tile{
+    padding:20px;border-radius:var(--r-md);
+    background:rgba(10,14,26,.55);border:1px solid var(--line);
+    text-align:center;transition:border-color .2s ease;
+  }
+  .price-tile.best{border-color:rgba(212,168,90,.55);background:rgba(212,168,90,.06)}
+  .price-tile small{font-size:12px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:8px}
+  .price{font-family:var(--serif);font-size:34px;letter-spacing:-.01em;color:#fff}
+  .price small{display:inline;text-transform:none;letter-spacing:0;font-size:15px;color:var(--muted)}
+  .price-note{font-size:13px;color:var(--parchment-dim);margin-top:10px}
+  .badge{
+    display:inline-block;padding:3px 10px;border-radius:999px;
+    background:rgba(212,168,90,.18);color:var(--gold-2);
+    font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;
+  }
+  .pricing-includes{display:grid;gap:10px;margin:0 0 26px;padding:0;list-style:none;color:var(--parchment-dim);font-size:14px;position:relative;z-index:1}
+  .pricing-includes li{display:flex;gap:10px;align-items:center}
+  .pricing-cta-wrap{text-align:center;position:relative;z-index:1}
+
+  /* -------- Social proof -------- */
+  .testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .quote-card{
+    padding:26px;border-radius:var(--r-md);
+    background:rgba(255,255,255,.03);border:1px solid var(--line);
+  }
+  .quote-stars{color:var(--gold);margin-bottom:12px;letter-spacing:2px;font-size:15px}
+  .quote-body{font-family:var(--serif);font-size:18px;line-height:1.45;font-weight:400;color:#fff;margin:0 0 14px;letter-spacing:-.005em}
+  .quote-attr{font-size:13px;color:var(--muted)}
+  .ratings-banner{
+    display:flex;gap:36px;justify-content:center;align-items:center;
+    margin-bottom:48px;flex-wrap:wrap;color:var(--parchment-dim);
+  }
+  .ratings-banner b{font-family:var(--serif);font-size:30px;color:#fff;font-weight:400;letter-spacing:-.01em}
+  .vert-divider{width:1px;height:34px;background:var(--line)}
+
+  /* -------- Footer -------- */
+  footer{padding:60px 0 80px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+  .footer-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px}
+  .footer-links{display:flex;gap:22px}
+  .footer-links a:hover{color:var(--parchment)}
+
+  /* -------- Responsive -------- */
+  @media (max-width: 980px){
+    .modes{grid-template-columns:repeat(2,1fr)}
+    .modes .mode:last-child{grid-column:1 / -1}
+    .showcase-grid{grid-template-columns:1fr;gap:30px}
+    .phones{height:520px}
+    .testimonials{grid-template-columns:1fr}
+    .section{padding:80px 0}
+    .hero-content{padding:100px 0 60px}
+  }
+  @media (max-width: 540px){
+    .modes{grid-template-columns:1fr}
+    .modes .mode:last-child{grid-column:auto}
+    .price-grid{grid-template-columns:1fr}
+    .phones{height:460px;transform:scale(.85);transform-origin:center}
+    .h1{font-size:42px}
+    .pricing-card{padding:32px 22px}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important;transition:none !important}
+  }
+
+  /* Reveal-on-scroll */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .8s ease, transform .8s ease}
+  .reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<!-- ============= NAV ============= -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="brand" aria-label="Bible Copilot home">
+      <span class="brand-mark" aria-hidden="true"></span>
+      Bible Copilot
+    </a>
+    <a class="nav-cta" href="https://apps.apple.com/app/id6758913373" target="_blank" rel="noopener">
+      Get the App
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</header>
+
+<!-- ============= HERO ============= -->
+<section class="hero" id="top">
+  <div class="hero-bg" aria-hidden="true">
+    <!-- 3D canvas mounts here lazily; static SVG fallback below until then -->
+    <div id="r3f-mount" style="position:absolute;inset:0"></div>
+    <div class="hero-fallback" id="hero-fallback">
+      <!-- Static SVG: typographic constellation -->
+      <svg viewBox="0 0 1000 1000" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs>
+          <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"  stop-color="#fff3cd" stop-opacity=".22"/>
+            <stop offset="35%" stop-color="#d4a85a" stop-opacity=".10"/>
+            <stop offset="70%" stop-color="#d4a85a" stop-opacity=".02"/>
+            <stop offset="100%" stop-color="#d4a85a" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="core" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#fff3cd" stop-opacity=".55"/>
+            <stop offset="60%" stop-color="#f0c97a" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <!-- soft warm focal point -->
+        <circle cx="500" cy="500" r="420" fill="url(#halo)"/>
+        <circle cx="500" cy="500" r="60"  fill="url(#core)"/>
+        <!-- ambient sparkles -->
+        <g fill="#f0c97a" opacity=".7">
+          <circle cx="200" cy="220" r="1.5"/><circle cx="820" cy="180" r="1"/>
+          <circle cx="140" cy="640" r="1.2"/><circle cx="860" cy="700" r="1.4"/>
+          <circle cx="380" cy="120" r="1"/><circle cx="700" cy="820" r="1.6"/>
+          <circle cx="300" cy="860" r="1"/><circle cx="620" cy="100" r="1.2"/>
+          <circle cx="80"  cy="400" r="1"/><circle cx="920" cy="450" r="1"/>
+          <circle cx="500" cy="40"  r="1"/><circle cx="500" cy="960" r="1"/>
+        </g>
+        <!-- typographic constellation, varied scale = depth -->
+        <g font-family="Fraunces, Georgia, serif" font-style="italic">
+          <text x="170" y="280" fill="#f5ecd9" opacity=".88" font-size="34">John 3:16</text>
+          <text x="730" y="240" fill="#f0c97a" opacity=".75" font-size="28">Ἐν ἀρχῇ</text>
+          <text x="120" y="540" fill="#e6d6ac" opacity=".60" font-size="22">Romans 8:28</text>
+          <text x="780" y="560" fill="#f5ecd9" opacity=".82" font-size="38" direction="rtl">בְּרֵאשִׁית</text>
+          <text x="200" y="780" fill="#d4a85a" opacity=".55" font-size="20">Genesis 1:1</text>
+          <text x="660" y="820" fill="#e6d6ac" opacity=".70" font-size="26">ἀγάπη</text>
+          <text x="420" y="160" fill="#cfc5ad" opacity=".5"  font-size="18">Psalm 23</text>
+          <text x="430" y="900" fill="#f0c97a" opacity=".75" font-size="32" direction="rtl">שָׁלוֹם</text>
+          <text x="80"  y="380" fill="#cfc5ad" opacity=".45" font-size="16">Heb 11:1</text>
+          <text x="850" y="400" fill="#cfc5ad" opacity=".50" font-size="18">λόγος</text>
+          <text x="320" y="460" fill="#f0c97a" opacity=".7"  font-size="24">Phil 4:13</text>
+          <text x="600" y="700" fill="#e6d6ac" opacity=".55" font-size="20">πνεῦμα</text>
+        </g>
+      </svg>
+    </div>
+    <div class="hero-grain"></div>
+  </div>
+  <div class="hero-scrim" aria-hidden="true"></div>
+
+  <div class="wrap hero-content">
+    <span class="eyebrow">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.39 7.36H22l-6.19 4.5L18.2 21 12 16.5 5.8 21l2.39-7.14L2 9.36h7.61z"/></svg>
+      Now on iPhone &amp; iPad
+    </span>
+    <h1 class="h1">Study Scripture deeper. <em>With AI that knows the original languages.</em></h1>
+    <p class="sub">Five study modes — Devotional, Historical, Cross-References, Greek &amp; Hebrew, and Life Application. Ask any verse. Hear it back with depth, not platitudes.</p>
+    <div class="cta-row">
+      <a class="btn-store" href="https://apps.apple.com/app/id6758913373" target="_blank" rel="noopener" aria-label="Download Bible Copilot on the App Store">
+        <svg class="apple" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.46 2.22-1.27 3-1 1-2.13 1.62-3.41 1.51-.13-1.12.43-2.27 1.21-3.04.84-.85 2.27-1.5 3.47-1.47zM20.5 17.4c-.53 1.22-.78 1.77-1.46 2.85-.94 1.5-2.27 3.36-3.92 3.38-1.46.02-1.84-.95-3.83-.94-1.99.01-2.41.96-3.88.94-1.65-.02-2.91-1.7-3.85-3.2C1.6 15.55.91 8.93 4.45 5.36c1.6-1.61 4.18-1.96 5.4-1.96 1.4 0 2.34.55 3.78.55 1.4 0 2.25-.55 3.84-.55 1.18 0 2.5.59 3.5 1.61-3.08 1.69-2.58 6.08.53 7.39-.57 1.4-.83 2-1 3z"/></svg>
+        <span><small>Download on the</small><b style="font-size:17px">App Store</b></span>
+      </a>
+      <a class="btn-ghost" href="#showcase">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        Watch demo
+      </a>
+    </div>
+    <div class="meta-row">
+      <span class="stars">★★★★★</span>
+      <span><b>1-week free trial</b> · then $4.99/mo or $29.99/yr</span>
+      <span>Free tier: <b>15 questions/day</b></span>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 5 STUDY MODES ============= -->
+<section class="section bordered" id="modes">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">Five ways in</span>
+      <h2 class="h2">One question. <em>Five lenses</em> on the text.</h2>
+      <p class="lead">Pick the mode that fits the moment — a quiet morning devotional, a deep Greek dive, a historical context check before small group.</p>
+    </div>
+    <div class="modes">
+      <article class="mode reveal">
+        <div class="mode-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-7-11a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 6.5-7 11-7 11Z"/></svg></div>
+        <h3 class="mode-title">Devotional</h3>
+        <p class="mode-body">Slow, reflective reading with prayer prompts and a single takeaway to carry into the day.</p>
+      </article>
+      <article class="mode reveal">
+        <div class="mode-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M5 6v14a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6M9 10h6M9 14h6"/></svg></div>
+        <h3 class="mode-title">Historical</h3>
+        <p class="mode-body">First-century context, geography, customs, audience — the world the verse was written into.</p>
+      </article>
+      <article class="mode reveal">
+        <div class="mode-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 6h7M6 8.5v7M18 8.5v7M8.5 18h7"/></svg></div>
+        <h3 class="mode-title">Cross-References</h3>
+        <p class="mode-body">Surfaces parallel passages and OT/NT echoes so you can read Scripture through Scripture.</p>
+      </article>
+      <article class="mode reveal">
+        <div class="mode-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16M7 19V8a3 3 0 0 1 3-3h0a3 3 0 0 1 3 3v11M9 12h4"/><path d="M16 19V11M16 11h3M16 15h3"/></svg></div>
+        <h3 class="mode-title">Greek &amp; Hebrew</h3>
+        <p class="mode-body">Word studies on the original text — root meaning, range, and how the choice shapes the verse.</p>
+      </article>
+      <article class="mode reveal">
+        <div class="mode-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/><circle cx="12" cy="12" r="3.5"/></svg></div>
+        <h3 class="mode-title">Life Application</h3>
+        <p class="mode-body">Practical, honest application — what the passage asks of you this week, not a generic platitude.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============= APP SHOWCASE ============= -->
+<section class="section bordered" id="showcase">
+  <div class="wrap">
+    <div class="showcase-grid">
+      <div class="phones reveal" aria-hidden="true">
+        <div class="phone-glow"></div>
+        <div class="phone phone-1"><img src="./assets/verse_study.png" alt="" loading="lazy" decoding="async"/></div>
+        <div class="phone phone-2"><img src="./assets/home.png" alt="Bible Copilot home screen" loading="lazy" decoding="async"/></div>
+        <div class="phone phone-3"><img src="./assets/ai_response.png" alt="" loading="lazy" decoding="async"/></div>
+      </div>
+      <div class="showcase-copy reveal">
+        <span class="kicker">Built for daily study</span>
+        <h2 class="h2">A verse, a question, <em>a real answer.</em></h2>
+        <p class="lead" style="margin-left:0">Type any reference — <b>John 3:16</b>, <b>Romans 8:28</b>, <b>Genesis 1:1</b>. Choose a mode. Read a thoughtful answer that pulls in the original language and cross-references, formatted to skim or savor.</p>
+        <ul class="showcase-list">
+          <li><span class="check">✓</span> Streaming responses — see the answer compose as it thinks</li>
+          <li><span class="check">✓</span> Save verses to a personal journal with notes</li>
+          <li><span class="check">✓</span> Reading plans and history that travel with you across devices</li>
+          <li><span class="check">✓</span> No ads, no clutter — designed for focus</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= PRICING ============= -->
+<section class="section bordered" id="pricing">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">Pricing</span>
+      <h2 class="h2">Try it free. <em>Keep it for the price of a coffee.</em></h2>
+      <p class="lead">Start with a 1-week free trial. Cancel any time from your Apple ID.</p>
+    </div>
+    <div class="pricing-card reveal">
+      <p class="pricing-eyebrow">Bible Copilot Pro</p>
+      <h3 class="pricing-h">Unlimited questions, all five modes</h3>
+      <div class="price-grid">
+        <div class="price-tile">
+          <small>Monthly</small>
+          <div class="price">$4.99<small>/mo</small></div>
+          <div class="price-note">Billed every month</div>
+        </div>
+        <div class="price-tile best">
+          <span class="badge">Save ~50%</span>
+          <small>Yearly</small>
+          <div class="price">$29.99<small>/yr</small></div>
+          <div class="price-note">Just $2.49/mo, billed once a year</div>
+        </div>
+      </div>
+      <ul class="pricing-includes">
+        <li><span class="check">✓</span> 1-week free trial — no charge until it ends</li>
+        <li><span class="check">✓</span> All five study modes, unlimited questions</li>
+        <li><span class="check">✓</span> Greek &amp; Hebrew word studies on every verse</li>
+        <li><span class="check">✓</span> Personal journal, reading plans, cross-references</li>
+        <li><span class="check">✓</span> Cancel anytime — manage in Apple Settings</li>
+      </ul>
+      <div style="text-align:center;color:var(--muted);font-size:13px;margin-bottom:18px">
+        Free tier without Pro: <b style="color:var(--parchment-dim)">15 questions/day</b>, two modes.
+      </div>
+      <div class="pricing-cta-wrap">
+        <a class="btn-store" href="https://apps.apple.com/app/id6758913373" target="_blank" rel="noopener">
+          <svg class="apple" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.46 2.22-1.27 3-1 1-2.13 1.62-3.41 1.51-.13-1.12.43-2.27 1.21-3.04.84-.85 2.27-1.5 3.47-1.47zM20.5 17.4c-.53 1.22-.78 1.77-1.46 2.85-.94 1.5-2.27 3.36-3.92 3.38-1.46.02-1.84-.95-3.83-.94-1.99.01-2.41.96-3.88.94-1.65-.02-2.91-1.7-3.85-3.2C1.6 15.55.91 8.93 4.45 5.36c1.6-1.61 4.18-1.96 5.4-1.96 1.4 0 2.34.55 3.78.55 1.4 0 2.25-.55 3.84-.55 1.18 0 2.5.59 3.5 1.61-3.08 1.69-2.58 6.08.53 7.39-.57 1.4-.83 2-1 3z"/></svg>
+          <span><small>Start free on</small><b style="font-size:17px">App Store</b></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= SOCIAL PROOF ============= -->
+<section class="section bordered" id="reviews">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">Early readers</span>
+      <h2 class="h2">A study partner that <em>actually reads with you.</em></h2>
+    </div>
+    <div class="ratings-banner">
+      <div><span class="stars" style="font-size:24px">★★★★★</span> <b style="margin-left:8px">5.0</b> on the App Store</div>
+      <div class="vert-divider"></div>
+      <div><b>6</b> ratings · iPhone &amp; iPad</div>
+      <div class="vert-divider"></div>
+      <div>Just launched — <b>real reviews</b> below</div>
+    </div>
+    <div class="testimonials">
+      <div class="quote-card reveal">
+        <div class="quote-stars">★★★★★</div>
+        <p class="quote-body">"The level of insight from a single scripture took my Bible study to a new level."</p>
+        <div class="quote-attr">— Bashemup · App Store review</div>
+      </div>
+      <div class="quote-card reveal">
+        <div class="quote-stars">★★★★★</div>
+        <p class="quote-body">"This app anchors in scripture to interpret scripture."</p>
+        <div class="quote-attr">— los| · App Store review</div>
+      </div>
+      <div class="quote-card reveal">
+        <div class="quote-stars">★★★★★</div>
+        <p class="quote-body">"I love the insight AI study gives, especially giving historical and cultural context."</p>
+        <div class="quote-attr">— OrlandoLaurie · App Store review</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= FOOTER ============= -->
+<footer>
+  <div class="wrap footer-row">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      Bible Copilot
+    </div>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="../public/privacy.html">Privacy</a>
+      <a href="../public/terms.html">Terms</a>
+      <a href="mailto:hello@scripturecopilot.app">Contact</a>
+      <a href="https://apps.apple.com/app/id6758913373" target="_blank" rel="noopener">App Store</a>
+    </nav>
+    <div>© 2026 Republic Publishing LLC</div>
+  </div>
+</footer>
+
+<!-- ============= 3D HERO (R3F) — lazy ============= -->
+<script>
+  // Reveal-on-scroll
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }, { threshold: .12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Decide whether to load WebGL hero
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isSmallViewport = matchMedia('(max-width: 768px)').matches;
+  // Heuristic for weak GPU / mobile: prefer fallback
+  const lowPower = (navigator.deviceMemory && navigator.deviceMemory <= 4) ||
+                   /Android.*Mobile|iPhone|iPod/i.test(navigator.userAgent) && isSmallViewport;
+  const skip3D = reduceMotion || lowPower;
+
+  // Webgl support test
+  function hasWebGL() {
+    try {
+      const c = document.createElement('canvas');
+      return !!(c.getContext('webgl2') || c.getContext('webgl'));
+    } catch { return false; }
+  }
+</script>
+
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@18.3.1",
+    "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
+    "react-dom": "https://esm.sh/react-dom@18.3.1",
+    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+    "three": "https://esm.sh/three@0.160.0",
+    "@react-three/fiber": "https://esm.sh/@react-three/fiber@8.15.19?deps=react@18.3.1,react-dom@18.3.1,three@0.160.0",
+    "@react-three/drei": "https://esm.sh/@react-three/drei@9.99.0?deps=react@18.3.1,react-dom@18.3.1,three@0.160.0,@react-three/fiber@8.15.19"
+  }
+}
+</script>
+
+<script type="module">
+  // Don't block first paint. Mount only after idle + WebGL check.
+  if (!window.skip3D && !(window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+    const small = matchMedia('(max-width: 768px)').matches;
+    const memOK = !navigator.deviceMemory || navigator.deviceMemory > 4;
+    const isMobileUA = /Android.*Mobile|iPhone|iPod/i.test(navigator.userAgent);
+    const ok = !((isMobileUA && small) || !memOK);
+
+    function tryWebGL(){
+      try { const c=document.createElement('canvas'); return !!(c.getContext('webgl2')||c.getContext('webgl')); }
+      catch { return false; }
+    }
+
+    if (ok && tryWebGL()) {
+      const start = () => import('./scene.js').catch(()=>mountInline());
+      const mountInline = async () => {
+        // Inline module so the file stays self-contained
+        const code = `
+import * as React from 'react';
+import { createRoot } from 'react-dom/client';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { Sparkles, Text } from '@react-three/drei';
+import * as THREE from 'three';
+
+// Fonts: Drei <Text> (troika-three-text) accepts TTF directly with CORS.
+// Pull TTF straight from Google's fonts repo via jsdelivr (stable, CORS-enabled).
+const FONT_LATIN_GREEK = 'https://cdn.jsdelivr.net/gh/google/fonts@main/ofl/ebgaramond/EBGaramond%5Bwght%5D.ttf';
+const FONT_GREEK       = 'https://cdn.jsdelivr.net/gh/google/fonts@main/ofl/ebgaramond/EBGaramond%5Bwght%5D.ttf';
+const FONT_HEBREW      = 'https://cdn.jsdelivr.net/gh/google/fonts@main/ofl/frankruhllibre/FrankRuhlLibre%5Bwght%5D.ttf';
+const isHebrew = (s) => /[֐-׿יִ-ﭏ]/.test(s);
+const isGreek  = (s) => /[Ͱ-Ͽἀ-῿]/.test(s);
+function fontFor(t){
+  if (isHebrew(t)) return FONT_HEBREW;
+  if (isGreek(t))  return FONT_GREEK;
+  return FONT_LATIN_GREEK;
+}
+
+// Typography constellation. Varied radii (some near, some far) + axes for parallax depth.
+const REFS = [
+  // Hero references — bigger, foreground
+  { t:'John 3:16',     r:1.6, s:0.18, h:0.65,  off:0.0,  size:0.18, color:'#f5ecd9', tilt:[0.05, 0, 0] },
+  { t:'Psalm 23',      r:1.2, s:0.22, h:-0.55, off:1.7,  size:0.15, color:'#e6d6ac', tilt:[0.0, 0, 0] },
+  { t:'Romans 8:28',   r:1.8, s:0.15, h:0.05,  off:3.3,  size:0.16, color:'#f5ecd9', tilt:[-0.05, 0, 0] },
+  { t:'Phil 4:13',     r:1.5, s:0.20, h:0.95,  off:5.1,  size:0.14, color:'#cfc5ad', tilt:[0.1, 0, 0] },
+  { t:'Genesis 1:1',   r:1.7, s:0.17, h:-1.05, off:0.9,  size:0.14, color:'#cfc5ad', tilt:[0.05, 0, 0.1] },
+
+  // Greek — gold accent
+  { t:'Ἐν ἀρχῇ',       r:1.4, s:0.24, h:1.10,  off:2.4,  size:0.18, color:'#f0c97a', tilt:[0, 0.1, 0] },
+  { t:'ἀγάπη',         r:1.0, s:0.28, h:-0.05, off:4.4,  size:0.20, color:'#f0c97a', tilt:[0, 0, 0] },
+  { t:'λόγος',         r:1.7, s:0.16, h:-1.20, off:6.0,  size:0.16, color:'#f0c97a', tilt:[0.1, 0, 0] },
+  { t:'πνεῦμα',        r:1.3, s:0.20, h:0.40,  off:7.7,  size:0.16, color:'#f0c97a', tilt:[-0.05,0, 0] },
+
+  // Hebrew
+  { t:'בְּרֵאשִׁית',     r:1.25,s:0.26, h:0.25,  off:8.2,  size:0.18, color:'#f5ecd9', tilt:[0, 0, 0] },
+  { t:'שָׁלוֹם',         r:1.6, s:0.22, h:-0.75, off:9.1,  size:0.20, color:'#f0c97a', tilt:[0.05,0, 0] },
+  { t:'אַהֲבָה',         r:1.1, s:0.30, h:1.00,  off:10.0, size:0.18, color:'#e6d6ac', tilt:[0, 0, 0] },
+
+  // Background depth — small, far back
+  { t:'Heb 11:1',      r:1.9, s:0.12, h:-0.35, off:11.2, size:0.09, color:'#cfc5ad', tilt:[0, 0, 0], depth:1.6 },
+  { t:'1 Cor 13',      r:1.85,s:0.14, h:0.55,  off:12.0, size:0.09, color:'#cfc5ad', tilt:[0, 0, 0], depth:1.8 },
+];
+
+function FloatingGlyph({ data, centerX }) {
+  const ref = React.useRef();
+  const depthOffset = data.depth || 0; // push some items farther back (negative z bias)
+  useFrame(({ clock, camera }) => {
+    if (!ref.current) return;
+    const t = clock.getElapsedTime() * data.s + data.off;
+    // Orbit on a slightly tilted plane for parallax variety
+    const tx = data.tilt || [0,0,0];
+    const px = centerX + Math.cos(t) * data.r;
+    const pz = Math.sin(t) * data.r - depthOffset;
+    const py = data.h + Math.sin(t*0.7 + data.off)*0.18 + tx[0]*Math.cos(t)*0.6;
+    ref.current.position.set(px, py, pz);
+    // Billboard — always face camera
+    ref.current.lookAt(camera.position);
+    // Depth-based opacity & subtle fade (no obstructing object now, but still helps cohesion)
+    const dist = camera.position.distanceTo(ref.current.position);
+    const op = Math.max(0.18, Math.min(0.95, 1.15 - (dist - 4) * 0.18));
+    if (ref.current.material) ref.current.material.opacity = op;
+  });
+  const font = fontFor(data.t);
+  return (
+    React.createElement(Text, {
+      ref, fontSize: data.size || 0.16, color: data.color || '#f0c97a',
+      anchorX:'center', anchorY:'middle',
+      font,
+      outlineWidth:0.004, outlineColor:'#1a1407', outlineOpacity:0.55,
+      'material-toneMapped': false, 'material-transparent': true, 'material-depthWrite': false
+    }, data.t)
+  );
+}
+
+// Soft luminous focal point: just a point light + tiny pinprick of warm light.
+// No outer sphere — that was rendering as a dark bubble.
+function FocalLight({ centerX }) {
+  return React.createElement('group', { position:[centerX, 0, 0] },
+    React.createElement('mesh', null,
+      React.createElement('sphereGeometry', { args:[0.04, 16, 16] }),
+      React.createElement('meshBasicMaterial', { color:'#fff8e0', toneMapped:false, transparent:true, opacity:0.85, depthWrite:false })
+    ),
+    React.createElement('pointLight', { intensity:2.0, color:'#f0c97a', distance:7, decay:2 })
+  );
+}
+
+// (Orb mesh removed per design pivot — typography is now the hero.)
+
+function Scene() {
+  // On portrait/narrow: keep typography centered behind/around headline; lift slightly.
+  // On wide: push to right so headline (left) is unobstructed.
+  const [layout, setLayout] = React.useState({ centerX: 0, centerY: 0.6, scale: 1.0 });
+  React.useEffect(() => {
+    const update = () => {
+      const w = window.innerWidth, h = window.innerHeight;
+      const aspect = w / h;
+      if (aspect < 1.0)        setLayout({ centerX: 0,    centerY: 0.6,  scale: 0.95 });
+      else if (aspect < 1.4)   setLayout({ centerX: 0.4,  centerY: 0.3,  scale: 1.0 });
+      else                     setLayout({ centerX: 1.4,  centerY: 0.1,  scale: 1.0 });
+    };
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
+  return React.createElement('group', { position:[0, layout.centerY, 0], scale:layout.scale },
+    React.createElement('ambientLight', { intensity:0.45 }),
+    React.createElement('directionalLight', { position:[3,4,5], intensity:0.55, color:'#fff3cd' }),
+    React.createElement('directionalLight', { position:[-4,-2,-3], intensity:0.25, color:'#6e7fff' }),
+    React.createElement(FocalLight, { centerX: layout.centerX }),
+    REFS.map((d,i)=>React.createElement(FloatingGlyph,{ key:i, data:d, centerX: layout.centerX })),
+    React.createElement(Sparkles, { count:80, scale:[14,8,8], size:1.8, speed:0.22, color:'#f0c97a', opacity:0.55 })
+  );
+}
+
+function App() {
+  return React.createElement(Canvas, {
+      camera:{ position:[0,0.2,6.2], fov:42 },
+      gl:{ antialias:true, alpha:true, powerPreference:'high-performance' },
+      dpr:[1, 1.6],
+      style:{ width:'100%', height:'100%' }
+    },
+    React.createElement(Scene)
+  );
+}
+
+const mount = document.getElementById('r3f-mount');
+if (mount) {
+  const root = createRoot(mount);
+  root.render(React.createElement(App));
+  // Fade out static fallback once R3F is up
+  requestAnimationFrame(()=>{
+    setTimeout(()=>{
+      const fb = document.getElementById('hero-fallback');
+      if (fb) { fb.style.transition='opacity .8s ease'; fb.style.opacity='0'; setTimeout(()=>fb.remove(), 900); }
+    }, 350);
+  });
+}
+`;
+        const blob = new Blob([code], { type: 'text/javascript' });
+        const url = URL.createObjectURL(blob);
+        await import(url);
+      };
+
+      const kick = () => mountInline();
+      if ('requestIdleCallback' in window) requestIdleCallback(kick, { timeout: 1200 });
+      else setTimeout(kick, 600);
+    }
+  }
+</script>
+
+</body>
+</html>
