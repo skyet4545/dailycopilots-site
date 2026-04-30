@@ -2,7 +2,7 @@
   "expo": {
     "name": "Bible Copilot",
     "slug": "scripture-copilot",
-    "version": "1.5.1",
+    "version": "1.9.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
@@ -16,7 +16,7 @@
     ],
     "ios": {
       "bundleIdentifier": "com.scripturecopilot.app",
-      "buildNumber": "91",
+      "buildNumber": "105",
       "supportsTablet": true,
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false

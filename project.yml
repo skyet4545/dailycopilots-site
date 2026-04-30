@@ -2,7 +2,7 @@ name: BibleCopilot
 options:
   bundleIdPrefix: com.scripturecopilot
   deploymentTarget:
-    iOS: "15.0"
+    iOS: "18.0"
   xcodeVersion: "15"
 
 targets:
@@ -18,21 +18,21 @@ targets:
         PRODUCT_NAME: Bible Copilot
         SWIFT_VERSION: "5.0"
         TARGETED_DEVICE_FAMILY: "1,2"
-        MARKETING_VERSION: "1.5.1"
-        CURRENT_PROJECT_VERSION: "88"
+        MARKETING_VERSION: "1.9.0"
+        CURRENT_PROJECT_VERSION: "119"
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS: "YES"
         CODE_SIGN_STYLE: Automatic
         DEVELOPMENT_TEAM: "846N5D6TMK"
         ENABLE_BITCODE: "NO"
-        IPHONEOS_DEPLOYMENT_TARGET: "15.0"
+        IPHONEOS_DEPLOYMENT_TARGET: "18.0"
     info:
       path: BibleCopilot/Resources/Info.plist
       properties:
         CFBundleDisplayName: Bible Copilot
         CFBundleName: BibleCopilot
-        CFBundleVersion: "88"
-        CFBundleShortVersionString: "1.5.1"
+        CFBundleVersion: "119"
+        CFBundleShortVersionString: "1.9.0"
         CFBundleIdentifier: com.scripturecopilot.app
         UILaunchScreen:
           UIColorName: systemBackground
@@ -46,4 +46,3 @@ targets:
           - UIInterfaceOrientationLandscapeLeft
           - UIInterfaceOrientationLandscapeRight
         ITSAppUsesNonExemptEncryption: false
-        NSMicrophoneUsageDescription: Used for voice input to ask Bible questions
