@@ -99,7 +99,7 @@ This is exactly what a new user experiences when they download Bible Copilot.
 - **Usage counter** is prominent at top
 - Shows "10/10 free questions today"
 - Subtle "Tap to upgrade" hint
-- All 5 study modes available
+- All 6 study modes available
 
 ---
 
