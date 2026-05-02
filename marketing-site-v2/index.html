@@ -4,18 +4,18 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="theme-color" content="#0a0e1a" />
-<title>Bible Copilot — Study Scripture deeper, with AI that knows the original languages</title>
-<meta name="description" content="An AI Bible study companion for iPhone. Five study modes — Devotional, Historical, Cross-References, Greek & Hebrew, and Life Application. 1-week free trial. $4.99/mo or $29.99/yr." />
+<title>Bible Copilot — Study Scripture deeper, the way seminaries teach it</title>
+<meta name="description" content="An AI Bible study companion for iPhone. Six study modes — Summary, Observe, Interpret, Theology, Apply, and Apologetics — the inductive method, in your pocket. 1-week free trial. $4.99/mo or $29.99/yr." />
 
 <!-- Open Graph / Twitter -->
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Bible Copilot — AI Bible Study Companion" />
-<meta property="og:description" content="Study Scripture deeper. Five modes, AI that knows the original Greek & Hebrew. iPhone + iPad." />
+<meta property="og:description" content="Study Scripture deeper. Six modes — the inductive method seminaries trust. iPhone + iPad." />
 <meta property="og:url" content="https://apps.apple.com/app/id6758913373" />
 <meta property="og:image" content="./assets/appicon.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Bible Copilot — AI Bible Study Companion" />
-<meta name="twitter:description" content="Study Scripture deeper. With AI that knows the original languages." />
+<meta name="twitter:description" content="Study Scripture deeper. The inductive method, in your pocket." />
 <meta name="twitter:image" content="./assets/appicon.png" />
 
 <link rel="icon" type="image/png" href="./assets/appicon.png" />
@@ -37,7 +37,8 @@
   "name": "Bible Copilot",
   "operatingSystem": "iOS 17",
   "applicationCategory": "LifestyleApplication",
-  "description": "AI Bible study companion with five modes: Devotional, Historical, Cross-References, Greek & Hebrew, and Life Application.",
+  "description": "AI Bible study companion with six modes from the inductive method: Summary, Observe, Interpret, Theology, Apply, and Apologetics.",
+  "featureList": "Six study modes (Summary, Observe, Interpret, Theology, Apply, Apologetics), AI verse commentary with cross-references, daily verse, reading streaks, study journal, five reading plans, light & dark mode",
   "url": "https://apps.apple.com/app/id6758913373",
   "image": "./assets/appicon.png",
   "publisher": { "@type": "Organization", "name": "Republic Publishing LLC" },
@@ -51,6 +52,80 @@
     "ratingValue": "5.0",
     "reviewCount": "6"
   }
+}
+</script>
+
+<!-- Structured data: FAQPage -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is Bible Copilot just ChatGPT with a Bible theme?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Bible Copilot enforces verse-anchored citations and applies six structured inductive-method study modes (Summary, Observe, Interpret, Theology, Apply, Apologetics) that a generic chatbot cannot replicate. Responses cite scripture by reference, not from memory."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if Bible Copilot gives me bad theology?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "On contested doctrines, Bible Copilot presents the major positions held by serious Christians (Reformed, Arminian, and others) without advocating for one. All verse references are cited explicitly. The app is a study tool, not a creed."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "I already use YouVersion. Why do I need Bible Copilot?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Bible Copilot is not a reading app — it is the understanding app you open after you finish the chapter. YouVersion handles reading plans and devotionals. Bible Copilot answers what verse questions mean, using six inductive study modes with original-language depth."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Bible Copilot support my Bible translation (KJV, NIV, ESV)?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Verse text is served from an API that supports multiple translations. KJV is the default."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to be a Bible scholar to use it?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The Summary and Apply modes are designed for non-scholars. Three of the five App Store reviewers described themselves as non-scholars and found the app approachable."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my data used to train AI models?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Your study questions and journal entries are not used to train any AI model."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I cancel the free trial before being charged?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Subscriptions are managed in Apple Settings (Settings > Apple ID > Subscriptions). Cancel before day 8 of the 1-week annual free trial and you are not charged."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does Bible Copilot cost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Free tier: 15 questions per day, no credit card required. Pro Monthly: $4.99/month. Pro Annual: $29.99/year ($2.49/month equivalent) with a 1-week free trial. App Store ID: 6758913373."
+      }
+    }
+  ]
 }
 </script>
 
@@ -189,8 +264,8 @@
   .h2 em{font-style:italic;color:var(--gold-2)}
   .lead{color:var(--parchment-dim);font-size:17px;line-height:1.6;max-width:60ch;margin:0 auto}
 
-  /* -------- 5 study modes -------- */
-  .modes{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+  /* -------- 6 study modes (3×2 grid) -------- */
+  .modes{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
   .mode{
     padding:28px 22px 24px;border-radius:var(--r-md);
     background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.015));
@@ -301,6 +376,86 @@
   .ratings-banner b{font-family:var(--serif);font-size:30px;color:#fff;font-weight:400;letter-spacing:-.01em}
   .vert-divider{width:1px;height:34px;background:var(--line)}
 
+  /* -------- Comparison table -------- */
+  .compare-wrap{
+    max-width:980px;margin:0 auto;
+    border-radius:var(--r-md);overflow:hidden;
+    border:1px solid rgba(212,168,90,.30);
+    background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.015));
+    box-shadow:var(--shadow-soft);
+    overflow-x:auto;
+  }
+  .compare{
+    width:100%;border-collapse:collapse;
+    font-size:14px;color:var(--parchment-dim);
+    min-width:760px;
+  }
+  .compare caption{
+    text-align:left;padding:18px 22px 0;
+    font-family:var(--serif);font-style:italic;color:var(--gold-2);font-size:14px;
+    caption-side:top;
+  }
+  .compare thead th{
+    font-family:var(--sans);font-weight:600;font-size:12px;
+    letter-spacing:.12em;text-transform:uppercase;
+    color:var(--gold);
+    text-align:left;padding:16px 14px;
+    background:rgba(212,168,90,.06);
+    border-bottom:1px solid rgba(212,168,90,.30);
+  }
+  .compare thead th:first-child{padding-left:22px}
+  .compare thead th:nth-child(2){color:var(--gold-2)}
+  .compare tbody td{
+    padding:14px;
+    border-bottom:1px solid var(--line);
+    vertical-align:top;line-height:1.45;
+  }
+  .compare tbody td:first-child{
+    padding-left:22px;color:#fff;font-weight:500;
+  }
+  .compare tbody td:nth-child(2){
+    color:var(--parchment);background:rgba(212,168,90,.04);
+  }
+  .compare tbody tr:last-child td{border-bottom:0}
+  .compare tbody tr:hover td{background:rgba(255,255,255,.02)}
+  .compare tbody tr:hover td:nth-child(2){background:rgba(212,168,90,.08)}
+
+  /* -------- FAQ -------- */
+  .faq-list{max-width:780px;margin:0 auto;display:grid;gap:14px}
+  details.faq-item{
+    border-radius:var(--r-md);
+    background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.015));
+    border:1px solid var(--line);
+    overflow:hidden;
+    transition:border-color .25s ease;
+  }
+  details.faq-item[open]{border-color:rgba(212,168,90,.35)}
+  details.faq-item summary{
+    list-style:none;cursor:pointer;
+    padding:20px 24px;
+    font-family:var(--serif);font-size:19px;font-weight:500;color:#fff;
+    display:flex;justify-content:space-between;align-items:flex-start;gap:18px;
+    letter-spacing:-.005em;line-height:1.3;
+  }
+  details.faq-item summary::-webkit-details-marker{display:none}
+  details.faq-item summary::after{
+    content:"+";flex-shrink:0;
+    color:var(--gold-2);font-family:var(--sans);font-size:24px;font-weight:300;
+    line-height:1;margin-top:2px;
+    transition:transform .2s ease;
+  }
+  details.faq-item[open] summary::after{content:"−"}
+  details.faq-item .faq-body{
+    padding:0 24px 22px;
+    font-size:15px;line-height:1.6;color:var(--parchment-dim);
+  }
+
+  @media (max-width: 540px){
+    details.faq-item summary{font-size:17px;padding:18px 18px}
+    details.faq-item .faq-body{padding:0 18px 18px;font-size:14.5px}
+    .compare{min-width:680px}
+  }
+
   /* -------- Footer -------- */
   footer{padding:60px 0 80px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
   .footer-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px}
@@ -310,7 +465,6 @@
   /* -------- Responsive -------- */
   @media (max-width: 980px){
     .modes{grid-template-columns:repeat(2,1fr)}
-    .modes .mode:last-child{grid-column:1 / -1}
     .showcase-grid{grid-template-columns:1fr;gap:30px}
     .phones{height:520px}
     .testimonials{grid-template-columns:1fr}
@@ -319,7 +473,6 @@
   }
   @media (max-width: 540px){
     .modes{grid-template-columns:1fr}
-    .modes .mode:last-child{grid-column:auto}
     .price-grid{grid-template-columns:1fr}
     .phones{height:460px;transform:scale(.85);transform-origin:center}
     .h1{font-size:42px}
@@ -356,25 +509,32 @@
     <!-- 3D canvas mounts here lazily; static SVG fallback below until then -->
     <div id="r3f-mount" style="position:absolute;inset:0"></div>
     <div class="hero-fallback" id="hero-fallback">
-      <!-- Static SVG: typographic constellation -->
+      <!-- Static SVG: stylized leather Bible + typographic constellation -->
       <svg viewBox="0 0 1000 1000" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
         <defs>
-          <radialGradient id="halo" cx="50%" cy="50%" r="50%">
-            <stop offset="0%"  stop-color="#fff3cd" stop-opacity=".22"/>
-            <stop offset="35%" stop-color="#d4a85a" stop-opacity=".10"/>
-            <stop offset="70%" stop-color="#d4a85a" stop-opacity=".02"/>
-            <stop offset="100%" stop-color="#d4a85a" stop-opacity="0"/>
-          </radialGradient>
-          <radialGradient id="core" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#fff3cd" stop-opacity=".55"/>
-            <stop offset="60%" stop-color="#f0c97a" stop-opacity="0"/>
-          </radialGradient>
+          <linearGradient id="leather" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"  stop-color="#4a1820"/>
+            <stop offset="55%" stop-color="#3a1218"/>
+            <stop offset="100%" stop-color="#240a0e"/>
+          </linearGradient>
+          <linearGradient id="leather-spine" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%"  stop-color="#160405"/>
+            <stop offset="100%" stop-color="#3a1218"/>
+          </linearGradient>
+          <linearGradient id="gold-edge-top" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%"  stop-color="#a87a30"/>
+            <stop offset="50%" stop-color="#f0c97a"/>
+            <stop offset="100%" stop-color="#a87a30"/>
+          </linearGradient>
+          <linearGradient id="gold-edge-side" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%"  stop-color="#b08842"/>
+            <stop offset="50%" stop-color="#e0b266"/>
+            <stop offset="100%" stop-color="#9a6f30"/>
+          </linearGradient>
         </defs>
-        <!-- soft warm focal point -->
-        <circle cx="500" cy="500" r="420" fill="url(#halo)"/>
-        <circle cx="500" cy="500" r="60"  fill="url(#core)"/>
-        <!-- ambient sparkles -->
-        <g fill="#f0c97a" opacity=".7">
+
+        <!-- ambient sparkles (no halo — Bible is the focal point) -->
+        <g fill="#f0c97a" opacity=".55">
           <circle cx="200" cy="220" r="1.5"/><circle cx="820" cy="180" r="1"/>
           <circle cx="140" cy="640" r="1.2"/><circle cx="860" cy="700" r="1.4"/>
           <circle cx="380" cy="120" r="1"/><circle cx="700" cy="820" r="1.6"/>
@@ -382,20 +542,82 @@
           <circle cx="80"  cy="400" r="1"/><circle cx="920" cy="450" r="1"/>
           <circle cx="500" cy="40"  r="1"/><circle cx="500" cy="960" r="1"/>
         </g>
-        <!-- typographic constellation, varied scale = depth -->
+
+        <!-- Stylized Bible (3/4 angle, spine on left) -->
+        <g transform="translate(510 510)">
+          <!-- soft cast shadow -->
+          <ellipse cx="14" cy="218" rx="290" ry="20" fill="#000" opacity=".40"/>
+          <ellipse cx="14" cy="218" rx="220" ry="12" fill="#000" opacity=".25"/>
+
+          <!-- Top edge of pages (gold leaf, 3/4 perspective) -->
+          <polygon points="-205,-185 230,-195 260,-160 -190,-150" fill="url(#gold-edge-top)"/>
+          <g stroke="#a78248" stroke-width=".5" opacity=".45">
+            <line x1="-198" y1="-178" x2="244" y2="-188"/>
+            <line x1="-194" y1="-170" x2="248" y2="-180"/>
+            <line x1="-190" y1="-162" x2="252" y2="-172"/>
+          </g>
+
+          <!-- Right edge (open side, gilded) -->
+          <polygon points="230,-195 260,-160 260,170 230,150" fill="url(#gold-edge-side)"/>
+          <g stroke="#a78248" stroke-width=".4" opacity=".42">
+            <line x1="237" y1="-180" x2="252" y2="-160"/>
+            <line x1="237" y1="-145" x2="252" y2="-125"/>
+            <line x1="237" y1="-110" x2="252" y2="-90"/>
+            <line x1="237" y1="-75"  x2="252" y2="-55"/>
+            <line x1="237" y1="-40"  x2="252" y2="-20"/>
+            <line x1="237" y1="-5"   x2="252" y2="15"/>
+            <line x1="237" y1="30"   x2="252" y2="50"/>
+            <line x1="237" y1="65"   x2="252" y2="85"/>
+            <line x1="237" y1="100"  x2="252" y2="120"/>
+          </g>
+
+          <!-- Bottom edge -->
+          <polygon points="-205,150 230,150 260,170 -190,170" fill="#9a7030"/>
+
+          <!-- Front cover (leather) -->
+          <polygon points="-205,-185 230,-195 230,150 -205,150" fill="url(#leather)" stroke="#180609" stroke-width="2"/>
+
+          <!-- Ornamental border (subtle gold inset) -->
+          <rect x="-180" y="-162" width="385" height="290" fill="none" stroke="#d4a85a" stroke-width="1.3" opacity=".42" rx="3"/>
+          <rect x="-170" y="-152" width="365" height="270" fill="none" stroke="#d4a85a" stroke-width=".6"  opacity=".25" rx="2"/>
+
+          <!-- Cross emboss -->
+          <g fill="#d4a85a" opacity=".46">
+            <rect x="-12" y="-72" width="24" height="170" rx="2"/>
+            <rect x="-60" y="-26" width="120" height="24"  rx="2"/>
+          </g>
+          <g fill="#f4d68a" opacity=".22">
+            <rect x="-11" y="-69" width="3"  height="164" rx="1"/>
+            <rect x="-57" y="-23" width="116" height="3"   rx="1"/>
+          </g>
+
+          <!-- Spine (left, slightly raised band) -->
+          <polygon points="-238,-172 -205,-185 -205,150 -243,164" fill="url(#leather-spine)" stroke="#0d0304" stroke-width="1.5"/>
+          <g stroke="#080202" stroke-width="2" opacity=".7">
+            <line x1="-230" y1="-92" x2="-214" y2="-94"/>
+            <line x1="-230" y1="78"  x2="-214" y2="76"/>
+          </g>
+
+          <!-- Ribbon bookmark — exits between pages bottom-right -->
+          <polygon points="105,150 148,150 144,300 100,290" fill="#9a1828"/>
+          <polygon points="105,150 122,150 121,228 105,225" fill="#bd2638" opacity=".55"/>
+          <polygon points="100,290 144,300 132,316 121,322 110,316" fill="#6a0d18"/>
+        </g>
+
+        <!-- Typographic constellation around the Bible -->
         <g font-family="Fraunces, Georgia, serif" font-style="italic">
-          <text x="170" y="280" fill="#f5ecd9" opacity=".88" font-size="34">John 3:16</text>
-          <text x="730" y="240" fill="#f0c97a" opacity=".75" font-size="28">Ἐν ἀρχῇ</text>
-          <text x="120" y="540" fill="#e6d6ac" opacity=".60" font-size="22">Romans 8:28</text>
-          <text x="780" y="560" fill="#f5ecd9" opacity=".82" font-size="38" direction="rtl">בְּרֵאשִׁית</text>
-          <text x="200" y="780" fill="#d4a85a" opacity=".55" font-size="20">Genesis 1:1</text>
-          <text x="660" y="820" fill="#e6d6ac" opacity=".70" font-size="26">ἀγάπη</text>
-          <text x="420" y="160" fill="#cfc5ad" opacity=".5"  font-size="18">Psalm 23</text>
-          <text x="430" y="900" fill="#f0c97a" opacity=".75" font-size="32" direction="rtl">שָׁלוֹם</text>
-          <text x="80"  y="380" fill="#cfc5ad" opacity=".45" font-size="16">Heb 11:1</text>
-          <text x="850" y="400" fill="#cfc5ad" opacity=".50" font-size="18">λόγος</text>
-          <text x="320" y="460" fill="#f0c97a" opacity=".7"  font-size="24">Phil 4:13</text>
-          <text x="600" y="700" fill="#e6d6ac" opacity=".55" font-size="20">πνεῦμα</text>
+          <text x="120" y="180" fill="#f5ecd9" opacity=".78" font-size="30">John 3:16</text>
+          <text x="780" y="160" fill="#f0c97a" opacity=".66" font-size="26">Ἐν ἀρχῇ</text>
+          <text x="60"  y="430" fill="#e6d6ac" opacity=".50" font-size="20">Romans 8:28</text>
+          <text x="800" y="430" fill="#f5ecd9" opacity=".66" font-size="32" direction="rtl">בְּרֵאשִׁית</text>
+          <text x="100" y="800" fill="#d4a85a" opacity=".55" font-size="22">Genesis 1:1</text>
+          <text x="700" y="850" fill="#e6d6ac" opacity=".60" font-size="24">ἀγάπη</text>
+          <text x="380" y="100" fill="#cfc5ad" opacity=".45" font-size="18">Psalm 23</text>
+          <text x="450" y="950" fill="#f0c97a" opacity=".62" font-size="28" direction="rtl">שָׁלוֹם</text>
+          <text x="40"  y="640" fill="#cfc5ad" opacity=".40" font-size="15">Heb 11:1</text>
+          <text x="855" y="650" fill="#cfc5ad" opacity=".48" font-size="17">λόγος</text>
+          <text x="60"  y="320" fill="#f0c97a" opacity=".58" font-size="20">Phil 4:13</text>
+          <text x="830" y="900" fill="#e6d6ac" opacity=".48" font-size="18">πνεῦμα</text>
         </g>
       </svg>
     </div>
@@ -406,10 +628,10 @@
   <div class="wrap hero-content">
     <span class="eyebrow">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.39 7.36H22l-6.19 4.5L18.2 21 12 16.5 5.8 21l2.39-7.14L2 9.36h7.61z"/></svg>
-      Now on iPhone &amp; iPad
+      Free to try. No streak to lose. Just more depth.
     </span>
-    <h1 class="h1">Study Scripture deeper. <em>With AI that knows the original languages.</em></h1>
-    <p class="sub">Five study modes — Devotional, Historical, Cross-References, Greek &amp; Hebrew, and Life Application. Ask any verse. Hear it back with depth, not platitudes.</p>
+    <h1 class="h1">Your Bible has the answers. <em>Your apps don&rsquo;t give them.</em></h1>
+    <p class="sub">Bible Copilot is the study companion that goes where YouVersion and Bible Gateway stop — six inductive-method lenses on any verse, with original-language depth, cross-references, and zero theological platitudes. In your pocket.</p>
     <div class="cta-row">
       <a class="btn-store" href="https://apps.apple.com/app/id6758913373" target="_blank" rel="noopener" aria-label="Download Bible Copilot on the App Store">
         <svg class="apple" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.46 2.22-1.27 3-1 1-2.13 1.62-3.41 1.51-.13-1.12.43-2.27 1.21-3.04.84-.85 2.27-1.5 3.47-1.47zM20.5 17.4c-.53 1.22-.78 1.77-1.46 2.85-.94 1.5-2.27 3.36-3.92 3.38-1.46.02-1.84-.95-3.83-.94-1.99.01-2.41.96-3.88.94-1.65-.02-2.91-1.7-3.85-3.2C1.6 15.55.91 8.93 4.45 5.36c1.6-1.61 4.18-1.96 5.4-1.96 1.4 0 2.34.55 3.78.55 1.4 0 2.25-.55 3.84-.55 1.18 0 2.5.59 3.5 1.61-3.08 1.69-2.58 6.08.53 7.39-.57 1.4-.83 2-1 3z"/></svg>
@@ -428,40 +650,169 @@
   </div>
 </section>
 
-<!-- ============= 5 STUDY MODES ============= -->
+<!-- ============= 6 STUDY MODES ============= -->
 <section class="section bordered" id="modes">
   <div class="wrap">
     <div class="section-head">
-      <span class="kicker">Five ways in</span>
-      <h2 class="h2">One question. <em>Five lenses</em> on the text.</h2>
-      <p class="lead">Pick the mode that fits the moment — a quiet morning devotional, a deep Greek dive, a historical context check before small group.</p>
+      <span class="kicker">Six ways in</span>
+      <h2 class="h2">One question. <em>Six lenses</em> on the text.</h2>
+      <p class="lead">The inductive method seminaries teach — Summary, Observe, Interpret, Theology, Apply, Apologetics. Pick the mode that fits the moment, in one tap.</p>
     </div>
     <div class="modes">
       <article class="mode reveal">
-        <div class="mode-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-7-11a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 6.5-7 11-7 11Z"/></svg></div>
-        <h3 class="mode-title">Devotional</h3>
-        <p class="mode-body">Slow, reflective reading with prayer prompts and a single takeaway to carry into the day.</p>
+        <div class="mode-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h12M4 18h8"/></svg></div>
+        <h3 class="mode-title">Summary</h3>
+        <p class="mode-body">Get the gist before the deep dive — structure, themes, and where this verse sits in its chapter.</p>
       </article>
       <article class="mode reveal">
-        <div class="mode-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M5 6v14a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6M9 10h6M9 14h6"/></svg></div>
-        <h3 class="mode-title">Historical</h3>
-        <p class="mode-body">First-century context, geography, customs, audience — the world the verse was written into.</p>
+        <div class="mode-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <h3 class="mode-title">Observe</h3>
+        <p class="mode-body">What does the text actually say? Structure, keywords, and the questions every careful reader should ask.</p>
       </article>
       <article class="mode reveal">
-        <div class="mode-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 6h7M6 8.5v7M18 8.5v7M8.5 18h7"/></svg></div>
-        <h3 class="mode-title">Cross-References</h3>
-        <p class="mode-body">Surfaces parallel passages and OT/NT echoes so you can read Scripture through Scripture.</p>
+        <div class="mode-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.74V17h8v-2.26A7 7 0 0 0 12 2Z"/></svg></div>
+        <h3 class="mode-title">Interpret</h3>
+        <p class="mode-body">What does it mean? Original languages, authorial intent, and cultural background — without the seminary tuition.</p>
       </article>
       <article class="mode reveal">
-        <div class="mode-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16M7 19V8a3 3 0 0 1 3-3h0a3 3 0 0 1 3 3v11M9 12h4"/><path d="M16 19V11M16 11h3M16 15h3"/></svg></div>
-        <h3 class="mode-title">Greek &amp; Hebrew</h3>
-        <p class="mode-body">Word studies on the original text — root meaning, range, and how the choice shapes the verse.</p>
+        <div class="mode-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h7a3 3 0 0 1 3 3v14a2 2 0 0 0-2-2H2V4ZM22 4h-7a3 3 0 0 0-3 3v14a2 2 0 0 1 2-2h8V4Z"/></svg></div>
+        <h3 class="mode-title">Theology</h3>
+        <p class="mode-body">What does this passage teach about God? Connect a single verse to the bigger story of Scripture.</p>
       </article>
       <article class="mode reveal">
-        <div class="mode-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/><circle cx="12" cy="12" r="3.5"/></svg></div>
-        <h3 class="mode-title">Life Application</h3>
-        <p class="mode-body">Practical, honest application — what the passage asks of you this week, not a generic platitude.</p>
+        <div class="mode-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-4 0v5M14 11V4a2 2 0 0 0-4 0v7M10 10.5V6a2 2 0 0 0-4 0v8a8 8 0 0 0 16 0v-3a2 2 0 0 0-4 0"/></svg></div>
+        <h3 class="mode-title">Apply</h3>
+        <p class="mode-body">Practical, honest takeaways — what this passage asks of you this week, not a generic platitude.</p>
       </article>
+      <article class="mode reveal">
+        <div class="mode-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 4 9 8 10 4-1 8-5 8-10V6l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg></div>
+        <h3 class="mode-title">Apologetics</h3>
+        <p class="mode-body">How do we defend this truth? Evidence, reasoning, and clear answers to the hardest objections.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============= COMPARISON TABLE ============= -->
+<section class="section bordered" id="compare" aria-label="Bible Copilot comparison with other Bible apps">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">How it stacks up</span>
+      <h2 class="h2">Bible Copilot vs. <em>the apps you already use.</em></h2>
+      <p class="lead">YouVersion, Bible Gateway, Olive Tree, ChatGPT — each does one thing. Bible Copilot is built for the question they all leave open: <i>what does this verse actually mean?</i></p>
+    </div>
+    <div class="compare-wrap reveal">
+      <table class="compare">
+        <caption>Feature comparison — Bible study apps, May 2026</caption>
+        <thead>
+          <tr>
+            <th scope="col">Feature</th>
+            <th scope="col">Bible Copilot</th>
+            <th scope="col">YouVersion</th>
+            <th scope="col">Bible Gateway</th>
+            <th scope="col">Olive Tree</th>
+            <th scope="col">ChatGPT</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>AI Q&amp;A on any verse</td>
+            <td>Yes — 6 study modes</td>
+            <td>Limited / devotional only</td>
+            <td>No</td>
+            <td>No</td>
+            <td>Yes (generic)</td>
+          </tr>
+          <tr>
+            <td>Inductive method scaffolding</td>
+            <td>Yes (Observe → Interpret → Apply + 3 more)</td>
+            <td>No</td>
+            <td>No</td>
+            <td>No</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Verse-anchored citations</td>
+            <td>Yes — enforced by system prompt</td>
+            <td>N/A</td>
+            <td>N/A</td>
+            <td>N/A</td>
+            <td>No — paraphrases from memory</td>
+          </tr>
+          <tr>
+            <td>Denominational humility</td>
+            <td>Yes — presents Reformed, Arminian, and others</td>
+            <td>Varies by content</td>
+            <td>Varies by commentary</td>
+            <td>Varies</td>
+            <td>Unpredictable</td>
+          </tr>
+          <tr>
+            <td>Apologetics mode</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>No</td>
+            <td>No</td>
+            <td>Generic only</td>
+          </tr>
+          <tr>
+            <td>Original language depth</td>
+            <td>Yes (inline, per response)</td>
+            <td>No</td>
+            <td>Via external commentaries</td>
+            <td>Via library purchase</td>
+            <td>Inconsistent</td>
+          </tr>
+          <tr>
+            <td>Reading plans</td>
+            <td>Yes — 5 plans (Free: John; Pro: all 5)</td>
+            <td>Yes — extensive</td>
+            <td>No</td>
+            <td>Limited</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Personal study journal</td>
+            <td>Yes (Pro)</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>Yes</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>iOS native</td>
+            <td>Yes (iOS 17+, SwiftUI)</td>
+            <td>Yes</td>
+            <td>Web-first</td>
+            <td>Yes</td>
+            <td>Web/app</td>
+          </tr>
+          <tr>
+            <td>Price</td>
+            <td>Free (15 Q/day) · $4.99/mo · $29.99/yr</td>
+            <td>Free</td>
+            <td>Free</td>
+            <td>$9.99–$49.99/yr+</td>
+            <td>Free / $20/mo</td>
+          </tr>
+          <tr>
+            <td>Free trial</td>
+            <td>1-week free trial (annual)</td>
+            <td>N/A</td>
+            <td>N/A</td>
+            <td>Varies</td>
+            <td>N/A</td>
+          </tr>
+          <tr>
+            <td>No ads</td>
+            <td>Yes</td>
+            <td>Ads on free tier</td>
+            <td>Ads</td>
+            <td>No ads</td>
+            <td>No ads</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </section>
@@ -482,9 +833,10 @@
         <p class="lead" style="margin-left:0">Type any reference — <b>John 3:16</b>, <b>Romans 8:28</b>, <b>Genesis 1:1</b>. Choose a mode. Read a thoughtful answer that pulls in the original language and cross-references, formatted to skim or savor.</p>
         <ul class="showcase-list">
           <li><span class="check">✓</span> Streaming responses — see the answer compose as it thinks</li>
-          <li><span class="check">✓</span> Save verses to a personal journal with notes</li>
-          <li><span class="check">✓</span> Reading plans and history that travel with you across devices</li>
-          <li><span class="check">✓</span> No ads, no clutter — designed for focus</li>
+          <li><span class="check">✓</span> Cross-references surface inline — tap to study the next verse</li>
+          <li><span class="check">✓</span> Save passages and notes to a personal study journal</li>
+          <li><span class="check">✓</span> Daily verse, reading streaks, and five guided plans</li>
+          <li><span class="check">✓</span> Light &amp; dark mode · No ads · No data collected</li>
         </ul>
       </div>
     </div>
@@ -501,7 +853,7 @@
     </div>
     <div class="pricing-card reveal">
       <p class="pricing-eyebrow">Bible Copilot Pro</p>
-      <h3 class="pricing-h">Unlimited questions, all five modes</h3>
+      <h3 class="pricing-h">Unlimited questions, all six modes</h3>
       <div class="price-grid">
         <div class="price-tile">
           <small>Monthly</small>
@@ -517,13 +869,13 @@
       </div>
       <ul class="pricing-includes">
         <li><span class="check">✓</span> 1-week free trial — no charge until it ends</li>
-        <li><span class="check">✓</span> All five study modes, unlimited questions</li>
-        <li><span class="check">✓</span> Greek &amp; Hebrew word studies on every verse</li>
-        <li><span class="check">✓</span> Personal journal, reading plans, cross-references</li>
+        <li><span class="check">✓</span> All six study modes, unlimited questions</li>
+        <li><span class="check">✓</span> Five reading plans — John, Psalms, Romans, Genesis, Sermon on the Mount</li>
+        <li><span class="check">✓</span> Personal journal with full history and inline cross-references</li>
         <li><span class="check">✓</span> Cancel anytime — manage in Apple Settings</li>
       </ul>
       <div style="text-align:center;color:var(--muted);font-size:13px;margin-bottom:18px">
-        Free tier without Pro: <b style="color:var(--parchment-dim)">15 questions/day</b>, two modes.
+        Free tier: <b style="color:var(--parchment-dim)">15 questions/day</b>, Gospel of John reading plan, no ads.
       </div>
       <div class="pricing-cta-wrap">
         <a class="btn-store" href="https://apps.apple.com/app/id6758913373" target="_blank" rel="noopener">
@@ -535,12 +887,57 @@
   </div>
 </section>
 
+<!-- ============= FAQ ============= -->
+<section class="section bordered" id="faq" aria-label="Frequently asked questions about Bible Copilot">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">Questions before you download</span>
+      <h2 class="h2">Honest answers to <em>the ones everyone asks.</em></h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item reveal">
+        <summary>Is this just ChatGPT with a Bible theme?</summary>
+        <div class="faq-body">No. ChatGPT answers from memory and will paraphrase scripture without verse numbers. Bible Copilot is built around a strict verse-anchoring discipline — every response cites the actual reference text, not a paraphrase from training data. The six study modes enforce a specific analytical lens (observation, interpretation, theology, application, apologetics) that a generic chatbot has no mechanism to apply.</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>What if it gives me bad theology?</summary>
+        <div class="faq-body">On contested doctrines — Calvinism vs. Arminianism, eschatology, baptism mode — the app presents the major positions held by serious Christians across denominations, without advocating for one. On historical-factual claims, responses cite scripture by verse number. You and your pastor are still the authority; this is a study tool, not a creed.</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>I already have YouVersion. Why do I need this?</summary>
+        <div class="faq-body">Bible Copilot is not a reading app — it&rsquo;s the understanding app you open after you finish the chapter. They&rsquo;re designed to coexist. YouVersion excels at reading plans and devotionals. Bible Copilot answers the question that reading plans leave open: &ldquo;What does this verse actually mean?&rdquo;</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Does it know my translation (KJV, NIV, ESV, NASB)?</summary>
+        <div class="faq-body">Yes. Verse text is pulled from an API serving multiple translations; KJV is the default. You can reference any translation-standard verse and the app will work with it.</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>I&rsquo;m not a Bible scholar. Will this be over my head?</summary>
+        <div class="faq-body">Three of the five App Store reviewers said the same thing — one verbatim: &ldquo;I don&rsquo;t consider myself a bible scholar by any stretch.&rdquo; The Summary and Apply modes are designed exactly for non-scholars who want depth without the jargon. Interpret and Theology modes go deeper when you&rsquo;re ready.</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>What happens to my data? Is it used to train AI models?</summary>
+        <div class="faq-body">No. Your study questions and journal entries are not used to train any AI model. The app calls an AI inference API per request; your content is not retained by the model provider for training.</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Can I cancel after the free trial?</summary>
+        <div class="faq-body">Yes. Subscriptions are managed entirely in your Apple Settings (Settings &gt; Apple ID &gt; Subscriptions). No support email required. Cancel before day 8 of the annual trial and you are not charged.</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>How is $29.99/year fair for a Bible app?</summary>
+        <div class="faq-body">It&rsquo;s roughly $2.49/month — less than a single paperback commentary, and you get unlimited questions every day. The free tier (15 questions/day) is enough for most daily devotional readers at no cost. The annual plan is for readers who want to go deep regularly.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
 <!-- ============= SOCIAL PROOF ============= -->
 <section class="section bordered" id="reviews">
   <div class="wrap">
     <div class="section-head">
-      <span class="kicker">Early readers</span>
-      <h2 class="h2">A study partner that <em>actually reads with you.</em></h2>
+      <span class="kicker">What readers are saying</span>
+      <h2 class="h2">&ldquo;The level of insight I can get from a single scripture has taken my Bible study to a <em>whole new level.</em>&rdquo;</h2>
+      <p class="lead" style="margin-top:14px">— Bashemup, App Store (<span class="stars">★★★★★</span>)</p>
     </div>
     <div class="ratings-banner">
       <div><span class="stars" style="font-size:24px">★★★★★</span> <b style="margin-left:8px">5.0</b> on the App Store</div>
@@ -550,20 +947,21 @@
       <div>Just launched — <b>real reviews</b> below</div>
     </div>
     <div class="testimonials">
+      <!-- Verbatim from iTunes RSS feed (sortBy=mostHelpful), truncated to ≤25 words -->
       <div class="quote-card reveal">
         <div class="quote-stars">★★★★★</div>
-        <p class="quote-body">"The level of insight from a single scripture took my Bible study to a new level."</p>
-        <div class="quote-attr">— Bashemup · App Store review</div>
+        <p class="quote-body">“This app has been an incredible blessing. The level of insight I can get from a single scripture has taken my Bible study to a…”</p>
+        <div class="quote-attr">— Bashemup · App Store review (“Great study companion”)</div>
       </div>
       <div class="quote-card reveal">
         <div class="quote-stars">★★★★★</div>
-        <p class="quote-body">"This app anchors in scripture to interpret scripture."</p>
-        <div class="quote-attr">— los| · App Store review</div>
+        <p class="quote-body">“I’ve been seeking an aid as I read my Bible and study Christian apologetics (a defense to Christian theology) that is outside the traditional book…”</p>
+        <div class="quote-attr">— Dove3777 · App Store review (“What I’ve been looking for..”)</div>
       </div>
       <div class="quote-card reveal">
         <div class="quote-stars">★★★★★</div>
-        <p class="quote-body">"I love the insight AI study gives, especially giving historical and cultural context."</p>
-        <div class="quote-attr">— OrlandoLaurie · App Store review</div>
+        <p class="quote-body">“I don’t consider myself a bible scholar by any stretch, but Bible copilot has really helped me gain a deeper understanding for scripture as I…”</p>
+        <div class="quote-attr">— H.R.R RR · App Store review (“Love this app!”)</div>
       </div>
     </div>
   </div>
@@ -646,7 +1044,7 @@
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Sparkles, Text } from '@react-three/drei';
+import { Sparkles, Text, RoundedBox } from '@react-three/drei';
 import * as THREE from 'three';
 
 // Fonts: Drei <Text> (troika-three-text) accepts TTF directly with CORS.
@@ -718,19 +1116,125 @@ function FloatingGlyph({ data, centerX }) {
   );
 }
 
-// Soft luminous focal point: just a point light + tiny pinprick of warm light.
-// No outer sphere — that was rendering as a dark bubble.
-function FocalLight({ centerX }) {
-  return React.createElement('group', { position:[centerX, 0, 0] },
-    React.createElement('mesh', null,
-      React.createElement('sphereGeometry', { args:[0.04, 16, 16] }),
-      React.createElement('meshBasicMaterial', { color:'#fff8e0', toneMapped:false, transparent:true, opacity:0.85, depthWrite:false })
+// 3D Bible mesh — built from R3F primitives (no external GLTF).
+// Spine on the left, cover facing camera with slight pitch + yaw.
+// Slowly rotates ~0.06 rad/sec on Y, gently bobs ±0.05 on Y.
+function Bible({ centerX = 0 }) {
+  const ref = React.useRef();
+  useFrame(({ clock }) => {
+    if (!ref.current) return;
+    const t = clock.getElapsedTime();
+    // pitch ~9° forward, yaw = base 0.22 + slow rotate, no roll
+    ref.current.rotation.set(0.16, 0.22 + t * 0.06, 0);
+    ref.current.position.y = Math.sin(t * 0.55) * 0.05;
+  });
+
+  // Shared materials (instances are cheap; React.createElement reuses node refs per call site)
+  const leatherFront = React.createElement('meshPhysicalMaterial', {
+    color:'#3d1218', roughness:0.62, clearcoat:0.28, clearcoatRoughness:0.55,
+    sheen:0.4, sheenColor:'#5a1a22', sheenRoughness:0.6
+  });
+  const leatherBack = React.createElement('meshPhysicalMaterial', {
+    color:'#2a0a0e', roughness:0.7, clearcoat:0.22, clearcoatRoughness:0.6
+  });
+  const leatherSpine = React.createElement('meshPhysicalMaterial', {
+    color:'#220609', roughness:0.72, clearcoat:0.2
+  });
+  const goldBright = React.createElement('meshStandardMaterial', {
+    color:'#d4a85a', metalness:0.78, roughness:0.30
+  });
+  const goldDim = React.createElement('meshStandardMaterial', {
+    color:'#a87a30', metalness:0.62, roughness:0.42
+  });
+  const crossMat = React.createElement('meshStandardMaterial', {
+    color:'#a78248', metalness:0.6, roughness:0.4
+  });
+
+  return React.createElement('group', { ref, position:[centerX, 0, 0] },
+    // ===== Pages block (cream, fills inside; visible on top/bottom/right) =====
+    React.createElement('mesh', { position:[0.01, 0, 0] },
+      React.createElement('boxGeometry', { args:[2.34, 1.56, 0.42] }),
+      React.createElement('meshStandardMaterial', {
+        color:'#f4ecd8', roughness:0.92, metalness:0.02
+      })
     ),
-    React.createElement('pointLight', { intensity:2.0, color:'#f0c97a', distance:7, decay:2 })
+    // Top gold edge
+    React.createElement('mesh', { position:[0.01, 0.785, 0] },
+      React.createElement('boxGeometry', { args:[2.34, 0.010, 0.42] }),
+      goldBright
+    ),
+    // Bottom gold edge (slightly dimmer — light falls off below)
+    React.createElement('mesh', { position:[0.01, -0.785, 0] },
+      React.createElement('boxGeometry', { args:[2.34, 0.010, 0.42] }),
+      goldDim
+    ),
+    // Right (open side) gold edge
+    React.createElement('mesh', { position:[1.185, 0, 0] },
+      React.createElement('boxGeometry', { args:[0.010, 1.56, 0.42] }),
+      goldBright
+    ),
+
+    // ===== Front cover (leather slab, slightly proud of pages on +Z) =====
+    React.createElement(RoundedBox, {
+      args:[2.4, 1.6, 0.028], radius:0.018, smoothness:4,
+      position:[0, 0, 0.224]
+    }, leatherFront),
+
+    // ===== Back cover =====
+    React.createElement(RoundedBox, {
+      args:[2.4, 1.6, 0.028], radius:0.018, smoothness:4,
+      position:[0, 0, -0.224]
+    }, leatherBack),
+
+    // ===== Spine (leather band on -X, full depth) =====
+    React.createElement(RoundedBox, {
+      args:[0.05, 1.6, 0.49], radius:0.022, smoothness:4,
+      position:[-1.205, 0, 0]
+    }, leatherSpine),
+
+    // Spine raised bands (decorative) — small ridges near top + bottom
+    React.createElement('mesh', { position:[-1.235, 0.42, 0] },
+      React.createElement('boxGeometry', { args:[0.014, 0.04, 0.49] }),
+      React.createElement('meshStandardMaterial', { color:'#1a0506', roughness:0.85 })
+    ),
+    React.createElement('mesh', { position:[-1.235, -0.42, 0] },
+      React.createElement('boxGeometry', { args:[0.014, 0.04, 0.49] }),
+      React.createElement('meshStandardMaterial', { color:'#1a0506', roughness:0.85 })
+    ),
+
+    // ===== Cross emboss on front cover (vertical + horizontal bars) =====
+    React.createElement('mesh', { position:[0, 0.04, 0.2405] },
+      React.createElement('boxGeometry', { args:[0.07, 0.5, 0.012] }),
+      crossMat
+    ),
+    React.createElement('mesh', { position:[0, 0.18, 0.2405] },
+      React.createElement('boxGeometry', { args:[0.30, 0.07, 0.012] }),
+      crossMat
+    ),
+
+    // ===== Ribbon bookmark — exits between pages bottom-right, hangs below =====
+    React.createElement('mesh', {
+      position:[0.5, -1.10, 0.0],
+      rotation:[0, 0, 0.05]
+    },
+      React.createElement('boxGeometry', { args:[0.06, 0.72, 0.005] }),
+      React.createElement('meshStandardMaterial', {
+        color:'#8a1828', roughness:0.55, metalness:0.06,
+        side: THREE.DoubleSide
+      })
+    ),
+    // Ribbon V-cut tip (small rotated diamond suggesting a notch)
+    React.createElement('mesh', {
+      position:[0.5, -1.46, 0.0],
+      rotation:[0, 0, Math.PI/4]
+    },
+      React.createElement('boxGeometry', { args:[0.043, 0.043, 0.005] }),
+      React.createElement('meshStandardMaterial', {
+        color:'#5a0d18', roughness:0.6, side: THREE.DoubleSide
+      })
+    )
   );
 }
-
-// (Orb mesh removed per design pivot — typography is now the hero.)
 
 function Scene() {
   // On portrait/narrow: keep typography centered behind/around headline; lift slightly.
@@ -749,10 +1253,22 @@ function Scene() {
     return () => window.removeEventListener('resize', update);
   }, []);
   return React.createElement('group', { position:[0, layout.centerY, 0], scale:layout.scale },
-    React.createElement('ambientLight', { intensity:0.45 }),
-    React.createElement('directionalLight', { position:[3,4,5], intensity:0.55, color:'#fff3cd' }),
-    React.createElement('directionalLight', { position:[-4,-2,-3], intensity:0.25, color:'#6e7fff' }),
-    React.createElement(FocalLight, { centerX: layout.centerX }),
+    // Low ambient — let the Bible's keys carry the read
+    React.createElement('ambientLight', { intensity:0.28, color:'#d8c4a4' }),
+    // Warm key light — above-camera-right, brings up cover + cross
+    React.createElement('directionalLight', { position:[4, 5, 4], intensity:1.15, color:'#ffe2b0' }),
+    // Cool fill — below-left, gives material contrast on leather
+    React.createElement('directionalLight', { position:[-4, -2, 2], intensity:0.45, color:'#7a90d8' }),
+    // Subtle rim light from behind — defines silhouette against navy
+    React.createElement('directionalLight', { position:[0.5, 1, -5], intensity:0.7, color:'#ffd9a0' }),
+    // Local sparkle on leather (warm point near Bible, no visible mesh)
+    React.createElement('pointLight', {
+      position:[layout.centerX + 0.8, 1.0, 1.6],
+      intensity:0.9, color:'#f0c97a', distance:6, decay:2
+    }),
+    // The Bible — visual anchor of the hero
+    React.createElement(Bible, { centerX: layout.centerX }),
+    // Floating typography orbits (passes in front and behind for parallax)
     REFS.map((d,i)=>React.createElement(FloatingGlyph,{ key:i, data:d, centerX: layout.centerX })),
     React.createElement(Sparkles, { count:80, scale:[14,8,8], size:1.8, speed:0.22, color:'#f0c97a', opacity:0.55 })
   );
