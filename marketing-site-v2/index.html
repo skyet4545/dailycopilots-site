@@ -29,29 +29,185 @@
 <!-- Fonts: Fraunces (serif heading), Inter (body) -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" />
 
-<!-- Structured data: SoftwareApplication -->
+<!-- Structured data: MobileApplication (primary) -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "MobileApplication",
+  "@id": "https://mybiblecopilot.com/#app",
   "name": "Bible Copilot",
-  "operatingSystem": "iOS 17",
+  "alternateName": ["Bible Copilot — AI Bible Study", "BibleCopilot"],
+  "operatingSystem": "iOS 17, iPadOS 17",
   "applicationCategory": "LifestyleApplication",
-  "description": "AI Bible study companion with six modes from the inductive method: Summary, Observe, Interpret, Theology, Apply, and Apologetics.",
-  "featureList": "Six study modes (Summary, Observe, Interpret, Theology, Apply, Apologetics), AI verse commentary with cross-references, daily verse, reading streaks, study journal, five reading plans, light & dark mode",
-  "url": "https://apps.apple.com/app/id6758913373",
-  "image": "./assets/appicon.png",
-  "publisher": { "@type": "Organization", "name": "Republic Publishing LLC" },
+  "applicationSubCategory": "Bible study, Reference, Religion",
+  "description": "AI Bible study companion for iPhone and iPad. Six inductive-method study modes — Summary, Observe, Interpret, Theology, Apply, and Apologetics — with verse-anchored citations, original-language depth, and a denominationally humble approach to contested doctrines.",
+  "featureList": [
+    "Summary mode — passage structure, themes, and context",
+    "Observe mode — what the text literally says; keywords and authorial patterns",
+    "Interpret mode — authorial intent, original Greek and Hebrew, historical and cultural context",
+    "Theology mode — what the passage teaches about God; Reformed, Arminian, and other positions presented",
+    "Apply mode — specific, honest application of the passage to the reader's life",
+    "Apologetics mode — evidence, reasoning, and scripture-anchored answers to objections",
+    "Five reading plans (Gospel of John, Psalms, Romans, Genesis, Sermon on the Mount)",
+    "Personal study journal with full history and inline cross-references",
+    "Verse-anchored citations — never paraphrases scripture from memory",
+    "No data used to train AI models",
+    "Native SwiftUI on iPhone and iPad",
+    "Light and dark mode"
+  ],
+  "url": "https://mybiblecopilot.com",
+  "downloadUrl": "https://apps.apple.com/app/id6758913373",
+  "installUrl": "https://apps.apple.com/app/id6758913373",
+  "softwareVersion": "1.9.0",
+  "image": "https://mybiblecopilot.com/assets/appicon.png",
+  "screenshot": [
+    "https://mybiblecopilot.com/assets/home.png",
+    "https://mybiblecopilot.com/assets/verse_study.png",
+    "https://mybiblecopilot.com/assets/ai_response.png"
+  ],
+  "author": { "@id": "https://mybiblecopilot.com/#carlos-reyes" },
+  "publisher": { "@id": "https://mybiblecopilot.com/#republic-publishing" },
   "offers": [
-    { "@type": "Offer", "price": "0", "priceCurrency": "USD", "name": "Free — 15 questions/day" },
-    { "@type": "Offer", "price": "4.99", "priceCurrency": "USD", "name": "Pro Monthly" },
-    { "@type": "Offer", "price": "29.99", "priceCurrency": "USD", "name": "Pro Yearly" }
+    { "@type": "Offer", "price": "0", "priceCurrency": "USD", "name": "Free — 15 questions/day", "availability": "https://schema.org/InStock", "category": "free" },
+    { "@type": "Offer", "price": "4.99", "priceCurrency": "USD", "name": "Pro Monthly", "availability": "https://schema.org/InStock", "category": "subscription" },
+    { "@type": "Offer", "price": "29.99", "priceCurrency": "USD", "name": "Pro Yearly", "availability": "https://schema.org/InStock", "category": "subscription" }
   ],
   "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "5.0",
-    "reviewCount": "6"
+    "reviewCount": "6",
+    "bestRating": "5",
+    "worstRating": "1"
+  },
+  "review": [
+    {
+      "@type": "Review",
+      "author": { "@type": "Person", "name": "Bashemup" },
+      "datePublished": "2026-04-06",
+      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+      "name": "Great study companion",
+      "reviewBody": "This app has been an incredible blessing. The level of insight I can get from a single scripture has taken my Bible study to a whole new level. I especially appreciate the original context and historical deep dives, it brings the Word to life in a powerful way."
+    },
+    {
+      "@type": "Review",
+      "author": { "@type": "Person", "name": "Dove3777" },
+      "datePublished": "2026-04-18",
+      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+      "name": "What I've been looking for",
+      "reviewBody": "I've been seeking an aid as I read my Bible and study Christian apologetics that is outside the traditional book format and this is it. Love the app, well made and thankful to have it."
+    },
+    {
+      "@type": "Review",
+      "author": { "@type": "Person", "name": "H.R.R RR" },
+      "datePublished": "2026-04-06",
+      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+      "name": "Love this app!",
+      "reviewBody": "I don't consider myself a bible scholar by any stretch, but Bible Copilot has really helped me gain a deeper understanding for scripture as I go through my studies."
+    }
+  ]
+}
+</script>
+
+<!-- Structured data: SoftwareApplication (broader engine coverage) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "@id": "https://mybiblecopilot.com/#software",
+  "name": "Bible Copilot",
+  "operatingSystem": "iOS 17, iPadOS 17",
+  "applicationCategory": "LifestyleApplication",
+  "url": "https://mybiblecopilot.com",
+  "downloadUrl": "https://apps.apple.com/app/id6758913373",
+  "softwareVersion": "1.9.0",
+  "description": "iOS Bible study app with six inductive-method study modes, original Greek and Hebrew, and verse-anchored AI responses.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "aggregateRating": { "@type": "AggregateRating", "ratingValue": "5.0", "reviewCount": "6" }
+}
+</script>
+
+<!-- Structured data: Organization (Republic Publishing LLC) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://mybiblecopilot.com/#republic-publishing",
+  "name": "Republic Publishing LLC",
+  "url": "https://mybiblecopilot.com",
+  "logo": "https://mybiblecopilot.com/assets/appicon.png",
+  "founder": { "@id": "https://mybiblecopilot.com/#carlos-reyes" },
+  "makesOffer": [
+    { "@type": "Offer", "itemOffered": { "@id": "https://mybiblecopilot.com/#app" } }
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "email": "hello@scripturecopilot.app",
+    "contactType": "customer support"
   }
+}
+</script>
+
+<!-- Structured data: Person (Carlos Reyes, founder/developer) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": "https://mybiblecopilot.com/#carlos-reyes",
+  "name": "Carlos Reyes",
+  "jobTitle": "Founder & Developer",
+  "worksFor": { "@id": "https://mybiblecopilot.com/#republic-publishing" },
+  "url": "https://mybiblecopilot.com"
+}
+</script>
+
+<!-- Structured data: Product / Offer (subscription tiers) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "https://mybiblecopilot.com/#product",
+  "name": "Bible Copilot Pro",
+  "description": "Unlimited questions across all six inductive Bible study modes, all five reading plans, and full personal study journal.",
+  "brand": { "@id": "https://mybiblecopilot.com/#republic-publishing" },
+  "image": "https://mybiblecopilot.com/assets/appicon.png",
+  "category": "Bible study app subscription",
+  "offers": [
+    {
+      "@type": "Offer",
+      "name": "Pro Monthly",
+      "price": "4.99",
+      "priceCurrency": "USD",
+      "priceValidUntil": "2027-12-31",
+      "availability": "https://schema.org/InStock",
+      "url": "https://apps.apple.com/app/id6758913373",
+      "seller": { "@id": "https://mybiblecopilot.com/#republic-publishing" },
+      "eligibleDuration": { "@type": "QuantitativeValue", "value": "1", "unitCode": "MON" }
+    },
+    {
+      "@type": "Offer",
+      "name": "Pro Annual (1-week free trial)",
+      "price": "29.99",
+      "priceCurrency": "USD",
+      "priceValidUntil": "2027-12-31",
+      "availability": "https://schema.org/InStock",
+      "url": "https://apps.apple.com/app/id6758913373",
+      "seller": { "@id": "https://mybiblecopilot.com/#republic-publishing" },
+      "eligibleDuration": { "@type": "QuantitativeValue", "value": "1", "unitCode": "ANN" }
+    }
+  ],
+  "aggregateRating": { "@type": "AggregateRating", "ratingValue": "5.0", "reviewCount": "6" }
+}
+</script>
+
+<!-- Structured data: BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mybiblecopilot.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Bible Copilot for iOS", "item": "https://apps.apple.com/app/id6758913373" }
+  ]
 }
 </script>
 
