@@ -4,7 +4,7 @@ import SwiftUI
 @Observable
 final class UsageService {
     static let shared = UsageService()
-    static let freeQuestionsPerDay = 15
+    static let freeQuestionsPerDay = 3
 
     @ObservationIgnored
     @AppStorage("usageDate") private var usageDate: String = ""
