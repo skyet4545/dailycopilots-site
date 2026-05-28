@@ -106,6 +106,11 @@ struct HomeView: View {
                             .tracking(1.2)
                             .padding(.horizontal)
 
+                        StudyModeCard(mode: .summary, isFullWidth: true) {
+                            onStudy(viewModel.searchText.isEmpty ? "John 3:16" : viewModel.searchText, .summary)
+                        }
+                        .padding(.horizontal)
+
                         LazyVGrid(columns: [
                             GridItem(.flexible(), spacing: 12),
                             GridItem(.flexible(), spacing: 12)

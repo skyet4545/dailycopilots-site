@@ -649,7 +649,7 @@ struct OnboardingView: View {
                 Button {
                     onComplete()
                 } label: {
-                    Text("Continue with 15 free questions/day")
+                    Text("Continue with 3 free questions/day")
                         .font(.subheadline)
                         .foregroundColor(AppTheme.textMuted)
                         .underline()

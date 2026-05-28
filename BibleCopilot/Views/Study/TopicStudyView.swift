@@ -127,7 +127,7 @@ struct TopicStudyView: View {
         let usageService = UsageService.shared
         let isPro = SubscriptionService.shared.isPro
         guard usageService.canAsk(isPro: isPro) else {
-            self.error = "You've used all 15 free questions today. Upgrade to Pro for unlimited access."
+            self.error = "You've used all 3 free questions today. Upgrade to Pro for unlimited access."
             isLoading = false
             return
         }
