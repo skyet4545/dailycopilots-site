@@ -31,8 +31,8 @@ targets:
       properties:
         CFBundleDisplayName: Bible Copilot
         CFBundleName: BibleCopilot
-        CFBundleVersion: "119"
-        CFBundleShortVersionString: "1.9.0"
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleIdentifier: com.scripturecopilot.app
         UILaunchScreen:
           UIColorName: systemBackground
