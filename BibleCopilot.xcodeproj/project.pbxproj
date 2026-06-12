@@ -30,6 +30,7 @@
 		542487F5DC45006B8B1DDD95 /* SignInWithAppleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9180BF1FC12F98B97EFE81C2 /* SignInWithAppleButton.swift */; };
 		5E998A1E36DE1939E6609AA7 /* SavedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B454B341D9CC542FCFEBAF3B /* SavedView.swift */; };
 		635BD0692AD9A7E1D51C8C94 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF0612395BA4D408286E1CD /* PaywallView.swift */; };
+		725EFE6EC5A41C290ED46FA5 /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE705240A2B05ACD112ACEE2 /* AnalyticsService.swift */; };
 		7C18A5C82B0BA8BEDA66936E /* BibleCopilotApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7252163E03A5A92A1852A2C6 /* BibleCopilotApp.swift */; };
 		7DF106B4AF22A62C6DCD2CF7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922F5CBA6C43138FD54F4B39 /* ContentView.swift */; };
 		7DF290A9685ACABA06D6FD1F /* QuickPickChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBDD98EB95C9459D7ACC1B5 /* QuickPickChip.swift */; };
@@ -101,6 +102,7 @@
 		9811C6C100DCAEEFF68F0A86 /* TopicStudyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicStudyView.swift; sourceTree = "<group>"; };
 		A49BC56BD84C2A17A55E3E6E /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		A9480CE00AC3834EE3E9396E /* JournalEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalEntry.swift; sourceTree = "<group>"; };
+		AE705240A2B05ACD112ACEE2 /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
 		AF983B9F10EAC837739D5F2F /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		B0FF4A81096062AB53F8B027 /* StreakService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakService.swift; sourceTree = "<group>"; };
 		B454B341D9CC542FCFEBAF3B /* SavedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedView.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				059C9FA9C9B49578732892E0 /* AIService.swift */,
+				AE705240A2B05ACD112ACEE2 /* AnalyticsService.swift */,
 				506F36E5723123FC328CB22C /* AuthService.swift */,
 				5799C73EFA4E53177962EDB9 /* BibleService.swift */,
 				25D374DD0157DB6D3F999504 /* CrossReferenceParser.swift */,
@@ -379,6 +382,7 @@
 			files = (
 				C2C997F2FE4F3C15755E8862 /* AIResponseView.swift in Sources */,
 				18178906F1495B4BC1410581 /* AIService.swift in Sources */,
+				725EFE6EC5A41C290ED46FA5 /* AnalyticsService.swift in Sources */,
 				14649335782CF343CFCEFE05 /* AppTheme.swift in Sources */,
 				EA8AA18AEED09D743E5A7423 /* AuthService.swift in Sources */,
 				7C18A5C82B0BA8BEDA66936E /* BibleCopilotApp.swift in Sources */,

@@ -18,6 +18,9 @@ struct BibleCopilotApp: App {
                 .environment(usageService)
                 .environment(authService)
                 .preferredColorScheme(themeManager.colorScheme)
+                .task {
+                    AnalyticsService.shared.track(AnalyticsEvent.appOpen)
+                }
                 .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
                     guard reminderEnabled else { return }
                     NotificationService.shared.scheduleStreakReminder()

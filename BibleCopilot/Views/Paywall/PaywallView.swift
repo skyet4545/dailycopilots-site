@@ -211,6 +211,9 @@ struct PaywallView: View {
                 }
             }
             .background(AppTheme.background)
+            .onAppear {
+                AnalyticsService.shared.track(AnalyticsEvent.paywallView, ["source": "in_app"])
+            }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button { dismiss() } label: {
@@ -235,10 +238,15 @@ struct PaywallView: View {
         Task {
             isLoading = true
             errorMessage = nil
+            AnalyticsService.shared.track(AnalyticsEvent.trialStartTap, ["product": product.id, "source": "in_app"])
             do {
                 try await subscriptionService.purchase(product)
-                if subscriptionService.isPro { dismiss() }
+                if subscriptionService.isPro {
+                    AnalyticsService.shared.track(AnalyticsEvent.purchaseSuccess, ["product": product.id, "source": "in_app"])
+                    dismiss()
+                }
             } catch {
+                AnalyticsService.shared.track(AnalyticsEvent.purchaseFailed, ["product": product.id, "error": String(describing: error).prefix(120).description])
                 errorMessage = "Purchase failed. Please try again."
             }
             isLoading = false

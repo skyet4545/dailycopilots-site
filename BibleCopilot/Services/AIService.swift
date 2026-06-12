@@ -14,12 +14,24 @@ actor AIService {
         AsyncThrowingStream { continuation in
             Task {
                 do {
-                    let message = """
-                    Study '\(verse)' using the \(mode.rawValue) method. \
-                    IMPORTANT: Always include verse numbers when quoting Scripture (e.g. "16 For God so loved..."). \
-                    When referencing related verses, write the full reference (e.g. Romans 8:28). \
-                    Verse text: '\(verseText)'
-                    """
+                    let message: String
+                    switch mode {
+                    case .summary:
+                        message = """
+                        Provide a concise summary of '\(verse)'. If this reference is a whole chapter or book, \
+                        summarize its structure, major themes, key passages, and takeaways. If it's a single verse, \
+                        summarize the chapter it's in and where the verse fits. Keep it plain and readable (2–4 short paragraphs). \
+                        IMPORTANT: Include verse numbers when quoting Scripture. Reference related verses with full references (e.g. Romans 8:28). \
+                        Verse text: '\(verseText)'
+                        """
+                    default:
+                        message = """
+                        Study '\(verse)' using the \(mode.rawValue) method. \
+                        IMPORTANT: Always include verse numbers when quoting Scripture (e.g. "16 For God so loved..."). \
+                        When referencing related verses, write the full reference (e.g. Romans 8:28). \
+                        Verse text: '\(verseText)'
+                        """
+                    }
 
                     var request = URLRequest(url: apiURL)
                     request.httpMethod = "POST"

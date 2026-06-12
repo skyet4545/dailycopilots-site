@@ -11,6 +11,11 @@ struct OnboardingView: View {
     // Personalization state
     @State private var selectedGoals: Set<String> = []
     @State private var selectedLevel: ExperienceLevel?
+    @State private var selectedDenomination: Denomination?
+    @State private var selectedTranslation: BibleTranslation?
+    @State private var selectedStruggles: Set<String> = []
+    @State private var planBuildProgress: Double = 0
+    @State private var planBuildDone = false
 
     // Aha moment state
     @State private var ahaInsight: String?
@@ -27,13 +32,20 @@ struct OnboardingView: View {
 
     private let slides = OnboardingSlide.slides
 
-    // Flow: 3 slides + goals + experience + aha moment + notification ask + paywall = 8 steps
+    // Flow: welcome → quiz (denomination, translation, goals, struggles, experience)
+    // → building plan → aha moment → notifications → social proof → paywall
+    private let welcomeStep = 0
+    private let denominationStep = 1
+    private let translationStep = 2
     private let goalStep = 3
-    private let experienceStep = 4
-    private let ahaStep = 5
-    private let notificationStep = 6
-    private let paywallStep = 7
-    private var totalSteps: Int { 8 }
+    private let struggleStep = 4
+    private let experienceStep = 5
+    private let buildPlanStep = 6
+    private let ahaStep = 7
+    private let notificationStep = 8
+    private let socialProofStep = 9
+    private let paywallStep = 10
+    private var totalSteps: Int { 11 }
 
     var body: some View {
         ZStack {
@@ -42,7 +54,7 @@ struct OnboardingView: View {
             VStack(spacing: 0) {
                 // Top bar
                 HStack {
-                    if currentStep > 0 && currentStep != paywallStep {
+                    if currentStep > 0 && currentStep != paywallStep && currentStep != buildPlanStep {
                         Button {
                             withAnimation { currentStep -= 1 }
                         } label: {
@@ -53,14 +65,6 @@ struct OnboardingView: View {
                         .padding()
                     }
                     Spacer()
-                    if currentStep < paywallStep {
-                        Button("Skip") {
-                            onComplete()
-                        }
-                        .font(.subheadline)
-                        .foregroundColor(AppTheme.textMuted)
-                        .padding()
-                    }
                 }
                 .frame(height: 44)
 
@@ -71,16 +75,26 @@ struct OnboardingView: View {
 
                 // Content
                 Group {
-                    if currentStep < slides.count {
+                    if currentStep == welcomeStep {
                         normalSlideView
+                    } else if currentStep == denominationStep {
+                        denominationView
+                    } else if currentStep == translationStep {
+                        translationView
                     } else if currentStep == goalStep {
                         goalSelectionView
+                    } else if currentStep == struggleStep {
+                        struggleSelectionView
                     } else if currentStep == experienceStep {
                         experienceLevelView
+                    } else if currentStep == buildPlanStep {
+                        buildingPlanView
                     } else if currentStep == ahaStep {
                         ahaMomentView
                     } else if currentStep == notificationStep {
                         notificationAskView
+                    } else if currentStep == socialProofStep {
+                        socialProofView
                     } else if currentStep == paywallStep {
                         paywallSlideView
                     }
@@ -93,9 +107,34 @@ struct OnboardingView: View {
         }
         .animation(.easeInOut(duration: 0.3), value: currentStep)
         .task {
+            AnalyticsService.shared.track(AnalyticsEvent.onboardingStep, ["step": "welcome"])
             if subscriptionService.products.isEmpty {
                 await subscriptionService.loadProducts()
             }
+        }
+        .onChange(of: currentStep) { _, newStep in
+            AnalyticsService.shared.track(AnalyticsEvent.onboardingStep, ["step": stepName(newStep)])
+            if newStep == buildPlanStep { runPlanBuild() }
+            if newStep == paywallStep {
+                AnalyticsService.shared.track(AnalyticsEvent.paywallView, ["source": "onboarding"])
+            }
+        }
+    }
+
+    private func stepName(_ step: Int) -> String {
+        switch step {
+        case welcomeStep: return "welcome"
+        case denominationStep: return "denomination"
+        case translationStep: return "translation"
+        case goalStep: return "goals"
+        case struggleStep: return "struggles"
+        case experienceStep: return "experience"
+        case buildPlanStep: return "build_plan"
+        case ahaStep: return "aha_moment"
+        case notificationStep: return "notifications"
+        case socialProofStep: return "social_proof"
+        case paywallStep: return "paywall"
+        default: return "step_\(step)"
         }
     }
 
@@ -232,6 +271,7 @@ struct OnboardingView: View {
             continueButton(disabled: selectedGoals.isEmpty) {
                 // Save goals
                 UserDefaults.standard.set(Array(selectedGoals), forKey: "onboarding_goals")
+                AnalyticsService.shared.track(AnalyticsEvent.quizAnswer, ["question": "goals", "answer": selectedGoals.sorted().joined(separator: ",")])
                 currentStep += 1
             }
         }
@@ -297,8 +337,358 @@ struct OnboardingView: View {
                 // Save experience level
                 if let level = selectedLevel {
                     UserDefaults.standard.set(level.rawValue, forKey: "onboarding_experience")
+                    AnalyticsService.shared.track(AnalyticsEvent.quizAnswer, ["question": "experience", "answer": level.rawValue])
                 }
                 currentStep += 1
+            }
+        }
+    }
+
+    // MARK: - Denomination
+
+    private var denominationView: some View {
+        VStack(spacing: 0) {
+            VStack(spacing: 16) {
+                Image(systemName: "building.columns")
+                    .font(.system(size: 36))
+                    .foregroundColor(AppTheme.gold)
+
+                Text("What's your church\nbackground?")
+                    .font(.title2.bold())
+                    .foregroundColor(AppTheme.textPrimary)
+                    .multilineTextAlignment(.center)
+
+                Text("Answers stay denominationally respectful either way")
+                    .font(.subheadline)
+                    .foregroundColor(AppTheme.textMuted)
+            }
+            .padding(.top, 12)
+            .padding(.bottom, 20)
+
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 10) {
+                    ForEach(Denomination.options) { option in
+                        quizRow(
+                            icon: option.icon,
+                            label: option.label,
+                            isSelected: selectedDenomination == option
+                        ) {
+                            selectedDenomination = option
+                            HapticService.lightImpact()
+                        }
+                    }
+                }
+                .padding(.horizontal, 24)
+                .padding(.bottom, 12)
+            }
+
+            continueButton(disabled: selectedDenomination == nil) {
+                if let d = selectedDenomination {
+                    UserDefaults.standard.set(d.id, forKey: "onboarding_denomination")
+                    AnalyticsService.shared.track(AnalyticsEvent.quizAnswer, ["question": "denomination", "answer": d.id])
+                }
+                currentStep += 1
+            }
+        }
+    }
+
+    // MARK: - Translation
+
+    private var translationView: some View {
+        VStack(spacing: 0) {
+            VStack(spacing: 16) {
+                Image(systemName: "character.book.closed")
+                    .font(.system(size: 36))
+                    .foregroundColor(Color(hex: "A78BFA"))
+
+                Text("Which Bible translation\ndo you prefer?")
+                    .font(.title2.bold())
+                    .foregroundColor(AppTheme.textPrimary)
+                    .multilineTextAlignment(.center)
+            }
+            .padding(.top, 12)
+            .padding(.bottom, 20)
+
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 10) {
+                    ForEach(BibleTranslation.options) { option in
+                        Button {
+                            selectedTranslation = option
+                            HapticService.lightImpact()
+                        } label: {
+                            HStack(spacing: 14) {
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text(option.label)
+                                        .font(.subheadline.bold())
+                                        .foregroundColor(selectedTranslation == option ? .white : AppTheme.textPrimary)
+                                    Text(option.blurb)
+                                        .font(.caption)
+                                        .foregroundColor(selectedTranslation == option ? .white.opacity(0.8) : AppTheme.textMuted)
+                                }
+                                Spacer()
+                                if selectedTranslation == option {
+                                    Image(systemName: "checkmark.circle.fill")
+                                        .foregroundColor(.white)
+                                }
+                            }
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 12)
+                            .background(selectedTranslation == option ? AppTheme.accentDark : AppTheme.cardBackground)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke(selectedTranslation == option ? AppTheme.accent : AppTheme.cardBorder, lineWidth: 1)
+                            )
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                .padding(.horizontal, 24)
+                .padding(.bottom, 12)
+            }
+
+            continueButton(disabled: selectedTranslation == nil) {
+                if let t = selectedTranslation {
+                    UserDefaults.standard.set(t.id == "unsure" ? "KJV" : t.id, forKey: "onboarding_translation")
+                    AnalyticsService.shared.track(AnalyticsEvent.quizAnswer, ["question": "translation", "answer": t.id])
+                }
+                currentStep += 1
+            }
+        }
+    }
+
+    // MARK: - Life Struggles
+
+    private var struggleSelectionView: some View {
+        VStack(spacing: 0) {
+            VStack(spacing: 16) {
+                Image(systemName: "heart.text.square")
+                    .font(.system(size: 36))
+                    .foregroundColor(Color(hex: "F87171"))
+
+                Text("What's weighing on\nyou lately?")
+                    .font(.title2.bold())
+                    .foregroundColor(AppTheme.textPrimary)
+                    .multilineTextAlignment(.center)
+
+                Text("Scripture speaks to all of it — select any")
+                    .font(.subheadline)
+                    .foregroundColor(AppTheme.textMuted)
+            }
+            .padding(.top, 12)
+            .padding(.bottom, 20)
+
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 10) {
+                    ForEach(LifeStruggle.options) { option in
+                        quizRow(
+                            icon: option.icon,
+                            label: option.label,
+                            isSelected: selectedStruggles.contains(option.id)
+                        ) {
+                            if selectedStruggles.contains(option.id) {
+                                selectedStruggles.remove(option.id)
+                            } else {
+                                selectedStruggles.insert(option.id)
+                            }
+                            HapticService.lightImpact()
+                        }
+                    }
+                }
+                .padding(.horizontal, 24)
+                .padding(.bottom, 12)
+            }
+
+            continueButton(disabled: selectedStruggles.isEmpty) {
+                UserDefaults.standard.set(Array(selectedStruggles), forKey: "onboarding_struggles")
+                AnalyticsService.shared.track(AnalyticsEvent.quizAnswer, ["question": "struggles", "answer": selectedStruggles.sorted().joined(separator: ",")])
+                currentStep += 1
+            }
+        }
+    }
+
+    private func quizRow(icon: String, label: String, isSelected: Bool, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            HStack(spacing: 14) {
+                Image(systemName: icon)
+                    .font(.system(size: 18))
+                    .foregroundColor(isSelected ? .white : AppTheme.gold)
+                    .frame(width: 28)
+
+                Text(label)
+                    .font(.subheadline)
+                    .foregroundColor(isSelected ? .white : AppTheme.textPrimary)
+
+                Spacer()
+
+                if isSelected {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundColor(.white)
+                }
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 14)
+            .background(isSelected ? AppTheme.accentDark : AppTheme.cardBackground)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(isSelected ? AppTheme.accent : AppTheme.cardBorder, lineWidth: 1)
+            )
+        }
+        .buttonStyle(.plain)
+    }
+
+    // MARK: - Building Your Plan
+
+    private var buildingPlanView: some View {
+        VStack(spacing: 0) {
+            Spacer()
+
+            if !planBuildDone {
+                VStack(spacing: 24) {
+                    ZStack {
+                        Circle()
+                            .stroke(AppTheme.textMuted.opacity(0.15), lineWidth: 8)
+                            .frame(width: 110, height: 110)
+                        Circle()
+                            .trim(from: 0, to: planBuildProgress)
+                            .stroke(AppTheme.goldGradient, style: StrokeStyle(lineWidth: 8, lineCap: .round))
+                            .frame(width: 110, height: 110)
+                            .rotationEffect(.degrees(-90))
+                        Text("\(Int(planBuildProgress * 100))%")
+                            .font(.title3.bold())
+                            .foregroundColor(AppTheme.textPrimary)
+                    }
+
+                    Text("Building your study plan…")
+                        .font(.headline)
+                        .foregroundColor(AppTheme.textPrimary)
+                }
+            } else {
+                VStack(spacing: 20) {
+                    Image(systemName: "checkmark.seal.fill")
+                        .font(.system(size: 52))
+                        .foregroundColor(AppTheme.success)
+
+                    Text("Your plan is ready")
+                        .font(.title2.bold())
+                        .foregroundColor(AppTheme.textPrimary)
+
+                    VStack(alignment: .leading, spacing: 12) {
+                        planSummaryRow(icon: "character.book.closed",
+                                       text: "\(UserDefaults.standard.string(forKey: "onboarding_translation") ?? "KJV") translation")
+                        if let d = selectedDenomination {
+                            planSummaryRow(icon: d.icon, text: "\(d.label) perspective, handled with care")
+                        }
+                        if !selectedStruggles.isEmpty {
+                            planSummaryRow(icon: "heart.fill",
+                                           text: "Verses for \(selectedStruggles.count) area\(selectedStruggles.count == 1 ? "" : "s") of your life")
+                        }
+                        planSummaryRow(icon: "book.fill", text: "6 guided study modes")
+                    }
+                    .padding(18)
+                    .background(AppTheme.cardBackground)
+                    .clipShape(RoundedRectangle(cornerRadius: 14))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 14)
+                            .stroke(AppTheme.gold.opacity(0.3), lineWidth: 1)
+                    )
+                    .padding(.horizontal, 32)
+                }
+                .transition(.opacity.combined(with: .scale(scale: 0.95)))
+            }
+
+            Spacer()
+
+            if planBuildDone {
+                continueButton {
+                    currentStep += 1
+                }
+            }
+        }
+    }
+
+    private func planSummaryRow(icon: String, text: String) -> some View {
+        HStack(spacing: 12) {
+            Image(systemName: icon)
+                .foregroundColor(AppTheme.gold)
+                .frame(width: 24)
+            Text(text)
+                .font(.subheadline)
+                .foregroundColor(AppTheme.textPrimary)
+            Spacer()
+        }
+    }
+
+    private func runPlanBuild() {
+        planBuildProgress = 0
+        planBuildDone = false
+        Task {
+            for i in 1...20 {
+                try? await Task.sleep(for: .milliseconds(90))
+                withAnimation(.linear(duration: 0.09)) {
+                    planBuildProgress = Double(i) / 20.0
+                }
+            }
+            withAnimation(.spring(duration: 0.4)) {
+                planBuildDone = true
+            }
+            HapticService.success()
+        }
+    }
+
+    // MARK: - Social Proof
+
+    private var socialProofView: some View {
+        VStack(spacing: 0) {
+            Spacer()
+
+            VStack(spacing: 24) {
+                Image(systemName: "checkmark.shield.fill")
+                    .font(.system(size: 44))
+                    .foregroundColor(AppTheme.gold)
+
+                Text("Built for serious study")
+                    .font(.title2.bold())
+                    .foregroundColor(AppTheme.textPrimary)
+
+                VStack(alignment: .leading, spacing: 16) {
+                    socialProofRow(icon: "graduationcap.fill",
+                                   title: "Seminary-grade method",
+                                   detail: "The same inductive framework taught in seminaries: Observe, Interpret, Theology, Apply, Apologetics.")
+                    socialProofRow(icon: "quote.opening",
+                                   title: "Every answer cites Scripture",
+                                   detail: "Verse-anchored responses with cross-references — never vague spiritual advice.")
+                    socialProofRow(icon: "person.2.fill",
+                                   title: "Denominationally humble",
+                                   detail: "On contested doctrine, you get the major views fairly presented — not one tradition's spin.")
+                }
+                .padding(.horizontal, 28)
+            }
+
+            Spacer()
+
+            continueButton {
+                currentStep += 1
+            }
+        }
+    }
+
+    private func socialProofRow(icon: String, title: String, detail: String) -> some View {
+        HStack(alignment: .top, spacing: 14) {
+            Image(systemName: icon)
+                .font(.system(size: 20))
+                .foregroundColor(AppTheme.gold)
+                .frame(width: 28)
+
+            VStack(alignment: .leading, spacing: 3) {
+                Text(title)
+                    .font(.subheadline.bold())
+                    .foregroundColor(AppTheme.textPrimary)
+                Text(detail)
+                    .font(.caption)
+                    .foregroundColor(AppTheme.textMuted)
+                    .fixedSize(horizontal: false, vertical: true)
             }
         }
     }
@@ -647,9 +1037,10 @@ struct OnboardingView: View {
 
                 // Skip
                 Button {
+                    AnalyticsService.shared.track(AnalyticsEvent.onboardingComplete, ["pro": "false"])
                     onComplete()
                 } label: {
-                    Text("Continue with 15 free questions/day")
+                    Text("Continue with 3 free questions/day")
                         .font(.subheadline)
                         .foregroundColor(AppTheme.textMuted)
                         .underline()
@@ -893,13 +1284,17 @@ struct OnboardingView: View {
         Task {
             isLoading = true
             errorMessage = nil
+            AnalyticsService.shared.track(AnalyticsEvent.trialStartTap, ["product": product.id])
             do {
                 try await subscriptionService.purchase(product)
                 if subscriptionService.isPro {
+                    AnalyticsService.shared.track(AnalyticsEvent.purchaseSuccess, ["product": product.id, "source": "onboarding"])
+                    AnalyticsService.shared.track(AnalyticsEvent.onboardingComplete, ["pro": "true"])
                     HapticService.success()
                     onComplete()
                 }
             } catch {
+                AnalyticsService.shared.track(AnalyticsEvent.purchaseFailed, ["product": product.id, "error": String(describing: error).prefix(120).description])
                 errorMessage = "Something went wrong. Try again."
             }
             isLoading = false

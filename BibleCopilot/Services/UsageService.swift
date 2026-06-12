@@ -23,7 +23,11 @@ final class UsageService {
     func canAsk(isPro: Bool) -> Bool {
         if isPro { return true }
         resetIfNewDay()
-        return usageCount < Self.freeQuestionsPerDay
+        let allowed = usageCount < Self.freeQuestionsPerDay
+        if !allowed {
+            AnalyticsService.shared.track(AnalyticsEvent.limitHit, ["used": "\(usageCount)"])
+        }
+        return allowed
     }
 
     func remainingQuestions(isPro: Bool) -> Int {
@@ -35,6 +39,7 @@ final class UsageService {
     func recordQuestion() {
         resetIfNewDay()
         usageCount += 1
+        AnalyticsService.shared.track(AnalyticsEvent.questionAsked, ["count_today": "\(usageCount)"])
     }
 
     private func resetIfNewDay() {

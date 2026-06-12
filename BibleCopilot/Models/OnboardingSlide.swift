@@ -48,6 +48,56 @@ struct StudyGoal: Identifiable, Hashable {
     ]
 }
 
+struct Denomination: Identifiable, Hashable {
+    let id: String
+    let icon: String
+    let label: String
+
+    static let options: [Denomination] = [
+        Denomination(id: "nondenominational", icon: "cross.fill", label: "Non-denominational"),
+        Denomination(id: "baptist", icon: "drop.fill", label: "Baptist"),
+        Denomination(id: "catholic", icon: "building.columns.fill", label: "Catholic"),
+        Denomination(id: "methodist", icon: "flame.fill", label: "Methodist"),
+        Denomination(id: "pentecostal", icon: "wind", label: "Pentecostal / Charismatic"),
+        Denomination(id: "lutheran", icon: "book.closed.fill", label: "Lutheran"),
+        Denomination(id: "reformed", icon: "books.vertical.fill", label: "Presbyterian / Reformed"),
+        Denomination(id: "orthodox", icon: "sun.max.fill", label: "Orthodox"),
+        Denomination(id: "exploring", icon: "sparkle.magnifyingglass", label: "Exploring / Other")
+    ]
+}
+
+struct BibleTranslation: Identifiable, Hashable {
+    let id: String
+    let label: String
+    let blurb: String
+
+    static let options: [BibleTranslation] = [
+        BibleTranslation(id: "KJV", label: "King James Version", blurb: "Classic, poetic language"),
+        BibleTranslation(id: "NIV", label: "New International Version", blurb: "Clear modern English"),
+        BibleTranslation(id: "ESV", label: "English Standard Version", blurb: "Word-for-word accuracy"),
+        BibleTranslation(id: "NLT", label: "New Living Translation", blurb: "Easy to read"),
+        BibleTranslation(id: "NKJV", label: "New King James Version", blurb: "Classic, updated wording"),
+        BibleTranslation(id: "unsure", label: "Not sure yet", blurb: "We'll start you with KJV")
+    ]
+}
+
+struct LifeStruggle: Identifiable, Hashable {
+    let id: String
+    let icon: String
+    let label: String
+
+    static let options: [LifeStruggle] = [
+        LifeStruggle(id: "anxiety", icon: "cloud.rain.fill", label: "Anxiety & worry"),
+        LifeStruggle(id: "purpose", icon: "location.north.line.fill", label: "Purpose & direction"),
+        LifeStruggle(id: "relationships", icon: "person.2.fill", label: "Relationships & family"),
+        LifeStruggle(id: "grief", icon: "heart.slash.fill", label: "Grief & loss"),
+        LifeStruggle(id: "forgiveness", icon: "arrow.uturn.left.circle.fill", label: "Forgiveness"),
+        LifeStruggle(id: "doubt", icon: "questionmark.circle.fill", label: "Doubt & hard questions"),
+        LifeStruggle(id: "habits", icon: "arrow.triangle.2.circlepath", label: "Breaking old habits"),
+        LifeStruggle(id: "gratitude", icon: "sun.max.fill", label: "Growing in gratitude")
+    ]
+}
+
 enum ExperienceLevel: String, CaseIterable, Identifiable {
     case beginner = "beginner"
     case intermediate = "intermediate"
