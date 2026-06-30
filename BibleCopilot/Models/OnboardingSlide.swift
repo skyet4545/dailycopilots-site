@@ -34,6 +34,20 @@ struct OnboardingSlide: Identifiable {
 
 // MARK: - Personalization Options
 
+struct AttributionSource: Identifiable, Hashable {
+    let id: String      // stable snake_case value for analytics grouping
+    let icon: String
+    let label: String
+
+    static let sources: [AttributionSource] = [
+        AttributionSource(id: "podcast_gospel_briefing", icon: "mic.fill", label: "A podcast"),
+        AttributionSource(id: "app_store_search", icon: "magnifyingglass", label: "App Store search"),
+        AttributionSource(id: "friend_church", icon: "person.2.fill", label: "Friend or church"),
+        AttributionSource(id: "social_media", icon: "play.rectangle.fill", label: "Social media"),
+        AttributionSource(id: "other", icon: "ellipsis.circle.fill", label: "Other")
+    ]
+}
+
 struct StudyGoal: Identifiable, Hashable {
     let id: String
     let icon: String

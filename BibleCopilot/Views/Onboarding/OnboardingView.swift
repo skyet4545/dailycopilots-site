@@ -12,6 +12,7 @@ struct OnboardingView: View {
     @State private var selectedGoals: Set<String> = []
     @State private var selectedLevel: ExperienceLevel?
     @State private var selectedDenomination: Denomination?
+    @State private var selectedAttribution: AttributionSource?
     @State private var selectedTranslation: BibleTranslation?
     @State private var selectedStruggles: Set<String> = []
     @State private var planBuildProgress: Double = 0
@@ -36,16 +37,17 @@ struct OnboardingView: View {
     // → building plan → aha moment → notifications → social proof → paywall
     private let welcomeStep = 0
     private let denominationStep = 1
-    private let translationStep = 2
-    private let goalStep = 3
-    private let struggleStep = 4
-    private let experienceStep = 5
-    private let buildPlanStep = 6
-    private let ahaStep = 7
-    private let notificationStep = 8
-    private let socialProofStep = 9
-    private let paywallStep = 10
-    private var totalSteps: Int { 11 }
+    private let attributionStep = 2
+    private let translationStep = 3
+    private let goalStep = 4
+    private let struggleStep = 5
+    private let experienceStep = 6
+    private let buildPlanStep = 7
+    private let ahaStep = 8
+    private let notificationStep = 9
+    private let socialProofStep = 10
+    private let paywallStep = 11
+    private var totalSteps: Int { 12 }
 
     var body: some View {
         ZStack {
@@ -79,6 +81,8 @@ struct OnboardingView: View {
                         normalSlideView
                     } else if currentStep == denominationStep {
                         denominationView
+                    } else if currentStep == attributionStep {
+                        attributionView
                     } else if currentStep == translationStep {
                         translationView
                     } else if currentStep == goalStep {
@@ -125,6 +129,7 @@ struct OnboardingView: View {
         switch step {
         case welcomeStep: return "welcome"
         case denominationStep: return "denomination"
+        case attributionStep: return "attribution"
         case translationStep: return "translation"
         case goalStep: return "goals"
         case struggleStep: return "struggles"
@@ -386,6 +391,54 @@ struct OnboardingView: View {
                 if let d = selectedDenomination {
                     UserDefaults.standard.set(d.id, forKey: "onboarding_denomination")
                     AnalyticsService.shared.track(AnalyticsEvent.quizAnswer, ["question": "denomination", "answer": d.id])
+                }
+                currentStep += 1
+            }
+        }
+    }
+
+    // MARK: - Attribution ("How did you hear about us?")
+
+    private var attributionView: some View {
+        VStack(spacing: 0) {
+            VStack(spacing: 16) {
+                Image(systemName: "hand.wave.fill")
+                    .font(.system(size: 36))
+                    .foregroundColor(AppTheme.gold)
+
+                Text("How did you hear\nabout us?")
+                    .font(.title2.bold())
+                    .foregroundColor(AppTheme.textPrimary)
+                    .multilineTextAlignment(.center)
+
+                Text("This helps us reach more people like you")
+                    .font(.subheadline)
+                    .foregroundColor(AppTheme.textMuted)
+            }
+            .padding(.top, 12)
+            .padding(.bottom, 20)
+
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 10) {
+                    ForEach(AttributionSource.sources) { option in
+                        quizRow(
+                            icon: option.icon,
+                            label: option.label,
+                            isSelected: selectedAttribution == option
+                        ) {
+                            selectedAttribution = option
+                            HapticService.lightImpact()
+                        }
+                    }
+                }
+                .padding(.horizontal, 24)
+                .padding(.bottom, 12)
+            }
+
+            continueButton(disabled: selectedAttribution == nil) {
+                if let a = selectedAttribution {
+                    UserDefaults.standard.set(a.id, forKey: "onboarding_heard_about")
+                    AnalyticsService.shared.track(AnalyticsEvent.quizAnswer, ["question": "heard_about", "answer": a.id])
                 }
                 currentStep += 1
             }
