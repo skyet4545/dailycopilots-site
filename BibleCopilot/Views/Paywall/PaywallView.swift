@@ -8,6 +8,57 @@ struct PaywallView: View {
     @State private var isLoading = false
     @State private var errorMessage: String?
 
+    // The plan the user is about to buy (annual is the default when nothing is tapped).
+    private var selectedProduct: Product? {
+        if selectedPlan == subscriptionService.monthlyProductID {
+            return subscriptionService.monthlyProduct
+        }
+        return subscriptionService.annualProduct
+    }
+
+    // The free-trial length on the selected plan, e.g. "7-Day", or nil if no trial.
+    private var trialLengthText: String? {
+        guard let offer = selectedProduct?.subscription?.introductoryOffer,
+              offer.paymentMode == .freeTrial else { return nil }
+        let n = offer.period.value
+        switch offer.period.unit {
+        case .day:   return "\(n)-Day"
+        case .week:  return "\(n * 7)-Day"
+        case .month: return "\(n)-Month"
+        case .year:  return "\(n)-Year"
+        @unknown default: return nil
+        }
+    }
+
+    // CTA: lead with the free trial when one exists — hesitant users tap "try free"
+    // far more than "pay".
+    private var ctaTitle: String {
+        if let t = trialLengthText { return "Start \(t) Free Trial" }
+        return "Subscribe"
+    }
+
+    // Risk-reversal line under the CTA. Dynamic to the selected plan.
+    private var reassuranceText: String {
+        guard let p = selectedProduct else { return "Cancel anytime" }
+        let period = (p.id == subscriptionService.monthlyProductID) ? "month" : "year"
+        if trialLengthText != nil {
+            return "No charge today. After your free trial it's \(p.displayPrice)/\(period). Cancel anytime."
+        }
+        return "\(p.displayPrice) per \(period). Cancel anytime."
+    }
+
+    // Annual card subtitle: per-month equivalent + savings vs monthly — makes the
+    // annual plan the obvious choice.
+    private var annualSubtitle: String {
+        guard let annual = subscriptionService.annualProduct else { return "Billed annually" }
+        let perMonth = (annual.price / 12).formatted(annual.priceFormatStyle)
+        if let monthly = subscriptionService.monthlyProduct, monthly.price > 0 {
+            let pct = Int((((1 - (annual.price / (monthly.price * 12))) * 100) as NSDecimalNumber).doubleValue.rounded())
+            return "Just \(perMonth)/mo · save \(pct)%"
+        }
+        return "Just \(perMonth)/mo · billed annually"
+    }
+
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -34,10 +85,10 @@ struct PaywallView: View {
 
                     // Features
                     VStack(alignment: .leading, spacing: 16) {
-                        PaywallFeatureRow(icon: "infinity", text: "Unlimited questions & answers")
-                        PaywallFeatureRow(icon: "book.fill", text: "Study Journal — save insights")
-                        PaywallFeatureRow(icon: "sparkles", text: "AI topical Bible discovery")
-                        PaywallFeatureRow(icon: "calendar", text: "All 5 Reading Plans")
+                        PaywallFeatureRow(icon: "infinity", text: "Unlimited Scripture-cited answers")
+                        PaywallFeatureRow(icon: "square.grid.2x2.fill", text: "All 6 study modes on every verse")
+                        PaywallFeatureRow(icon: "sparkles", text: "Explore any topic across Scripture")
+                        PaywallFeatureRow(icon: "book.fill", text: "Study journal + all 5 reading plans")
                     }
                     .padding(.horizontal, 32)
 
@@ -95,8 +146,8 @@ struct PaywallView: View {
                                 PaywallPlanCard(
                                     product: annual,
                                     isSelected: selectedPlan == annual.id || selectedPlan.isEmpty,
-                                    badge: "BEST VALUE",
-                                    subtitle: "\(annual.displayPrice)/year"
+                                    badge: trialLengthText != nil ? "7-DAY FREE TRIAL" : "BEST VALUE",
+                                    subtitle: annualSubtitle
                                 ) {
                                     selectedPlan = annual.id
                                     HapticService.selection()
@@ -126,7 +177,7 @@ struct PaywallView: View {
                                 if isLoading {
                                     ProgressView().tint(.white)
                                 } else {
-                                    Text("Continue")
+                                    Text(ctaTitle)
                                         .font(.headline)
                                 }
                             }
@@ -138,6 +189,14 @@ struct PaywallView: View {
                         }
                         .padding(.horizontal, 24)
                         .disabled(isLoading)
+
+                        // Risk-reversal, right under the CTA where it converts.
+                        Text(reassuranceText)
+                            .font(.caption)
+                            .foregroundColor(AppTheme.textMuted)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, 32)
+                            .padding(.top, 2)
                     }
 
                     if let error = errorMessage {
@@ -145,10 +204,6 @@ struct PaywallView: View {
                             .font(.caption)
                             .foregroundColor(AppTheme.error)
                     }
-
-                    Text("No commitment, cancel anytime")
-                        .font(.caption)
-                        .foregroundColor(AppTheme.textMuted)
 
                     // Sign in prompt (if not signed in)
                     if !AuthService.shared.isSignedIn {
