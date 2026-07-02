@@ -12,8 +12,10 @@ final class ReviewService {
 
         let lastMilestone = UserDefaults.standard.integer(forKey: lastPromptMilestoneKey)
 
-        // Prompt at 5, 15, and 50 studies (each only once)
-        let milestones = [5, 15, 50]
+        // Prompt at 3, 10, and 30 studies (each only once).
+        // 3 is reachable on day one within the free tier's 3 questions/day —
+        // right after the third successful answer, the strongest aha moment.
+        let milestones = [3, 10, 30]
         if milestones.contains(count) && count > lastMilestone {
             requestReview()
             UserDefaults.standard.set(count, forKey: lastPromptMilestoneKey)

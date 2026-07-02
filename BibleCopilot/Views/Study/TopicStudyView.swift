@@ -140,6 +140,7 @@ struct TopicStudyView: View {
             }
             crossReferences = CrossReferenceParser.extractReferences(from: response, limit: 8)
             usageService.recordQuestion()
+            ReviewService.shared.recordStudyAndPromptIfReady()
             HapticService.success()
         } catch {
             self.error = "Unable to search Scripture for this topic. Check your internet connection."

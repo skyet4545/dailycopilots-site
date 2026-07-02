@@ -157,6 +157,7 @@ final class StudyViewModel {
                 }
                 crossReferences = CrossReferenceParser.extractReferences(from: aiResponse)
                 usageService.recordQuestion()
+                ReviewService.shared.recordStudyAndPromptIfReady()
                 HapticService.success()
             } catch {
                 if !Task.isCancelled {
