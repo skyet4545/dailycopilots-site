@@ -49,6 +49,12 @@ struct OnboardingView: View {
     private let paywallStep = 11
     private var totalSteps: Int { 12 }
 
+    // v2.4: the live flow is welcome → aha → app. Progress reflects that 2-screen journey
+    // (the quiz/notification/social-proof/onboarding-paywall steps are no longer in the path).
+    private var flowProgress: Double {
+        currentStep == welcomeStep ? 0.5 : 1.0
+    }
+
     var body: some View {
         ZStack {
             AppTheme.background.ignoresSafeArea()
@@ -58,7 +64,16 @@ struct OnboardingView: View {
                 HStack {
                     if currentStep > 0 && currentStep != paywallStep && currentStep != buildPlanStep {
                         Button {
-                            withAnimation { currentStep -= 1 }
+                            // v2.4 flow is welcome → aha → attribution → app (the 6-question quiz is
+                            // skipped), so a plain `currentStep -= 1` would land the user on an abandoned
+                            // quiz screen. Map back moves explicitly along the real flow.
+                            withAnimation {
+                                switch currentStep {
+                                case ahaStep: currentStep = welcomeStep
+                                case attributionStep: currentStep = ahaStep
+                                default: currentStep = welcomeStep
+                                }
+                            }
                         } label: {
                             Image(systemName: "chevron.left")
                                 .font(.body.bold())
@@ -125,6 +140,13 @@ struct OnboardingView: View {
         }
     }
 
+    /// Finish onboarding and enter the app. v2.4: onboarding now ends at the aha moment
+    /// (welcome → value → app), so this is the single completion path for the free flow.
+    private func completeOnboarding(pro: Bool) {
+        AnalyticsService.shared.track(AnalyticsEvent.onboardingComplete, ["pro": pro ? "true" : "false"])
+        onComplete()
+    }
+
     private func stepName(_ step: Int) -> String {
         switch step {
         case welcomeStep: return "welcome"
@@ -154,7 +176,7 @@ struct OnboardingView: View {
 
                 Capsule()
                     .fill(AppTheme.goldGradient)
-                    .frame(width: geo.size.width * CGFloat(currentStep + 1) / CGFloat(totalSteps), height: 4)
+                    .frame(width: geo.size.width * flowProgress, height: 4)
                     .animation(.easeInOut(duration: 0.3), value: currentStep)
             }
         }
@@ -203,7 +225,10 @@ struct OnboardingView: View {
             Spacer()
 
             continueButton {
-                currentStep += 1
+                // v2.4: skip the 6-question quiz (write-only, never personalizes answers) and the
+                // mid-onboarding paywall. Go straight to the value moment — getting users to their
+                // first insight fast is the #1 activation lever (2/3 were dropping before asking anything).
+                withAnimation { currentStep = ahaStep }
             }
         }
     }
@@ -435,13 +460,25 @@ struct OnboardingView: View {
                 .padding(.bottom, 12)
             }
 
+            // Last step: saving the answer completes onboarding straight into the app.
             continueButton(disabled: selectedAttribution == nil) {
                 if let a = selectedAttribution {
                     UserDefaults.standard.set(a.id, forKey: "onboarding_heard_about")
                     AnalyticsService.shared.track(AnalyticsEvent.quizAnswer, ["question": "heard_about", "answer": a.id])
                 }
-                currentStep += 1
+                completeOnboarding(pro: false)
             }
+
+            // Attribution is optional — never trap the user here.
+            Button {
+                completeOnboarding(pro: false)
+            } label: {
+                Text("Skip")
+                    .font(.subheadline)
+                    .foregroundColor(AppTheme.textMuted)
+                    .underline()
+            }
+            .padding(.bottom, 24)
         }
     }
 
@@ -861,12 +898,27 @@ struct OnboardingView: View {
 
                 Spacer().frame(height: 20)
 
-                // Continue to paywall
+                // v2.4: after the aha insight, ask the one attribution question (how they heard about
+                // us), then drop straight into the app so they can ask their OWN first question. No
+                // mid-onboarding paywall — monetization happens value-first, at the 3-question limit.
+                // (The old "Unlock Unlimited Study" label was a dead button: it just advanced to the
+                // notifications screen, unlocking nothing.)
                 if ahaInsight != nil {
-                    continueButtonInline(label: "Unlock Unlimited Study") {
-                        currentStep += 1
+                    continueButtonInline(label: "Start studying — it's free") {
+                        withAnimation { currentStep = attributionStep }
                     }
                 }
+
+                // Always-available exit so a failed insight can never trap the user on the last step.
+                Button {
+                    completeOnboarding(pro: false)
+                } label: {
+                    Text(ahaInsight != nil ? "Maybe later" : "Skip for now")
+                        .font(.subheadline)
+                        .foregroundColor(AppTheme.textMuted)
+                        .underline()
+                }
+                .padding(.top, 4)
 
                 Spacer().frame(height: 40)
             }

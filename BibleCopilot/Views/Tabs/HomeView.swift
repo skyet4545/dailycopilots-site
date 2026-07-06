@@ -5,8 +5,17 @@ struct HomeView: View {
     @State private var streakService = StreakService.shared
     @State private var showShareSheet = false
     @State private var shareText = ""
+    // v2.4 activation: show a one-tap "first question" hero until the user's first study.
+    // 2/3 of new users were never asking a single question — this hands them an instant win.
+    @AppStorage("bc_firstStudyDone") private var firstStudyDone = false
     var onStudy: (String, StudyMode?) -> Void
     var onShowPaywall: () -> Void
+
+    /// Route every study through here so the first-question hero clears after the first tap.
+    private func study(_ ref: String, _ mode: StudyMode?) {
+        firstStudyDone = true
+        onStudy(ref, mode)
+    }
 
     var body: some View {
         NavigationStack {
@@ -41,13 +50,50 @@ struct HomeView: View {
                     }
                     .padding(.top, 12)
 
+                    // v2.4 first-question hero — the single clearest first action for a new user.
+                    if !firstStudyDone {
+                        Button {
+                            study("John 3:16", .summary)
+                        } label: {
+                            VStack(alignment: .leading, spacing: 10) {
+                                HStack(spacing: 8) {
+                                    Image(systemName: "sparkles")
+                                        .foregroundColor(AppTheme.gold)
+                                    Text("New here? Start with one tap")
+                                        .font(.headline)
+                                        .foregroundColor(AppTheme.textPrimary)
+                                    Spacer()
+                                }
+                                HStack {
+                                    Text("“What does John 3:16 really mean?”")
+                                        .font(.subheadline)
+                                        .italic()
+                                        .foregroundColor(AppTheme.textMuted)
+                                    Spacer()
+                                    Image(systemName: "arrow.right.circle.fill")
+                                        .foregroundColor(AppTheme.accent)
+                                        .font(.title3)
+                                }
+                            }
+                            .padding()
+                            .background(AppTheme.surfaceLight)
+                            .clipShape(RoundedRectangle(cornerRadius: AppTheme.cornerRadiusLarge))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: AppTheme.cornerRadiusLarge)
+                                    .stroke(AppTheme.gold.opacity(0.6), lineWidth: 1.5)
+                            )
+                        }
+                        .buttonStyle(.plain)
+                        .padding(.horizontal)
+                    }
+
                     // Daily Verse
                     DailyVerseCard(
                         reference: viewModel.dailyVerseRef,
                         text: viewModel.dailyVerseText,
                         isLoading: viewModel.dailyVerseLoading,
                         onStudy: {
-                            onStudy(viewModel.dailyVerseRef, nil)
+                            study(viewModel.dailyVerseRef, nil)
                         },
                         onShare: {
                             shareText = viewModel.shareText(
@@ -91,7 +137,7 @@ struct HomeView: View {
                         HStack(spacing: 10) {
                             ForEach(HomeViewModel.quickPicks, id: \.self) { pick in
                                 QuickPickChip(text: pick) {
-                                    onStudy(pick, nil)
+                                    study(pick, nil)
                                 }
                             }
                         }
@@ -107,7 +153,7 @@ struct HomeView: View {
                             .padding(.horizontal)
 
                         StudyModeCard(mode: .summary, isFullWidth: true) {
-                            onStudy(viewModel.searchText.isEmpty ? "John 3:16" : viewModel.searchText, .summary)
+                            study(viewModel.searchText.isEmpty ? "John 3:16" : viewModel.searchText, .summary)
                         }
                         .padding(.horizontal)
 
@@ -117,14 +163,14 @@ struct HomeView: View {
                         ], spacing: 12) {
                             ForEach([StudyMode.observe, .interpret, .theology, .apply]) { mode in
                                 StudyModeCard(mode: mode) {
-                                    onStudy(viewModel.searchText.isEmpty ? "John 3:16" : viewModel.searchText, mode)
+                                    study(viewModel.searchText.isEmpty ? "John 3:16" : viewModel.searchText, mode)
                                 }
                             }
                         }
                         .padding(.horizontal)
 
                         StudyModeCard(mode: .apologetics, isFullWidth: true) {
-                            onStudy(viewModel.searchText.isEmpty ? "John 3:16" : viewModel.searchText, .apologetics)
+                            study(viewModel.searchText.isEmpty ? "John 3:16" : viewModel.searchText, .apologetics)
                         }
                         .padding(.horizontal)
                     }
@@ -145,7 +191,7 @@ struct HomeView: View {
 
     private func handleSearch() {
         if let verse = viewModel.searchVerse() {
-            onStudy(verse, nil)
+            study(verse, nil)
         }
     }
 }
