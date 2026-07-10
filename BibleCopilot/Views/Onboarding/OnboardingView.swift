@@ -1140,17 +1140,23 @@ struct OnboardingView: View {
                         .foregroundColor(AppTheme.error)
                 }
 
-                // Skip
+                // Skip — made a clear, visible secondary button. It was tiny muted underlined
+                // text; ~10 of ~30 onboarding quitters bailed on this screen instead of
+                // continuing free, so make the free path obvious and un-trapped.
                 Button {
                     AnalyticsService.shared.track(AnalyticsEvent.onboardingComplete, ["pro": "false"])
                     onComplete()
                 } label: {
-                    Text("Continue with 3 free questions/day")
-                        .font(.subheadline)
-                        .foregroundColor(AppTheme.textMuted)
-                        .underline()
+                    Text("Continue with 3 free questions a day")
+                        .font(.subheadline.bold())
+                        .foregroundColor(AppTheme.textPrimary)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 14)
+                        .background(AppTheme.surfaceLight)
+                        .clipShape(RoundedRectangle(cornerRadius: 14))
                 }
-                .padding(.top, 4)
+                .padding(.horizontal, 24)
+                .padding(.top, 8)
 
                 // Legal
                 VStack(spacing: 4) {

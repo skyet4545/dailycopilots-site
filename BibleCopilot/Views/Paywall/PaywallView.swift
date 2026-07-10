@@ -81,6 +81,18 @@ struct PaywallView: View {
                         Text("Unlock unlimited AI-powered Bible study")
                             .font(.subheadline)
                             .foregroundColor(AppTheme.textMuted)
+
+                        // Value recap: when they've been studying (the limit-hit moment), remind
+                        // them of the value they just got. This is where hesitant users convert —
+                        // 13 of 17 who hit the wall were walking away without it.
+                        if UsageService.shared.usedToday > 0 {
+                            Text("You've asked \(UsageService.shared.usedToday) question\(UsageService.shared.usedToday == 1 ? "" : "s") today. You're clearly studying, keep it going with unlimited.")
+                                .font(.subheadline.weight(.semibold))
+                                .foregroundColor(AppTheme.gold)
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal, 24)
+                                .padding(.top, 4)
+                        }
                     }
 
                     // Features
@@ -267,7 +279,7 @@ struct PaywallView: View {
             }
             .background(AppTheme.background)
             .onAppear {
-                AnalyticsService.shared.track(AnalyticsEvent.paywallView, ["source": "in_app"])
+                AnalyticsService.shared.track(AnalyticsEvent.paywallView, ["source": "in_app", "used": "\(UsageService.shared.usedToday)"])
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {

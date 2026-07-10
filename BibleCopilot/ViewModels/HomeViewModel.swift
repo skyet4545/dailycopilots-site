@@ -37,9 +37,27 @@ final class HomeViewModel {
         return trimmed
     }
 
+    // Reflection + one-tap question from the server-curated daily content (when present).
+    var dailyReflection = ""
+    var dailySuggestedQuestion = ""
+
     @MainActor
     func loadDailyVerse() async {
         dailyVerseLoading = true
+        // Prefer server-curated daily content: set each day by the copilot-daily-content
+        // task, matched to the Gospel Briefing verse of the day. Falls back to the local
+        // rotation so the card can never break.
+        if let daily = await DailyContentService.shared.fetchToday(),
+           let ref = daily.headline, !ref.isEmpty,
+           let passage = daily.passage, !passage.isEmpty {
+            dailyVerseRef = ref
+            dailyVerseText = passage
+            dailyReflection = daily.reflection ?? ""
+            dailySuggestedQuestion = daily.suggested_question ?? ""
+            dailyVerseLoading = false
+            return
+        }
+        // Fallback: local rotation.
         dailyVerseRef = await DailyVerseService.shared.todaysVerse
         do {
             dailyVerseText = try await BibleService.shared.fetchVerse(dailyVerseRef)

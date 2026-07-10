@@ -4,8 +4,11 @@ struct DailyVerseCard: View {
     let reference: String
     let text: String
     let isLoading: Bool
+    var reflection: String = ""
+    var suggestedQuestion: String = ""
     let onStudy: () -> Void
     let onShare: () -> Void
+    var onAsk: () -> Void = {}
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -45,6 +48,13 @@ struct DailyVerseCard: View {
                     .lineLimit(4)
             }
 
+            if !reflection.isEmpty {
+                Text(reflection)
+                    .font(.subheadline)
+                    .foregroundColor(AppTheme.textMuted)
+                    .lineSpacing(3)
+            }
+
             Button(action: onStudy) {
                 HStack(spacing: 6) {
                     Image(systemName: "brain.head.profile")
@@ -56,6 +66,21 @@ struct DailyVerseCard: View {
                 .padding(.vertical, 10)
                 .background(AppTheme.accent)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
+            }
+
+            if !suggestedQuestion.isEmpty {
+                Button(action: onAsk) {
+                    HStack(spacing: 6) {
+                        Image(systemName: "sparkles")
+                        Text("Ask about this")
+                    }
+                    .font(.subheadline.bold())
+                    .foregroundColor(AppTheme.accent)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 10)
+                    .background(AppTheme.accent.opacity(0.12))
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                }
             }
         }
         .padding()

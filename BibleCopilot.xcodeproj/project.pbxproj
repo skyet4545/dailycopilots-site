@@ -42,6 +42,7 @@
 		92992D7885BA4865E0D4E8F6 /* StreakService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0FF4A81096062AB53F8B027 /* StreakService.swift */; };
 		956EB159E6FA31AD2558E198 /* StudyModeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33DDA73C6C7E3EE533A48837 /* StudyModeCard.swift */; };
 		971AF5A6A128228FA9E8938F /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49BC56BD84C2A17A55E3E6E /* KeychainService.swift */; };
+		99B6731791CE37C16F8C000D /* DailyContentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEC23180452E2D9A69718C5 /* DailyContentService.swift */; };
 		9B286DD908FE427E45803F27 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF983B9F10EAC837739D5F2F /* EmptyStateView.swift */; };
 		AC38E852287E12A48A200692 /* VerseCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B86C55E661E66B439846584 /* VerseCardView.swift */; };
 		B4893D3114BDD2DC8978B9C4 /* OnboardingSlide.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDD2B968D0F5F5199EEE4411 /* OnboardingSlide.swift */; };
@@ -100,6 +101,7 @@
 		92C7391170E60BC03DB1933B /* UsageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageService.swift; sourceTree = "<group>"; };
 		92E47BAF9E4B03AA47EBC084 /* ReviewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewService.swift; sourceTree = "<group>"; };
 		9811C6C100DCAEEFF68F0A86 /* TopicStudyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicStudyView.swift; sourceTree = "<group>"; };
+		9EEC23180452E2D9A69718C5 /* DailyContentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyContentService.swift; sourceTree = "<group>"; };
 		A49BC56BD84C2A17A55E3E6E /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		A9480CE00AC3834EE3E9396E /* JournalEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalEntry.swift; sourceTree = "<group>"; };
 		AE705240A2B05ACD112ACEE2 /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				506F36E5723123FC328CB22C /* AuthService.swift */,
 				5799C73EFA4E53177962EDB9 /* BibleService.swift */,
 				25D374DD0157DB6D3F999504 /* CrossReferenceParser.swift */,
+				9EEC23180452E2D9A69718C5 /* DailyContentService.swift */,
 				1A1673C1E232B9139E5C1365 /* DailyVerseService.swift */,
 				136DD3E3B4C6C163CA67185D /* HapticService.swift */,
 				A49BC56BD84C2A17A55E3E6E /* KeychainService.swift */,
@@ -391,6 +394,7 @@
 				7DF106B4AF22A62C6DCD2CF7 /* ContentView.swift in Sources */,
 				212F8B84D6A2E7EAB35494BC /* CrossReferenceParser.swift in Sources */,
 				28D5D4DA5ED8EF76123562DA /* CrossReferencesView.swift in Sources */,
+				99B6731791CE37C16F8C000D /* DailyContentService.swift in Sources */,
 				1AD0140591062A0E94A8DFC5 /* DailyVerseCard.swift in Sources */,
 				02F612115A3107FF2F2243C0 /* DailyVerseService.swift in Sources */,
 				DA1F4A9EA8EB50BA68E95B9E /* Date+Formatting.swift in Sources */,

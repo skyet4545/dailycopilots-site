@@ -8,13 +8,30 @@ struct HomeView: View {
     // v2.4 activation: show a one-tap "first question" hero until the user's first study.
     // 2/3 of new users were never asking a single question — this hands them an instant win.
     @AppStorage("bc_firstStudyDone") private var firstStudyDone = false
+    @AppStorage("dailyReminderEnabled") private var reminderEnabled = false
+    @AppStorage("reminderHour") private var reminderHour = 8
     var onStudy: (String, StudyMode?) -> Void
     var onShowPaywall: () -> Void
 
     /// Route every study through here so the first-question hero clears after the first tap.
     private func study(_ ref: String, _ mode: StudyMode?) {
+        let wasFirst = !firstStudyDone
         firstStudyDone = true
+        if wasFirst { Task { await enableDailyReminderAfterAha() } }
         onStudy(ref, mode)
+    }
+
+    /// After a new user's first study (the aha), ask for notification permission and turn on
+    /// the daily verse reminder — the return trigger that lifts next-day retention. Previously
+    /// this was off by default and only enabled manually in Settings, so almost no one got it.
+    private func enableDailyReminderAfterAha() async {
+        guard !reminderEnabled else { return }
+        let granted = await NotificationService.shared.requestPermission()
+        AnalyticsService.shared.track("notif_permission", ["granted": granted ? "true" : "false"])
+        guard granted else { return }
+        NotificationService.shared.scheduleDailyReminder(hour: reminderHour, minute: 0)
+        reminderEnabled = true
+        AnalyticsService.shared.track("daily_reminder_enabled")
     }
 
     var body: some View {
@@ -92,6 +109,8 @@ struct HomeView: View {
                         reference: viewModel.dailyVerseRef,
                         text: viewModel.dailyVerseText,
                         isLoading: viewModel.dailyVerseLoading,
+                        reflection: viewModel.dailyReflection,
+                        suggestedQuestion: viewModel.dailySuggestedQuestion,
                         onStudy: {
                             study(viewModel.dailyVerseRef, nil)
                         },
@@ -101,6 +120,10 @@ struct HomeView: View {
                                 text: viewModel.dailyVerseText
                             )
                             showShareSheet = true
+                        },
+                        onAsk: {
+                            let q = viewModel.dailySuggestedQuestion.isEmpty ? viewModel.dailyVerseRef : viewModel.dailySuggestedQuestion
+                            study(q, nil)
                         }
                     )
                     .padding(.horizontal)
