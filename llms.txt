@@ -1,0 +1,17 @@
+# Daily Copilots
+
+> A family of AI study companions from Republic Publishing. Each app gives trusted, source-backed answers about its subject — not generic AI. Free tier available; Pro unlocks unlimited questions, all reading plans, and saved notes.
+
+## Apps
+- [Bible Copilot](https://mybiblecopilot.com/gospel): AI Bible study. Verse meaning, original languages, historical context, six study modes.
+- [Prayer Copilot](https://prayercopilot.com/): AI that writes a personal, Scripture-rooted prayer for your exact situation.
+- [Stoic Copilot](https://dailycopilots.com/stoic/): AI Stoic study guide anchored to Marcus Aurelius, Epictetus and Seneca.
+- [Torah Copilot](https://dailycopilots.com/torah/): AI Torah study anchored to Tanakh, Talmud, Rashi and Rambam.
+- [Gita Copilot](https://dailycopilots.com/gita/): AI Bhagavad Gita study guide with the Sanskrit and classical commentators.
+- [Wisdom Copilot](https://dailycopilots.com/wisdom/): AI wisdom across the great traditions — Stoics, Scripture, Eastern philosophy, the classics.
+- [Constitution Copilot](https://dailycopilots.com/constitution/): AI guide to the US Constitution, the Federalist Papers and landmark Supreme Court cases.
+
+## Notes
+- Publisher: Republic Publishing.
+- Each app is anchored to primary sources and cites them; answers are source-backed, not internet-median opinion.
+- Platforms: iPhone and iPad (iOS).
