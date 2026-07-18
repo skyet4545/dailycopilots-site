@@ -2,8 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url><loc>https://dailycopilots.com/</loc><changefreq>weekly</changefreq></url>
 <url><loc>https://dailycopilots.com/stoic/</loc><changefreq>weekly</changefreq></url>
+<url><loc>https://dailycopilots.com/stoic/pro/</loc><changefreq>weekly</changefreq></url>
 <url><loc>https://dailycopilots.com/torah/</loc><changefreq>weekly</changefreq></url>
+<url><loc>https://dailycopilots.com/torah/pro/</loc><changefreq>weekly</changefreq></url>
 <url><loc>https://dailycopilots.com/wisdom/</loc><changefreq>weekly</changefreq></url>
+<url><loc>https://dailycopilots.com/wisdom/pro/</loc><changefreq>weekly</changefreq></url>
 <url><loc>https://dailycopilots.com/gita/</loc><changefreq>weekly</changefreq></url>
+<url><loc>https://dailycopilots.com/gita/pro/</loc><changefreq>weekly</changefreq></url>
 <url><loc>https://dailycopilots.com/constitution/</loc><changefreq>weekly</changefreq></url>
+<url><loc>https://dailycopilots.com/constitution/pro/</loc><changefreq>weekly</changefreq></url>
 </urlset>
