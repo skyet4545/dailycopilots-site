@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "last_verified": "2026-07-27",
+  "source_of_truth": "BibleCopilot/Services/UsageService.swift and approved App Store pricing",
+  "product": {
+    "name": "Bible Copilot",
+    "publisher": "Republic Publishing",
+    "app_store_id": "6758913373",
+    "app_store_url": "https://apps.apple.com/us/app/bible-copilot-ai-bible-study/id6758913373",
+    "website": "https://mybiblecopilot.com",
+    "platforms": ["iPhone", "iPad"]
+  },
+  "free_tier": {
+    "questions_per_day": 3,
+    "account_required": false,
+    "ads": false
+  },
+  "pro": {
+    "monthly_usd": 9.99,
+    "annual_usd": 49.99,
+    "annual_trial_days": 7
+  },
+  "study_modes": ["Summary", "Observe", "Interpret", "Theology", "Apply", "Apologetics"],
+  "approved_claims": [
+    "Verse-anchored Bible study",
+    "Scripture-cited explanations",
+    "Three free questions daily",
+    "No account required",
+    "Six guided study modes"
+  ],
+  "prohibited_claims_without_current_evidence": [
+    "#1 AI Bible study app",
+    "Scholarly-level",
+    "Seminary-grade",
+    "The first",
+    "Limited-time offer",
+    "Founding week offer"
+  ]
+}

@@ -16,7 +16,7 @@ The open web's awareness of Bible Copilot today is **effectively zero outside of
 - `https://mybiblecopilot.com/` — primary marketing site. Indexed. Two blog posts surfaced in search:
   - `https://mybiblecopilot.com/blog/blog-01426/` — "Romans 14:8 in the Original Greek..."
   - `https://mybiblecopilot.com/blog/blog-02579/` — "Top 25 Bible Verses About Resentment"
-  - Search snippet describes the app as: "instant, scholarly-level answers to any question about any verse... AI-powered Observe, Interpret, Apply, Pray, and Explore modes."
+  - Search snippet describes the app as: "instant, in-depth answers to any question about any verse... AI-powered Observe, Interpret, Apply, Pray, and Explore modes."
 - `bible-copilot-app.netlify.app` — **does not appear in any search index.** Possibly a staging/preview URL.
 
 ### Third-party citations of Bible Copilot

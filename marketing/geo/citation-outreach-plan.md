@@ -24,7 +24,7 @@ URLs in this document came from the Phase 3 citation audit (web-verified 2026-05
 | 7 | **REACHRIGHT Studios — Best Christian Apps** | `https://reachrightstudios.com/blog/best-christian-apps/` | Already covers 16 apps broadly; church-marketing audience. | Cold email. **Email Template 1**. | Low | P2 | 10% |
 | 8 | **Doxa — Best Bible Apps with AI** | `https://doxa.app/blog/best-bible-apps-with-ai` | Doxa is a competitor *and* a reviewer. They list YouVersion and Logos honestly. Worth pitching even if low odds. | Cold email; acknowledge they're a competitor; pitch as honest comparison addition. **Email Template 1**. | Low | P3 | 3–5% (they may decline) |
 | 9 | **Superprompt — Top 10 Christian AI Assistants** | `https://superprompt.com/blog/best-ai-bible-chat-apps-2025` | Already indexed by SERPs for "best AI Bible chat" queries. Listicle pages rank well. | Cold email asking for inclusion. **Email Template 1**. | Low | P2 | 10–15% |
-| 10 | **Christian Post Deals — Top Bible Apps** | `https://deals.christianpost.com/post/top-4-bible-apps-in-north-america-for-2026-...` | Mainstream Christian-news adjacency, surfaces in Google News. | Cold email; angle = "indie iOS-first AI Bible app, Republic Publishing LLC founder story." **Email Template 1**. | Med | P3 | 5% |
+| 10 | **Christian Post Deals — Top Bible Apps** | `https://deals.christianpost.com/post/top-4-bible-apps-in-north-america-for-2026-...` | Mainstream Christian-news adjacency, surfaces in Google News. | Cold email; angle = "indie iOS AI Bible app, Republic Publishing LLC founder story." **Email Template 1**. | Med | P3 | 5% |
 
 ### B. Reddit — 5 most strategic threads/subs (P1/P2)
 
@@ -89,9 +89,9 @@ Realistic earliest eligibility: **Q4 2026** if Tim Challies + ChurchTech Today +
 >
 > Hi [Editor first name],
 >
-> I'm Carlos Reyes, founder of Bible Copilot ([App Store](https://apps.apple.com/app/id6758913373)). It's an iOS app that runs inductive study (Observe, Interpret, Theology, Apply, Apologetics, Summary) on any verse — every answer is verse-anchored and denominationally humble.
+> I'm Carlos Reyes, founder of Bible Copilot ([App Store](https://apps.apple.com/us/app/bible-copilot-ai-bible-study/id6758913373)). It's an iOS app that runs inductive study (Observe, Interpret, Theology, Apply, Apologetics, Summary) on any verse — every answer is verse-anchored and denominationally humble.
 >
-> Free tier is 15 questions/day; Pro is $4.99/month. Early reviewers wrote things like *"finally, a Bible AI that cites the text instead of guessing"* (5.0 stars, App Store).
+> Free tier is 3 questions/day; Pro is $9.99/month or $49.99/year, with a 7-day trial on annual. Early reviewers wrote things like *"finally, a Bible AI that cites the text instead of guessing"* (5.0 stars, App Store).
 >
 > Would you consider it for your next "[insert their listicle title]" refresh? Happy to send a Pro promo code if you want to test it.
 >
@@ -102,7 +102,7 @@ Realistic earliest eligibility: **Q4 2026** if Tim Challies + ChurchTech Today +
 
 > Founder disclosure: I built **Bible Copilot** (iOS), so take this with a grain of salt.
 >
-> If you specifically want **inductive study + apologetics in one app**, it has six modes — Observe, Interpret, Theology, Apply, Apologetics, Summary — each verse-anchored. Free tier is 15 questions/day. It's not the best for *everything* (YouVersion still wins on social), but for the inductive workflow it's the only iOS app I've found that ships all six modes by default. Try it and decide.
+> If you specifically want **inductive study + apologetics in one app**, it has six modes — Observe, Interpret, Theology, Apply, Apologetics, Summary — each verse-anchored. Free tier is 3 questions/day. It's not the best for *everything* (YouVersion still wins on social), but it is built for an inductive workflow from the start. Try it and decide.
 
 Variants: drop "by default" if char-tight; never use bold formatting on r/Christianity (they auto-flag promo posts).
 
@@ -118,7 +118,7 @@ Variants: drop "by default" if char-tight; never use bold formatting on r/Christ
 >
 > 1. **Why inductive method beats "ask the AI" Bible apps** — verse-anchored answers vs. confabulated paraphrase.
 > 2. **Denominational humility in AI** — how I tuned the system prompt to cite text, not push a tradition.
-> 3. **Indie iOS economics** — 5.0 stars, 6 reviews, $4.99/mo, no VC. What it costs to run a niche faith app on Vercel.
+> 3. **Indie iOS economics** — 5.0 stars, 6 reviews, $9.99/mo, no VC. What it costs to run a niche faith app on Vercel.
 >
 > Happy with 20–30 min, audio-only. App Store: apps.apple.com/app/id6758913373.
 >
