@@ -556,8 +556,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = BibleCopilot/BibleCopilot.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Apple Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 127;
 				DEVELOPMENT_TEAM = 846N5D6TMK;
 				ENABLE_BITCODE = NO;
@@ -569,6 +569,7 @@
 				);
 				MARKETING_VERSION = 2.4.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.scripturecopilot.app;
+				PROVISIONING_PROFILE_SPECIFIER = "Bible Copilot App Store 2.4.2";
 				PRODUCT_NAME = "Bible Copilot";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
