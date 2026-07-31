@@ -12,6 +12,9 @@ final class UsageService {
     @ObservationIgnored
     @AppStorage("usageCount") private var usageCount: Int = 0
 
+    @ObservationIgnored
+    @AppStorage("hasCompletedFirstQuestion") private var hasCompletedFirstQuestion = false
+
     init() {
         resetIfNewDay()
     }
@@ -36,17 +39,19 @@ final class UsageService {
         return max(0, Self.freeQuestionsPerDay - usageCount)
     }
 
+    /// Records a successfully completed answer and returns true only for the
+    /// first successful question on this install.
     @discardableResult
     func recordQuestion() -> Bool {
         resetIfNewDay()
         usageCount += 1
         AnalyticsService.shared.track(AnalyticsEvent.questionAsked, ["count_today": "\(usageCount)"])
-        let isFirstQuestion = !UserDefaults.standard.bool(forKey: "has_completed_first_question")
-        if isFirstQuestion {
-            UserDefaults.standard.set(true, forKey: "has_completed_first_question")
+        if !hasCompletedFirstQuestion {
+            hasCompletedFirstQuestion = true
             AnalyticsService.shared.track(AnalyticsEvent.firstQuestionCompleted)
+            return true
         }
-        return isFirstQuestion
+        return false
     }
 
     private func resetIfNewDay() {

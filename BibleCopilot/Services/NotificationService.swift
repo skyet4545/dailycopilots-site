@@ -18,16 +18,37 @@ final class NotificationService {
         }
     }
 
+    /// Returns true exactly once after a person's first useful study. The UI
+    /// presents a dismissible, user-timed soft ask before invoking iOS's
+    /// permission dialog; Settings remains available for a later opt-in.
     func shouldOfferDailyReminderAfterFirstStudy() -> Bool {
-        !UserDefaults.standard.bool(forKey: "daily_reminder_prompt_seen")
+        let defaults = UserDefaults.standard
+        guard !defaults.bool(forKey: "dailyReminderEnabled"),
+              !defaults.bool(forKey: "firstStudyReminderPromptAttempted") else {
+            return false
+        }
+
+        defaults.set(true, forKey: "firstStudyReminderPromptAttempted")
+        return true
     }
 
     func enableDailyReminder(hour: Int, minute: Int) async -> Bool {
-        UserDefaults.standard.set(true, forKey: "daily_reminder_prompt_seen")
+        let defaults = UserDefaults.standard
         let granted = await requestPermission()
+        AnalyticsService.shared.track(
+            AnalyticsEvent.notificationPermission,
+            ["granted": granted ? "true" : "false", "context": "post_first_successful_question"]
+        )
         guard granted else { return false }
+
         scheduleDailyReminder(hour: hour, minute: minute)
-        AnalyticsService.shared.track(AnalyticsEvent.dailyReminderEnabled, ["hour": "\(hour)"])
+        defaults.set(true, forKey: "dailyReminderEnabled")
+        defaults.set(hour, forKey: "reminderHour")
+        defaults.set(minute, forKey: "reminderMinute")
+        AnalyticsService.shared.track(
+            AnalyticsEvent.dailyReminderEnabled,
+            ["context": "post_first_successful_question"]
+        )
         return true
     }
 

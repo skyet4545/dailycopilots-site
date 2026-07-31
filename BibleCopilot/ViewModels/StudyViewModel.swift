@@ -25,13 +25,20 @@ final class StudyViewModel {
 
     var suggestedFollowUpQuestion: String? {
         guard let selectedMode, !aiLoading, !aiResponse.isEmpty else { return nil }
+
         switch selectedMode {
-        case .summary: return "What is the main truth I should carry with me?"
-        case .observe: return "What detail in this passage deserves a closer look?"
-        case .interpret: return "How would the first readers have understood this?"
-        case .theology: return "What does this reveal about God and His character?"
-        case .apply: return "What is one faithful step I can take today?"
-        case .apologetics: return "How could I explain this truth with grace and clarity?"
+        case .summary:
+            return "What is the main truth I should carry with me?"
+        case .observe:
+            return "What detail in this passage deserves a closer look?"
+        case .interpret:
+            return "How would the first readers have understood this?"
+        case .theology:
+            return "What does this reveal about God and His character?"
+        case .apply:
+            return "What is one faithful step I can take today?"
+        case .apologetics:
+            return "How could I explain this truth with grace and clarity?"
         }
     }
 
@@ -135,7 +142,9 @@ final class StudyViewModel {
     @MainActor
     func askSuggestedFollowUp(isPro: Bool, onShowPaywall: @escaping () -> Void) async {
         guard let suggestion = suggestedFollowUpQuestion else { return }
-        AnalyticsService.shared.track(AnalyticsEvent.followUpSuggestionTapped, ["mode": selectedMode?.rawValue ?? "unknown"])
+        AnalyticsService.shared.track(AnalyticsEvent.followUpSuggestionTapped, [
+            "mode": selectedMode?.rawValue ?? "unknown"
+        ])
         followUpText = suggestion
         await askFollowUp(isPro: isPro, onShowPaywall: onShowPaywall)
     }

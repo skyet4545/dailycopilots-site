@@ -57,11 +57,17 @@ struct StudyView: View {
                         VStack(spacing: 8) {
                             if let suggestion = viewModel.suggestedFollowUpQuestion {
                                 Button {
-                                    Task { await viewModel.askSuggestedFollowUp(isPro: subscriptionService.isPro, onShowPaywall: onShowPaywall) }
+                                    Task {
+                                        await viewModel.askSuggestedFollowUp(
+                                            isPro: subscriptionService.isPro,
+                                            onShowPaywall: onShowPaywall
+                                        )
+                                    }
                                 } label: {
                                     HStack(spacing: 8) {
                                         Image(systemName: "sparkles")
-                                        Text(suggestion).multilineTextAlignment(.leading)
+                                        Text(suggestion)
+                                            .multilineTextAlignment(.leading)
                                         Spacer(minLength: 0)
                                         Image(systemName: "arrow.right")
                                     }
@@ -75,6 +81,7 @@ struct StudyView: View {
                                 }
                                 .accessibilityLabel("Explore next: \(suggestion)")
                             }
+
                             HStack(spacing: 10) {
                                 TextField("Ask a follow-up question...", text: $viewModel.followUpText)
                                     .foregroundColor(AppTheme.textPrimary)
@@ -173,7 +180,7 @@ struct StudyView: View {
     }
 }
 
-private struct PostStudyReminderView: View {
+struct PostStudyReminderView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var reminderTime = Calendar.current.date(from: DateComponents(hour: 8, minute: 0)) ?? Date()
     @State private var isSaving = false
@@ -181,21 +188,38 @@ private struct PostStudyReminderView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 24) {
-                Image(systemName: "bell.badge.fill").font(.system(size: 42)).foregroundColor(AppTheme.gold)
-                Text("Continue this study tomorrow").font(.title2.bold()).foregroundColor(AppTheme.textPrimary).multilineTextAlignment(.center)
+                Image(systemName: "bell.badge.fill")
+                    .font(.system(size: 42))
+                    .foregroundColor(AppTheme.gold)
+                Text("Continue this study tomorrow")
+                    .font(.title2.bold())
+                    .foregroundColor(AppTheme.textPrimary)
+                    .multilineTextAlignment(.center)
                 Text("Choose a time for a gentle daily reminder. You can change it anytime in Settings.")
-                    .font(.body).foregroundColor(AppTheme.textMuted).multilineTextAlignment(.center)
+                    .font(.body)
+                    .foregroundColor(AppTheme.textMuted)
+                    .multilineTextAlignment(.center)
                 DatePicker("Reminder time", selection: $reminderTime, displayedComponents: .hourAndMinute)
-                    .datePickerStyle(.wheel).labelsHidden().frame(maxHeight: 160)
-                Button { Task { await saveReminder() } } label: {
-                    if isSaving { ProgressView().tint(.white) } else { Text("Remind me") }
+                    .datePickerStyle(.wheel)
+                    .labelsHidden()
+                    .frame(maxHeight: 160)
+                Button {
+                    Task { await saveReminder() }
+                } label: {
+                    if isSaving { ProgressView().tint(.white) }
+                    else { Text("Remind me") }
                 }
-                .buttonStyle(.borderedProminent).tint(AppTheme.accent).disabled(isSaving)
+                .buttonStyle(.borderedProminent)
+                .tint(AppTheme.accent)
+                .disabled(isSaving)
                 Button("Not now") {
                     AnalyticsService.shared.track(AnalyticsEvent.reminderPromptDismissed, ["context": "post_first_successful_question"])
                     dismiss()
-                }.foregroundColor(AppTheme.textMuted)
-            }.padding(28).navigationBarTitleDisplayMode(.inline)
+                }
+                .foregroundColor(AppTheme.textMuted)
+            }
+            .padding(28)
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 

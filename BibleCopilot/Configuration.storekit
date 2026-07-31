@@ -1,99 +1,86 @@
 {
-  "identifier" : "E4B9F2A1-1234-5678-9ABC-DEF012345678",
-  "nonRenewingSubscriptions" : [
-
-  ],
-  "products" : [
-
-  ],
-  "settings" : {
-    "_applicationInternalID" : "6758913373",
-    "_developerTeamID" : "846N5D6TMK",
-    "_failTransactionsEnabled" : false,
-    "_locale" : "en_US",
-    "_storefront" : "USA",
-    "_storeKitErrors" : [
+  "identifier": "E4B9F2A1-1234-5678-9ABC-DEF012345678",
+  "nonRenewingSubscriptions": [],
+  "products": [],
+  "settings": {
+    "_applicationInternalID": "6758913373",
+    "_developerTeamID": "846N5D6TMK",
+    "_failTransactionsEnabled": false,
+    "_locale": "en_US",
+    "_storefront": "USA",
+    "_storeKitErrors": [
       {
-        "current" : null,
-        "enabled" : false,
-        "name" : "Load Products"
+        "current": null,
+        "enabled": false,
+        "name": "Load Products"
       }
     ]
   },
-  "subscriptionGroups" : [
+  "subscriptionGroups": [
     {
-      "id" : "bible_copilot_pro",
-      "localizations" : [
-
-      ],
-      "name" : "Bible Copilot Pro",
-      "subscriptions" : [
+      "id": "bible_copilot_pro",
+      "localizations": [],
+      "name": "Bible Copilot Pro",
+      "subscriptions": [
         {
-          "adHocOffers" : [
-
-          ],
-          "codeOffers" : [
-
-          ],
-          "displayPrice" : "4.99",
-          "familyShareable" : false,
-          "groupNumber" : 1,
-          "internalID" : "biblecopilot_pro_monthly",
-          "introductoryOffer" : null,
-          "localizations" : [
+          "adHocOffers": [],
+          "codeOffers": [],
+          "displayPrice": "9.99",
+          "familyShareable": false,
+          "groupNumber": 1,
+          "internalID": "biblecopilot_pro_monthly",
+          "introductoryOffer": {
+            "internalID": "live_intro_biblecopilot_pro_monthly",
+            "numberOfPeriods": 1,
+            "paymentMode": "free",
+            "subscriptionPeriod": "P1W"
+          },
+          "localizations": [
             {
-              "description" : "Unlimited AI Bible study — billed monthly",
-              "displayName" : "Monthly",
-              "locale" : "en_US"
+              "description": "Unlimited AI Bible study — billed monthly",
+              "displayName": "Monthly",
+              "locale": "en_US"
             }
           ],
-          "productID" : "biblecopilot_pro_monthly",
-          "recurringSubscriptionPeriod" : "P1M",
-          "referenceName" : "Monthly",
-          "subscriptionGroupID" : "bible_copilot_pro",
-          "type" : "RecurringSubscription",
-          "winbackOffers" : [
-
-          ]
+          "productID": "biblecopilot_pro_monthly",
+          "recurringSubscriptionPeriod": "P1M",
+          "referenceName": "Monthly",
+          "subscriptionGroupID": "bible_copilot_pro",
+          "type": "RecurringSubscription",
+          "winbackOffers": []
         },
         {
-          "adHocOffers" : [
-
-          ],
-          "codeOffers" : [
-
-          ],
-          "displayPrice" : "29.99",
-          "familyShareable" : false,
-          "groupNumber" : 1,
-          "internalID" : "biblecopilot_pro_annual",
-          "introductoryOffer" : {
-            "internalID" : "annual_trial",
-            "numberOfPeriods" : 1,
-            "paymentMode" : "free",
-            "subscriptionPeriod" : "P1W"
+          "adHocOffers": [],
+          "codeOffers": [],
+          "displayPrice": "49.99",
+          "familyShareable": false,
+          "groupNumber": 1,
+          "internalID": "biblecopilot_pro_annual",
+          "introductoryOffer": {
+            "internalID": "live_intro_biblecopilot_pro_annual",
+            "numberOfPeriods": 1,
+            "paymentMode": "free",
+            "subscriptionPeriod": "P1W"
           },
-          "localizations" : [
+          "localizations": [
             {
-              "description" : "Unlimited AI Bible study — billed annually",
-              "displayName" : "Annual",
-              "locale" : "en_US"
+              "description": "Unlimited AI Bible study — billed annually",
+              "displayName": "Annual",
+              "locale": "en_US"
             }
           ],
-          "productID" : "biblecopilot_pro_annual",
-          "recurringSubscriptionPeriod" : "P1Y",
-          "referenceName" : "Annual",
-          "subscriptionGroupID" : "bible_copilot_pro",
-          "type" : "RecurringSubscription",
-          "winbackOffers" : [
-
-          ]
+          "productID": "biblecopilot_pro_annual",
+          "recurringSubscriptionPeriod": "P1Y",
+          "referenceName": "Annual",
+          "subscriptionGroupID": "bible_copilot_pro",
+          "type": "RecurringSubscription",
+          "winbackOffers": []
         }
       ]
     }
   ],
-  "version" : {
-    "major" : 4,
-    "minor" : 0
+  "version": {
+    "major": 4,
+    "minor": 0
   }
 }
