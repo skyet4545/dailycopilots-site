@@ -3,35 +3,17 @@ import SwiftUI
 struct HomeView: View {
     @State private var viewModel = HomeViewModel()
     @State private var streakService = StreakService.shared
-    @State private var showShareSheet = false
-    @State private var shareText = ""
+    @State private var showShareComposer = false
     // v2.4 activation: show a one-tap "first question" hero until the user's first study.
     // 2/3 of new users were never asking a single question — this hands them an instant win.
-    @AppStorage("bc_firstStudyDone") private var firstStudyDone = false
-    @AppStorage("dailyReminderEnabled") private var reminderEnabled = false
-    @AppStorage("reminderHour") private var reminderHour = 8
+    @AppStorage("hasCompletedFirstQuestion") private var firstStudyDone = false
     var onStudy: (String, StudyMode?) -> Void
     var onShowPaywall: () -> Void
 
-    /// Route every study through here so the first-question hero clears after the first tap.
+    /// Route every study through here. The first-question hero clears only after
+    /// StudyViewModel records a successful answer, not when a request merely starts.
     private func study(_ ref: String, _ mode: StudyMode?) {
-        let wasFirst = !firstStudyDone
-        firstStudyDone = true
-        if wasFirst { Task { await enableDailyReminderAfterAha() } }
         onStudy(ref, mode)
-    }
-
-    /// After a new user's first study (the aha), ask for notification permission and turn on
-    /// the daily verse reminder — the return trigger that lifts next-day retention. Previously
-    /// this was off by default and only enabled manually in Settings, so almost no one got it.
-    private func enableDailyReminderAfterAha() async {
-        guard !reminderEnabled else { return }
-        let granted = await NotificationService.shared.requestPermission()
-        AnalyticsService.shared.track("notif_permission", ["granted": granted ? "true" : "false"])
-        guard granted else { return }
-        NotificationService.shared.scheduleDailyReminder(hour: reminderHour, minute: 0)
-        reminderEnabled = true
-        AnalyticsService.shared.track("daily_reminder_enabled")
     }
 
     var body: some View {
@@ -115,11 +97,8 @@ struct HomeView: View {
                             study(viewModel.dailyVerseRef, nil)
                         },
                         onShare: {
-                            shareText = viewModel.shareText(
-                                for: viewModel.dailyVerseRef,
-                                text: viewModel.dailyVerseText
-                            )
-                            showShareSheet = true
+                            AnalyticsService.shared.track(AnalyticsEvent.shareComposerOpened)
+                            showShareComposer = true
                         },
                         onAsk: {
                             let q = viewModel.dailySuggestedQuestion.isEmpty ? viewModel.dailyVerseRef : viewModel.dailySuggestedQuestion
@@ -203,8 +182,13 @@ struct HomeView: View {
             }
             .background(AppTheme.background)
             .scrollDismissesKeyboard(.immediately)
-            .sheet(isPresented: $showShareSheet) {
-                ActivityView(activityItems: [shareText])
+            .sheet(isPresented: $showShareComposer) {
+                VerseShareComposerView(
+                    reference: viewModel.dailyVerseRef,
+                    verseText: viewModel.dailyVerseText,
+                    reflection: viewModel.dailyReflection,
+                    suggestedQuestion: viewModel.dailySuggestedQuestion
+                )
             }
         }
         .task {

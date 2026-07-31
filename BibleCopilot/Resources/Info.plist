@@ -22,6 +22,29 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>tiktoksharesdk</string>
+		<string>snssdk1180</string>
+		<string>snssdk1233</string>
+	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>awphocjlqnbemb7t</string>
+			</array>
+		</dict>
+	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Bible Copilot saves the verse cards you choose so you can share them to TikTok.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Bible Copilot saves the verse cards you choose so you can share them to TikTok.</string>
+	<key>SentryDSN</key>
+	<string>$(SENTRY_DSN)</string>
+	<key>TikTokClientKey</key>
+	<string>awphocjlqnbemb7t</string>
 	<key>UILaunchScreen</key>
 	<dict>
 		<key>UIColorName</key>

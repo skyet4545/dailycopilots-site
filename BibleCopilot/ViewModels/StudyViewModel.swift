@@ -21,6 +21,26 @@ final class StudyViewModel {
     var chatHistory: [AIService.ChatMessage] = []
     var followUpText = ""
     var showFollowUp = false
+    var shouldOfferDailyReminder = false
+
+    var suggestedFollowUpQuestion: String? {
+        guard let selectedMode, !aiLoading, !aiResponse.isEmpty else { return nil }
+
+        switch selectedMode {
+        case .summary:
+            return "What is the main truth I should carry with me?"
+        case .observe:
+            return "What detail in this passage deserves a closer look?"
+        case .interpret:
+            return "How would the first readers have understood this?"
+        case .theology:
+            return "What does this reveal about God and His character?"
+        case .apply:
+            return "What is one faithful step I can take today?"
+        case .apologetics:
+            return "How could I explain this truth with grace and clarity?"
+        }
+    }
 
     @ObservationIgnored
     @AppStorage("translation") private var translation: String = "asv"
@@ -100,7 +120,10 @@ final class StudyViewModel {
                 }
 
                 crossReferences = CrossReferenceParser.extractReferences(from: aiResponse)
-                usageService.recordQuestion()
+                let completedFirstQuestion = usageService.recordQuestion()
+                if completedFirstQuestion {
+                    shouldOfferDailyReminder = NotificationService.shared.shouldOfferDailyReminderAfterFirstStudy()
+                }
                 StreakService.shared.recordStudy()
                 ReviewService.shared.recordStudyAndPromptIfReady()
                 showFollowUp = true
@@ -115,6 +138,16 @@ final class StudyViewModel {
     }
 
     // MARK: - Follow-Up Question
+
+    @MainActor
+    func askSuggestedFollowUp(isPro: Bool, onShowPaywall: @escaping () -> Void) async {
+        guard let suggestion = suggestedFollowUpQuestion else { return }
+        AnalyticsService.shared.track(AnalyticsEvent.followUpSuggestionTapped, [
+            "mode": selectedMode?.rawValue ?? "unknown"
+        ])
+        followUpText = suggestion
+        await askFollowUp(isPro: isPro, onShowPaywall: onShowPaywall)
+    }
 
     @MainActor
     func askFollowUp(isPro: Bool, onShowPaywall: @escaping () -> Void) async {
@@ -156,7 +189,10 @@ final class StudyViewModel {
                     chatHistory = Array(chatHistory.suffix(6))
                 }
                 crossReferences = CrossReferenceParser.extractReferences(from: aiResponse)
-                usageService.recordQuestion()
+                let completedFirstQuestion = usageService.recordQuestion()
+                if completedFirstQuestion {
+                    shouldOfferDailyReminder = NotificationService.shared.shouldOfferDailyReminderAfterFirstStudy()
+                }
                 ReviewService.shared.recordStudyAndPromptIfReady()
                 HapticService.success()
             } catch {

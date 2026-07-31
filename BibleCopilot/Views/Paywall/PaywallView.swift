@@ -8,6 +8,10 @@ struct PaywallView: View {
     @State private var isLoading = false
     @State private var errorMessage: String?
 
+    private var paywallTrigger: String {
+        UsageService.shared.usedToday >= UsageService.freeQuestionsPerDay ? "free_limit" : "manual_upgrade"
+    }
+
     // The plan the user is about to buy (annual is the default when nothing is tapped).
     private var selectedProduct: Product? {
         if selectedPlan == subscriptionService.monthlyProductID {
@@ -162,6 +166,7 @@ struct PaywallView: View {
                                     subtitle: annualSubtitle
                                 ) {
                                     selectedPlan = annual.id
+                                    AnalyticsService.shared.track(AnalyticsEvent.planSelected, ["product": annual.id, "billing_period": "annual", "trigger": paywallTrigger])
                                     HapticService.selection()
                                 }
                             }
@@ -175,6 +180,7 @@ struct PaywallView: View {
                                     subtitle: "Billed monthly"
                                 ) {
                                     selectedPlan = monthly.id
+                                    AnalyticsService.shared.track(AnalyticsEvent.planSelected, ["product": monthly.id, "billing_period": "monthly", "trigger": paywallTrigger])
                                     HapticService.selection()
                                 }
                             }
@@ -279,7 +285,7 @@ struct PaywallView: View {
             }
             .background(AppTheme.background)
             .onAppear {
-                AnalyticsService.shared.track(AnalyticsEvent.paywallView, ["source": "in_app", "used": "\(UsageService.shared.usedToday)"])
+                AnalyticsService.shared.track(AnalyticsEvent.paywallView, ["source": "in_app", "trigger": paywallTrigger, "used": "\(UsageService.shared.usedToday)"])
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -305,11 +311,11 @@ struct PaywallView: View {
         Task {
             isLoading = true
             errorMessage = nil
-            AnalyticsService.shared.track(AnalyticsEvent.trialStartTap, ["product": product.id, "source": "in_app"])
+            AnalyticsService.shared.track(AnalyticsEvent.trialStartTap, ["product": product.id, "source": "in_app", "trigger": paywallTrigger])
             do {
                 try await subscriptionService.purchase(product)
                 if subscriptionService.isPro {
-                    AnalyticsService.shared.track(AnalyticsEvent.purchaseSuccess, ["product": product.id, "source": "in_app"])
+                    AnalyticsService.shared.track(AnalyticsEvent.purchaseSuccess, ["product": product.id, "source": "in_app", "trigger": paywallTrigger])
                     dismiss()
                 }
             } catch {
