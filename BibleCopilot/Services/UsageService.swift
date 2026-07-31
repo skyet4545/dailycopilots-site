@@ -36,10 +36,17 @@ final class UsageService {
         return max(0, Self.freeQuestionsPerDay - usageCount)
     }
 
-    func recordQuestion() {
+    @discardableResult
+    func recordQuestion() -> Bool {
         resetIfNewDay()
         usageCount += 1
         AnalyticsService.shared.track(AnalyticsEvent.questionAsked, ["count_today": "\(usageCount)"])
+        let isFirstQuestion = !UserDefaults.standard.bool(forKey: "has_completed_first_question")
+        if isFirstQuestion {
+            UserDefaults.standard.set(true, forKey: "has_completed_first_question")
+            AnalyticsService.shared.track(AnalyticsEvent.firstQuestionCompleted)
+        }
+        return isFirstQuestion
     }
 
     private func resetIfNewDay() {

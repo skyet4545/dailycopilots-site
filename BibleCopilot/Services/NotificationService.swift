@@ -18,6 +18,19 @@ final class NotificationService {
         }
     }
 
+    func shouldOfferDailyReminderAfterFirstStudy() -> Bool {
+        !UserDefaults.standard.bool(forKey: "daily_reminder_prompt_seen")
+    }
+
+    func enableDailyReminder(hour: Int, minute: Int) async -> Bool {
+        UserDefaults.standard.set(true, forKey: "daily_reminder_prompt_seen")
+        let granted = await requestPermission()
+        guard granted else { return false }
+        scheduleDailyReminder(hour: hour, minute: minute)
+        AnalyticsService.shared.track(AnalyticsEvent.dailyReminderEnabled, ["hour": "\(hour)"])
+        return true
+    }
+
     // MARK: - Schedule Daily Reminder
 
     func scheduleDailyReminder(hour: Int = 8, minute: Int = 0) {
