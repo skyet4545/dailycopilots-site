@@ -38,6 +38,22 @@ const apps = {
     tint: "#f6ece0",
     hubTitle: "Stoic philosophy answers",
     hubDescription: "Source-backed answers about Marcus Aurelius, Epictetus, Seneca, Stoic practice, virtue, judgment, desire, and action.",
+    featuredAnswer: {
+      slug: "the-obstacle-is-the-way-meaning",
+      eyebrow: "Featured source-and-meaning answer",
+      title: "What did Marcus Aurelius mean by \"the obstacle is the way\"?",
+      summary: "This week's Stoic cluster centers on source, translation trail, meaning, and misuse guardrails for Meditations 5.20."
+    },
+    hubMethodology: {
+      title: "How Stoic Copilot answers stay grounded",
+      items: [
+        "Direct answer first, before any app promotion.",
+        "Primary text, translation trail, and interpretation stay visibly distinct.",
+        "Related Stoic answers connect the idea to control, desire, and action rather than flattening it into self-help slogans.",
+        "Every follow-up route stays inside Stoic Copilot and its matching App Store journey."
+      ]
+    },
+    includeHubBreadcrumbSchema: true,
     bridge: "Ask how Marcus Aurelius, Epictetus, and Seneca explain the idea—and how it applies to your situation.",
     prompts: ["Which primary text is this idea from?", "How would another Stoic frame it?", "What would practicing this look like today?"],
     bridgeEs: "Pregunta cómo explican esta idea Marco Aurelio, Epicteto y Séneca, y cómo se aplica a tu situación.",
@@ -141,6 +157,31 @@ function answerRecords(appKey, config) {
   }).sort((a, b) => a.title.localeCompare(b.title));
 }
 
+function hubFeaturedMarkup(appKey, config) {
+  if (!config.featuredAnswer) return "";
+  const { slug, eyebrow, title, summary } = config.featuredAnswer;
+  return `
+  <section class="feature">
+   <div class="eyebrow">${htmlEscape(eyebrow)}</div>
+   <h2>${htmlEscape(title)}</h2>
+   <p>${htmlEscape(summary)}</p>
+   <div class="feature-links">
+    <a class="feature-link" href="/${appKey}/answers/${slug}/">Read the full answer →</a>
+    <a class="feature-link secondary-link" href="/${appKey}/answers/discipline-of-action-epictetus/">See the duty-and-action follow-up →</a>
+   </div>
+  </section>`;
+}
+
+function hubMethodologyMarkup(config) {
+  if (!config.hubMethodology?.items?.length) return "";
+  const items = config.hubMethodology.items.map((item) => `<li>${htmlEscape(item)}</li>`).join("");
+  return `
+  <section class="method">
+   <h2>${htmlEscape(config.hubMethodology.title)}</h2>
+   <ul>${items}</ul>
+  </section>`;
+}
+
 function hubMarkup(appKey, config, records) {
   const items = records.map((record) => `<a class="question" href="/${appKey}/answers/${record.slug}/">${htmlEscape(record.title)}<span>Read answer →</span></a>`).join("\n   ");
   const itemList = JSON.stringify({
@@ -159,6 +200,15 @@ function hubMarkup(appKey, config, records) {
       }))
     }
   });
+  const breadcrumbSchema = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Daily Copilots", item: "https://dailycopilots.com/" },
+      { "@type": "ListItem", position: 2, name: config.label, item: `https://dailycopilots.com/${appKey}/` },
+      { "@type": "ListItem", position: 3, name: "Answers", item: `https://dailycopilots.com/${appKey}/answers/` }
+    ]
+  });
   const appHref = `https://apps.apple.com/us/app/${appKey}-copilot/id${config.appId}?pt=${providerToken}&amp;ct=dc_${appKey}_landing&amp;mt=8`;
   return `<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -167,15 +217,17 @@ function hubMarkup(appKey, config, records) {
 <link rel="canonical" href="https://dailycopilots.com/${appKey}/answers/">
 <meta property="og:title" content="${config.hubTitle} | ${config.label}"><meta property="og:description" content="${config.hubDescription}"><meta property="og:type" content="website"><meta property="og:url" content="https://dailycopilots.com/${appKey}/answers/">
 <script type="application/ld+json">${itemList}</script>
+${config.includeHubBreadcrumbSchema ? `<script type="application/ld+json">${breadcrumbSchema}</script>` : ""}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#faf8f3;--surface:#fff;--ink:#181510;--ink-soft:#5b574d;--muted:#918c7d;--border:#eae6da;--acc:${config.accent};--acc-tint:${config.tint}}*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}.wrap{max-width:900px;margin:0 auto;padding:0 24px}.crumb{padding:24px 0;font-size:13px}.crumb a{color:var(--muted);text-decoration:none;font-weight:700}.hero{padding:34px 0 28px}.eyebrow{color:var(--acc);font-weight:800;text-transform:uppercase;letter-spacing:.1em;font-size:11px;margin-bottom:12px}h1{font-family:'Sora',sans-serif;font-size:42px;line-height:1.12;letter-spacing:-.025em;margin-bottom:15px}.intro{font-size:18px;color:var(--ink-soft);max-width:690px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.primary,.secondary{display:inline-flex;padding:12px 18px;border-radius:12px;text-decoration:none;font-weight:800;font-size:14px}.primary{background:var(--acc);color:white}.secondary{background:var(--acc-tint);color:var(--acc)}.questions{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:24px 0 60px}.question{display:flex;flex-direction:column;justify-content:space-between;min-height:126px;padding:19px;background:var(--surface);border:1px solid var(--border);border-radius:16px;color:var(--ink);text-decoration:none;font-weight:700}.question:hover{border-color:var(--acc);transform:translateY(-2px)}.question span{margin-top:14px;color:var(--acc);font-size:12px}footer{padding:0 0 50px;text-align:center;color:var(--muted);font-size:12px}@media(max-width:650px){h1{font-size:32px}.questions{grid-template-columns:1fr}}
+:root{--bg:#faf8f3;--surface:#fff;--ink:#181510;--ink-soft:#5b574d;--muted:#918c7d;--border:#eae6da;--acc:${config.accent};--acc-tint:${config.tint}}*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}.wrap{max-width:900px;margin:0 auto;padding:0 24px}.crumb{padding:24px 0;font-size:13px}.crumb a{color:var(--muted);text-decoration:none;font-weight:700}.hero{padding:34px 0 28px}.eyebrow{color:var(--acc);font-weight:800;text-transform:uppercase;letter-spacing:.1em;font-size:11px;margin-bottom:12px}h1,h2{font-family:'Sora',sans-serif}h1{font-size:42px;line-height:1.12;letter-spacing:-.025em;margin-bottom:15px}h2{font-size:24px;line-height:1.2;letter-spacing:-.02em}.intro{font-size:18px;color:var(--ink-soft);max-width:690px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.primary,.secondary{display:inline-flex;padding:12px 18px;border-radius:12px;text-decoration:none;font-weight:800;font-size:14px}.primary{background:var(--acc);color:white}.secondary{background:var(--acc-tint);color:var(--acc)}.feature,.method{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:24px;margin:0 0 22px}.feature p,.method li{color:var(--ink-soft)}.feature p{margin-top:10px;font-size:16px}.feature-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.feature-link{display:inline-flex;padding:11px 16px;border-radius:12px;background:var(--acc-tint);color:var(--acc);text-decoration:none;font-weight:800;font-size:14px}.secondary-link{background:#fff;border:1px solid var(--border)}.method ul{padding-left:18px;margin-top:12px}.method li+li{margin-top:8px}.questions{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:24px 0 60px}.question{display:flex;flex-direction:column;justify-content:space-between;min-height:126px;padding:19px;background:var(--surface);border:1px solid var(--border);border-radius:16px;color:var(--ink);text-decoration:none;font-weight:700}.question:hover{border-color:var(--acc);transform:translateY(-2px)}.question span{margin-top:14px;color:var(--acc);font-size:12px}footer{padding:0 0 50px;text-align:center;color:var(--muted);font-size:12px}@media(max-width:650px){h1{font-size:32px}.questions{grid-template-columns:1fr}.feature-links{flex-direction:column}}
 </style><script async src="https://www.googletagmanager.com/gtag/js?id=G-77KV1K7WK6"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-77KV1K7WK6');</script>
 <script defer src="/assets/conversion.js"></script></head><body><div class="wrap">
  <div class="crumb"><a href="/">Daily Copilots</a> · <a href="/${appKey}/">${config.label}</a></div>
  <main><section class="hero"><div class="eyebrow">${config.label} answer library</div><h1>${config.hubTitle}</h1><p class="intro">${config.hubDescription} Start with a question below, then continue with your own follow-up in the app.</p><div class="actions"><a class="primary" data-app="${appKey}" data-cta-location="answer_hub_hero" href="${appHref}">Ask ${config.label} — free to start →</a><a class="secondary" href="/${appKey}/">See how ${config.label} works</a></div></section>
+${hubFeaturedMarkup(appKey, config)}${hubMethodologyMarkup(config)}
   <section class="questions" aria-label="${config.label} questions">${items}</section></main>
  <footer>Part of <a href="/" style="color:var(--acc)">Daily Copilots</a> · Republic Publishing.${config.disclaimer ? ` ${config.disclaimer}` : ""}</footer>
 </div></body></html>`;
