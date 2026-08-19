@@ -22,12 +22,25 @@ Use stable snake-case source IDs. Existing values remain valid; do not silently 
 | --- | --- |
 | `app_store_search` | The user reports finding the app in App Store search |
 | `organic_search` | The user reports using Google or another search engine to find a verse, Bible question, or Bible Copilot website/article; this is self-reported organic discovery, not a verified search-click record |
+| `youtube` | The user reports YouTube as the source; this is self-reported discovery unless it is corroborated by a tagged YouTube landing-view and App Store handoff |
+| `website_article` | The user reports a Bible Copilot website article as the source; this is self-reported discovery unless it is corroborated by a tagged article handoff |
+| `email_newsletter` | The user reports an email newsletter as the source; this is self-reported discovery unless it is corroborated by a tagged email handoff |
 | `podcast_gospel_briefing` | The user reports The Gospel Briefing as the source |
 | `social_media` | Social source is known but platform or creative is unavailable |
 | `friend_church` | Word of mouth, church, or small group |
 | `other` | Unclassified self-report; do not treat as direct traffic |
 
 When an external asset is published, add its own web campaign fields: `utm_source`, `utm_medium`, `utm_campaign`, and `utm_content`. Use the existing App Store campaign token only as a handoff identifier unless App Store Connect returns the appropriate attributed install report.
+
+### Active acquisition campaign registry
+
+| Channel | Reader-facing destination | Website campaign fields | Apple handoff identifier | App-side source expected after 2.4.2 is live |
+| --- | --- | --- | --- | --- |
+| YouTube Shorts | Dedicated YouTube landing page, not a raw App Store URL | `utm_source=youtube&utm_medium=organic_video&utm_campaign=shorts_2026_08&utm_content={video_id}` | `ct=youtube_shorts_2026_08` | `youtube` |
+| Bible Copilot article | The article's existing measured in-page handoff | `utm_source=organic&utm_medium=article&utm_campaign=article_journey_v1&utm_content={article_slug}` | Existing `bc_{cta_location}` token | `website_article` or `organic_search` |
+| Gospel Briefing | `/gospel` | `utm_source=gospel_briefing&utm_medium=podcast&utm_campaign=weekly_sponsor&utm_content={episode_date}` | `ct=gospelbriefing_podcast` | `podcast_gospel_briefing` |
+
+Do not add UTMs directly to an App Store URL. UTMs belong on the owned landing page; the owned page records the handoff and appends the Apple campaign identifier to the outbound App Store link.
 
 ## Weekly readout
 
