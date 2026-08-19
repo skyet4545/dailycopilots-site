@@ -3,6 +3,10 @@ import path from "node:path";
 
 const website = path.resolve(import.meta.dirname, "..");
 const providerToken = "128532000";
+const appArg = process.argv.find((arg) => arg.startsWith("--app="));
+const slugArg = process.argv.find((arg) => arg.startsWith("--slugs="));
+const requestedApps = appArg ? new Set(appArg.replace("--app=", "").split(",").map((value) => value.trim()).filter(Boolean)) : null;
+const requestedSlugs = slugArg ? new Set(slugArg.replace("--slugs=", "").split(",").map((value) => value.trim()).filter(Boolean)) : null;
 
 const apps = {
   constitution: {
@@ -66,6 +70,26 @@ const apps = {
     tint: "#f9f3d9",
     hubTitle: "Torah study answers",
     hubDescription: "Source-backed answers about Torah text, Hebrew, pshat, classical commentators, mitzvot, parsha, and Jewish tradition.",
+    featuredAnswer: {
+      slug: "torah-vs-talmud-difference",
+      eyebrow: "Featured text-and-tradition answer",
+      title: "What is the difference between the Torah and the Talmud?",
+      summary: "This week's Torah cluster centers on the written text, Oral Torah, and the study layers people usually mean when they search for Torah vs. Talmud.",
+      secondaryLink: {
+        href: "/torah/answers/written-torah-vs-oral-torah/",
+        label: "Trace the Written vs. Oral Torah follow-up →"
+      }
+    },
+    hubMethodology: {
+      title: "How Torah Copilot answers stay grounded",
+      items: [
+        "Direct answer first, before any app promotion.",
+        "Written text, Oral Torah, commentary, and later interpretation stay visibly distinct.",
+        "Cluster links move from foundational comparisons into covenant practice, Hebrew terms, and classical commentators instead of scattering into unrelated topics.",
+        "Every follow-up route stays inside Torah Copilot and its matching App Store journey."
+      ]
+    },
+    includeHubBreadcrumbSchema: true,
     bridge: "Ask about the Hebrew, the plain meaning, and how classical commentators understand the passage.",
     prompts: ["What does the Hebrew phrase mean?", "How do Rashi and other commentators differ?", "Where else does the Torah address this idea?"]
   },
@@ -159,7 +183,8 @@ function answerRecords(appKey, config) {
 
 function hubFeaturedMarkup(appKey, config) {
   if (!config.featuredAnswer) return "";
-  const { slug, eyebrow, title, summary } = config.featuredAnswer;
+  const { slug, eyebrow, title, summary, secondaryLink } = config.featuredAnswer;
+  const secondary = secondaryLink ? `<a class="feature-link secondary-link" href="${secondaryLink.href}">${htmlEscape(secondaryLink.label)}</a>` : "";
   return `
   <section class="feature">
    <div class="eyebrow">${htmlEscape(eyebrow)}</div>
@@ -167,7 +192,7 @@ function hubFeaturedMarkup(appKey, config) {
    <p>${htmlEscape(summary)}</p>
    <div class="feature-links">
     <a class="feature-link" href="/${appKey}/answers/${slug}/">Read the full answer →</a>
-    <a class="feature-link secondary-link" href="/${appKey}/answers/discipline-of-action-epictetus/">See the duty-and-action follow-up →</a>
+    ${secondary}
    </div>
   </section>`;
 }
@@ -277,8 +302,9 @@ function updateSitemap() {
 }
 
 for (const [appKey, config] of Object.entries(apps)) {
+  if (requestedApps && !requestedApps.has(appKey)) continue;
   const answerHub = path.join(website, appKey, "answers", "index.html");
-  const englishFiles = walk(path.join(website, appKey, "answers")).filter((file) => file.endsWith("index.html") && file !== answerHub);
+  const englishFiles = walk(path.join(website, appKey, "answers")).filter((file) => file.endsWith("index.html") && file !== answerHub).filter((file) => !requestedSlugs || requestedSlugs.has(path.basename(path.dirname(file))));
   const spanishFiles = walk(path.join(website, "es", appKey, "answers")).filter((file) => file.endsWith("index.html"));
   for (const file of englishFiles) updateAnswerPage(file, appKey, config, "en");
   for (const file of spanishFiles) updateAnswerPage(file, appKey, config, "es");
@@ -290,6 +316,6 @@ for (const [appKey, config] of Object.entries(apps)) {
   updateProductPage(appKey, config, "pro");
 }
 
-updateHomepage();
+if (!requestedApps) updateHomepage();
 updateSitemap();
 console.log("Built Daily Copilots search-to-app journey.");
