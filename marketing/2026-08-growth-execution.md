@@ -25,7 +25,9 @@ Every Short in the pilot uses one destination and one CTA:
 
 > Study the verse yourself — use the link in the description to open Bible Copilot free.
 
-The description and pinned comment must use the future dedicated landing-page URL with the `youtube / organic_video / shorts_2026_08 / {video_id}` fields defined in the acquisition contract. The landing page, not YouTube or the App Store URL, is responsible for recording the visit and outbound App Store tap.
+The description and pinned comment must use the dedicated landing-page URL with the `youtube / organic_video / shorts_2026_08 / {video_id}` fields defined in the acquisition contract. The landing page, not YouTube or the App Store URL, is responsible for recording the visit and outbound App Store tap.
+
+Deployment status on 2026-08-19: `https://mybiblecopilot.com/youtube/` is live, returns the expected noindex campaign page, and has the correct App Store campaign token. Its event receiver is not yet usable from the browser: the existing `marketing-attribution` endpoint returned `401 UNAUTHORIZED_NO_AUTH_HEADER` to a controlled production receipt, while its current CORS contract permits only `content-type`. Do not treat YouTube landing views or handoffs as measured until the endpoint's authentication and CORS contract are reconciled in its owning, source-controlled project.
 
 Pilot window: 14 consecutive days after both the landing page and 2.4.2 are live. Do not change the CTA, destination, or content cadence during the window.
 
