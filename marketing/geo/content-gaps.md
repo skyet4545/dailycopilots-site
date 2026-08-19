@@ -10,10 +10,10 @@ The 10 baseline queries each have a clear competitor pattern. Below is the per-p
 
 ### Gap 1: "ChatGPT alternative for Bible study" → `/vs-chatgpt`
 
-- **Why it's a gap:** Son of God AI, BibliChat, and BibleMate own this query. Bible Copilot is structurally a stronger answer (verse-anchored citations, six modes, $4.99 vs ChatGPT's $20) but has no dedicated page for AI engines to cite.
+- **Why it's a gap:** Son of God AI, BibliChat, and BibleMate own this query. Bible Copilot is structurally a stronger answer (verse-anchored citations, six modes, $9.99 vs ChatGPT's $20) but has no dedicated page for AI engines to cite.
 - **Content piece:** `/vs-chatgpt` landing page.
 - **Word count target:** 900–1,200.
-- **Required sections (H2):** Why people use ChatGPT for Bible study; The three structural problems (memory hallucination, no inductive structure, doctrinal flattening); How Bible Copilot differs (verse API anchoring, six modes, denominationally humble); Side-by-side feature table; Price comparison ($4.99 vs $20); FAQ (5 Q&A); CTA.
+- **Required sections (H2):** Why people use ChatGPT for Bible study; The three structural problems (memory hallucination, no inductive structure, doctrinal flattening); How Bible Copilot differs (verse API anchoring, six modes, denominationally humble); Side-by-side feature table; Price comparison ($9.99 vs $20); FAQ (5 Q&A); CTA.
 - **Schema to add:** `Product` + `FAQPage` + `ComparisonTable` (in `Article`).
 - **Effort:** med.
 - **Priority:** P1.

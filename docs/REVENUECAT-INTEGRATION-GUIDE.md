@@ -346,8 +346,8 @@ const checkSubscriptionType = async () => {
 2. **My Apps** → **Bible Copilot** → **In-App Purchases**
 3. Create subscription group: "Bible Copilot Pro"
 4. Add products:
-   - **monthly** — $4.99/month
-   - **yearly** — $39.99/year (or $34.99 to show 30% savings)
+   - **monthly** — $9.99/month
+   - **yearly** — $49.99/year
    - **lifetime** — $99.99 (one-time purchase, non-renewing)
 
 ### 2. **Configure in RevenueCat Dashboard**
@@ -690,4 +690,3 @@ analytics.track('question_asked', {
 
 
 ---
-

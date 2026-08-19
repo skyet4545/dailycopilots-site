@@ -1,0 +1,348 @@
+# Verse-explainer backlog for bible-copilot-verse-engine.
+# One target per line. Two kinds:
+#   verse: <reference>            -> writes "What Does <ref> Mean?"  slug: what-does-<book>-<chap>-<verse>-mean
+#   topic: <theme>               -> writes "Bible Verses About <theme>"  slug: bible-verses-about-<theme>
+# The engine picks the FIRST targets whose derived slug is NOT already published
+# (checked against done_topics.txt AND site-deploy/blog/). Never reuse a slug.
+# Accuracy is paramount (this is Scripture) — quote only public-domain WEB/KJV and only if certain.
+
+# ---- high-intent verses (winnable long-tail; the mega-popular ones are lower priority) ----
+verse: Psalm 23:1
+verse: Psalm 23:4
+verse: Psalm 23:6
+verse: Psalm 27:1
+verse: Psalm 34:18
+verse: Psalm 37:4
+verse: Psalm 46:1
+verse: Psalm 51:10
+verse: Psalm 55:22
+verse: Psalm 91:1
+verse: Psalm 91:11
+verse: Psalm 118:24
+verse: Psalm 121:1
+verse: Psalm 139:14
+verse: Psalm 147:3
+verse: Psalm 30:5
+verse: Psalm 103:12
+verse: Proverbs 3:5
+verse: Proverbs 16:3
+verse: Proverbs 18:10
+verse: Proverbs 22:6
+verse: Proverbs 4:23
+verse: Proverbs 27:17
+verse: Proverbs 31:25
+verse: Isaiah 40:31
+verse: Isaiah 43:2
+verse: Isaiah 26:3
+verse: Isaiah 53:5
+verse: Isaiah 55:8
+verse: Isaiah 41:13
+verse: Isaiah 6:8
+verse: Jeremiah 33:3
+verse: Jeremiah 1:5
+verse: Jeremiah 17:7
+verse: Matthew 6:33
+verse: Matthew 6:34
+verse: Matthew 11:28
+verse: Matthew 7:7
+verse: Matthew 19:26
+verse: Matthew 5:14
+verse: Matthew 5:16
+verse: Mark 11:24
+verse: Luke 1:37
+verse: John 1:1
+verse: John 8:32
+verse: John 10:10
+verse: John 14:6
+verse: John 14:27
+verse: John 15:5
+verse: John 16:33
+verse: John 13:34
+verse: Romans 5:8
+verse: Romans 6:23
+verse: Romans 8:28
+verse: Romans 8:38-39
+verse: Romans 10:9
+verse: Romans 15:13
+verse: Romans 8:31
+verse: 1 Corinthians 10:13
+verse: 1 Corinthians 13:4-7
+verse: 1 Corinthians 13:13
+verse: 1 Corinthians 16:14
+verse: 1 Corinthians 6:19
+verse: 2 Corinthians 5:7
+verse: 2 Corinthians 5:17
+verse: 2 Corinthians 4:18
+verse: Galatians 2:20
+verse: Galatians 5:22-23
+verse: Galatians 6:9
+verse: Ephesians 2:8-9
+verse: Ephesians 2:10
+verse: Ephesians 4:32
+verse: Ephesians 6:11
+verse: Ephesians 3:20
+verse: Philippians 4:13
+verse: Philippians 4:19
+verse: Philippians 1:6
+verse: Philippians 4:8
+verse: Colossians 3:23
+verse: Colossians 3:2
+verse: 1 Thessalonians 5:16-18
+verse: 2 Timothy 1:7
+verse: 2 Timothy 3:16
+verse: Hebrews 11:1
+verse: Hebrews 12:1-2
+verse: Hebrews 13:8
+verse: Hebrews 4:12
+verse: Hebrews 11:6
+verse: James 1:2-3
+verse: James 1:5
+verse: James 4:7
+verse: James 1:19
+verse: 1 Peter 5:7
+verse: 1 Peter 3:15
+verse: 1 John 1:9
+verse: 1 John 4:18
+verse: 1 John 4:19
+verse: Revelation 3:20
+verse: Revelation 21:4
+verse: Genesis 1:1
+verse: Genesis 1:27
+verse: Genesis 50:20
+verse: Deuteronomy 31:6
+
+# ---- topical "bible verses about X" pages (high download intent) ----
+topic: strength
+topic: hope
+topic: faith
+topic: healing
+topic: peace
+topic: forgiveness
+topic: patience
+topic: trust
+topic: courage
+topic: worry
+topic: depression
+topic: loneliness
+topic: gratitude
+topic: protection
+topic: guidance
+topic: purpose
+topic: self-control
+topic: joy
+topic: wisdom
+topic: encouragement
+topic: new beginnings
+topic: marriage
+topic: friendship
+topic: money
+topic: work
+topic: addiction
+topic: fear of death
+topic: forgiving yourself
+
+# ---- appended 2026-07-14 by verse-engine (keep loop fed) ----
+verse: Psalm 46:10
+verse: Psalm 19:14
+verse: Psalm 133:1
+verse: Proverbs 3:6
+verse: Proverbs 15:1
+verse: Ecclesiastes 3:1
+verse: Micah 6:8
+verse: Zephaniah 3:17
+verse: Habakkuk 3:19
+verse: Nahum 1:7
+verse: Lamentations 3:22-23
+verse: Joshua 24:15
+verse: 1 Samuel 16:7
+verse: Nehemiah 8:10
+verse: Colossians 3:15
+verse: Colossians 3:16
+verse: 1 Thessalonians 5:11
+verse: Titus 3:5
+topic: anxiety
+topic: grief
+topic: gratitude
+topic: marriage
+
+# ---- appended 2026-07-16 by verse-engine (keep loop fed) ----
+verse: Psalm 62:1-2
+verse: Psalm 73:26
+verse: Psalm 119:11
+verse: Psalm 18:2
+verse: Proverbs 17:22
+verse: Proverbs 28:13
+verse: Isaiah 43:1
+verse: Isaiah 54:17
+verse: Jeremiah 31:3
+verse: John 3:16
+verse: Romans 12:2
+verse: 2 Corinthians 12:9
+verse: Philippians 4:6-7
+verse: 1 Peter 2:9
+topic: comfort
+topic: humility
+topic: temptation
+topic: waiting on god
+topic: identity in christ
+topic: perseverance
+
+# ---- appended 2026-07-17 by verse-engine (keep loop fed) ----
+verse: Psalm 42:11
+verse: Psalm 56:3
+verse: Psalm 90:12
+verse: Psalm 143:8
+verse: Proverbs 19:21
+verse: Isaiah 30:21
+verse: Ezekiel 36:26
+verse: Daniel 3:17-18
+verse: Matthew 5:4
+verse: Matthew 6:21
+verse: John 15:13
+verse: Romans 12:12
+verse: 2 Corinthians 1:3-4
+verse: Galatians 6:2
+verse: Philippians 2:3
+verse: Hebrews 10:24-25
+verse: James 4:8
+verse: 1 Peter 5:6
+topic: anger
+topic: contentment
+topic: doubt
+topic: generosity
+topic: rest
+
+# ---- appended 2026-07-19 by verse-engine (backlog top-up) ----
+verse: Psalm 34:8
+verse: Psalm 100:4
+verse: Psalm 138:8
+verse: Psalm 145:18
+verse: Proverbs 11:25
+verse: Proverbs 16:9
+verse: Proverbs 19:11
+verse: Isaiah 12:2
+verse: Isaiah 61:1
+verse: Matthew 5:6
+verse: John 11:25
+verse: Romans 8:26
+verse: 2 Corinthians 9:8
+verse: Ephesians 4:29
+verse: Philippians 2:13
+topic: love
+topic: kindness
+topic: prayer
+
+# ---- appended 2026-07-20 by verse-engine (backlog top-up) ----
+verse: Psalm 27:14
+verse: Psalm 31:24
+verse: Psalm 62:8
+verse: Psalm 145:9
+verse: Proverbs 15:22
+verse: Proverbs 24:16
+verse: Proverbs 29:25
+verse: Isaiah 40:29
+verse: Isaiah 58:11
+verse: Matthew 5:9
+verse: Matthew 28:20
+verse: Luke 6:38
+verse: John 14:1
+verse: Romans 5:3-4
+verse: Philippians 3:13-14
+verse: Colossians 3:12
+verse: 1 John 5:14
+verse: Revelation 21:5
+topic: overcoming fear
+topic: gods faithfulness
+
+# ---- appended 2026-07-25 by verse-engine (backlog top-up) ----
+verse: Psalm 32:8
+verse: Psalm 37:5
+verse: Psalm 40:1-2
+verse: Psalm 84:11
+verse: Psalm 119:105
+verse: Psalm 130:5
+verse: Proverbs 13:20
+verse: Proverbs 21:5
+verse: Isaiah 1:18
+verse: Isaiah 55:11
+verse: Matthew 5:8
+verse: Matthew 22:37-39
+verse: John 4:24
+verse: Acts 1:8
+verse: Romans 1:16
+verse: Hebrews 6:19
+verse: Hebrews 12:11
+verse: James 5:16
+verse: 1 John 3:1
+topic: spiritual warfare
+topic: obedience
+topic: honesty
+topic: spiritual growth
+
+# ---- appended 2026-07-26 by verse-engine (top-up; all slugs verified unpublished) ----
+verse: Psalm 16:8
+verse: Psalm 94:19
+verse: Psalm 126:5
+verse: Psalm 139:16
+verse: Proverbs 10:12
+verse: Proverbs 20:24
+verse: Ecclesiastes 3:11
+verse: Isaiah 43:19
+verse: Isaiah 61:3
+verse: Joel 2:25
+verse: Zechariah 4:6
+verse: Malachi 3:10
+verse: Mark 10:27
+verse: Luke 11:9
+verse: Luke 12:7
+verse: Romans 8:1
+verse: 1 Corinthians 15:58
+verse: Ephesians 6:12
+verse: Hebrews 13:5
+verse: 1 Peter 4:10
+topic: family
+topic: health
+
+# ---- appended 2026-07-28 by verse-engine (top-up; all slugs verified unpublished) ----
+verse: Psalm 5:3
+verse: Psalm 33:11
+verse: Psalm 63:1
+verse: Psalm 71:14
+verse: Psalm 112:7
+verse: Psalm 141:3
+verse: Proverbs 12:25
+verse: Proverbs 14:29
+verse: Proverbs 25:28
+verse: Ecclesiastes 4:9-10
+verse: Isaiah 9:6
+verse: Isaiah 40:8
+verse: Matthew 6:14-15
+verse: Mark 9:23
+verse: Luke 6:31
+verse: John 15:7
+verse: Acts 2:38
+verse: 1 Corinthians 2:9
+verse: 2 Corinthians 10:5
+verse: Galatians 5:1
+
+# ---- appended 2026-07-30 by verse-engine (backlog was under 30 remaining) ----
+verse: Matthew 10:29
+verse: Acts 20:35
+verse: 2 Corinthians 3:17
+verse: Colossians 2:6
+verse: 2 Timothy 2:15
+verse: James 4:10
+verse: 2 Peter 3:9
+verse: 1 John 2:15
+verse: Jude 1:24
+verse: Revelation 1:8
+verse: Proverbs 21:2
+verse: Ecclesiastes 4:12
+verse: Micah 7:8
+verse: Mark 12:31
+verse: Luke 16:10
+verse: John 6:35
+verse: Hebrews 4:16
+verse: 1 Peter 1:3
+topic: mercy
+topic: hospitality

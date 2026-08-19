@@ -1,0 +1,13 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.mybiblecopilot/bible-copilot",
+  "description": "Scripture ground truth for agents: verify Bible quotes against the actual text (catches misquotes and verses that don't exist), resolve any reference to canonical form, exact public-domain verse text, plus AI study.",
+  "websiteUrl": "https://mybiblecopilot.com",
+  "version": "2.0.0",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mybiblecopilot.com/mcp"
+    }
+  ]
+}

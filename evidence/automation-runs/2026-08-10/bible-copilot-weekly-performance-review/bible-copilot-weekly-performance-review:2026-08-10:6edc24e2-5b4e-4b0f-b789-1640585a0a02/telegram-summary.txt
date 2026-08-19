@@ -1,0 +1,13 @@
+Period: August 3-9, 2026 (America/New_York)
+Bible Copilot Shorts views: 5,212 vs 9,341 (-44%) [YouTube API, verified]
+Bible Copilot onboarding completions: 19 vs 14 (+36%) [Supabase, verified]
+Bible Copilot purchase devices: 2 vs 1 (+1) [Supabase, verified]
+Bible Copilot App Store units: 18 on Aug 3-8 vs 14 on Jul 27-Aug 1 (+29%; Aug 9 unavailable) [ASC, partial]
+Gospel Briefing downloads: 54 vs 8 (+575%) [Transistor, verified]
+Gospel Briefing live RSS episodes: 3 vs 2 (+1) [RSS + Supabase, verified]
+Podcast-attributed Bible Copilot onboarding: 1 vs 0 (+1) [Supabase, verified]
+Strongest win: Gospel Briefing attention rebounded and produced the first podcast-attributed Bible Copilot onboarding device.
+Highest-risk concern: only 3 of 7 Gospel dates published, and the August 8 RSS episode is missing a local archive page.
+Missing/blocked: GSC, GA4, Plausible, Facebook insights, aggregate subscriber reads, and campaign-level App Store attribution.
+Decision needed: fix Gospel reliability and measurement before changing sponsor creative or growth themes.
+Artifacts retained: /Users/carlosreyes/Desktop/Projects/Apps/biblecopilot/marketing/weekly-scorecards/2026-08-10.md; /Users/carlosreyes/Documents/Codex/2026-07-27/i-ve-logged/outputs/gospel-briefing-weekly-report-2026-08-10.md

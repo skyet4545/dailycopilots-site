@@ -2,7 +2,7 @@
 
 **Built 2026-07-03.** Two coupled playbooks to fix the diagnosed conversion leak and pour high-intent traffic into it. Grounded in `product-marketing-context.md` (positioning/competitors/customer language) and the earlier conversion diagnosis. Mechanics for running the PPO test live in `marketing/ppo-test-steps.md`; this doc is the **creative + keyword strategy** that doc is missing.
 
-> **Pricing used (current):** Free — 3 questions/day, no account. Pro — **$9.99/mo or $49.99/yr**, 7-day free trial. *(Note: `product-marketing-context.md` still shows the old $4.99/$29.99 · 15/day — it's stale from May; use the current numbers here and correct that doc on the next marketing pass.)*
+> **Pricing used (current):** Free — 3 questions/day, no account. Pro — **$9.99/mo or $49.99/yr**, 7-day free trial.
 
 ## The flywheel (why these two, together)
 App Store rank compounds: **keyword relevance → impressions → conversion → install velocity → ratings → rank → more impressions.** Two things gate it right now:

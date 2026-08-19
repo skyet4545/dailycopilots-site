@@ -40,10 +40,13 @@ struct AttributionSource: Identifiable, Hashable {
     let label: String
 
     static let sources: [AttributionSource] = [
-        AttributionSource(id: "podcast_gospel_briefing", icon: "mic.fill", label: "A podcast"),
+        AttributionSource(id: "podcast_gospel_briefing", icon: "mic.fill", label: "The Gospel Briefing"),
         AttributionSource(id: "app_store_search", icon: "magnifyingglass", label: "App Store search"),
+        AttributionSource(id: "youtube", icon: "play.rectangle.fill", label: "YouTube"),
         AttributionSource(id: "friend_church", icon: "person.2.fill", label: "Friend or church"),
         AttributionSource(id: "social_media", icon: "play.rectangle.fill", label: "Social media"),
+        AttributionSource(id: "website_article", icon: "doc.text.fill", label: "A Bible Copilot article"),
+        AttributionSource(id: "email_newsletter", icon: "envelope.fill", label: "An email newsletter"),
         AttributionSource(id: "other", icon: "ellipsis.circle.fill", label: "Other")
     ]
 }

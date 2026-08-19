@@ -15,7 +15,7 @@
 
 **Product type:** Native iOS / iPadOS app (iOS 17+, SwiftUI + StoreKit 2 + SwiftData), backed by a Rust serverless backend on Vercel calling OpenAI `gpt-4o-mini` with SSE streaming.
 
-**Business model:** Freemium with App Store IAP. Free tier = 3 questions/day plus the Gospel of John reading plan. Pro = $9.99/mo or $49.99/yr (≈ 58% annual savings) for unlimited questions, all five plans, full journal, and a 7-day free trial on annual.
+**Business model:** Freemium with App Store IAP. Free tier = 3 questions/day plus the Gospel of John reading plan. Pro = $9.99/mo or $49.99/yr (≈ 58% annual savings) for unlimited questions, all five plans, full journal, and a 7-day free trial on either plan.
 
 ---
 
@@ -224,7 +224,7 @@ All quotes below are **verbatim** from the 5 real iTunes Store reviews and the A
 - App Store rating: **5.0 ★** with **6 ratings** as of 2026-04-30 (verified via `https://itunes.apple.com/lookup?id=6758913373&country=us`).
 - 5 written reviews, all 5★.
 - Live App Store version: **1.9.0** (released 2026-04-21); current build: **119**.
-- Pricing: Free 3 questions/day · Pro $9.99/mo or $49.99/yr (~58% annual savings) · 7-day free trial on annual.
+- Pricing: Free 3 questions/day · Pro $9.99/mo or $49.99/yr (~58% annual savings) · 7-day free trial on either plan.
 
 **Customers:** Direct-to-consumer; no logos to display. Reviewer handles available: Bashemup, Dove3777, H.R.R RR, OrlandoLaurie, los|.
 
@@ -256,7 +256,7 @@ All quotes below are **verbatim** from the 5 real iTunes Store reviews and the A
 
 **Conversion action:**
 1. App Store install (primary, App Store ID `6758913373`).
-2. Onboarding paywall conversion to 1-week free trial on annual ($49.99/yr).
+2. Onboarding paywall conversion to a one-week free trial on the selected Pro plan.
 3. Trial → paid retention at end of week 1.
 4. Free → paid upgrade for users who exceed 3 questions/day.
 

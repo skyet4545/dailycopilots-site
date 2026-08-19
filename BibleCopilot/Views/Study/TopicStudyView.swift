@@ -8,6 +8,7 @@ struct TopicStudyView: View {
     @State private var error: String?
     @State private var crossReferences: [String] = []
     @State private var showCopied = false
+    @State private var showReminderPrompt = false
     var onStudyVerse: (String) -> Void
 
     var body: some View {
@@ -120,6 +121,9 @@ struct TopicStudyView: View {
                 }
             }
         }
+        .sheet(isPresented: $showReminderPrompt) {
+            PostStudyReminderView()
+        }
         .task { await fetchTopicStudy() }
     }
 
@@ -139,7 +143,10 @@ struct TopicStudyView: View {
                 response += chunk
             }
             crossReferences = CrossReferenceParser.extractReferences(from: response, limit: 8)
-            usageService.recordQuestion()
+            let completedFirstQuestion = usageService.recordQuestion()
+            if completedFirstQuestion {
+                showReminderPrompt = NotificationService.shared.shouldOfferDailyReminderAfterFirstStudy()
+            }
             ReviewService.shared.recordStudyAndPromptIfReady()
             HapticService.success()
         } catch {

@@ -1,0 +1,3 @@
+// The local override is generated from macOS Keychain and is intentionally untracked.
+SENTRY_DSN =
+#include? "Sentry.local.xcconfig"

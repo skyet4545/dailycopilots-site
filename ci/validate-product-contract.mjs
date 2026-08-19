@@ -18,6 +18,7 @@ const expected = {
   freeQuestions: 3,
   monthlyUsd: 9.99,
   annualUsd: 49.99,
+  monthlyTrialDays: 7,
   annualTrialDays: 7,
   studyModes: ["Summary", "Observe", "Interpret", "Theology", "Apply", "Apologetics"]
 };
@@ -31,6 +32,7 @@ check(truth.product?.app_store_id === expected.appStoreId, "Unexpected App Store
 check(truth.free_tier?.questions_per_day === expected.freeQuestions, "Free question limit drifted");
 check(truth.pro?.monthly_usd === expected.monthlyUsd, "Monthly price drifted");
 check(truth.pro?.annual_usd === expected.annualUsd, "Annual price drifted");
+check(truth.pro?.monthly_trial_days === expected.monthlyTrialDays, "Monthly trial length drifted");
 check(truth.pro?.annual_trial_days === expected.annualTrialDays, "Annual trial length drifted");
 check(
   JSON.stringify(truth.study_modes) === JSON.stringify(expected.studyModes),
@@ -41,6 +43,7 @@ const publicRoots = ["site-deploy", "marketing-site-v2", "metadata", "marketing"
 const textExtensions = new Set([".html", ".md", ".txt", ".json", ".xml", ".py", ".js", ".ts"]);
 const prohibited = truth.prohibited_claims_without_current_evidence || [];
 const findings = [];
+const stalePriceFindings = [];
 
 const claimMatchers = new Map([
   ["#1 AI Bible study app", /#1\s+ai\s+bible\s+study\s+app/i],
@@ -65,6 +68,18 @@ function visit(directory) {
     }
     if (!textExtensions.has(path.extname(entry.name).toLowerCase())) continue;
     const content = fs.readFileSync(fullPath, "utf8").toLowerCase();
+    const stalePricePatterns = [
+      /\$4\.99\/(?:mo(?:nth)?|month)(?=[\s\S]{0,50}(?:\$49\.99|49\.99\/yr))/i,
+      /bible copilot is \$4\.99/i,
+      /bible copilot's pro is \$4\.99/i,
+      /pro at \$4\.99\/month/i,
+      /monthly is available for \$4\.99/i,
+    ];
+    const relativePath = path.relative(root, fullPath);
+    const isHistoricalWatch = /^marketing\/geo\/watch-\d{4}-\d{2}-\d{2}\.md$/.test(relativePath);
+    if (!isHistoricalWatch && stalePricePatterns.some((matcher) => matcher.test(content))) {
+      stalePriceFindings.push(`${relativePath} contains stale Bible Copilot monthly pricing`);
+    }
     for (const claim of prohibited) {
       const matcher = claimMatchers.get(claim);
       const matches = matcher ? matcher.test(content) : content.includes(claim.toLowerCase());
@@ -76,6 +91,7 @@ function visit(directory) {
 }
 
 for (const publicRoot of publicRoots) visit(path.join(root, publicRoot));
+errors.push(...stalePriceFindings);
 
 if (process.argv.includes("--write-baseline")) {
   fs.writeFileSync(

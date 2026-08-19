@@ -1,0 +1,40 @@
+# Comparison/listicle backlog for bible-copilot-comparison-engine.
+# One topic per line: <slug> | <target search query> | <format>
+# The daily loop picks the FIRST slug not already in done_topics.txt, writes it, removes nothing (done_topics is the source of truth).
+# Formats: vs (head-to-head), alt (alternatives listicle), best (best-X-for-Y listicle), howto (use-case guide).
+# All must be honest (real competitors, fair treatment) — honest comparisons get cited; puffery does not.
+
+bible-copilot-vs-logos | Bible Copilot vs Logos Bible study | vs
+logos-alternatives-cheap | cheap Logos alternative for iPhone | alt
+best-bible-app-for-sermon-prep | best Bible app for sermon preparation | best
+best-ai-bible-app-for-apologetics | best AI Bible app for apologetics | best
+bible-copilot-vs-bible-chat | Bible Copilot vs Bible Chat | vs
+best-bible-app-for-small-groups | best Bible study app for small groups | best
+best-bible-app-with-greek-and-hebrew | best Bible app with Greek and Hebrew | best
+bible-copilot-vs-blue-letter-bible | Bible Copilot vs Blue Letter Bible | vs
+best-bible-app-for-new-christians | best Bible app for new Christians | best
+youversion-alternatives | best YouVersion alternatives 2026 | alt
+best-bible-app-for-inductive-study | best Bible app for inductive Bible study | best
+bible-copilot-vs-olive-tree | Bible Copilot vs Olive Tree Bible | vs
+best-free-bible-study-app | best free Bible study app 2026 | best
+best-bible-app-for-pastors | best Bible study app for pastors | best
+bible-gateway-alternatives | best Bible Gateway alternatives | alt
+best-bible-app-for-daily-devotions | best Bible app for daily devotions | best
+best-christian-ai-apps | best Christian AI apps 2026 | best
+bible-copilot-vs-bible-gateway | Bible Copilot vs Bible Gateway | vs
+best-bible-app-for-students | best Bible app for students and teens | best
+how-to-study-the-bible-inductively | how to study the Bible inductively | howto
+olive-tree-alternatives | best Olive Tree Bible alternatives | alt
+best-bible-app-for-anxiety | best Bible app for anxiety and worry | best
+best-bible-commentary-app | best Bible commentary app 2026 | best
+how-to-understand-hard-bible-passages | how to understand difficult Bible passages | howto
+best-bible-app-for-couples | best Bible app for couples and marriage | best
+# --- 2026-07-03: teardown-identified winnable queries (inductive-study angle is ownable; apologetics + Greek/Hebrew fields are thin) ---
+best-ai-bible-app-for-inductive-study | best AI Bible app for inductive study observe interpret apply | best
+observe-interpret-apply-bible-app | Bible app that does observe interpret apply | howto
+best-ai-bible-app-with-greek-hebrew | best AI Bible app with Greek and Hebrew for everyday readers | best
+gotquestions-alternative-app | GotQuestions alternative app that explains any verse | alt
+best-bible-app-that-explains-verses | best Bible app that explains verses with AI | best
+faith-guide-alternative | Faith Guide alternative for AI Bible study | alt
+bible-chat-alternative | Bible Chat alternative Scripture-cited answers | alt
+best-ai-bible-app-for-hard-questions | best AI Bible app for hard questions and doubts | best

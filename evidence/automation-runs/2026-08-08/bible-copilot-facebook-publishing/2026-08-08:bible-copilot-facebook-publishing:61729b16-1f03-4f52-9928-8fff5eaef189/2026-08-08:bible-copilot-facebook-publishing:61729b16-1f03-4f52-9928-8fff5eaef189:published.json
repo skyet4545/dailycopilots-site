@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "1.0",
+  "artifactVersion": "c96ba2c3274df4e140b0e2a08140828fcd71cea2a46c78884819f3eba677eb3c",
+  "rootRunId": "2026-08-08:bible-copilot-facebook-publishing:61729b16-1f03-4f52-9928-8fff5eaef189",
+  "runId": "2026-08-08:bible-copilot-facebook-publishing:61729b16-1f03-4f52-9928-8fff5eaef189:published",
+  "producer": {
+    "scheduler": "codex-desktop-automation",
+    "jobId": "bible-copilot-facebook-publishing",
+    "startedAt": "2026-08-08T15:31:40Z",
+    "completedAt": "2026-08-08T15:33:15Z"
+  },
+  "upstream": {
+    "runId": "editorial-queue:bible-copilot-2026-W32-a-christians-guide-to-friendship-what-the-bible-teaches-sat-1130",
+    "artifactPath": "/Users/carlosreyes/.config/social-editorial/queues/bible-copilot-2026-W32.json",
+    "sha256": "a46c32375ea56b0869aa504cb07c31df55fd1b195426e357e751d38b4421aa5e"
+  },
+  "status": "published_verified",
+  "output": {
+    "kind": "publication-receipt",
+    "artifact": "automation custody receipt",
+    "requiredFields": {
+      "queueItemId": "bible-copilot-2026-W32-a-christians-guide-to-friendship-what-the-bible-teaches-sat-1130",
+      "isPublished": true,
+      "postId": "1167712496420391_122133066891352786",
+      "permalinkUrl": "https://www.facebook.com/122101394553352786/posts/122133066891352786",
+      "skipReason": null
+    }
+  },
+  "validation": {
+    "contractVersion": "1.0",
+    "passed": true,
+    "checks": [
+      "editorial_queue_validate_ok",
+      "meta_preflight_ok",
+      "recent_cooldown_clear",
+      "recent_duplicate_check_clear",
+      "approval_hash_valid",
+      "source_links_reverified",
+      "meta_publish_verified"
+    ]
+  },
+  "recovery": {
+    "idempotencyKey": "bible-copilot-2026-W32-a-christians-guide-to-friendship-what-the-bible-teaches-sat-1130",
+    "rollbackRef": "meta-pages-log:bible-copilot:bible-copilot-2026-W32-a-christians-guide-to-friendship-what-the-bible-teaches-sat-1130"
+  },
+  "externalEffects": [
+    {
+      "type": "facebook_page_post",
+      "page": "bible-copilot",
+      "postId": "1167712496420391_122133066891352786",
+      "permalinkUrl": "https://www.facebook.com/122101394553352786/posts/122133066891352786",
+      "verifiedPublished": true,
+      "recordedAt": "2026-08-08T15:33:15Z",
+      "idempotencyKey": "bible-copilot-2026-W32-a-christians-guide-to-friendship-what-the-bible-teaches-sat-1130"
+    }
+  ]
+}

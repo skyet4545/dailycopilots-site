@@ -11,6 +11,7 @@ final class UsageServiceTests: XCTestCase {
         // Reset stored values
         UserDefaults.standard.removeObject(forKey: "usageDate")
         UserDefaults.standard.removeObject(forKey: "usageCount")
+        UserDefaults.standard.removeObject(forKey: "hasCompletedFirstQuestion")
     }
 
     // MARK: - Free Tier Limits
@@ -20,21 +21,21 @@ final class UsageServiceTests: XCTestCase {
     }
 
     func testFreeUserBlockedAtLimit() {
-        for _ in 0..<10 {
+        for _ in 0..<3 {
             service.recordQuestion()
         }
         XCTAssertFalse(service.canAsk(isPro: false))
     }
 
-    func testFreeUserAllowed9Questions() {
-        for _ in 0..<9 {
+    func testFreeUserAllowed2Questions() {
+        for _ in 0..<2 {
             service.recordQuestion()
         }
         XCTAssertTrue(service.canAsk(isPro: false))
     }
 
-    func testFreeUserBlockedAt10Questions() {
-        for _ in 0..<10 {
+    func testFreeUserBlockedAt3Questions() {
+        for _ in 0..<3 {
             service.recordQuestion()
         }
         XCTAssertFalse(service.canAsk(isPro: false))
@@ -65,9 +66,9 @@ final class UsageServiceTests: XCTestCase {
     }
 
     func testRemainingDecrements() {
-        XCTAssertEqual(service.remainingQuestions(isPro: false), 10)
+        XCTAssertEqual(service.remainingQuestions(isPro: false), 3)
         service.recordQuestion()
-        XCTAssertEqual(service.remainingQuestions(isPro: false), 9)
+        XCTAssertEqual(service.remainingQuestions(isPro: false), 2)
     }
 
     // MARK: - Midnight Reset
@@ -75,7 +76,7 @@ final class UsageServiceTests: XCTestCase {
     func testResetOnNewDay() {
         // Simulate questions from yesterday
         UserDefaults.standard.set("2020-01-01", forKey: "usageDate")
-        UserDefaults.standard.set(10, forKey: "usageCount")
+        UserDefaults.standard.set(3, forKey: "usageCount")
 
         // Should reset because today != 2020-01-01
         XCTAssertTrue(service.canAsk(isPro: false))
@@ -84,7 +85,12 @@ final class UsageServiceTests: XCTestCase {
 
     // MARK: - Constants
 
-    func testFreeQuestionLimitIs10() {
-        XCTAssertEqual(UsageService.freeQuestionsPerDay, 10)
+    func testFreeQuestionLimitMatchesProductTruth() {
+        XCTAssertEqual(UsageService.freeQuestionsPerDay, 3)
+    }
+
+    func testOnlyFirstSuccessfulQuestionReturnsTrue() {
+        XCTAssertTrue(service.recordQuestion())
+        XCTAssertFalse(service.recordQuestion())
     }
 }

@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "1.0",
+  "rootRunId": "bible-copilot-weekly-performance-review:2026-08-17:5a9b69ab-97b4-49bb-bea2-6241f1460138",
+  "runId": "bible-copilot-weekly-performance-review:2026-08-17:814e062f-1763-4449-88e6-91117a742aad",
+  "producer": {
+    "scheduler": "codex-desktop",
+    "jobId": "bible-copilot-weekly-performance-review",
+    "startedAt": "2026-08-17T06:33:21Z",
+    "completedAt": "2026-08-17T06:45:49.506Z"
+  },
+  "upstream": {
+    "runId": "bible-copilot-weekly-performance-review:2026-08-17:5a9b69ab-97b4-49bb-bea2-6241f1460138:input",
+    "artifactPath": "/Users/carlosreyes/Desktop/Projects/Apps/biblecopilot/evidence/automation-runs/2026-08-17/bible-copilot-weekly-performance-review/bible-copilot-weekly-performance-review:2026-08-17:5a9b69ab-97b4-49bb-bea2-6241f1460138/input.json",
+    "sha256": "47ce38e83751669be9526635ce5d397bca4f641b6fb3d5da5b26d38d885ce17c"
+  },
+  "status": "completed_with_missing_evidence",
+  "output": {
+    "kind": "scorecard",
+    "artifact": "biblecopilot/marketing/weekly-scorecards/YYYY-MM-DD.md",
+    "artifactPath": "/Users/carlosreyes/Desktop/Projects/Apps/biblecopilot/marketing/weekly-scorecards/2026-08-17.md",
+    "sha256": "29da09a11cccca9411272a9a9e87ba88cbf3a0e1d93e50cba2eefa349c7c574a",
+    "requiredFields": {
+      "scorecardPath": "/Users/carlosreyes/Desktop/Projects/Apps/biblecopilot/marketing/weekly-scorecards/2026-08-17.md",
+      "dataCoverage": "verified: YouTube API, Supabase app events, Transistor show analytics, App Store daily units/subscription snapshot, RSS/archive validator; blocked: GSC, GA4, Plausible, Facebook insights, aggregate subscriber reads, App Store campaign-token attribution",
+      "winner": "Bible Copilot Shorts views rose 43% and onboarding completions rose 63% week over week.",
+      "concern": "Gospel Briefing downloads fell from 54 to 7, only 2 episodes went live, and the podcast produced no current-week attributed onboarding while search/web analytics remained partially dark.",
+      "recommendation": "Repair Gospel Briefing reliability and restore the measurement spine before changing sponsor creative or weekly growth themes.",
+      "gospelReportPath": "/Users/carlosreyes/Documents/Codex/2026-07-27/i-ve-logged/outputs/gospel-briefing-weekly-report-2026-08-17.md",
+      "executiveCoverSummaryPath": "/Users/carlosreyes/Documents/Codex/2026-07-27/i-ve-logged/outputs/bible-copilot-and-gospel-briefing-weekly-cover-2026-08-17.md",
+      "reportingWindow": "2026-08-10 to 2026-08-16 (America/New_York)",
+      "comparisonWindow": "2026-08-03 to 2026-08-09 (America/New_York)",
+      "localChanges": "none",
+      "telegramDelivery": "sent"
+    }
+  },
+  "validation": {
+    "contractVersion": "1.0",
+    "passed": true,
+    "checks": [
+      "required_artifacts_written",
+      "shared_evidence_collected_once_for_both_sections",
+      "telegram_report_sent",
+      "safe_terminal_state",
+      "missing_evidence_labeled_explicitly"
+    ]
+  },
+  "recovery": {
+    "idempotencyKey": "bible-copilot-weekly-performance-review:2026-08-10:2026-08-16",
+    "rollbackRef": "reports-only run; no product code or remote state mutated beyond approved Telegram delivery"
+  },
+  "externalEffects": [
+    {
+      "type": "telegram_report",
+      "helper": "send-optimus-telegram-report.mjs",
+      "automationId": "bible-copilot-weekly-performance-review",
+      "payloadHash": "470b9afa128d8691d426c9546c9e3e8083f66b7cf7c3ac7a5a62daf07552065d",
+      "chunkCount": 1,
+      "messageIds": [
+        24167
+      ],
+      "artifact": "/Users/carlosreyes/Documents/Codex/2026-07-27/i-ve-logged/outputs/bible-copilot-and-gospel-briefing-weekly-cover-2026-08-17.md"
+    }
+  ],
+  "artifactVersion": "bcfb134e20895607e0e3211ec67b2a7a05e264fe85f5a43126ac44fd18ffbe2c"
+}

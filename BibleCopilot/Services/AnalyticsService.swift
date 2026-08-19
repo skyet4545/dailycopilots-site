@@ -28,10 +28,15 @@ final class AnalyticsService {
     }
 
     func track(_ event: String, _ properties: [String: String] = [:]) {
+        var enrichedProperties = properties
+        if let acquisitionSource = UserDefaults.standard.string(forKey: "onboarding_heard_about") {
+            enrichedProperties["acquisition_source"] = acquisitionSource
+        }
+
         let payload: [String: Any] = [
             "app_identifier": appIdentifier,
             "event": event,
-            "properties": properties,
+            "properties": enrichedProperties,
             "device_id": deviceId,
             "session_id": sessionId,
             "app_version": appVersion,
@@ -63,7 +68,18 @@ enum AnalyticsEvent {
     static let purchaseSuccess = "purchase_success"
     static let purchaseFailed = "purchase_failed"
     static let questionAsked = "question_asked"
+    static let firstQuestionCompleted = "first_question_completed"
+    static let followUpSuggestionTapped = "follow_up_suggestion_tapped"
+    static let notificationPermission = "notif_permission"
+    static let reminderPromptShown = "reminder_prompt_shown"
+    static let reminderPromptDismissed = "reminder_prompt_dismissed"
+    static let dailyReminderEnabled = "daily_reminder_enabled"
     static let limitHit = "limit_hit"
+    static let planSelected = "plan_selected"
     static let planOpened = "plan_opened"
     static let verseShared = "verse_shared"
+    static let shareComposerOpened = "share_composer_opened"
+    static let tiktokShareStarted = "tiktok_share_started"
+    static let tiktokShareSucceeded = "tiktok_share_succeeded"
+    static let tiktokShareFailed = "tiktok_share_failed"
 }

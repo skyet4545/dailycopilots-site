@@ -3,6 +3,7 @@ import SwiftData
 
 @main
 struct BibleCopilotApp: App {
+    @UIApplicationDelegateAdaptor(TikTokAppDelegate.self) private var appDelegate
     @State private var subscriptionService = SubscriptionService.shared
     @State private var usageService = UsageService.shared
     @State private var authService = AuthService.shared
@@ -10,6 +11,10 @@ struct BibleCopilotApp: App {
     @AppStorage("dailyReminderEnabled") private var reminderEnabled: Bool = false
     @AppStorage("reminderHour") private var reminderHour: Int = 8
     @AppStorage("reminderMinute") private var reminderMinute: Int = 0
+
+    init() {
+        SentryService.start()
+    }
 
     var body: some Scene {
         WindowGroup {

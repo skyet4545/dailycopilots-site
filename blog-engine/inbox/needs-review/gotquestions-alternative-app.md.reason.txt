@@ -1,0 +1,1 @@
+current 2026-W32 authority manifest has no approvedNewPage

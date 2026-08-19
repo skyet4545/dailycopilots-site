@@ -5,27 +5,46 @@ options:
     iOS: "18.0"
   xcodeVersion: "15"
 
+packages:
+  Sentry:
+    url: https://github.com/getsentry/sentry-cocoa.git
+    from: 9.24.0
+  TikTokOpenSDK:
+    url: https://github.com/tiktok/tiktok-opensdk-ios.git
+    from: 2.5.0
+
 targets:
   BibleCopilot:
     type: application
     platform: iOS
     deploymentTarget: "15.0"
+    configFiles:
+      Debug: BibleCopilot/Config/Sentry.xcconfig
+      Release: BibleCopilot/Config/Sentry.xcconfig
     sources:
       - path: BibleCopilot
+    dependencies:
+      - package: Sentry
+      - package: TikTokOpenSDK
+        product: TikTokOpenSDKCore
+      - package: TikTokOpenSDK
+        product: TikTokOpenShareSDK
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.scripturecopilot.app
         PRODUCT_NAME: Bible Copilot
+        PRODUCT_MODULE_NAME: BibleCopilot
         SWIFT_VERSION: "5.0"
         TARGETED_DEVICE_FAMILY: "1,2"
-        MARKETING_VERSION: "2.4.0"
-        CURRENT_PROJECT_VERSION: "125"
+        MARKETING_VERSION: "2.4.1"
+        CURRENT_PROJECT_VERSION: "126"
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS: "YES"
         CODE_SIGN_STYLE: Automatic
         DEVELOPMENT_TEAM: "846N5D6TMK"
         ENABLE_BITCODE: "NO"
         IPHONEOS_DEPLOYMENT_TARGET: "18.0"
+        CODE_SIGN_ENTITLEMENTS: BibleCopilot/BibleCopilot.entitlements
     info:
       path: BibleCopilot/Resources/Info.plist
       properties:
@@ -34,6 +53,17 @@ targets:
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleIdentifier: com.scripturecopilot.app
+        SentryDSN: $(SENTRY_DSN)
+        TikTokClientKey: awphocjlqnbemb7t
+        LSApplicationQueriesSchemes:
+          - tiktoksharesdk
+          - snssdk1180
+          - snssdk1233
+        CFBundleURLTypes:
+          - CFBundleURLSchemes:
+              - awphocjlqnbemb7t
+        NSPhotoLibraryUsageDescription: Bible Copilot saves the verse cards you choose so you can share them to TikTok.
+        NSPhotoLibraryAddUsageDescription: Bible Copilot saves the verse cards you choose so you can share them to TikTok.
         UILaunchScreen:
           UIColorName: systemBackground
         UISupportedInterfaceOrientations:
@@ -46,3 +76,29 @@ targets:
           - UIInterfaceOrientationLandscapeLeft
           - UIInterfaceOrientationLandscapeRight
         ITSAppUsesNonExemptEncryption: false
+
+  BibleCopilotTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - path: BibleCopilotTests
+    dependencies:
+      - target: BibleCopilot
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.scripturecopilot.app.tests
+        SWIFT_VERSION: "5.0"
+        GENERATE_INFOPLIST_FILE: "YES"
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/Bible Copilot.app/Bible Copilot"
+        BUNDLE_LOADER: "$(TEST_HOST)"
+
+schemes:
+  BibleCopilot:
+    build:
+      targets:
+        BibleCopilot: all
+        BibleCopilotTests: [test]
+    test:
+      targets:
+        - BibleCopilotTests
