@@ -21,6 +21,7 @@ Use stable snake-case source IDs. Existing values remain valid; do not silently 
 | ID | Meaning |
 | --- | --- |
 | `app_store_search` | The user reports finding the app in App Store search |
+| `organic_search` | The user reports using Google or another search engine to find a verse, Bible question, or Bible Copilot website/article; this is self-reported organic discovery, not a verified search-click record |
 | `podcast_gospel_briefing` | The user reports The Gospel Briefing as the source |
 | `social_media` | Social source is known but platform or creative is unavailable |
 | `friend_church` | Word of mouth, church, or small group |

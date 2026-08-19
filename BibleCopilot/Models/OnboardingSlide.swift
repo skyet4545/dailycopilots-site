@@ -42,6 +42,7 @@ struct AttributionSource: Identifiable, Hashable {
     static let sources: [AttributionSource] = [
         AttributionSource(id: "podcast_gospel_briefing", icon: "mic.fill", label: "The Gospel Briefing"),
         AttributionSource(id: "app_store_search", icon: "magnifyingglass", label: "App Store search"),
+        AttributionSource(id: "organic_search", icon: "magnifyingglass", label: "Google or another search engine"),
         AttributionSource(id: "youtube", icon: "play.rectangle.fill", label: "YouTube"),
         AttributionSource(id: "friend_church", icon: "person.2.fill", label: "Friend or church"),
         AttributionSource(id: "social_media", icon: "play.rectangle.fill", label: "Social media"),
