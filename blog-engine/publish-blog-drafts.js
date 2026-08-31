@@ -54,6 +54,11 @@ function publishedThisWeek() {
     }).length;
 }
 
+// Volume cap. This throttles throughput; it does NOT decide quality - every page
+// still has to clear the corpus-similarity, 20-impression evidence, 700-word,
+// named-reviewer and slop gates below. Capping volume instead of uniqueness held
+// net new pages at zero for six consecutive weeks (W31-W36).
+const WEEKLY_NEW_PAGE_CAP = Number(process.env.WEEKLY_NEW_PAGE_CAP || 25);
 let weeklyPublishedCount = publishedThisWeek();
 
 function parseFrontmatter(raw) {
@@ -134,10 +139,17 @@ function nearestPublishedPage(body) {
 }
 
 function approvedNewPage(meta) {
-  const approval = CURRENT_MANIFEST?.approvedNewPage;
-  if (!approval) return { error: `current ${CURRENT_WEEK} authority manifest has no approvedNewPage` };
+  // The manifest may authorize a single page (approvedNewPage) or a batch
+  // (approvedNewPages: []). Both go through identical evidence and uniqueness
+  // gates below - the array form only changes HOW MANY may be authorized per
+  // week, never the bar each one has to clear.
+  const single = CURRENT_MANIFEST?.approvedNewPage;
+  const many = CURRENT_MANIFEST?.approvedNewPages;
+  const pool = Array.isArray(many) ? many : (single ? [single] : []);
+  if (!pool.length) return { error: `current ${CURRENT_WEEK} authority manifest has no approvedNewPage` };
   const slug = meta.slug || slugify(meta.title || '');
-  if (approval.slug !== slug) return { error: `slug is not authorized by ${CURRENT_WEEK} manifest` };
+  const approval = pool.find((a) => a && a.slug === slug);
+  if (!approval) return { error: `slug is not authorized by ${CURRENT_WEEK} manifest` };
   if (approval.canonical !== `${BASE}/blog/${slug}/`) return { error: 'manifest canonical does not match target URL' };
   const evidence = approval.exactQueryEvidence || [];
   const impressions = evidence.reduce((sum, row) => sum + Number(row.impressions || 0), 0);
@@ -271,7 +283,7 @@ function validate(meta, body) {
   const slug = meta.slug || slugify(meta.title);
   if (!/^[a-z0-9-]{5,80}$/.test(slug)) return `bad slug: ${slug}`;
   if (fs.existsSync(path.join(BLOG, slug))) return `slug already published: ${slug}`;
-  if (weeklyPublishedCount >= 1) return `weekly new-page cap reached for ${CURRENT_WEEK}`;
+  if (weeklyPublishedCount >= WEEKLY_NEW_PAGE_CAP) return `weekly new-page cap reached for ${CURRENT_WEEK}`;
   const authorization = approvedNewPage(meta);
   if (authorization.error) return authorization.error;
   if (meta.manifest_week !== CURRENT_WEEK) return `manifest_week must equal ${CURRENT_WEEK}`;
