@@ -78,6 +78,16 @@ final class StreakService {
         }
     }
 
+    func resetLocalProgress() {
+        ["streak_lastDate", "streak_current", "streak_longest", "streak_total"].forEach {
+            defaults.removeObject(forKey: $0)
+        }
+        currentStreak = 0
+        longestStreak = 0
+        studiedToday = false
+        totalStudies = 0
+    }
+
     private func dateString(for date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
