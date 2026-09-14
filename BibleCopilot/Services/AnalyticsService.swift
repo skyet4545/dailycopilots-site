@@ -6,6 +6,8 @@ import SwiftUI
 final class AnalyticsService {
     static let shared = AnalyticsService()
 
+    static let consentKey = "analyticsConsentGranted"
+
     // Dedicated analytics project — separate from the shared auth project so
     // event volume can never impact auth/journal quotas.
     private let endpoint = URL(string: "https://fseqgcebvxiqmzngxhre.supabase.co/rest/v1/analytics_events")!
@@ -13,6 +15,17 @@ final class AnalyticsService {
     private let appIdentifier = "bible_copilot"
 
     private let sessionId = UUID().uuidString
+
+    var isEnabled: Bool {
+        UserDefaults.standard.bool(forKey: Self.consentKey)
+    }
+
+    func setEnabled(_ enabled: Bool) {
+        UserDefaults.standard.set(enabled, forKey: Self.consentKey)
+        if !enabled {
+            UserDefaults.standard.removeObject(forKey: "analyticsDeviceId")
+        }
+    }
 
     private var deviceId: String {
         if let existing = UserDefaults.standard.string(forKey: "analyticsDeviceId") {
@@ -28,6 +41,8 @@ final class AnalyticsService {
     }
 
     func track(_ event: String, _ properties: [String: String] = [:]) {
+        guard isEnabled else { return }
+
         var enrichedProperties = properties
         if let acquisitionSource = UserDefaults.standard.string(forKey: "onboarding_heard_about") {
             enrichedProperties["acquisition_source"] = acquisitionSource

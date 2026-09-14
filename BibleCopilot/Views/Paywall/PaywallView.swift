@@ -12,6 +12,17 @@ struct PaywallView: View {
         UsageService.shared.usedToday >= UsageService.freeQuestionsPerDay ? "free_limit" : "manual_upgrade"
     }
 
+    // The free-limit treatment changes one decision variable: the headline shifts
+    // from an abstract benefit to continuing the study the reader just started.
+    // The offer, prices, trial, plan order, feature list, and CTA stay unchanged.
+    private var paywallCopyVersion: String {
+        paywallTrigger == "free_limit" ? "free_limit_continue_v1" : "manual_control_v1"
+    }
+
+    private var paywallHeadline: String {
+        paywallTrigger == "free_limit" ? "Continue Your Bible Study" : "Understand Scripture\nDeeply"
+    }
+
     // The plan the user is about to buy (annual is the default when nothing is tapped).
     private var selectedProduct: Product? {
         if selectedPlan == subscriptionService.monthlyProductID {
@@ -77,7 +88,7 @@ struct PaywallView: View {
                             .shadow(color: AppTheme.gold.opacity(0.3), radius: 10, y: 4)
                             .padding(.top, 40)
 
-                        Text("Understand Scripture\nDeeply")
+                        Text(paywallHeadline)
                             .font(.title.bold())
                             .foregroundColor(AppTheme.textPrimary)
                             .multilineTextAlignment(.center)
@@ -166,7 +177,7 @@ struct PaywallView: View {
                                     subtitle: annualSubtitle
                                 ) {
                                     selectedPlan = annual.id
-                                    AnalyticsService.shared.track(AnalyticsEvent.planSelected, ["product": annual.id, "billing_period": "annual", "trigger": paywallTrigger])
+                                    AnalyticsService.shared.track(AnalyticsEvent.planSelected, ["product": annual.id, "billing_period": "annual", "trigger": paywallTrigger, "copy_version": paywallCopyVersion])
                                     HapticService.selection()
                                 }
                             }
@@ -180,7 +191,7 @@ struct PaywallView: View {
                                     subtitle: "Billed monthly"
                                 ) {
                                     selectedPlan = monthly.id
-                                    AnalyticsService.shared.track(AnalyticsEvent.planSelected, ["product": monthly.id, "billing_period": "monthly", "trigger": paywallTrigger])
+                                    AnalyticsService.shared.track(AnalyticsEvent.planSelected, ["product": monthly.id, "billing_period": "monthly", "trigger": paywallTrigger, "copy_version": paywallCopyVersion])
                                     HapticService.selection()
                                 }
                             }
@@ -285,7 +296,7 @@ struct PaywallView: View {
             }
             .background(AppTheme.background)
             .onAppear {
-                AnalyticsService.shared.track(AnalyticsEvent.paywallView, ["source": "in_app", "trigger": paywallTrigger, "used": "\(UsageService.shared.usedToday)"])
+                AnalyticsService.shared.track(AnalyticsEvent.paywallView, ["source": "in_app", "trigger": paywallTrigger, "used": "\(UsageService.shared.usedToday)", "copy_version": paywallCopyVersion])
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -311,15 +322,15 @@ struct PaywallView: View {
         Task {
             isLoading = true
             errorMessage = nil
-            AnalyticsService.shared.track(AnalyticsEvent.trialStartTap, ["product": product.id, "source": "in_app", "trigger": paywallTrigger])
+            AnalyticsService.shared.track(AnalyticsEvent.trialStartTap, ["product": product.id, "source": "in_app", "trigger": paywallTrigger, "copy_version": paywallCopyVersion])
             do {
                 try await subscriptionService.purchase(product)
                 if subscriptionService.isPro {
-                    AnalyticsService.shared.track(AnalyticsEvent.purchaseSuccess, ["product": product.id, "source": "in_app", "trigger": paywallTrigger])
+                    AnalyticsService.shared.track(AnalyticsEvent.purchaseSuccess, ["product": product.id, "source": "in_app", "trigger": paywallTrigger, "copy_version": paywallCopyVersion])
                     dismiss()
                 }
             } catch {
-                AnalyticsService.shared.track(AnalyticsEvent.purchaseFailed, ["product": product.id, "error": String(describing: error).prefix(120).description])
+                AnalyticsService.shared.track(AnalyticsEvent.purchaseFailed, ["product": product.id, "source": "in_app", "trigger": paywallTrigger, "copy_version": paywallCopyVersion, "error": String(describing: error).prefix(120).description])
                 errorMessage = "Purchase failed. Please try again."
             }
             isLoading = false

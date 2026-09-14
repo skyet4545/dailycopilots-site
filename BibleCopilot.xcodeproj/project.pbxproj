@@ -33,6 +33,7 @@
 		4A724EA8B454E0295A0B7D9A /* StudyModeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DE4F18C93BDE5685A0D035 /* StudyModeTheme.swift */; };
 		542487F5DC45006B8B1DDD95 /* SignInWithAppleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9180BF1FC12F98B97EFE81C2 /* SignInWithAppleButton.swift */; };
 		55458F7B023174031692F3CD /* TikTokOpenShareSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 849093764282423C8DB2BD90 /* TikTokOpenShareSDK */; };
+		58492252E90D003DCFCFF61F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 91572C6786E606A26CCF5DC7 /* PrivacyInfo.xcprivacy */; };
 		5E998A1E36DE1939E6609AA7 /* SavedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B454B341D9CC542FCFEBAF3B /* SavedView.swift */; };
 		635BD0692AD9A7E1D51C8C94 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF0612395BA4D408286E1CD /* PaywallView.swift */; };
 		725EFE6EC5A41C290ED46FA5 /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE705240A2B05ACD112ACEE2 /* AnalyticsService.swift */; };
@@ -128,6 +129,7 @@
 		832B0E19208107CB4EFA5A8D /* BibleServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleServiceTests.swift; sourceTree = "<group>"; };
 		84085A086F51F6FB6803E846 /* PlansListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlansListView.swift; sourceTree = "<group>"; };
 		8A4438718821365AB5E0717D /* ProLockOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProLockOverlay.swift; sourceTree = "<group>"; };
+		91572C6786E606A26CCF5DC7 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		9180BF1FC12F98B97EFE81C2 /* SignInWithAppleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleButton.swift; sourceTree = "<group>"; };
 		922F5CBA6C43138FD54F4B39 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		92A596BDE81142912179F7A6 /* ReadingPlanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingPlanTests.swift; sourceTree = "<group>"; };
@@ -137,7 +139,6 @@
 		9EEC23180452E2D9A69718C5 /* DailyContentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyContentService.swift; sourceTree = "<group>"; };
 		A46BA6D8531BA6089988D4B5 /* SubscriptionServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionServiceTests.swift; sourceTree = "<group>"; };
 		A49BC56BD84C2A17A55E3E6E /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
-		A5EFFC0ABA31D57755B56311 /* Sentry.local.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Sentry.local.xcconfig; sourceTree = "<group>"; };
 		A9480CE00AC3834EE3E9396E /* JournalEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalEntry.swift; sourceTree = "<group>"; };
 		AE705240A2B05ACD112ACEE2 /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
 		AF983B9F10EAC837739D5F2F /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
@@ -278,6 +279,7 @@
 				04CA73846BF615DDE757AF9E /* Assets.xcassets */,
 				605D5B57063F29A812BB16EB /* BibleCopilot.entitlements */,
 				6AD3287D331AE696EB381A94 /* Configuration.storekit */,
+				91572C6786E606A26CCF5DC7 /* PrivacyInfo.xcprivacy */,
 				D8C961DBE67857287D35498A /* App */,
 				8AD1FD9E0D62A07A6E4E7096 /* Config */,
 				27B32ACB67C60009C10DA2BB /* Extensions */,
@@ -312,7 +314,6 @@
 		8AD1FD9E0D62A07A6E4E7096 /* Config */ = {
 			isa = PBXGroup;
 			children = (
-				A5EFFC0ABA31D57755B56311 /* Sentry.local.xcconfig */,
 				67F8C122B0DB1EC06DE4D671 /* Sentry.xcconfig */,
 			);
 			path = Config;
@@ -478,6 +479,7 @@
 				487F0F5BB365644C192FE6CB /* Assets.xcassets in Resources */,
 				0699AA62167C67136505D405 /* Assets.xcassets in Resources */,
 				0D1BF3C4639353D0FC54A48C /* Configuration.storekit in Resources */,
+				58492252E90D003DCFCFF61F /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -655,7 +657,7 @@
 				CODE_SIGN_ENTITLEMENTS = BibleCopilot/BibleCopilot.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 128;
+				CURRENT_PROJECT_VERSION = 130;
 				DEVELOPMENT_TEAM = 846N5D6TMK;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = BibleCopilot/Resources/Info.plist;
@@ -664,7 +666,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.4.2;
+				MARKETING_VERSION = 2.4.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.scripturecopilot.app;
 				PRODUCT_MODULE_NAME = BibleCopilot;
 				PRODUCT_NAME = "Bible Copilot";
@@ -765,7 +767,7 @@
 				CODE_SIGN_ENTITLEMENTS = BibleCopilot/BibleCopilot.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 128;
+				CURRENT_PROJECT_VERSION = 130;
 				DEVELOPMENT_TEAM = 846N5D6TMK;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = BibleCopilot/Resources/Info.plist;
@@ -774,7 +776,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.4.2;
+				MARKETING_VERSION = 2.4.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.scripturecopilot.app;
 				PRODUCT_MODULE_NAME = BibleCopilot;
 				PRODUCT_NAME = "Bible Copilot";

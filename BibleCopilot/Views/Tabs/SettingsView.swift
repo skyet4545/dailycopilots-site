@@ -8,6 +8,7 @@ struct SettingsView: View {
     @AppStorage("dailyReminderEnabled") private var reminderEnabled: Bool = false
     @AppStorage("reminderHour") private var reminderHour: Int = 8
     @AppStorage("reminderMinute") private var reminderMinute: Int = 0
+    @AppStorage(AnalyticsService.consentKey) private var analyticsConsentGranted = false
 
     let onShowPaywall: () -> Void
 
@@ -178,6 +179,24 @@ struct SettingsView: View {
                     }
                 } header: {
                     Text("Preferences")
+                }
+
+                Section {
+                    Toggle(isOn: $analyticsConsentGranted) {
+                        VStack(alignment: .leading, spacing: 3) {
+                            Text("Share Usage Analytics")
+                                .foregroundColor(AppTheme.textPrimary)
+                            Text("Share app interactions and purchase events to help improve Bible Copilot. Bible text, study questions, journal entries, your name, and your email are excluded.")
+                                .font(.caption)
+                                .foregroundColor(AppTheme.textMuted)
+                        }
+                    }
+                    .tint(AppTheme.accent)
+                    .onChange(of: analyticsConsentGranted) { _, enabled in
+                        AnalyticsService.shared.setEnabled(enabled)
+                    }
+                } header: {
+                    Text("Privacy")
                 }
 
                 // Legal (required by App Store 3.1.2)
