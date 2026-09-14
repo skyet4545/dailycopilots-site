@@ -969,7 +969,7 @@ struct OnboardingView: View {
                         .foregroundColor(AppTheme.textPrimary)
                         .multilineTextAlignment(.center)
 
-                    Text("People who study Scripture daily remember 3× more. Get a gentle reminder so you never miss a day.")
+                    Text("Choose a gentle reminder time that helps you return to Scripture each day.")
                         .font(.body)
                         .foregroundColor(AppTheme.textMuted)
                         .multilineTextAlignment(.center)

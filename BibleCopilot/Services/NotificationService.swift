@@ -2,6 +2,11 @@ import Foundation
 import UserNotifications
 
 final class NotificationService {
+    struct DailyReminderTime: Equatable {
+        let hour: Int
+        let minute: Int
+    }
+
     static let shared = NotificationService()
     static let studyReminderOpenedNotification = Notification.Name("BibleCopilotStudyReminderOpened")
     private static let referenceKey = "study_reference"
@@ -68,13 +73,18 @@ final class NotificationService {
         center.removePendingNotificationRequests(withIdentifiers: ["daily_reminder"])
 
         let defaults = UserDefaults.standard
+        let reminderTime = normalizedDailyReminderTime(hour: hour, minute: minute)
+        // Persist even when the person accepts the UI's untouched default.
+        // @AppStorage can display a default without materializing its key.
+        defaults.set(reminderTime.hour, forKey: "reminderHour")
+        defaults.set(reminderTime.minute, forKey: "reminderMinute")
         let reference = defaults.string(forKey: Self.referenceKey)
         let mode = defaults.string(forKey: Self.modeKey).flatMap(StudyMode.init(rawValue:))
         let content = makeDailyReminderContent(reference: reference, mode: mode)
 
         var dateComponents = DateComponents()
-        dateComponents.hour = hour
-        dateComponents.minute = minute
+        dateComponents.hour = reminderTime.hour
+        dateComponents.minute = reminderTime.minute
 
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
         let request = UNNotificationRequest(identifier: "daily_reminder", content: content, trigger: trigger)
@@ -87,10 +97,29 @@ final class NotificationService {
         guard defaults.bool(forKey: "dailyReminderEnabled") else { return }
         defaults.set(reference, forKey: Self.referenceKey)
         defaults.set(mode.rawValue, forKey: Self.modeKey)
+        let reminderTime = resolvedDailyReminderTime(defaults: defaults)
         scheduleDailyReminder(
+            hour: reminderTime.hour,
+            minute: reminderTime.minute
+        )
+    }
+
+    func resolvedDailyReminderTime(defaults: UserDefaults = .standard) -> DailyReminderTime {
+        guard defaults.object(forKey: "reminderHour") != nil,
+              defaults.object(forKey: "reminderMinute") != nil else {
+            return DailyReminderTime(hour: 8, minute: 0)
+        }
+        return normalizedDailyReminderTime(
             hour: defaults.integer(forKey: "reminderHour"),
             minute: defaults.integer(forKey: "reminderMinute")
         )
+    }
+
+    private func normalizedDailyReminderTime(hour: Int, minute: Int) -> DailyReminderTime {
+        guard (0...23).contains(hour), (0...59).contains(minute) else {
+            return DailyReminderTime(hour: 8, minute: 0)
+        }
+        return DailyReminderTime(hour: hour, minute: minute)
     }
 
     func makeDailyReminderContent(reference: String?, mode: StudyMode?) -> UNMutableNotificationContent {
@@ -109,12 +138,15 @@ final class NotificationService {
         return content
     }
 
-    func recordPendingStudyResume(userInfo: [AnyHashable: Any]) {
+    func recordPendingStudyResume(
+        userInfo: [AnyHashable: Any],
+        notificationCenter: NotificationCenter = .default
+    ) {
         guard let request = StudyResumeRequest(userInfo: userInfo) else { return }
         let defaults = UserDefaults.standard
         defaults.set(request.reference, forKey: Self.pendingReferenceKey)
         if let mode = request.mode { defaults.set(mode.rawValue, forKey: Self.pendingModeKey) }
-        NotificationCenter.default.post(name: Self.studyReminderOpenedNotification, object: nil)
+        notificationCenter.post(name: Self.studyReminderOpenedNotification, object: nil)
     }
 
     func consumePendingStudyResume() -> StudyResumeRequest? {

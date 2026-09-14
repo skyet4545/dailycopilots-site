@@ -10,6 +10,43 @@ final class StudyResumeReminderTests: XCTestCase {
         super.tearDown()
     }
 
+    func testMissingStoredTimeUsesVisibleEightAMDefault() {
+        let suiteName = "StudyResumeReminderTests.missing-time"
+        let defaults = UserDefaults(suiteName: suiteName)!
+        defaults.removePersistentDomain(forName: suiteName)
+
+        let time = NotificationService.shared.resolvedDailyReminderTime(defaults: defaults)
+
+        XCTAssertEqual(time, NotificationService.DailyReminderTime(hour: 8, minute: 0))
+        defaults.removePersistentDomain(forName: suiteName)
+    }
+
+    func testExplicitMidnightReminderIsPreserved() {
+        let suiteName = "StudyResumeReminderTests.midnight"
+        let defaults = UserDefaults(suiteName: suiteName)!
+        defaults.removePersistentDomain(forName: suiteName)
+        defaults.set(0, forKey: "reminderHour")
+        defaults.set(0, forKey: "reminderMinute")
+
+        let time = NotificationService.shared.resolvedDailyReminderTime(defaults: defaults)
+
+        XCTAssertEqual(time, NotificationService.DailyReminderTime(hour: 0, minute: 0))
+        defaults.removePersistentDomain(forName: suiteName)
+    }
+
+    func testInvalidStoredTimeFailsBackToEightAM() {
+        let suiteName = "StudyResumeReminderTests.invalid-time"
+        let defaults = UserDefaults(suiteName: suiteName)!
+        defaults.removePersistentDomain(forName: suiteName)
+        defaults.set(27, forKey: "reminderHour")
+        defaults.set(90, forKey: "reminderMinute")
+
+        let time = NotificationService.shared.resolvedDailyReminderTime(defaults: defaults)
+
+        XCTAssertEqual(time, NotificationService.DailyReminderTime(hour: 8, minute: 0))
+        defaults.removePersistentDomain(forName: suiteName)
+    }
+
     func testContextualContentCarriesPassageAndMode() {
         let content = NotificationService.shared.makeDailyReminderContent(
             reference: "Romans 8:28",
@@ -40,10 +77,13 @@ final class StudyResumeReminderTests: XCTestCase {
     }
 
     func testPendingResumeIsConsumedExactlyOnce() {
-        NotificationService.shared.recordPendingStudyResume(userInfo: [
-            "study_reference": "Psalm 23:1",
-            "study_mode": "apply"
-        ])
+        NotificationService.shared.recordPendingStudyResume(
+            userInfo: [
+                "study_reference": "Psalm 23:1",
+                "study_mode": "apply"
+            ],
+            notificationCenter: NotificationCenter()
+        )
 
         XCTAssertEqual(
             NotificationService.shared.consumePendingStudyResume(),
