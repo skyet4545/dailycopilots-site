@@ -5,24 +5,46 @@ final class ReviewService {
 
     private let studyCountKey = "review_studyCount"
     private let lastPromptMilestoneKey = "review_lastPromptMilestone"
+    private let defaults: UserDefaults
+    private let requestReviewAction: () -> Void
+    private let trackPromptRequest: (Int) -> Void
 
-    func recordStudyAndPromptIfReady() {
-        let count = UserDefaults.standard.integer(forKey: studyCountKey) + 1
-        UserDefaults.standard.set(count, forKey: studyCountKey)
+    init(
+        defaults: UserDefaults = .standard,
+        requestReviewAction: (() -> Void)? = nil,
+        trackPromptRequest: ((Int) -> Void)? = nil
+    ) {
+        self.defaults = defaults
+        self.requestReviewAction = requestReviewAction ?? Self.requestReviewInActiveScene
+        self.trackPromptRequest = trackPromptRequest ?? { milestone in
+            AnalyticsService.shared.track(
+                AnalyticsEvent.reviewPromptRequested,
+                ["study_milestone": "\(milestone)"]
+            )
+        }
+    }
 
-        let lastMilestone = UserDefaults.standard.integer(forKey: lastPromptMilestoneKey)
+    @discardableResult
+    func recordStudyAndPromptIfReady() -> Int? {
+        let count = defaults.integer(forKey: studyCountKey) + 1
+        defaults.set(count, forKey: studyCountKey)
+
+        let lastMilestone = defaults.integer(forKey: lastPromptMilestoneKey)
 
         // Prompt at 3, 10, and 30 studies (each only once).
         // 3 is reachable on day one within the free tier's 3 questions/day —
         // right after the third successful answer, the strongest aha moment.
         let milestones = [3, 10, 30]
         if milestones.contains(count) && count > lastMilestone {
-            requestReview()
-            UserDefaults.standard.set(count, forKey: lastPromptMilestoneKey)
+            trackPromptRequest(count)
+            requestReviewAction()
+            defaults.set(count, forKey: lastPromptMilestoneKey)
+            return count
         }
+        return nil
     }
 
-    private func requestReview() {
+    private static func requestReviewInActiveScene() {
         Task { @MainActor in
             if let scene = UIApplication.shared.connectedScenes
                 .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {

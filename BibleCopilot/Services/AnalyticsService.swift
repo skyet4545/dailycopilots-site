@@ -103,6 +103,7 @@ enum AnalyticsEvent {
     static let planOpened = "plan_opened"
     static let verseShared = "verse_shared"
     static let shareComposerOpened = "share_composer_opened"
+    static let reviewPromptRequested = "review_prompt_requested"
     static let tiktokShareStarted = "tiktok_share_started"
     static let tiktokShareSucceeded = "tiktok_share_succeeded"
     static let tiktokShareFailed = "tiktok_share_failed"
