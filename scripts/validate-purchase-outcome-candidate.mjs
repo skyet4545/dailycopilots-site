@@ -37,6 +37,8 @@ check(paywall.includes("recordedPlanLoadFailure"), "plan-load failure is dedupli
 check(onboarding.includes("PaywallView.visibleTrialLength"), "onboarding reuses the tested eligibility boundary");
 check(onboarding.includes("Unlock Bible Copilot Pro") && onboarding.includes("Subscribe Annually"), "ineligible onboarding avoids a free-trial promise");
 check(settings.includes("No active Bible Copilot Pro purchase was found"), "settings reports no restored entitlement");
+check((paywall.match(/purchase_attempt_id/g) || []).length >= 1 && onboarding.includes("purchase_attempt_id"), "purchase tap and outcomes carry an anonymous attempt join key");
+check(paywall.includes("restore_attempt_id") && settings.includes("restore_attempt_id"), "restore outcomes carry an anonymous attempt join key");
 check(review.includes("do not establish an active paid subscription"), "review preserves the commercial evidence boundary");
 
 const parent = "9bf3b9acf492175d65e4045fd94d0bed1ea63a63";

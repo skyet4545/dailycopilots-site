@@ -1487,7 +1487,7 @@ struct OnboardingView: View {
             errorMessage = nil
             purchaseStatusMessage = nil
             let eligibleTrial = onboardingVisibleTrialLength(for: product) != nil
-            let properties = ["product": product.id, "source": "onboarding", "trial_eligibility": onboardingEligibilityState(for: product), "offer_type": eligibleTrial ? "free_trial" : "subscription"]
+            let properties = ["product": product.id, "source": "onboarding", "trial_eligibility": onboardingEligibilityState(for: product), "offer_type": eligibleTrial ? "free_trial" : "subscription", "purchase_attempt_id": UUID().uuidString]
             AnalyticsService.shared.track(AnalyticsEvent.trialStartTap, properties)
             do {
                 let outcome = try await subscriptionService.purchase(product)
@@ -1507,7 +1507,7 @@ struct OnboardingView: View {
                     errorMessage = "Apple did not complete the purchase. Please try again."
                 }
             } catch {
-                AnalyticsService.shared.track(AnalyticsEvent.purchaseFailed, ["product": product.id, "error": String(describing: error).prefix(120).description])
+                AnalyticsService.shared.track(AnalyticsEvent.purchaseFailed, properties.merging(["error": String(describing: error).prefix(120).description]) { current, _ in current })
                 errorMessage = "Something went wrong. Try again."
             }
             isLoading = false

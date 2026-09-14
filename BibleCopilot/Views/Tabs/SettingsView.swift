@@ -286,16 +286,17 @@ struct SettingsView: View {
 
                     Button {
                         Task {
+                            let restoreProperties = ["source": "settings", "restore_attempt_id": UUID().uuidString]
                             do {
                                 if try await subscriptionService.restore() {
-                                    AnalyticsService.shared.track(AnalyticsEvent.restoreSucceeded, ["source": "settings"])
+                                    AnalyticsService.shared.track(AnalyticsEvent.restoreSucceeded, restoreProperties)
                                     restoreAlertMessage = "Bible Copilot Pro has been restored."
                                 } else {
-                                    AnalyticsService.shared.track(AnalyticsEvent.restoreNoEntitlement, ["source": "settings"])
+                                    AnalyticsService.shared.track(AnalyticsEvent.restoreNoEntitlement, restoreProperties)
                                     restoreAlertMessage = "No active Bible Copilot Pro purchase was found for this Apple ID."
                                 }
                             } catch {
-                                AnalyticsService.shared.track(AnalyticsEvent.restoreFailed, ["source": "settings", "error": String(describing: error).prefix(120).description])
+                                AnalyticsService.shared.track(AnalyticsEvent.restoreFailed, restoreProperties.merging(["error": String(describing: error).prefix(120).description]) { current, _ in current })
                                 restoreAlertMessage = "Apple could not restore purchases. Check your connection and try again."
                             }
                             showingRestoreAlert = true

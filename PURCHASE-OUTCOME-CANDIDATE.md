@@ -29,6 +29,8 @@ The existing analytics-consent gate applies to all new events:
 
 The purchase events retain product, source, paywall trigger, copy version, trial eligibility, and offer type where the paywall already knows them. No transaction identifier, receipt, Apple account, price, exact time-to-renewal, or customer content is added.
 
+Each tap and terminal purchase event shares a random `purchase_attempt_id`; each restore result has a random `restore_attempt_id`. These identifiers exist only to join one attempt to its result. They are not StoreKit transaction IDs and do not identify the Apple account or customer.
+
 ## Decision boundary
 
 These events diagnose the paywall and Apple purchase flow. They do not establish an active paid subscription, renewal, proceeds, or causal revenue lift. Apple active-paid state and currency-specific proceeds remain the commercial authority.

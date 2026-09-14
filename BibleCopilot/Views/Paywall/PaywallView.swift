@@ -297,17 +297,18 @@ struct PaywallView: View {
                         Task {
                             isLoading = true
                             defer { isLoading = false }
+                            let restoreProperties = ["source": "paywall", "restore_attempt_id": UUID().uuidString]
                             do {
                                 if try await subscriptionService.restore() {
                                     completedPurchase = true
-                                    AnalyticsService.shared.track(AnalyticsEvent.restoreSucceeded, ["source": "paywall"])
+                                    AnalyticsService.shared.track(AnalyticsEvent.restoreSucceeded, restoreProperties)
                                     dismiss()
                                 } else {
-                                    AnalyticsService.shared.track(AnalyticsEvent.restoreNoEntitlement, ["source": "paywall"])
+                                    AnalyticsService.shared.track(AnalyticsEvent.restoreNoEntitlement, restoreProperties)
                                     statusMessage = "No active Bible Copilot Pro purchase was found for this Apple ID."
                                 }
                             } catch {
-                                AnalyticsService.shared.track(AnalyticsEvent.restoreFailed, ["source": "paywall", "error": String(describing: error).prefix(120).description])
+                                AnalyticsService.shared.track(AnalyticsEvent.restoreFailed, restoreProperties.merging(["error": String(describing: error).prefix(120).description]) { current, _ in current })
                                 errorMessage = "Apple could not restore purchases. Check your connection and try again."
                             }
                         }
@@ -392,10 +393,10 @@ struct PaywallView: View {
             errorMessage = nil
             statusMessage = nil
             let eligibleTrial = visibleTrialLength(for: product) != nil
-            AnalyticsService.shared.track(AnalyticsEvent.trialStartTap, ["product": product.id, "source": "in_app", "trigger": paywallTrigger, "copy_version": paywallCopyVersion, "trial_eligibility": eligibilityState(for: product), "offer_type": eligibleTrial ? "free_trial" : "subscription"])
+            let properties = ["product": product.id, "source": "in_app", "trigger": paywallTrigger, "copy_version": paywallCopyVersion, "trial_eligibility": eligibilityState(for: product), "offer_type": eligibleTrial ? "free_trial" : "subscription", "purchase_attempt_id": UUID().uuidString]
+            AnalyticsService.shared.track(AnalyticsEvent.trialStartTap, properties)
             do {
                 let outcome = try await subscriptionService.purchase(product)
-                let properties = ["product": product.id, "source": "in_app", "trigger": paywallTrigger, "copy_version": paywallCopyVersion, "trial_eligibility": eligibilityState(for: product), "offer_type": eligibleTrial ? "free_trial" : "subscription"]
                 switch outcome {
                 case .purchased:
                     completedPurchase = true
@@ -411,7 +412,7 @@ struct PaywallView: View {
                     errorMessage = "Apple did not complete the purchase. Please try again."
                 }
             } catch {
-                AnalyticsService.shared.track(AnalyticsEvent.purchaseFailed, ["product": product.id, "source": "in_app", "trigger": paywallTrigger, "copy_version": paywallCopyVersion, "error": String(describing: error).prefix(120).description])
+                AnalyticsService.shared.track(AnalyticsEvent.purchaseFailed, properties.merging(["error": String(describing: error).prefix(120).description]) { current, _ in current })
                 errorMessage = "Purchase failed. Please try again."
             }
             isLoading = false
