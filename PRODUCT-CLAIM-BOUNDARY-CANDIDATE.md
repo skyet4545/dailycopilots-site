@@ -18,6 +18,6 @@ The current product source and every prepared release branch repeated absolute o
 
 ## Release position
 
-This branch is based on the truthful StoreKit eligibility candidate at `5ab049b1fac004db3eb0fbd1c74d5347c650d7f8`. It is a local copy and test candidate. It does not include the separate account-deletion branch at `d9d30d02f51e3790762c5e22a61d5b144664e590`, so it must be reconciled into the approved release train before any archive or submission decision.
+This copy repair is integrated into the isolated Bible Copilot 2.4.5/131 growth candidate. The branch contains the complete 2.4.4 trust candidate foundation, contextual study-resume reminders, per-customer StoreKit trial-eligibility presentation, and these bounded product claims.
 
 No app was built for distribution, uploaded, submitted, released, or shown to customers by this work.
