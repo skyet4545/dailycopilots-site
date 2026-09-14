@@ -9,6 +9,8 @@ struct SettingsView: View {
     @AppStorage("reminderHour") private var reminderHour: Int = 8
     @AppStorage("reminderMinute") private var reminderMinute: Int = 0
     @AppStorage(AnalyticsService.consentKey) private var analyticsConsentGranted = false
+    @State private var restoreAlertMessage = ""
+    @State private var showingRestoreAlert = false
 
     let onShowPaywall: () -> Void
 
@@ -283,7 +285,21 @@ struct SettingsView: View {
                     }
 
                     Button {
-                        Task { await subscriptionService.restore() }
+                        Task {
+                            do {
+                                if try await subscriptionService.restore() {
+                                    AnalyticsService.shared.track(AnalyticsEvent.restoreSucceeded, ["source": "settings"])
+                                    restoreAlertMessage = "Bible Copilot Pro has been restored."
+                                } else {
+                                    AnalyticsService.shared.track(AnalyticsEvent.restoreNoEntitlement, ["source": "settings"])
+                                    restoreAlertMessage = "No active Bible Copilot Pro purchase was found for this Apple ID."
+                                }
+                            } catch {
+                                AnalyticsService.shared.track(AnalyticsEvent.restoreFailed, ["source": "settings", "error": String(describing: error).prefix(120).description])
+                                restoreAlertMessage = "Apple could not restore purchases. Check your connection and try again."
+                            }
+                            showingRestoreAlert = true
+                        }
                     } label: {
                         Text("Restore Purchases")
                             .foregroundColor(AppTheme.accent)
@@ -296,6 +312,11 @@ struct SettingsView: View {
             .background(AppTheme.background)
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.large)
+            .alert("Restore Purchases", isPresented: $showingRestoreAlert) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(restoreAlertMessage)
+            }
         }
     }
 }

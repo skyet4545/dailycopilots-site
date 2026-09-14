@@ -7,7 +7,11 @@ struct PaywallView: View {
     @State private var selectedPlan: String = ""
     @State private var isLoading = false
     @State private var errorMessage: String?
+    @State private var statusMessage: String?
     @State private var introOfferEligibility: [String: Bool] = [:]
+    @State private var completedPurchase = false
+    @State private var recordedDismissal = false
+    @State private var recordedPlanLoadFailure = false
 
     private var paywallTrigger: String {
         UsageService.shared.usedToday >= UsageService.freeQuestionsPerDay ? "free_limit" : "manual_upgrade"
@@ -264,6 +268,14 @@ struct PaywallView: View {
                             .foregroundColor(AppTheme.error)
                     }
 
+                    if let status = statusMessage {
+                        Text(status)
+                            .font(.caption)
+                            .foregroundColor(AppTheme.textMuted)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, 24)
+                    }
+
                     // Sign in prompt (if not signed in)
                     if !AuthService.shared.isSignedIn {
                         VStack(spacing: 8) {
@@ -284,9 +296,20 @@ struct PaywallView: View {
                     Button("Restore Purchases") {
                         Task {
                             isLoading = true
-                            await subscriptionService.restore()
-                            isLoading = false
-                            if subscriptionService.isPro { dismiss() }
+                            defer { isLoading = false }
+                            do {
+                                if try await subscriptionService.restore() {
+                                    completedPurchase = true
+                                    AnalyticsService.shared.track(AnalyticsEvent.restoreSucceeded, ["source": "paywall"])
+                                    dismiss()
+                                } else {
+                                    AnalyticsService.shared.track(AnalyticsEvent.restoreNoEntitlement, ["source": "paywall"])
+                                    statusMessage = "No active Bible Copilot Pro purchase was found for this Apple ID."
+                                }
+                            } catch {
+                                AnalyticsService.shared.track(AnalyticsEvent.restoreFailed, ["source": "paywall", "error": String(describing: error).prefix(120).description])
+                                errorMessage = "Apple could not restore purchases. Check your connection and try again."
+                            }
                         }
                     }
                     .font(.footnote)
@@ -327,13 +350,25 @@ struct PaywallView: View {
             .background(AppTheme.background)
             .onAppear {
                 AnalyticsService.shared.track(AnalyticsEvent.paywallView, ["source": "in_app", "trigger": paywallTrigger, "used": "\(UsageService.shared.usedToday)", "copy_version": paywallCopyVersion, "trial_eligibility": eligibilityState(for: selectedProduct)])
+                recordPlanLoadFailureIfNeeded()
             }
             .task(id: subscriptionProductIDs) {
                 await refreshIntroOfferEligibility()
             }
+            .onChange(of: subscriptionService.loadError) { _, newValue in
+                guard newValue != nil else { return }
+                recordPlanLoadFailureIfNeeded()
+            }
+            .onDisappear {
+                guard !completedPurchase else { return }
+                recordDismissal(reason: "sheet_closed")
+            }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button { dismiss() } label: {
+                    Button {
+                        recordDismissal(reason: "close_button")
+                        dismiss()
+                    } label: {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundColor(AppTheme.textMuted)
                     }
@@ -355,13 +390,25 @@ struct PaywallView: View {
         Task {
             isLoading = true
             errorMessage = nil
+            statusMessage = nil
             let eligibleTrial = visibleTrialLength(for: product) != nil
             AnalyticsService.shared.track(AnalyticsEvent.trialStartTap, ["product": product.id, "source": "in_app", "trigger": paywallTrigger, "copy_version": paywallCopyVersion, "trial_eligibility": eligibilityState(for: product), "offer_type": eligibleTrial ? "free_trial" : "subscription"])
             do {
-                try await subscriptionService.purchase(product)
-                if subscriptionService.isPro {
-                    AnalyticsService.shared.track(AnalyticsEvent.purchaseSuccess, ["product": product.id, "source": "in_app", "trigger": paywallTrigger, "copy_version": paywallCopyVersion])
+                let outcome = try await subscriptionService.purchase(product)
+                let properties = ["product": product.id, "source": "in_app", "trigger": paywallTrigger, "copy_version": paywallCopyVersion, "trial_eligibility": eligibilityState(for: product), "offer_type": eligibleTrial ? "free_trial" : "subscription"]
+                switch outcome {
+                case .purchased:
+                    completedPurchase = true
+                    AnalyticsService.shared.track(AnalyticsEvent.purchaseSuccess, properties)
                     dismiss()
+                case .cancelled:
+                    AnalyticsService.shared.track(AnalyticsEvent.purchaseCancelled, properties)
+                case .pending:
+                    AnalyticsService.shared.track(AnalyticsEvent.purchasePending, properties)
+                    statusMessage = "Your purchase is pending Apple approval. Pro will unlock automatically when it completes."
+                case .unknown:
+                    AnalyticsService.shared.track(AnalyticsEvent.purchaseUnknown, properties)
+                    errorMessage = "Apple did not complete the purchase. Please try again."
                 }
             } catch {
                 AnalyticsService.shared.track(AnalyticsEvent.purchaseFailed, ["product": product.id, "source": "in_app", "trigger": paywallTrigger, "copy_version": paywallCopyVersion, "error": String(describing: error).prefix(120).description])
@@ -369,6 +416,18 @@ struct PaywallView: View {
             }
             isLoading = false
         }
+    }
+
+    private func recordDismissal(reason: String) {
+        guard !recordedDismissal else { return }
+        recordedDismissal = true
+        AnalyticsService.shared.track(AnalyticsEvent.paywallDismissed, ["source": "in_app", "trigger": paywallTrigger, "copy_version": paywallCopyVersion, "reason": reason])
+    }
+
+    private func recordPlanLoadFailureIfNeeded() {
+        guard subscriptionService.loadError != nil, !recordedPlanLoadFailure else { return }
+        recordedPlanLoadFailure = true
+        AnalyticsService.shared.track(AnalyticsEvent.paywallPlansLoadFailed, ["source": "in_app", "trigger": paywallTrigger, "copy_version": paywallCopyVersion])
     }
 
     @MainActor

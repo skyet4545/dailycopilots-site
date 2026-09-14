@@ -96,7 +96,7 @@ final class SubscriptionService {
     // MARK: - Purchase
 
     @MainActor
-    func purchase(_ product: Product) async throws {
+    func purchase(_ product: Product) async throws -> PurchaseOutcome {
         isLoading = true
         defer { isLoading = false }
 
@@ -106,23 +106,25 @@ final class SubscriptionService {
             let transaction = try checkVerified(verification)
             await transaction.finish()
             isPro = true
+            return .purchased
         case .userCancelled:
-            break
+            return .cancelled
         case .pending:
-            break
+            return .pending
         @unknown default:
-            break
+            return .unknown
         }
     }
 
     // MARK: - Restore
 
     @MainActor
-    func restore() async {
+    func restore() async throws -> Bool {
         isLoading = true
         defer { isLoading = false }
-        try? await AppStore.sync()
+        try await AppStore.sync()
         await checkSubscriptionStatus()
+        return isPro
     }
 
     // MARK: - Status
@@ -213,6 +215,13 @@ struct EntitlementObservation: Equatable {
     }
 
     var fingerprint: String { "\(state)|\(plan)" }
+}
+
+enum PurchaseOutcome: Equatable {
+    case purchased
+    case cancelled
+    case pending
+    case unknown
 }
 
 enum SubscriptionError: LocalizedError {
