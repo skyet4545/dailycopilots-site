@@ -765,14 +765,14 @@ struct OnboardingView: View {
 
                 VStack(alignment: .leading, spacing: 16) {
                     socialProofRow(icon: "graduationcap.fill",
-                                   title: "Seminary-grade method",
-                                   detail: "The same inductive framework taught in seminaries: Observe, Interpret, Theology, Apply, Apologetics.")
+                                   title: "A structured study method",
+                                   detail: "Use Summary, Observe, Interpret, Theology, Apply, and Apologetics to examine a passage from different angles.")
                     socialProofRow(icon: "quote.opening",
-                                   title: "Every answer cites Scripture",
-                                   detail: "Verse-anchored responses with cross-references — never vague spiritual advice.")
+                                   title: "References you can check",
+                                   detail: "Open cited passages and compare the response with Scripture in context.")
                     socialProofRow(icon: "person.2.fill",
-                                   title: "Denominationally humble",
-                                   detail: "On contested doctrine, you get the major views fairly presented — not one tradition's spin.")
+                                   title: "Compare interpretations",
+                                   detail: "Theology mode aims to identify major Christian views. Review important conclusions with Scripture and trusted teachers.")
                 }
                 .padding(.horizontal, 28)
             }
