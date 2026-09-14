@@ -20,10 +20,17 @@ final class AnalyticsService {
         UserDefaults.standard.bool(forKey: Self.consentKey)
     }
 
-    func setEnabled(_ enabled: Bool) {
+    func setEnabled(_ enabled: Bool, context: String? = nil) {
+        let wasEnabled = isEnabled
         UserDefaults.standard.set(enabled, forKey: Self.consentKey)
         if !enabled {
             UserDefaults.standard.removeObject(forKey: "analyticsDeviceId")
+        } else if !wasEnabled, let context {
+            // App launch happened before consent, so establish the consenting device's
+            // cohort entry now. Without this backfill, new consenting users would never
+            // enter the activation, paywall, and retention funnel.
+            track(AnalyticsEvent.appOpen, ["context": "analytics_enabled", "consent_context": context])
+            track(AnalyticsEvent.analyticsConsent, ["context": context])
         }
     }
 

@@ -193,7 +193,7 @@ struct SettingsView: View {
                     }
                     .tint(AppTheme.accent)
                     .onChange(of: analyticsConsentGranted) { _, enabled in
-                        AnalyticsService.shared.setEnabled(enabled)
+                        AnalyticsService.shared.setEnabled(enabled, context: "settings")
                     }
                 } header: {
                     Text("Privacy")

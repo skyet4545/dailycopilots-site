@@ -478,10 +478,7 @@ struct OnboardingView: View {
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .padding(.horizontal, 24)
             .onChange(of: analyticsConsentGranted) { _, enabled in
-                AnalyticsService.shared.setEnabled(enabled)
-                if enabled {
-                    AnalyticsService.shared.track(AnalyticsEvent.analyticsConsent, ["context": "onboarding_attribution"])
-                }
+                AnalyticsService.shared.setEnabled(enabled, context: "onboarding_attribution")
             }
 
             // Last step: saving the answer completes onboarding straight into the app.
