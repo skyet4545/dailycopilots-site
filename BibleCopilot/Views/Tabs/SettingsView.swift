@@ -287,6 +287,7 @@ struct SettingsView: View {
                     Button {
                         Task {
                             let restoreProperties = ["source": "settings", "restore_attempt_id": UUID().uuidString]
+                            AnalyticsService.shared.track(AnalyticsEvent.restoreStarted, restoreProperties)
                             do {
                                 if try await subscriptionService.restore() {
                                     AnalyticsService.shared.track(AnalyticsEvent.restoreSucceeded, restoreProperties)

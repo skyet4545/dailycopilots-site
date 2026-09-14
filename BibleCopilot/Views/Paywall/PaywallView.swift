@@ -298,6 +298,7 @@ struct PaywallView: View {
                             isLoading = true
                             defer { isLoading = false }
                             let restoreProperties = ["source": "paywall", "restore_attempt_id": UUID().uuidString]
+                            AnalyticsService.shared.track(AnalyticsEvent.restoreStarted, restoreProperties)
                             do {
                                 if try await subscriptionService.restore() {
                                     completedPurchase = true

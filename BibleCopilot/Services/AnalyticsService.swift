@@ -95,6 +95,7 @@ enum AnalyticsEvent {
     static let purchaseFailed = "purchase_failed"
     static let paywallDismissed = "paywall_dismissed"
     static let paywallPlansLoadFailed = "paywall_plans_load_failed"
+    static let restoreStarted = "restore_started"
     static let restoreSucceeded = "restore_succeeded"
     static let restoreNoEntitlement = "restore_no_entitlement"
     static let restoreFailed = "restore_failed"

@@ -28,7 +28,7 @@ for (const value of ["purchased", "cancelled", "pending", "unknown"]) {
   check(service.includes(`case ${value}`), `purchase outcome ${value} exists`);
 }
 check(service.includes("func restore() async throws -> Bool"), "restore propagates App Store errors and reports entitlement state");
-for (const event of ["purchase_cancelled", "purchase_pending", "purchase_unknown", "paywall_dismissed", "paywall_plans_load_failed", "restore_succeeded", "restore_no_entitlement", "restore_failed"]) {
+for (const event of ["purchase_cancelled", "purchase_pending", "purchase_unknown", "paywall_dismissed", "paywall_plans_load_failed", "restore_started", "restore_succeeded", "restore_no_entitlement", "restore_failed"]) {
   check(analytics.includes(`= \"${event}\"`), `analytics event ${event} exists`);
 }
 check(paywall.includes("case .pending:") && paywall.includes("pending Apple approval"), "paywall explains pending Apple approval");
@@ -39,6 +39,7 @@ check(onboarding.includes("Unlock Bible Copilot Pro") && onboarding.includes("Su
 check(settings.includes("No active Bible Copilot Pro purchase was found"), "settings reports no restored entitlement");
 check((paywall.match(/purchase_attempt_id/g) || []).length >= 1 && onboarding.includes("purchase_attempt_id"), "purchase tap and outcomes carry an anonymous attempt join key");
 check(paywall.includes("restore_attempt_id") && settings.includes("restore_attempt_id"), "restore outcomes carry an anonymous attempt join key");
+check(paywall.includes("AnalyticsEvent.restoreStarted") && settings.includes("AnalyticsEvent.restoreStarted"), "restore attempts record a joinable start denominator");
 check(review.includes("do not establish an active paid subscription"), "review preserves the commercial evidence boundary");
 
 const parent = "9bf3b9acf492175d65e4045fd94d0bed1ea63a63";

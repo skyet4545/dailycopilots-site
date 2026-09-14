@@ -23,6 +23,7 @@ The existing analytics-consent gate applies to all new events:
 - `purchase_unknown`
 - `paywall_dismissed`
 - `paywall_plans_load_failed`
+- `restore_started`
 - `restore_succeeded`
 - `restore_no_entitlement`
 - `restore_failed`
