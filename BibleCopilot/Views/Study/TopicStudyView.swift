@@ -7,6 +7,7 @@ struct TopicStudyView: View {
     @State private var isLoading = true
     @State private var error: String?
     @State private var crossReferences: [String] = []
+    @State private var referenceVerificationNote: String?
     @State private var showCopied = false
     @State private var showReminderPrompt = false
     var onStudyVerse: (String) -> Void
@@ -78,12 +79,19 @@ struct TopicStudyView: View {
                             .padding(.horizontal)
 
                         // Tappable cross-references
-                        if !crossReferences.isEmpty {
+                        if !crossReferences.isEmpty || referenceVerificationNote != nil {
                             VStack(alignment: .leading, spacing: 8) {
-                                Text("STUDY THESE PASSAGES")
+                                Text(crossReferences.isEmpty ? "REFERENCE CHECK" : "STUDY THESE PASSAGES")
                                     .font(.caption.bold())
                                     .foregroundColor(AppTheme.textMuted)
                                     .tracking(1.2)
+
+                                if let referenceVerificationNote {
+                                    Label(referenceVerificationNote, systemImage: "checkmark.shield")
+                                        .font(.caption2)
+                                        .foregroundColor(AppTheme.textMuted)
+                                        .fixedSize(horizontal: false, vertical: true)
+                                }
 
                                 FlowLayout(spacing: 8) {
                                     ForEach(crossReferences, id: \.self) { ref in
@@ -142,13 +150,16 @@ struct TopicStudyView: View {
             for try await chunk in stream {
                 response += chunk
             }
-            crossReferences = CrossReferenceParser.extractReferences(from: response, limit: 8)
             let completedFirstQuestion = usageService.recordQuestion()
             if completedFirstQuestion {
                 showReminderPrompt = NotificationService.shared.shouldOfferDailyReminderAfterFirstStudy()
             }
             ReviewService.shared.recordStudyAndPromptIfReady()
             HapticService.success()
+            let extractedReferences = CrossReferenceParser.extractReferences(from: response, limit: 8)
+            let verification = await BibleService.shared.verifyReferences(extractedReferences)
+            crossReferences = verification.displayedReferences
+            referenceVerificationNote = verification.note
         } catch {
             self.error = "Unable to search Scripture for this topic. Check your internet connection."
         }

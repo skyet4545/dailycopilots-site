@@ -35,6 +35,7 @@
 		542487F5DC45006B8B1DDD95 /* SignInWithAppleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9180BF1FC12F98B97EFE81C2 /* SignInWithAppleButton.swift */; };
 		55458F7B023174031692F3CD /* TikTokOpenShareSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 849093764282423C8DB2BD90 /* TikTokOpenShareSDK */; };
 		58492252E90D003DCFCFF61F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 91572C6786E606A26CCF5DC7 /* PrivacyInfo.xcprivacy */; };
+		5B2494CAED74F16B0674A424 /* ScriptureReferenceVerificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D741EB5708080599524F5247 /* ScriptureReferenceVerificationTests.swift */; };
 		5E998A1E36DE1939E6609AA7 /* SavedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B454B341D9CC542FCFEBAF3B /* SavedView.swift */; };
 		635BD0692AD9A7E1D51C8C94 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF0612395BA4D408286E1CD /* PaywallView.swift */; };
 		725EFE6EC5A41C290ED46FA5 /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE705240A2B05ACD112ACEE2 /* AnalyticsService.swift */; };
@@ -155,6 +156,7 @@
 		CFCA863DA4756D1599A8AD7C /* SyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncService.swift; sourceTree = "<group>"; };
 		D284467BC69B7D0F51B9EDF9 /* DailyVerseCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyVerseCard.swift; sourceTree = "<group>"; };
 		D62753EB7324AF3ADEF3CCB9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D741EB5708080599524F5247 /* ScriptureReferenceVerificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptureReferenceVerificationTests.swift; sourceTree = "<group>"; };
 		DDD2B968D0F5F5199EEE4411 /* OnboardingSlide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSlide.swift; sourceTree = "<group>"; };
 		E5D74D69F97244843338F19F /* StreakBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakBadge.swift; sourceTree = "<group>"; };
 		E70D7EC04333C5BB46EAE484 /* SubscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionService.swift; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 				832B0E19208107CB4EFA5A8D /* BibleServiceTests.swift */,
 				33B7D718B98BA521824C19FD /* CrossReferenceParserTests.swift */,
 				92A596BDE81142912179F7A6 /* ReadingPlanTests.swift */,
+				D741EB5708080599524F5247 /* ScriptureReferenceVerificationTests.swift */,
 				A46BA6D8531BA6089988D4B5 /* SubscriptionServiceTests.swift */,
 				3A993445ECF54646210DD294 /* UsageServiceTests.swift */,
 			);
@@ -498,6 +501,7 @@
 				9254D2E7382DFAE11825B149 /* BibleServiceTests.swift in Sources */,
 				C9DBDB3864DEDC35AA69C346 /* CrossReferenceParserTests.swift in Sources */,
 				D6EEE85FBCBF48F15D0D34BE /* ReadingPlanTests.swift in Sources */,
+				5B2494CAED74F16B0674A424 /* ScriptureReferenceVerificationTests.swift in Sources */,
 				3F4F740B44BAC9EE02D766A1 /* SubscriptionServiceTests.swift in Sources */,
 				A749F558B1F683FB0E0344DA /* UsageServiceTests.swift in Sources */,
 			);

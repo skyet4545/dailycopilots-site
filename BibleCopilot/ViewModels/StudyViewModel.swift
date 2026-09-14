@@ -15,6 +15,7 @@ final class StudyViewModel {
     var aiError: String?
 
     var crossReferences: [String] = []
+    var referenceVerificationNote: String?
     var isBookmarked = false
 
     // Conversation history for follow-up questions
@@ -88,6 +89,7 @@ final class StudyViewModel {
         aiLoading = true
         aiError = nil
         crossReferences = []
+        referenceVerificationNote = nil
         showFollowUp = false
 
         HapticService.lightImpact()
@@ -119,13 +121,17 @@ final class StudyViewModel {
                     chatHistory = Array(chatHistory.suffix(6))
                 }
 
-                crossReferences = CrossReferenceParser.extractReferences(from: aiResponse)
                 let completedFirstQuestion = usageService.recordQuestion()
                 if completedFirstQuestion {
                     shouldOfferDailyReminder = NotificationService.shared.shouldOfferDailyReminderAfterFirstStudy()
                 }
                 StreakService.shared.recordStudy()
                 ReviewService.shared.recordStudyAndPromptIfReady()
+                let extractedReferences = CrossReferenceParser.extractReferences(from: aiResponse)
+                let verification = await BibleService.shared.verifyReferences(extractedReferences, translation: translation)
+                guard !Task.isCancelled else { return }
+                crossReferences = verification.displayedReferences
+                referenceVerificationNote = verification.note
                 showFollowUp = true
                 HapticService.success()
             } catch {
@@ -165,6 +171,7 @@ final class StudyViewModel {
         aiLoading = true
         aiError = nil
         crossReferences = []
+        referenceVerificationNote = nil
 
         HapticService.lightImpact()
 
@@ -188,12 +195,16 @@ final class StudyViewModel {
                 if chatHistory.count > 6 {
                     chatHistory = Array(chatHistory.suffix(6))
                 }
-                crossReferences = CrossReferenceParser.extractReferences(from: aiResponse)
                 let completedFirstQuestion = usageService.recordQuestion()
                 if completedFirstQuestion {
                     shouldOfferDailyReminder = NotificationService.shared.shouldOfferDailyReminderAfterFirstStudy()
                 }
                 ReviewService.shared.recordStudyAndPromptIfReady()
+                let extractedReferences = CrossReferenceParser.extractReferences(from: aiResponse)
+                let verification = await BibleService.shared.verifyReferences(extractedReferences, translation: translation)
+                guard !Task.isCancelled else { return }
+                crossReferences = verification.displayedReferences
+                referenceVerificationNote = verification.note
                 HapticService.success()
             } catch {
                 if !Task.isCancelled {

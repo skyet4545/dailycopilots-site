@@ -121,13 +121,17 @@ struct StudyView: View {
                     }
 
                     // Cross References
-                    if !viewModel.crossReferences.isEmpty {
-                        CrossReferencesView(references: viewModel.crossReferences) { ref in
+                    if !viewModel.crossReferences.isEmpty || viewModel.referenceVerificationNote != nil {
+                        CrossReferencesView(
+                            references: viewModel.crossReferences,
+                            verificationNote: viewModel.referenceVerificationNote
+                        ) { ref in
                             // Navigate to new study for this reference & auto-trigger AI
                             let currentMode = viewModel.selectedMode ?? .observe
                             viewModel.verse = ref
                             viewModel.aiResponse = ""
                             viewModel.crossReferences = []
+                            viewModel.referenceVerificationNote = nil
                             Task {
                                 await viewModel.fetchVerse()
                                 await viewModel.selectMode(

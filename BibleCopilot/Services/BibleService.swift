@@ -1,5 +1,37 @@
 import Foundation
 
+enum ScriptureReferenceVerificationState: Sendable {
+    case verified
+    case rejected
+    case unavailable
+}
+
+struct ScriptureReferenceVerification: Sendable {
+    let verified: [String]
+    let rejected: [String]
+    let unavailable: [String]
+
+    var displayedReferences: [String] {
+        verified + unavailable
+    }
+
+    var note: String? {
+        let checkedCount = verified.count + rejected.count
+        if !unavailable.isEmpty {
+            return rejected.isEmpty
+                ? "Reference check unavailable for \(unavailable.count) passage\(unavailable.count == 1 ? "" : "s"). Verify those in your Bible."
+                : "\(checkedCount) reference\(checkedCount == 1 ? "" : "s") checked; \(rejected.count) invalid reference\(rejected.count == 1 ? "" : "s") omitted. Check unavailable passages in your Bible."
+        }
+        if !rejected.isEmpty {
+            return "\(checkedCount) reference\(checkedCount == 1 ? "" : "s") checked against public-domain Bible text; \(rejected.count) invalid reference\(rejected.count == 1 ? "" : "s") omitted."
+        }
+        if !verified.isEmpty {
+            return "\(verified.count) reference\(verified.count == 1 ? "" : "s") checked against public-domain Bible text."
+        }
+        return nil
+    }
+}
+
 actor BibleService {
     static let shared = BibleService()
     private let primaryURL = "https://bible-api.com"
@@ -28,6 +60,64 @@ actor BibleService {
         }
 
         throw BibleServiceError.verseNotFound
+    }
+
+    /// Checks generated references against the same public-domain Bible source used for passage text.
+    /// Rejected references are not made tappable. Network failures remain visible as unavailable,
+    /// because an unavailable verifier is not evidence that a reference is invalid.
+    func verifyReferences(_ references: [String], translation: String = "asv") async -> ScriptureReferenceVerification {
+        guard !references.isEmpty else {
+            return ScriptureReferenceVerification(verified: [], rejected: [], unavailable: [])
+        }
+
+        var states = Array(repeating: ScriptureReferenceVerificationState.unavailable, count: references.count)
+        await withTaskGroup(of: (Int, ScriptureReferenceVerificationState).self) { group in
+            for (index, reference) in references.enumerated() {
+                group.addTask {
+                    (index, await Self.verifyAgainstPrimarySource(reference, translation: translation))
+                }
+            }
+            for await (index, state) in group {
+                states[index] = state
+            }
+        }
+
+        var verified: [String] = []
+        var rejected: [String] = []
+        var unavailable: [String] = []
+        for (index, reference) in references.enumerated() {
+            switch states[index] {
+            case .verified: verified.append(reference)
+            case .rejected: rejected.append(reference)
+            case .unavailable: unavailable.append(reference)
+            }
+        }
+        return ScriptureReferenceVerification(verified: verified, rejected: rejected, unavailable: unavailable)
+    }
+
+    private nonisolated static func verifyAgainstPrimarySource(
+        _ reference: String,
+        translation: String
+    ) async -> ScriptureReferenceVerificationState {
+        guard let encoded = reference.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed),
+              let url = URL(string: "https://bible-api.com/\(encoded)?translation=\(translation)") else {
+            return .rejected
+        }
+
+        var request = URLRequest(url: url)
+        request.timeoutInterval = 8
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard let http = response as? HTTPURLResponse else { return .unavailable }
+            if http.statusCode == 404 || http.statusCode == 400 { return .rejected }
+            guard http.statusCode == 200 else { return .unavailable }
+            guard let result = try? JSONDecoder().decode(BibleAPIResponse.self, from: data) else {
+                return .unavailable
+            }
+            return result.verses.isEmpty ? .rejected : .verified
+        } catch {
+            return .unavailable
+        }
     }
 
     private func evictCacheIfNeeded() {
