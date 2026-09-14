@@ -166,7 +166,12 @@ struct StudyView: View {
                 }
             }
         }
-        .task { await viewModel.fetchVerse() }
+        .task {
+            await viewModel.fetchVerse(
+                isPro: subscriptionService.isPro,
+                onShowPaywall: onShowPaywall
+            )
+        }
         .onDisappear { viewModel.cancelStream() }
         .onChange(of: viewModel.shouldOfferDailyReminder) { _, shouldOffer in
             guard shouldOffer else { return }
@@ -179,7 +184,7 @@ struct StudyView: View {
             ActivityView(activityItems: [text])
         }
         .sheet(isPresented: $showReminderPrompt) {
-            PostStudyReminderView()
+            PostStudyReminderView(reference: viewModel.verse, mode: viewModel.selectedMode)
         }
     }
 }
@@ -188,6 +193,13 @@ struct PostStudyReminderView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var reminderTime = Calendar.current.date(from: DateComponents(hour: 8, minute: 0)) ?? Date()
     @State private var isSaving = false
+    let reference: String?
+    let mode: StudyMode?
+
+    init(reference: String? = nil, mode: StudyMode? = nil) {
+        self.reference = reference
+        self.mode = mode
+    }
 
     var body: some View {
         NavigationStack {
@@ -230,7 +242,12 @@ struct PostStudyReminderView: View {
     private func saveReminder() async {
         isSaving = true
         let components = Calendar.current.dateComponents([.hour, .minute], from: reminderTime)
-        _ = await NotificationService.shared.enableDailyReminder(hour: components.hour ?? 8, minute: components.minute ?? 0)
+        _ = await NotificationService.shared.enableDailyReminder(
+            hour: components.hour ?? 8,
+            minute: components.minute ?? 0,
+            reference: reference,
+            mode: mode
+        )
         isSaving = false
         dismiss()
     }

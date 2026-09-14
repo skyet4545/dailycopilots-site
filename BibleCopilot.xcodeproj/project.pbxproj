@@ -64,6 +64,7 @@
 		BFCD3CBC3F2FDE2A63024A14 /* BibleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5799C73EFA4E53177962EDB9 /* BibleService.swift */; };
 		C04A53DE5742AF9A956760C2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F913E8C1D57E32F785F666C3 /* SettingsView.swift */; };
 		C2C997F2FE4F3C15755E8862 /* AIResponseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D2CD7F99C6F326B650429D /* AIResponseView.swift */; };
+		C4152F030D786F89EB9A3EDD /* StudyResumeReminderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF040D96E6FE8F9F1492F09 /* StudyResumeReminderTests.swift */; };
 		C9DBDB3864DEDC35AA69C346 /* CrossReferenceParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B7D718B98BA521824C19FD /* CrossReferenceParserTests.swift */; };
 		D4FC064ACFD7C982DB5A7669 /* PlanDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FA98FA974456C8AF1DBF5 /* PlanDetailView.swift */; };
 		D6EEE85FBCBF48F15D0D34BE /* ReadingPlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A596BDE81142912179F7A6 /* ReadingPlanTests.swift */; };
@@ -160,6 +161,7 @@
 		D741EB5708080599524F5247 /* ScriptureReferenceVerificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptureReferenceVerificationTests.swift; sourceTree = "<group>"; };
 		D85F2121D46934CAD26C1A32 /* AccountDeletionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDeletionTests.swift; sourceTree = "<group>"; };
 		DDD2B968D0F5F5199EEE4411 /* OnboardingSlide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSlide.swift; sourceTree = "<group>"; };
+		DDF040D96E6FE8F9F1492F09 /* StudyResumeReminderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyResumeReminderTests.swift; sourceTree = "<group>"; };
 		E5D74D69F97244843338F19F /* StreakBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakBadge.swift; sourceTree = "<group>"; };
 		E70D7EC04333C5BB46EAE484 /* SubscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionService.swift; sourceTree = "<group>"; };
 		EC92E1F7C95FA9CD697B4DE7 /* LoadingDotsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingDotsView.swift; sourceTree = "<group>"; };
@@ -263,6 +265,7 @@
 				33B7D718B98BA521824C19FD /* CrossReferenceParserTests.swift */,
 				92A596BDE81142912179F7A6 /* ReadingPlanTests.swift */,
 				D741EB5708080599524F5247 /* ScriptureReferenceVerificationTests.swift */,
+				DDF040D96E6FE8F9F1492F09 /* StudyResumeReminderTests.swift */,
 				A46BA6D8531BA6089988D4B5 /* SubscriptionServiceTests.swift */,
 				3A993445ECF54646210DD294 /* UsageServiceTests.swift */,
 			);
@@ -506,6 +509,7 @@
 				C9DBDB3864DEDC35AA69C346 /* CrossReferenceParserTests.swift in Sources */,
 				D6EEE85FBCBF48F15D0D34BE /* ReadingPlanTests.swift in Sources */,
 				5B2494CAED74F16B0674A424 /* ScriptureReferenceVerificationTests.swift in Sources */,
+				C4152F030D786F89EB9A3EDD /* StudyResumeReminderTests.swift in Sources */,
 				3F4F740B44BAC9EE02D766A1 /* SubscriptionServiceTests.swift in Sources */,
 				A749F558B1F683FB0E0344DA /* UsageServiceTests.swift in Sources */,
 			);
@@ -669,7 +673,7 @@
 				CODE_SIGN_ENTITLEMENTS = BibleCopilot/BibleCopilot.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 130;
+				CURRENT_PROJECT_VERSION = 131;
 				DEVELOPMENT_TEAM = 846N5D6TMK;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = BibleCopilot/Resources/Info.plist;
@@ -678,7 +682,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.4.4;
+				MARKETING_VERSION = 2.4.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.scripturecopilot.app;
 				PRODUCT_MODULE_NAME = BibleCopilot;
 				PRODUCT_NAME = "Bible Copilot";
@@ -779,7 +783,7 @@
 				CODE_SIGN_ENTITLEMENTS = BibleCopilot/BibleCopilot.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 130;
+				CURRENT_PROJECT_VERSION = 131;
 				DEVELOPMENT_TEAM = 846N5D6TMK;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = BibleCopilot/Resources/Info.plist;
@@ -788,7 +792,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.4.4;
+				MARKETING_VERSION = 2.4.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.scripturecopilot.app;
 				PRODUCT_MODULE_NAME = BibleCopilot;
 				PRODUCT_NAME = "Bible Copilot";
