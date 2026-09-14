@@ -74,6 +74,7 @@ final class AnalyticsService {
 // MARK: - Event names
 
 enum AnalyticsEvent {
+    static let analyticsConsent = "analytics_consent_granted"
     static let appOpen = "app_open"
     static let onboardingStep = "onboarding_step"
     static let quizAnswer = "quiz_answer"

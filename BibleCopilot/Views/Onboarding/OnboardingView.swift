@@ -13,6 +13,7 @@ struct OnboardingView: View {
     @State private var selectedLevel: ExperienceLevel?
     @State private var selectedDenomination: Denomination?
     @State private var selectedAttribution: AttributionSource?
+    @AppStorage(AnalyticsService.consentKey) private var analyticsConsentGranted = false
     @State private var selectedTranslation: BibleTranslation?
     @State private var selectedStruggles: Set<String> = []
     @State private var planBuildProgress: Double = 0
@@ -458,6 +459,29 @@ struct OnboardingView: View {
                 }
                 .padding(.horizontal, 24)
                 .padding(.bottom, 12)
+            }
+
+            Toggle(isOn: $analyticsConsentGranted) {
+                VStack(alignment: .leading, spacing: 3) {
+                    Text("Share Usage Analytics")
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundColor(AppTheme.textPrimary)
+                    Text("Share feature and purchase-flow events to help improve Bible Copilot. Bible text, study questions, journal entries, your name, and your email are excluded.")
+                        .font(.caption)
+                        .foregroundColor(AppTheme.textMuted)
+                }
+            }
+            .tint(AppTheme.accent)
+            .padding(.horizontal, 24)
+            .padding(.vertical, 10)
+            .background(AppTheme.cardBackground)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .padding(.horizontal, 24)
+            .onChange(of: analyticsConsentGranted) { _, enabled in
+                AnalyticsService.shared.setEnabled(enabled)
+                if enabled {
+                    AnalyticsService.shared.track(AnalyticsEvent.analyticsConsent, ["context": "onboarding_attribution"])
+                }
             }
 
             // Last step: saving the answer completes onboarding straight into the app.

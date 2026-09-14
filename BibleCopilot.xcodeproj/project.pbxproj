@@ -30,6 +30,7 @@
 		3F4F740B44BAC9EE02D766A1 /* SubscriptionServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46BA6D8531BA6089988D4B5 /* SubscriptionServiceTests.swift */; };
 		481A2D315752D2F69C98863E /* HapticService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136DD3E3B4C6C163CA67185D /* HapticService.swift */; };
 		487F0F5BB365644C192FE6CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04CA73846BF615DDE757AF9E /* Assets.xcassets */; };
+		48A509B73844F8A6217F4AB2 /* AnalyticsServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EC01A61B520B391460B763 /* AnalyticsServiceTests.swift */; };
 		4A724EA8B454E0295A0B7D9A /* StudyModeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DE4F18C93BDE5685A0D035 /* StudyModeTheme.swift */; };
 		542487F5DC45006B8B1DDD95 /* SignInWithAppleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9180BF1FC12F98B97EFE81C2 /* SignInWithAppleButton.swift */; };
 		55458F7B023174031692F3CD /* TikTokOpenShareSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 849093764282423C8DB2BD90 /* TikTokOpenShareSDK */; };
@@ -98,6 +99,7 @@
 		1A1673C1E232B9139E5C1365 /* DailyVerseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyVerseService.swift; sourceTree = "<group>"; };
 		1D2DAD3AD94965C3805E0A68 /* CrossReferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossReferencesView.swift; sourceTree = "<group>"; };
 		1FE11B40D5D9FD62BE15A301 /* SavedPassageCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedPassageCard.swift; sourceTree = "<group>"; };
+		22EC01A61B520B391460B763 /* AnalyticsServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsServiceTests.swift; sourceTree = "<group>"; };
 		2440A27F643FF28BD80E720F /* SentryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentryService.swift; sourceTree = "<group>"; };
 		25D374DD0157DB6D3F999504 /* CrossReferenceParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossReferenceParser.swift; sourceTree = "<group>"; };
 		27201F4980D3AAEFEDF6CA82 /* BibleCopilotTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = BibleCopilotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -251,6 +253,7 @@
 			isa = PBXGroup;
 			children = (
 				BF3AAAA60C0A23FBA84527C0 /* AIServiceTests.swift */,
+				22EC01A61B520B391460B763 /* AnalyticsServiceTests.swift */,
 				832B0E19208107CB4EFA5A8D /* BibleServiceTests.swift */,
 				33B7D718B98BA521824C19FD /* CrossReferenceParserTests.swift */,
 				92A596BDE81142912179F7A6 /* ReadingPlanTests.swift */,
@@ -491,6 +494,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				03C1FA64A38FFDD8A391D4A0 /* AIServiceTests.swift in Sources */,
+				48A509B73844F8A6217F4AB2 /* AnalyticsServiceTests.swift in Sources */,
 				9254D2E7382DFAE11825B149 /* BibleServiceTests.swift in Sources */,
 				C9DBDB3864DEDC35AA69C346 /* CrossReferenceParserTests.swift in Sources */,
 				D6EEE85FBCBF48F15D0D34BE /* ReadingPlanTests.swift in Sources */,
