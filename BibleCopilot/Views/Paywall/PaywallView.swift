@@ -112,7 +112,7 @@ struct PaywallView: View {
 
                     // Features
                     VStack(alignment: .leading, spacing: 16) {
-                        PaywallFeatureRow(icon: "infinity", text: "Unlimited Scripture-cited answers")
+                        PaywallFeatureRow(icon: "infinity", text: "Unlimited AI study questions")
                         PaywallFeatureRow(icon: "square.grid.2x2.fill", text: "All 6 study modes on every verse")
                         PaywallFeatureRow(icon: "sparkles", text: "Explore any topic across Scripture")
                         PaywallFeatureRow(icon: "book.fill", text: "Study journal + all 5 reading plans")
