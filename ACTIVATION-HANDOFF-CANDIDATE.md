@@ -1,4 +1,4 @@
-# Bible Copilot 2.4.6/132 activation handoff candidate
+# Bible Copilot 2.4.6/132 activation and review-measurement candidate
 
 ## Outcome
 
@@ -12,6 +12,8 @@ The existing button says `Start studying — it's free`, but after the optional 
 
 The live transition data is diagnostic. It does not prove that the extra choice caused the missing first questions or that this candidate will improve retention or subscriptions.
 
+The public listing currently reports 17 ratings at 4.94 stars. The app requests an Apple review at the 3rd, 10th, and 30th successful answers, but the released app does not record when those requests occur. This candidate preserves that cadence and adds consent-gated request measurement so rating growth can be assessed without claiming that Apple displayed its prompt or that a request produced a rating.
+
 ## Implementation
 
 - Adds an explicit `OnboardingCompletionIntent` with `enterHome` and `startStudy` states.
@@ -19,17 +21,21 @@ The live transition data is diagnostic. It does not prove that the extra choice 
 - Sets the study mode before presenting the study so the selected action runs immediately.
 - Adds `next_action` to the existing consent-gated `onboarding_complete` event. It records only `enter_home` or `start_selected_study`; it does not transmit the selected verse.
 - Preserves Home as the destination for every skip and legacy completion path.
+- Adds `review_prompt_requested` with only `study_milestone` at successful-answer milestones 3, 10, and 30.
 - Advances the candidate version to 2.4.6 build 132.
 
 ## Verification
 
 - Product-claim boundary guard: passed.
-- Full iPhone 17 Pro simulator suite: 82 passed, 0 failed, 0 skipped.
+- Full iPhone 17 Pro simulator suite: 84 passed, 0 failed, 0 skipped.
 - Focused intent tests verify that the study path retains Summary mode and the selected reference, while the skip path enters Home.
+- Focused review-service tests verify exactly-once requests at milestones 3, 10, and 30.
 
 ## Measurement after an approved release
 
 Primary mechanism metric: consenting new-device `onboarding_complete` events with `next_action=start_selected_study` that produce `question_asked` within 24 hours.
+
+Reputation mechanism metric: consented `review_prompt_requested` devices by milestone, reported next to the public rating count and average. The request event is not proof that Apple displayed a prompt, that a rating was submitted, or that rating activity caused acquisition or subscription lift.
 
 Business guardrails: overall first-question-within-24-hours rate, D1 and D7 retention, free-limit paywall reach, purchase taps, StoreKit success, Apple active paid subscriptions, trial-to-paid movement, churn, refunds, and currency-specific proceeds.
 
