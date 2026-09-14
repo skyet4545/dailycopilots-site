@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "preparedAt": "2026-09-14",
+  "product": "Bible Copilot",
+  "appStoreId": "6758913373",
+  "storefront": "US",
+  "governingOutcome": "Increase qualified App Store Search discovery that produces active paid Bible Copilot Pro subscriptions and verified net subscription revenue.",
+  "liveBaseline": {
+    "observedOn": "2026-09-14",
+    "version": "2.4.2",
+    "name": "Bible Copilot - AI Bible Study",
+    "subtitle": "Verse Meaning & Bible Answers",
+    "keywords": "scripture,devotional,kjv,gospel,jesus,christian,chat,gpt,commentary,daily,reading,plan,prayer,niv",
+    "description": "Understand Scripture with clear, verse-backed explanations and focused follow-up questions. Bible Copilot helps you move from a passage to its meaning, context, theology, application, and common questions without losing sight of the biblical text.\n\nSIX STUDY MODES\n- Summary: Get the central idea quickly.\n- Observe: Notice structure, repeated words, and important details.\n- Interpret: Explore context and meaning.\n- Theology: Connect the passage to biblical teaching.\n- Apply: Turn understanding into faithful practice.\n- Apologetics: Examine questions and reasons carefully.\n\nASK FOLLOW-UP QUESTIONS\nStart with a verse or passage, read its explanation, then ask the specific question the text raises for you. Continue the conversation without beginning your study again.\n\nSAVE YOUR STUDY\nKeep useful insights and return to them later. Use guided reading plans to build a consistent study rhythm.\n\nFREE TO START\nAsk up to 3 AI-powered questions each day at no charge.\n\nBIBLE COPILOT PRO\n- Unlimited questions\n- Full access to Pro study features\n- Monthly: $9.99\n- Annual: $49.99 with a 7-day free trial\n\nPayment is handled by Apple. Subscriptions renew automatically unless canceled through your Apple ID subscription settings.\n\nBible Copilot is a study aid, not a replacement for Scripture, prayer, church community, or qualified pastoral counsel.\n\nTerms of Use: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/\nPrivacy Policy: https://mybiblecopilot.com/privacy",
+    "releaseNotes": "This update improves how Bible Copilot measures the source of new study journeys, including visits from the website, YouTube, email, and organic search."
+  },
+  "candidate": {
+    "name": "Bible Copilot - AI Bible Study",
+    "subtitle": "Verse Meaning & Bible Answers",
+    "keywords": "explain,context,commentary,devotional,kjv,niv,christian,reading,plan,apologetics,theology,inductive",
+    "treatment": "Replace only the hidden keyword field. Preserve the live name, subtitle, description, screenshots, pricing, offer, and product behavior.",
+    "hypothesis": "Replacing broad or overlapping tokens with exact product-supported study-intent tokens will improve non-brand discovery for verse explanation, commentary, inductive study, theology, and apologetics without weakening brand rank.",
+    "status": "held_for_four_unchanged_weekly_rank_snapshots_and_owner_approval"
+  },
+  "evidence": {
+    "currentRankedQueries": 8,
+    "configuredQueries": 25,
+    "primaryQueriesAtTarget": 0,
+    "observedRanks": {
+      "bible copilot": 1,
+      "ai bible study": 50,
+      "ai bible": 80,
+      "bible study ai": 91
+    },
+    "notReturned": [
+      "verse meaning",
+      "bible answers",
+      "ask bible question",
+      "verse explanation",
+      "explain bible verse"
+    ],
+    "comparisonBoundary": "Public search results and competing listing copy reveal positioning and rank observations, not keyword-to-download or keyword-to-subscription attribution."
+  },
+  "decisionPolicy": {
+    "prerequisites": [
+      "Four unchanged weekly US rank snapshots",
+      "Fresh live metadata and product-truth verification",
+      "A version metadata window after the current 2.4.3 paywall treatment is released",
+      "Explicit owner approval before App Store Connect mutation"
+    ],
+    "measurement": [
+      "Weekly rank by configured query",
+      "App Store Search impressions product-page views and first-time downloads",
+      "App Store Search paying users and currency-specific proceeds",
+      "First-question D1 D7 paywall and StoreKit guardrails"
+    ],
+    "advance": "At least 3 of 8 primary non-brand terms meet target, at least one reaches top 20, and comparable App Store Search first-time downloads rise 25% without worse activation, retention, paid-subscription, refund, or proceeds evidence.",
+    "boundary": "Ranking movement is directional. Do not attribute installs, paid subscriptions, or revenue to a keyword without an Apple-supported join."
+  },
+  "ownerGates": [
+    "App Store metadata change",
+    "App submission",
+    "release",
+    "pricing or introductory-offer change"
+  ],
+  "externalEffects": []
+}

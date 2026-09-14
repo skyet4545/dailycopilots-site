@@ -1,147 +1,97 @@
-# Bible Copilot — App Store Connect Metadata
-# Copy-paste ready for ASC
+# Bible Copilot — App Store metadata source
 
----
+Updated: 2026-09-14
 
-## App Name (30 char max)
-```
+Status: internal source reconciled; no App Store Connect change authorized
+
+This file separates the current public US listing from the next held metadata candidate. The public baseline comes from Apple's listing and the read-only App Store evidence. Any metadata mutation, submission, or release requires Carlos's explicit approval.
+
+## Current public baseline — version 2.4.2
+
+### Name
+
+```text
 Bible Copilot - AI Bible Study
 ```
-(30 characters)
 
----
+### Subtitle
 
-## Subtitle (30 char max)
+```text
+Verse Meaning & Bible Answers
 ```
-Scripture Questions Answered
+
+### Hidden keywords
+
+```text
+scripture,devotional,kjv,gospel,jesus,christian,chat,gpt,commentary,daily,reading,plan,prayer,niv
 ```
-(28 characters)
 
----
+### Description
 
-## Promotional Text (170 char max — can change anytime, no review needed)
-```
-NEW: Light mode, Gospel of John reading plan (free!), and study journal. Ask any Bible question and get verse-backed answers with cross-references instantly.
-```
-(158 characters)
+```text
+Understand Scripture with clear, verse-backed explanations and focused follow-up questions. Bible Copilot helps you move from a passage to its meaning, context, theology, application, and common questions without losing sight of the biblical text.
 
----
+SIX STUDY MODES
+- Summary: Get the central idea quickly.
+- Observe: Notice structure, repeated words, and important details.
+- Interpret: Explore context and meaning.
+- Theology: Connect the passage to biblical teaching.
+- Apply: Turn understanding into faithful practice.
+- Apologetics: Examine questions and reasons carefully.
 
-## Description (4000 char max)
-```
-Ask any Bible question and get instant, verse-backed answers. Bible Copilot uses the inductive study method trusted by pastors and scholars — Summary, Observation, Interpretation, Theology, Application, and Apologetics — all in one tap.
+ASK FOLLOW-UP QUESTIONS
+Start with a verse or passage, read its explanation, then ask the specific question the text raises for you. Continue the conversation without beginning your study again.
 
-6 STUDY MODES
-Go deeper than a simple answer. Every response walks you through the same framework seminaries teach:
-
-- Summary: Get the gist before the deep dive — structure, themes, and where the verse sits in its chapter.
-- Observe: What does the text actually say? Break down structure, keywords, and context.
-- Interpret: What does it mean? Unpack the original languages, cultural background, and authorial intent.
-- Theology: What does it teach about God? Connect the passage to systematic and biblical theology.
-- Apply: How does this change my life? Practical, personal takeaways grounded in the text.
-- Apologetics: How do I defend this? Evidence, reasoning, and responses to common objections.
-
-BUILT FOR SERIOUS STUDY
-Powered by historical-grammatical interpretation — the gold standard in biblical scholarship. Get insights informed by Augustine, Spurgeon, C.S. Lewis, N.T. Wright, and other trusted voices. Not generic AI answers.
-
-YOUR STUDY JOURNAL
-Save insights from any study session. Build a personal library of notes organized by verse and study mode. Track your daily streak and watch your consistency grow.
-
-GUIDED READING PLANS
-Follow structured plans that build lasting habits. Start with the Gospel of John — completely free, no Pro required. Additional plans cover Romans, Psalms, Genesis, and Sermon on the Mount.
+SAVE YOUR STUDY
+Keep useful insights and return to them later. Use guided reading plans to build a consistent study rhythm.
 
 FREE TO START
-3 AI-powered questions every day, completely free. No account required. No ads. No data collected.
+Ask up to 3 AI-powered questions each day at no charge.
 
 BIBLE COPILOT PRO
-Unlock the full experience:
-- Unlimited AI questions
-- All 6 study modes
-- All 5 reading plans
-- Study journal with full history
-- Priority AI responses
-- 7-day free trial on monthly and annual plans
+- Unlimited questions
+- Full access to Pro study features
+- Monthly: $9.99
+- Annual: $49.99 with a 7-day free trial
 
-Monthly: $9.99/month
-Annual: $49.99/year (save ~58%)
+Payment is handled by Apple. Subscriptions renew automatically unless canceled through your Apple ID subscription settings.
 
-Whether you are a seminary student, small group leader, or someone exploring faith for the first time — Bible Copilot meets you where you are.
+Bible Copilot is a study aid, not a replacement for Scripture, prayer, church community, or qualified pastoral counsel.
 
-Questions or feedback? support@mybiblecopilot.com
-```
-(1,587 characters — well under 4,000 limit)
-
----
-
-## Keywords (100 char max — comma separated, NO spaces)
-```
-devotional,verse,prayer,christian,faith,gospel,church,commentary,sermon,theology,kjv,niv,esv,daily,god
-```
-(99 characters)
-
-NOTE: Do NOT include words already in Name or Subtitle. These are already indexed:
-- From Name: bible, copilot, ai, study
-- From Subtitle: scripture, questions, answered
-
----
-
-## What's New (for v1.7.1)
-```
-- Light mode support — study comfortably in any lighting
-- Gospel of John reading plan now free for everyone
-- 15 daily questions (up from 10)
-- Copy button on AI responses for easy sharing
-- Study journal improvements
-- Performance and stability fixes
+Terms of Use: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Privacy Policy: https://mybiblecopilot.com/privacy
 ```
 
----
+### Current release notes
 
-## Category
-- Primary: Reference
-- Secondary: Education
-
----
-
-## Support URL
-```
-https://mybiblecopilot.com/support
+```text
+This update improves how Bible Copilot measures the source of new study journeys, including visits from the website, YouTube, email, and organic search.
 ```
 
-## Marketing URL (optional)
-```
-https://mybiblecopilot.com
-```
+## Held keyword-only candidate
 
-## Privacy Policy URL
-```
-https://mybiblecopilot.com/privacy
+Preserve the current name, subtitle, description, gallery, offer, pricing, and product behavior. Change only the hidden keyword field after its prerequisites and owner gate pass.
+
+```text
+explain,context,commentary,devotional,kjv,niv,christian,reading,plan,apologetics,theology,inductive
 ```
 
----
+The candidate is 99 UTF-8 bytes. It removes broad or overlapping terms and adds product-supported intent terms for explanation, context, commentary, inductive study, theology, and apologetics. This is a hypothesis, not a ranking or revenue claim.
 
-## Copyright
-```
-2026 Republic Publishing
-```
+Do not apply it until four unchanged weekly US rank snapshots exist, the live listing and `product-truth.json` are revalidated, the current 2.4.3 paywall treatment has a metadata window, and Carlos explicitly approves the App Store Connect change.
 
----
+## Measurement and decision boundary
 
-## In-App Purchases Display Names (shown on product page)
-- Bible Copilot Pro (Monthly) — "Unlimited AI Bible study"
-- Bible Copilot Pro (Annual) — "Unlimited AI Bible study — best value"
+Track weekly rank by query, App Store Search impressions, product-page views, first-time downloads, paying users, and currency-specific proceeds. Keep first-question completion, D1/D7 retention, paywall behavior, StoreKit success, refunds, and paid-subscription movement as separate guardrails.
 
----
+A public rank is not the converting keyword. A metadata change is not an install, subscription, or revenue outcome. The structured candidate and full decision policy are in `metadata/app_store_metadata_candidate.json`.
 
-## Age Rating
-- 4+ (no objectionable content)
+## Stable listing fields
 
----
-
-## Screenshot Captions (keyword-optimized — Apple now indexes these)
-1. "Ask Any Bible Question — AI-Powered Answers"
-2. "6 Study Modes for Deep Scripture Analysis"
-3. "Verse-by-Verse AI Commentary with Cross-References"
-4. "Insights from Trusted Biblical Scholars"
-5. "Daily Streak — Build Your Bible Study Habit"
-6. "Start Free — 3 Questions Every Day"
+- Primary category: Reference
+- Secondary category: Education
+- Support URL: https://mybiblecopilot.com/support
+- Marketing URL: https://mybiblecopilot.com
+- Privacy policy: https://mybiblecopilot.com/privacy
+- Copyright: 2026 Republic Publishing
+- Age rating: 4+
