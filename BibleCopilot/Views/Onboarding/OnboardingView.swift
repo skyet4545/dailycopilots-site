@@ -23,6 +23,7 @@ struct OnboardingView: View {
     @State private var ahaInsight: String?
     @State private var isLoadingInsight = false
     @State private var selectedAhaVerse: String = "John 1:1"
+    @State private var completionIntent: OnboardingCompletionIntent = .enterHome
 
     // Notification step state
     @State private var notificationRequested = false
@@ -30,7 +31,7 @@ struct OnboardingView: View {
     @AppStorage("reminderHour") private var reminderHour: Int = 8
     @AppStorage("reminderMinute") private var reminderMinute: Int = 0
 
-    let onComplete: () -> Void
+    let onComplete: (OnboardingCompletionIntent) -> Void
 
     private let slides = OnboardingSlide.slides
 
@@ -143,9 +144,13 @@ struct OnboardingView: View {
 
     /// Finish onboarding and enter the app. v2.4: onboarding now ends at the aha moment
     /// (welcome → value → app), so this is the single completion path for the free flow.
-    private func completeOnboarding(pro: Bool) {
-        AnalyticsService.shared.track(AnalyticsEvent.onboardingComplete, ["pro": pro ? "true" : "false"])
-        onComplete()
+    private func completeOnboarding(pro: Bool, intent: OnboardingCompletionIntent? = nil) {
+        let resolvedIntent = intent ?? completionIntent
+        AnalyticsService.shared.track(AnalyticsEvent.onboardingComplete, [
+            "pro": pro ? "true" : "false",
+            "next_action": resolvedIntent.analyticsValue
+        ])
+        onComplete(resolvedIntent)
     }
 
     private func stepName(_ step: Int) -> String {
@@ -926,13 +931,14 @@ struct OnboardingView: View {
                 // notifications screen, unlocking nothing.)
                 if ahaInsight != nil {
                     continueButtonInline(label: "Start studying — it's free") {
+                        completionIntent = .startStudy(reference: selectedAhaVerse, mode: .summary)
                         withAnimation { currentStep = attributionStep }
                     }
                 }
 
                 // Always-available exit so a failed insight can never trap the user on the last step.
                 Button {
-                    completeOnboarding(pro: false)
+                    completeOnboarding(pro: false, intent: .enterHome)
                 } label: {
                     Text(ahaInsight != nil ? "Maybe later" : "Skip for now")
                         .font(.subheadline)
@@ -1166,7 +1172,7 @@ struct OnboardingView: View {
                 // continuing free, so make the free path obvious and un-trapped.
                 Button {
                     AnalyticsService.shared.track(AnalyticsEvent.onboardingComplete, ["pro": "false"])
-                    onComplete()
+                    onComplete(.enterHome)
                 } label: {
                     Text("Continue with 3 free questions a day")
                         .font(.subheadline.bold())
@@ -1423,7 +1429,7 @@ struct OnboardingView: View {
                     AnalyticsService.shared.track(AnalyticsEvent.purchaseSuccess, ["product": product.id, "source": "onboarding"])
                     AnalyticsService.shared.track(AnalyticsEvent.onboardingComplete, ["pro": "true"])
                     HapticService.success()
-                    onComplete()
+                    onComplete(.enterHome)
                 }
             } catch {
                 AnalyticsService.shared.track(AnalyticsEvent.purchaseFailed, ["product": product.id, "error": String(describing: error).prefix(120).description])
