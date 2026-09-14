@@ -7,6 +7,7 @@ struct PaywallView: View {
     @State private var selectedPlan: String = ""
     @State private var isLoading = false
     @State private var errorMessage: String?
+    @State private var introOfferEligibility: [String: Bool] = [:]
 
     private var paywallTrigger: String {
         UsageService.shared.usedToday >= UsageService.freeQuestionsPerDay ? "free_limit" : "manual_upgrade"
@@ -31,9 +32,12 @@ struct PaywallView: View {
         return subscriptionService.annualProduct
     }
 
-    // The free-trial length on the selected plan, e.g. "7-Day", or nil if no trial.
-    private var trialLengthText: String? {
-        guard let offer = selectedProduct?.subscription?.introductoryOffer,
+    private var subscriptionProductIDs: String {
+        subscriptionService.products.map(\.id).sorted().joined(separator: "|")
+    }
+
+    private func configuredTrialLength(for product: Product?) -> String? {
+        guard let offer = product?.subscription?.introductoryOffer,
               offer.paymentMode == .freeTrial else { return nil }
         let n = offer.period.value
         switch offer.period.unit {
@@ -43,6 +47,32 @@ struct PaywallView: View {
         case .year:  return "\(n)-Year"
         @unknown default: return nil
         }
+    }
+
+    static func visibleTrialLength(configured: String?, isEligible: Bool?) -> String? {
+        guard isEligible == true else { return nil }
+        return configured
+    }
+
+    private func visibleTrialLength(for product: Product?) -> String? {
+        guard let product else { return nil }
+        return Self.visibleTrialLength(
+            configured: configuredTrialLength(for: product),
+            isEligible: introOfferEligibility[product.id]
+        )
+    }
+
+    private func eligibilityState(for product: Product?) -> String {
+        guard let product,
+              configuredTrialLength(for: product) != nil else { return "no_free_trial" }
+        guard let isEligible = introOfferEligibility[product.id] else { return "unknown" }
+        return isEligible ? "eligible" : "ineligible"
+    }
+
+    // The free-trial length is visible only after StoreKit confirms that this
+    // customer is eligible for the configured introductory offer.
+    private var trialLengthText: String? {
+        visibleTrialLength(for: selectedProduct)
     }
 
     // CTA: lead with the free trial when one exists — hesitant users tap "try free"
@@ -173,11 +203,11 @@ struct PaywallView: View {
                                 PaywallPlanCard(
                                     product: annual,
                                     isSelected: selectedPlan == annual.id || selectedPlan.isEmpty,
-                                    badge: trialLengthText != nil ? "7-DAY FREE TRIAL" : "BEST VALUE",
+                                    badge: visibleTrialLength(for: annual).map { "\($0.uppercased()) FREE TRIAL" } ?? "BEST VALUE",
                                     subtitle: annualSubtitle
                                 ) {
                                     selectedPlan = annual.id
-                                    AnalyticsService.shared.track(AnalyticsEvent.planSelected, ["product": annual.id, "billing_period": "annual", "trigger": paywallTrigger, "copy_version": paywallCopyVersion])
+                                    AnalyticsService.shared.track(AnalyticsEvent.planSelected, ["product": annual.id, "billing_period": "annual", "trigger": paywallTrigger, "copy_version": paywallCopyVersion, "trial_eligibility": eligibilityState(for: annual)])
                                     HapticService.selection()
                                 }
                             }
@@ -191,7 +221,7 @@ struct PaywallView: View {
                                     subtitle: "Billed monthly"
                                 ) {
                                     selectedPlan = monthly.id
-                                    AnalyticsService.shared.track(AnalyticsEvent.planSelected, ["product": monthly.id, "billing_period": "monthly", "trigger": paywallTrigger, "copy_version": paywallCopyVersion])
+                                    AnalyticsService.shared.track(AnalyticsEvent.planSelected, ["product": monthly.id, "billing_period": "monthly", "trigger": paywallTrigger, "copy_version": paywallCopyVersion, "trial_eligibility": eligibilityState(for: monthly)])
                                     HapticService.selection()
                                 }
                             }
@@ -296,7 +326,10 @@ struct PaywallView: View {
             }
             .background(AppTheme.background)
             .onAppear {
-                AnalyticsService.shared.track(AnalyticsEvent.paywallView, ["source": "in_app", "trigger": paywallTrigger, "used": "\(UsageService.shared.usedToday)", "copy_version": paywallCopyVersion])
+                AnalyticsService.shared.track(AnalyticsEvent.paywallView, ["source": "in_app", "trigger": paywallTrigger, "used": "\(UsageService.shared.usedToday)", "copy_version": paywallCopyVersion, "trial_eligibility": eligibilityState(for: selectedProduct)])
+            }
+            .task(id: subscriptionProductIDs) {
+                await refreshIntroOfferEligibility()
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -322,7 +355,8 @@ struct PaywallView: View {
         Task {
             isLoading = true
             errorMessage = nil
-            AnalyticsService.shared.track(AnalyticsEvent.trialStartTap, ["product": product.id, "source": "in_app", "trigger": paywallTrigger, "copy_version": paywallCopyVersion])
+            let eligibleTrial = visibleTrialLength(for: product) != nil
+            AnalyticsService.shared.track(AnalyticsEvent.trialStartTap, ["product": product.id, "source": "in_app", "trigger": paywallTrigger, "copy_version": paywallCopyVersion, "trial_eligibility": eligibilityState(for: product), "offer_type": eligibleTrial ? "free_trial" : "subscription"])
             do {
                 try await subscriptionService.purchase(product)
                 if subscriptionService.isPro {
@@ -335,6 +369,17 @@ struct PaywallView: View {
             }
             isLoading = false
         }
+    }
+
+    @MainActor
+    private func refreshIntroOfferEligibility() async {
+        var refreshed: [String: Bool] = [:]
+        for product in subscriptionService.products {
+            guard configuredTrialLength(for: product) != nil,
+                  let subscription = product.subscription else { continue }
+            refreshed[product.id] = await subscription.isEligibleForIntroOffer
+        }
+        introOfferEligibility = refreshed
     }
 }
 

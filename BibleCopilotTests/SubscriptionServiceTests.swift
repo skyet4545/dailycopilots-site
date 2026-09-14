@@ -47,4 +47,25 @@ final class SubscriptionServiceTests: XCTestCase {
         _ = service.annualProduct
         _ = service.monthlyProduct
     }
+
+    // MARK: - Paywall trial presentation
+
+    func testEligibleConfiguredTrialIsVisible() {
+        XCTAssertEqual(
+            PaywallView.visibleTrialLength(configured: "7-Day", isEligible: true),
+            "7-Day"
+        )
+    }
+
+    func testIneligibleConfiguredTrialIsHidden() {
+        XCTAssertNil(PaywallView.visibleTrialLength(configured: "7-Day", isEligible: false))
+    }
+
+    func testUnknownEligibilityDefaultsToNoTrialPromise() {
+        XCTAssertNil(PaywallView.visibleTrialLength(configured: "7-Day", isEligible: nil))
+    }
+
+    func testMissingIntroOfferIsHiddenEvenWhenEligible() {
+        XCTAssertNil(PaywallView.visibleTrialLength(configured: nil, isEligible: true))
+    }
 }
