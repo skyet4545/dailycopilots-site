@@ -127,6 +127,7 @@ final class StudyViewModel {
                 }
                 StreakService.shared.recordStudy()
                 ReviewService.shared.recordStudyAndPromptIfReady()
+                NotificationService.shared.updateDailyReminderContext(reference: verse, mode: mode)
                 let extractedReferences = CrossReferenceParser.extractReferences(from: aiResponse)
                 let verification = await BibleService.shared.verifyReferences(extractedReferences, translation: translation)
                 guard !Task.isCancelled else { return }
@@ -200,6 +201,7 @@ final class StudyViewModel {
                     shouldOfferDailyReminder = NotificationService.shared.shouldOfferDailyReminderAfterFirstStudy()
                 }
                 ReviewService.shared.recordStudyAndPromptIfReady()
+                NotificationService.shared.updateDailyReminderContext(reference: verse, mode: mode)
                 let extractedReferences = CrossReferenceParser.extractReferences(from: aiResponse)
                 let verification = await BibleService.shared.verifyReferences(extractedReferences, translation: translation)
                 guard !Task.isCancelled else { return }

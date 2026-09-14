@@ -97,6 +97,7 @@ enum AnalyticsEvent {
     static let reminderPromptShown = "reminder_prompt_shown"
     static let reminderPromptDismissed = "reminder_prompt_dismissed"
     static let dailyReminderEnabled = "daily_reminder_enabled"
+    static let studyReminderOpened = "study_reminder_opened"
     static let limitHit = "limit_hit"
     static let planSelected = "plan_selected"
     static let planOpened = "plan_opened"

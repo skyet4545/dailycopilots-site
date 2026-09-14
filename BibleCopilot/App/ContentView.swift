@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(SubscriptionService.self) private var subscriptionService
     @AppStorage("onboardingComplete") private var onboardingComplete = false
     @State private var selectedTab = 0
     @State private var studyRequest: StudyRequest?
@@ -69,9 +70,30 @@ struct ContentView: View {
         }
         .onAppear {
             configureTabBarAppearance()
+            openPendingStudyReminder()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: NotificationService.studyReminderOpenedNotification)) { _ in
+            openPendingStudyReminder()
         }
         .onChange(of: ThemeManager.shared.themeMode) {
             configureTabBarAppearance()
+        }
+    }
+
+    private func openPendingStudyReminder() {
+        guard let resume = NotificationService.shared.consumePendingStudyResume() else { return }
+        Task { @MainActor in
+            // Resolve current StoreKit entitlement before deciding whether the
+            // reminder can auto-run a study mode. Free users still return to
+            // the passage without consuming a question.
+            await subscriptionService.checkSubscriptionStatus()
+            studyRequest = StudyRequest(verse: resume.reference)
+            studyMode = subscriptionService.isPro ? resume.mode : nil
+            AnalyticsService.shared.track(AnalyticsEvent.studyReminderOpened, [
+                "has_context": "true",
+                "is_pro": subscriptionService.isPro ? "true" : "false",
+                "mode": resume.mode?.rawValue ?? "none"
+            ])
         }
     }
 
