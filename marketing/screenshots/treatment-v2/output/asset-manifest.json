@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "treatmentId": "bible-copilot-question-to-habit-v2",
+  "generatedAt": "2026-09-14T06:26:39.057Z",
+  "readyFrames": 5,
+  "requiredFrames": 6,
+  "complete": false,
+  "assets": [
+    {
+      "position": 1,
+      "id": "verse-entry",
+      "status": "composited_from_verified_real_capture",
+      "source": "../real-src-01-home.png",
+      "sourceSha256": "95b77e56d77af882a1ee787a75e05a496475c5b493e49b3f44fbced76c26bc23",
+      "output": "output/01-verse-entry.png",
+      "outputSha256": "c7742c67f53904626345136777137533f4780c384f14c16b31c30297c7a61b01"
+    },
+    {
+      "position": 2,
+      "id": "six-study-modes",
+      "status": "composited_from_verified_real_capture",
+      "source": "../real-src-02-study.png",
+      "sourceSha256": "501229b44ba82cefeb1b6bdd1385cee903e70eea917e4a0f485a563405815c25",
+      "output": "output/02-six-study-modes.png",
+      "outputSha256": "c8651344b8c19fcf939cf2058215107d5e9137175d3d9ed96f7be43022f578d9"
+    },
+    {
+      "position": 3,
+      "id": "scripture-cited-answer",
+      "status": "composited_from_verified_real_capture",
+      "source": "../real-src-03-answer.png",
+      "sourceSha256": "9ec5c5992c2c1a2e57d66e5bd3802a6825dc98fedaa9fd4a74568169058663c5",
+      "output": "output/03-scripture-cited-answer.png",
+      "outputSha256": "7bb0d326b08562da2b95e3c93c5bc46b7edfc9973bb8b77da3be3c7d22a246d9"
+    },
+    {
+      "position": 4,
+      "id": "follow-up-study",
+      "status": "composited_from_verified_real_capture",
+      "source": "source-04-follow-up-study.png",
+      "sourceSha256": "683735ba419c4629c9fa5f4c030fa76c59b45eedd2ab09baca80bd6f663d7d7e",
+      "output": "output/04-follow-up-study.png",
+      "outputSha256": "6dddc64a305b706f039d305c907c3e40ff056d57771e09d4990e8980cde9d946"
+    },
+    {
+      "position": 5,
+      "id": "reading-plan",
+      "status": "composited_from_verified_real_capture",
+      "source": "source-05-reading-plan.png",
+      "sourceSha256": "ac265b038e010da315ef13b88e685da7983dfc055cfbfd6f0a0515234b749ac9",
+      "output": "output/05-reading-plan.png",
+      "outputSha256": "3dd5d1cec691db22e320a5e91126891f1b9776fb46a1eb08d3e3dd334227e316"
+    }
+  ],
+  "blockers": [
+    {
+      "position": 6,
+      "id": "pro-offer",
+      "reason": "The build 129 source capture contains Unlimited Scripture-cited answers. Recapture this state from product-claim candidate commit 79bfba4f21338a73ed4946cb4bf93a45e139b988, or a reconciled descendant, after StoreKit confirms trial eligibility."
+    }
+  ]
+}
