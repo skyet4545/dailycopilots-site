@@ -90,6 +90,7 @@ enum AnalyticsEvent {
     static let trialStartTap = "trial_start_tap"
     static let purchaseSuccess = "purchase_success"
     static let purchaseFailed = "purchase_failed"
+    static let entitlementStateObserved = "entitlement_state_observed"
     static let questionAsked = "question_asked"
     static let firstQuestionCompleted = "first_question_completed"
     static let followUpSuggestionTapped = "follow_up_suggestion_tapped"
