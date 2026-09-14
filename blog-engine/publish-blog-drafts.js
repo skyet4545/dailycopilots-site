@@ -14,12 +14,14 @@
 
 const fs = require('fs');
 const path = require('path');
+const syncRuntimeAssets = require('./sync-runtime-assets.js');
 
 const ENGINE = __dirname;
 const INBOX = path.join(ENGINE, 'inbox');
 const PUBLISHED = path.join(INBOX, 'published');
 const NEEDS_REVIEW = path.join(INBOX, 'needs-review');
 const SITE = path.join(ENGINE, '..', 'site-deploy');
+syncRuntimeAssets(SITE);
 const BLOG = path.join(SITE, 'blog');
 const SITEMAP = path.join(SITE, 'sitemap.xml');
 const BLOG_INDEX = path.join(BLOG, 'index.html');

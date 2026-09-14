@@ -30,6 +30,8 @@ Use stable snake-case source IDs. Existing values remain valid; do not silently 
 | `friend_church` | Word of mouth, church, or small group |
 | `other` | Unclassified self-report; do not treat as direct traffic |
 
+Website first-touch events use a separate, privacy-bounded vocabulary for untagged AI referrals: `ai_chatgpt`, `ai_perplexity`, `ai_copilot`, `ai_gemini`, `ai_claude`, `ai_you`, `ai_meta`, `ai_deepseek`, and `ai_mistral`. The event stores only the referring hostname, never its path, query string, prompt, or message contents. An explicit `utm_source` takes precedence over inferred referrer classification. These values prove a website referral and any later website App Store handoff in the same first-party session; they do not prove an install, trial, paid subscription, or AI recommendation.
+
 When an external asset is published, add its own web campaign fields: `utm_source`, `utm_medium`, `utm_campaign`, and `utm_content`. Use the existing App Store campaign token only as a handoff identifier unless App Store Connect returns the appropriate attributed install report.
 
 ### Active acquisition campaign registry
@@ -54,6 +56,7 @@ BIBLE_COPILOT_ANALYTICS_PROJECT_DIR="/Users/carlosreyes/Desktop/Projects/The Gos
 Report these separately:
 
 1. tagged landing views and App Store handoffs;
+   Break out untagged AI-referral landing views and handoffs by the stable `ai_*` source when the browser supplies a referring hostname.
 2. first-time downloads from App Store Connect;
 3. activated devices, paywall views, trial taps, and purchase successes by self-reported source;
 4. active subscriptions, introductory offers, renewals, cancellations, billing retry, and grace-period counts from App Store Connect.
