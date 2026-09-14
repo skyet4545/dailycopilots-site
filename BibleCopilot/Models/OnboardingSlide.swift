@@ -19,15 +19,15 @@ struct OnboardingSlide: Identifiable {
             id: 1,
             icon: "brain.head.profile",
             iconColor: Color(hex: "A78BFA"),
-            title: "Scripture-Grounded\nInsight",
-            subtitle: "Every answer is rooted in the Bible. Cross-references, original languages, and historical context — all at your fingertips."
+            title: "Scripture-Referenced\nInsight",
+            subtitle: "AI explanations are designed to include Bible references you can open, compare, and check in context."
         ),
         OnboardingSlide(
             id: 2,
             icon: "safari",
             iconColor: Color(hex: "34D399"),
-            title: "Five Study\nModes",
-            subtitle: "Observation, interpretation, theology, application, and apologetics — guided by time-tested methods."
+            title: "Six Study\nModes",
+            subtitle: "Summary, observation, interpretation, theology, application, and apologetics — six ways to examine a passage."
         )
     ]
 }
