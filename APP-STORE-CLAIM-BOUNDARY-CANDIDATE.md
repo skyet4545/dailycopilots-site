@@ -21,9 +21,10 @@ The treatment keeps the real product captures, six-mode sequence, follow-up stud
 
 ## Validation
 
-- Five retained source hashes match and five composites are exactly 1290 by 2796 pixels.
-- The prior build 129 Pro capture is disqualified because its embedded product UI contains `Unlimited Scripture-cited answers`.
-- The normal validator passes at five of six. The strict upload gate fails closed until a real corrected Pro capture replaces it.
+- All six source hashes match and all six composites are exactly 1290 by 2796 pixels.
+- The prior build 129 Pro capture was disqualified and replaced by a real simulator capture from product-copy commit `79bfba4f21338a73ed4946cb4bf93a45e139b988`.
+- StoreKit loaded both plans, confirmed the eligible annual trial state, and the corrected paywall visibly showed `Unlimited AI study questions`.
+- The normal validator and strict upload gate both pass at six of six.
 - Four unsupported absolute Scripture-claim patterns are rejected by the validator.
 - Trial language is rejected unless the customer-facing copy includes an eligibility boundary.
 - Each generated asset has an immutable SHA-256 in the asset manifest.
@@ -36,4 +37,4 @@ Do not attribute any result to one individual frame because the six-frame packag
 
 ## Owner gate
 
-No App Store Connect asset, test, metadata, app version, subscription, or price was changed. The treatment is not submission-ready until its final real capture passes. Creating or starting a Product Page Optimization test and applying a winner each require a separate owner decision.
+No App Store Connect asset, test, metadata, app version, subscription, or price was changed. Creating or starting a Product Page Optimization test and applying a winner each require a separate owner decision.

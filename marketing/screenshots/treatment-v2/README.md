@@ -15,9 +15,9 @@ The normal validator proves the identity and dimensions of all available real-ca
 node validate-treatment.mjs --require-complete
 ```
 
-That command must pass before upload. The current candidate deliberately fails closed at five of six frames because the real build 129 Pro capture contains an unbounded Scripture-citation quantity claim. This preserves local asset identity and dimensions without presenting the package as submission-ready.
+That command passes for all six genuine product captures. The final Pro source was recaptured from local product-copy commit `79bfba4f21338a73ed4946cb4bf93a45e139b988` after StoreKit loaded both plans and confirmed the eligible annual trial state.
 
-The validator also rejects absolute Scripture-citation guarantees, requires a recorded manual source-copy review for every ready frame, and rejects customer-facing trial statements that omit eligibility. The live four-frame gallery observed on September 14, 2026 contains both risks; this treatment has no external effect until its final real capture is corrected and a separately approved Product Page Optimization test or gallery update is created in App Store Connect.
+The validator rejects absolute Scripture-citation guarantees, requires a recorded manual source-copy review for every ready frame, and rejects customer-facing trial statements that omit eligibility. The live four-frame gallery observed on September 14, 2026 contains both risks; this treatment has no external effect until a separately approved Product Page Optimization test or gallery update is created in App Store Connect.
 
 ## Recapture procedure
 
@@ -27,4 +27,4 @@ Use product-claim candidate commit `79bfba4f21338a73ed4946cb4bf93a45e139b988`, o
 2. **Reading plan:** open the Plans tab and capture the real list with Gospel of John visible as the 21-day free plan. Do not invent completion progress.
 3. **Pro offer:** open the build 129 paywall only after StoreKit products load. The screenshot must show the trial CTA and current monthly and annual prices supplied by StoreKit. Reject any loading, error, stale `Continue` CTA, or missing trial state.
 
-The September 13 capture pass established all three product states, but the September 14 claim audit disqualified the Pro source copy. The normal validator passes the five retained frames; the strict validator must continue failing until a real corrected Pro capture is installed and hashed. After recapture, run both validators and inspect every PNG at full resolution. Create the live Product Page Optimization test only after Carlos approves that action. Starting the test and applying a winner are separate owner decisions.
+The September 14 recapture replaced the disqualified build 129 Pro source and bound the corrected UI to its exact hash. Both validators pass at six of six. Inspect every PNG at full resolution before any upload. Create the live Product Page Optimization test only after Carlos approves that action. Starting the test and applying a winner are separate owner decisions.

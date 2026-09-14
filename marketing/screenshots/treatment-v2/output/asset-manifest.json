@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "treatmentId": "bible-copilot-question-to-habit-v2",
-  "generatedAt": "2026-09-14T06:26:39.057Z",
-  "readyFrames": 5,
+  "generatedAt": "2026-09-14T06:33:13.764Z",
+  "readyFrames": 6,
   "requiredFrames": 6,
-  "complete": false,
+  "complete": true,
   "assets": [
     {
       "position": 1,
@@ -50,13 +50,16 @@
       "sourceSha256": "ac265b038e010da315ef13b88e685da7983dfc055cfbfd6f0a0515234b749ac9",
       "output": "output/05-reading-plan.png",
       "outputSha256": "3dd5d1cec691db22e320a5e91126891f1b9776fb46a1eb08d3e3dd334227e316"
-    }
-  ],
-  "blockers": [
+    },
     {
       "position": 6,
       "id": "pro-offer",
-      "reason": "The build 129 source capture contains Unlimited Scripture-cited answers. Recapture this state from product-claim candidate commit 79bfba4f21338a73ed4946cb4bf93a45e139b988, or a reconciled descendant, after StoreKit confirms trial eligibility."
+      "status": "composited_from_verified_real_capture",
+      "source": "source-06-pro-offer.png",
+      "sourceSha256": "da8642fbc9d28bd401811d3ea94aa12650f8a78d0fff934aade30c14fe99d5ad",
+      "output": "output/06-pro-offer.png",
+      "outputSha256": "7932b7e33ac92c60bf247d033f37e1d43dae98f31369fc08dc6993130eef058e"
     }
-  ]
+  ],
+  "blockers": []
 }
