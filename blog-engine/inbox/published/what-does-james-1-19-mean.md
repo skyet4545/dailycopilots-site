@@ -11,7 +11,7 @@ keywords: james 1:19 meaning, swift to hear slow to speak, slow to anger verse, 
 
 ## The context
 
-James is intensely practical. Earlier in the chapter he speaks of receiving God's word "with meekness" (James 1:21) and of being "doers of the word, and not hearers only" (James 1:22). Verse 19 introduces this section. Being "swift to hear" connects both to listening well to others and to receiving God's word humbly. The following verse explains the concern about anger: "For the wrath of man worketh not the righteousness of God" (James 1:20).
+James is intensely practical. Later in the chapter he speaks of receiving God's word "with meekness" (James 1:21) and of being "doers of the word, and not hearers only" (James 1:22). Verse 19 introduces this section. Being "swift to hear" connects both to listening well to others and to receiving God's word humbly. The following verse explains the concern about anger: "For the wrath of man worketh not the righteousness of God" (James 1:20).
 
 The King James Version reads: "Wherefore, my beloved brethren, let every man be swift to hear, slow to speak, slow to wrath." The World English Bible reads, "let every man be swift to hear, slow to speak, and slow to anger."
 
