@@ -131,11 +131,10 @@ struct PaywallView: View {
                             .font(.subheadline)
                             .foregroundColor(AppTheme.textMuted)
 
-                        // Value recap: when they've been studying (the limit-hit moment), remind
-                        // them of the value they just got. This is where hesitant users convert —
-                        // 13 of 17 who hit the wall were walking away without it.
+                        // Value recap: make the daily free limit and the immediate next step
+                        // explicit at the limit-hit moment without changing pricing or trial terms.
                         if UsageService.shared.usedToday > 0 {
-                            Text("You've asked \(UsageService.shared.usedToday) question\(UsageService.shared.usedToday == 1 ? "" : "s") today. You're clearly studying, keep it going with unlimited.")
+                            Text("You've reached today's 3 free questions. Keep studying with Scripture-cited explanations and all 6 guided study modes.")
                                 .font(.subheadline.weight(.semibold))
                                 .foregroundColor(AppTheme.gold)
                                 .multilineTextAlignment(.center)
