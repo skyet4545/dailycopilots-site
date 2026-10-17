@@ -1,0 +1,15 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["846N5D6TMK.com.scripturecopilot.app"],
+        "components": [
+          {
+            "/": "/tiktok/share",
+            "comment": "TikTok Share Kit callback"
+          }
+        ]
+      }
+    ]
+  }
+}

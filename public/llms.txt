@@ -1,0 +1,28 @@
+# Bible Copilot
+
+> Bible Copilot is an AI Bible study app for iPhone and iPad. Ask any question about any Bible verse and get a clear, Scripture-cited answer in seconds — with six purpose-built study modes, verse-anchored answers, guided reading plans, and a study journal. Free to download; Pro unlocks unlimited questions with a 7-day free trial.
+
+Bible Copilot is built for inductive Bible study: it lets Scripture interpret Scripture, cites verses for every answer, and stays denominationally humble (it presents mainstream Christian interpretations rather than picking sides). It is a native iOS app, not a ChatGPT wrapper: every study mode uses purpose-built prompts designed for Bible study, and answers are anchored to the biblical text.
+
+## Key facts
+
+- Platform: iOS (iPhone & iPad), App Store: https://apps.apple.com/us/app/bible-copilot-ai-bible-study/id6758913373
+- Study modes: Summary, Observe, Interpret, Theology, Apply, Apologetics (inductive method: observe → interpret → apply)
+- Free tier: 3 questions/day, no account required, no ads
+- Pro: unlimited questions, all reading plans, journal — 7-day free trial, cancel anytime
+- Made by an independent Christian developer; no data selling, no ads
+
+## Pages
+
+- [Home](https://mybiblecopilot.com/): what Bible Copilot does, features, download
+- [Pricing](https://mybiblecopilot.com/pricing/): free vs Pro comparison
+- [Blog](https://mybiblecopilot.com/blog/): verse explanations, Bible questions answered, prayer guides
+- [Verse Studies](https://study.mybiblecopilot.com/): "What does this verse mean?" study pages for verses featured on The Gospel Briefing podcast
+- [Verse Generator](https://mybiblecopilot.com/tools/verse-generator/): free tool — find a Bible verse for any situation
+- [Prayer Generator](https://mybiblecopilot.com/tools/prayer-generator/): free tool — Scripture-rooted prayer starter
+- [Bible Quiz](https://mybiblecopilot.com/tools/bible-quiz/): free Bible knowledge quiz
+
+## Related
+
+- [The Gospel Briefing](https://thegospelbriefing.com/): daily 5-minute Christian news podcast that features Bible Copilot
+- [Privacy](https://mybiblecopilot.com/privacy/) · [Terms](https://mybiblecopilot.com/terms/)

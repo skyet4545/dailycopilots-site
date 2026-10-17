@@ -1,0 +1,141 @@
+:root {
+  --bc-bg: #080d19;
+  --bc-panel: #111a2e;
+  --bc-panel-soft: #151f35;
+  --bc-line: #2a3a58;
+  --bc-text: #f7f3e8;
+  --bc-muted: #aeb9cc;
+  --bc-gold: #d4af5f;
+  --bc-gold-soft: #f0cf83;
+}
+
+html[data-monetization-intent] { scroll-padding-top: 84px; }
+body.bc-revenue-ready { overflow-x: hidden; }
+
+.bc-inline-study,
+.bc-final-pro,
+.bc-study-sidebar {
+  color: var(--bc-text);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.bc-editorial-shell {
+  width: min(1180px, 100%) !important;
+  max-width: 1180px !important;
+  display: grid;
+  grid-template-columns: minmax(0, 760px) minmax(240px, 300px);
+  gap: clamp(38px, 5vw, 72px);
+  align-items: start;
+}
+
+.bc-editorial-shell > article { min-width: 0; }
+
+.bc-study-sidebar {
+  position: sticky;
+  top: 24px;
+  display: grid;
+  gap: 16px;
+}
+
+.bc-sidebar-card,
+.bc-inline-study,
+.bc-final-pro {
+  border: 1px solid var(--bc-line);
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(21,31,53,.98), rgba(12,19,34,.98));
+  box-shadow: 0 18px 55px rgba(0,0,0,.18);
+}
+
+.bc-sidebar-card { padding: 20px; }
+.bc-sidebar-label,
+.bc-kicker {
+  margin: 0 0 8px !important;
+  color: var(--bc-gold) !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+.bc-sidebar-card h2 {
+  margin: 0 0 9px !important;
+  padding: 0 !important;
+  color: #fff !important;
+  font: 700 20px/1.25 Georgia, serif !important;
+}
+.bc-sidebar-card p { margin: 0 0 16px !important; color: var(--bc-muted) !important; font-size: 14px; line-height: 1.55; }
+.bc-toc { margin: 0 !important; padding: 0 !important; list-style: none; display: grid; gap: 9px; }
+.bc-toc li { margin: 0 !important; }
+.bc-toc a { color: var(--bc-muted) !important; text-decoration: none; font-size: 13px; line-height: 1.4; }
+.bc-toc a:hover { color: var(--bc-gold-soft) !important; }
+
+.bc-inline-study {
+  margin: 32px 0 36px;
+  padding: 22px 24px;
+  border-left: 4px solid var(--bc-gold);
+}
+.bc-inline-study h2,
+.bc-final-pro h2 {
+  margin: 0 0 9px !important;
+  padding: 0 !important;
+  color: #fff !important;
+  font: 700 24px/1.25 Georgia, serif !important;
+}
+.bc-inline-study p,
+.bc-final-pro p { color: var(--bc-muted) !important; margin: 0 0 16px !important; }
+
+.post-body .bc-direct-answer {
+  margin: 0 0 30px !important;
+  padding: 20px 22px;
+  border-left: 4px solid var(--bc-gold);
+  border-radius: 0 12px 12px 0;
+  background: rgba(212,175,95,.09);
+  color: var(--bc-text) !important;
+  font-size: 1.03em;
+  line-height: 1.7;
+}
+
+.bc-button-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.bc-button,
+.bc-text-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  border-radius: 999px;
+  font-weight: 800;
+  text-decoration: none !important;
+}
+.bc-button { padding: 11px 20px; background: var(--bc-gold); color: #101827 !important; }
+.bc-button:hover { background: var(--bc-gold-soft); }
+.bc-text-link { padding: 10px 4px; color: var(--bc-gold-soft) !important; }
+
+.bc-final-pro { margin: 46px 0 20px; padding: 30px; text-align: center; border: 2px solid var(--bc-gold); }
+.bc-price-note { display: block; margin-top: 11px; color: #8996aa; font-size: 13px; }
+
+.bc-legacy-promo-hidden { display: none !important; }
+
+.bc-ad-slot {
+  width: 100%;
+  margin: 34px 0;
+  overflow: hidden;
+  text-align: center;
+}
+.bc-ad-label { display: block; margin-bottom: 7px; color: #778398; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
+.bc-ad-slot .adsbygoogle { min-height: 250px; }
+
+.hero-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
+.cta-secondary { display: inline-block; border: 1px solid #3a4968; color: #f5f1e8; padding: 17px 30px; border-radius: 50px; font-size: 17px; font-weight: 700; text-decoration: none; }
+.cta-secondary:hover { border-color: #d4af5f; color: #d4af5f; }
+.hero-proof { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 18px; margin-top: 18px; color: #8793a8; font-size: 14px; }
+
+@media (max-width: 900px) {
+  .bc-editorial-shell { display: block; width: min(780px, 100%) !important; }
+  .bc-study-sidebar { display: none; }
+}
+
+@media (max-width: 640px) {
+  .bc-inline-study, .bc-final-pro { padding: 21px 18px; border-radius: 14px; }
+  .bc-button-row { display: grid; }
+  .bc-button, .bc-text-link { width: 100%; }
+  .hero-actions { display: grid; padding: 0 8px; }
+}

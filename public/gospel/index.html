@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="robots" content="noindex, follow">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Heard us on The Gospel Briefing? — Bible Copilot</title>
+  <meta name="description" content="Bible Copilot for listeners of The Gospel Briefing, a five-minute weekday Christian news decision brief. Ask three Bible questions free each day, or try annual Pro free for seven days." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Bible Copilot for Gospel Briefing Listeners" />
+  <meta property="og:description" content="Verse-anchored Bible study with Scripture-cited explanations." />
+  <meta property="og:image" content="https://mybiblecopilot.com/og-image.png" />
+  <meta property="og:url" content="https://mybiblecopilot.com/gospel" />
+  <meta property="og:type" content="website" />
+
+  <!-- Apple Smart App Banner -->
+  <meta name="apple-itunes-app" content="app-id=6758913373" />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://mybiblecopilot.com/gospel" />
+
+  <style>
+    :root {
+      --navy: #0a1f3c;
+      --navy-dark: #061227;
+      --gold: #d4a574;
+      --gold-dark: #b58955;
+      --cream: #f8f5ee;
+      --text: #1a1a1a;
+      --text-muted: #6a6a6a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(180deg, var(--navy) 0%, var(--navy-dark) 100%);
+      color: white;
+      padding: 64px 0 56px;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      font-family: -apple-system, system-ui, sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 18px;
+    }
+    .hero h1 {
+      font-size: 38px;
+      line-height: 1.15;
+      font-weight: 400;
+      margin-bottom: 18px;
+      letter-spacing: -0.01em;
+    }
+    .hero h1 em {
+      color: var(--gold);
+      font-style: italic;
+    }
+    .hero-sub {
+      font-size: 18px;
+      color: rgba(255,255,255,0.85);
+      max-width: 520px;
+      margin: 0 auto 32px;
+    }
+    .offer-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(212, 165, 116, 0.4);
+      border-radius: 12px;
+      padding: 24px;
+      max-width: 480px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .offer-title {
+      font-family: -apple-system, system-ui, sans-serif;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .offer-headline {
+      font-size: 22px;
+      color: white;
+      margin-bottom: 8px;
+    }
+    .offer-fine {
+      font-size: 14px;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 20px;
+    }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gold);
+      color: var(--navy);
+      text-decoration: none;
+      font-family: -apple-system, system-ui, sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      padding: 14px 28px;
+      border-radius: 8px;
+      box-shadow: 0 6px 24px rgba(212, 165, 116, 0.3);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .cta:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(212, 165, 116, 0.45); }
+    .cta-sub {
+      display: block;
+      font-family: -apple-system, system-ui, sans-serif;
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      margin-top: 14px;
+    }
+
+    /* PROOF SECTION */
+    .proof {
+      padding: 56px 0 40px;
+      text-align: center;
+    }
+    .proof-eyebrow {
+      font-family: -apple-system, system-ui, sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+    .stars { font-size: 22px; color: var(--gold-dark); letter-spacing: 4px; margin-bottom: 8px; }
+    .stars-meta {
+      font-family: -apple-system, system-ui, sans-serif;
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 36px;
+    }
+    .tradition {
+      font-size: 17px;
+      font-style: italic;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin: 0 auto;
+    }
+    .tradition strong { color: var(--navy); font-style: normal; font-weight: 600; }
+
+    /* DEMO */
+    .demo {
+      background: white;
+      padding: 56px 0;
+      border-top: 1px solid #e8e3d8;
+      border-bottom: 1px solid #e8e3d8;
+    }
+    .demo h2 {
+      font-size: 26px;
+      text-align: center;
+      margin-bottom: 32px;
+      color: var(--navy);
+      font-weight: 400;
+    }
+    .demo-question {
+      background: var(--cream);
+      border-left: 3px solid var(--gold);
+      padding: 16px 20px;
+      margin-bottom: 16px;
+      font-style: italic;
+      color: var(--navy);
+      font-size: 16px;
+    }
+    .demo-answer {
+      background: #fafaf6;
+      border-left: 3px solid var(--navy);
+      padding: 20px 24px;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    .demo-answer strong { color: var(--navy); }
+    .demo-answer .verse-ref {
+      font-family: -apple-system, system-ui, sans-serif;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 12px;
+      display: block;
+    }
+
+    /* WHY */
+    .why {
+      padding: 56px 0 64px;
+    }
+    .why h2 {
+      font-size: 26px;
+      text-align: center;
+      margin-bottom: 36px;
+      color: var(--navy);
+      font-weight: 400;
+    }
+    .why-grid {
+      display: grid;
+      gap: 20px;
+    }
+    .why-item {
+      padding: 18px 22px;
+      background: white;
+      border-radius: 8px;
+      border: 1px solid #e8e3d8;
+    }
+    .why-item strong {
+      color: var(--navy);
+      font-weight: 600;
+      display: block;
+      margin-bottom: 4px;
+      font-size: 16px;
+    }
+    .why-item span {
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+
+    /* FINAL CTA */
+    .final {
+      background: var(--navy);
+      color: white;
+      padding: 56px 0;
+      text-align: center;
+    }
+    .final h2 {
+      font-size: 28px;
+      font-weight: 400;
+      margin-bottom: 16px;
+    }
+    .final p {
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 28px;
+      max-width: 440px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 32px 0 48px;
+      text-align: center;
+      font-family: -apple-system, system-ui, sans-serif;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    footer a { color: var(--navy); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 580px) {
+      .hero { padding: 48px 0 40px; }
+      .hero h1 { font-size: 30px; }
+      .hero-sub { font-size: 16px; }
+      .offer-headline { font-size: 18px; }
+      .demo h2, .why h2, .final h2 { font-size: 22px; }
+    }
+  </style>
+  <script defer src="/assets/gospel-funnel.js"></script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/monetization.css">
+</head>
+<body>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-eyebrow">From the five-minute Gospel Briefing</div>
+      <h1>Study Scripture with clarity.<br /><em>Not generic chat.</em></h1>
+      <p class="hero-sub">After today’s five-minute Christian news decision brief, bring its passage into a guided study that works through what it says, what it means, what it teaches about God, and how to apply it.</p>
+
+      <div class="offer-card">
+        <div class="offer-title">Gospel Briefing Offer</div>
+        <div class="offer-headline">Start with three free questions a day.</div>
+        <div class="offer-fine">Or try the annual Pro plan free for seven days.</div>
+        <a class="cta" data-gospel-funnel-cta data-cta-location="hero_offer" href="https://apps.apple.com/us/app/bible-copilot-ai-bible-study/id6758913373?pt=128532000&ct=gospelbriefing_podcast&mt=8">Get Bible Copilot</a>
+        <span class="cta-sub">No account required for the free tier.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="proof">
+    <div class="container">
+      <div class="proof-eyebrow">Built for thoughtful Bible study</div>
+      <div class="stars">✦ ✦ ✦</div>
+      <div class="stars-meta">Verse-anchored study, not generic answers.</div>
+      <p class="tradition">Keep the <strong>passage itself</strong> in view as you study its context, meaning, and application.</p>
+    </div>
+  </section>
+
+  <section class="demo">
+    <div class="container">
+      <h2>Here's what an answer looks like.</h2>
+      <div class="demo-question">How does this verse fit its chapter, book, and the rest of Scripture?</div>
+      <div class="demo-answer">
+        <p>Start with the passage. Bible Copilot gives you a guided study that helps you observe the text, interpret it carefully, consider its theology, and apply what you are learning.</p>
+        <p style="margin-top: 14px;">Its explanations cite Scripture so you can keep checking the answer against the Bible.</p>
+        <span class="verse-ref">Summary · Observe · Interpret · Theology · Apply · Apologetics</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="why">
+    <div class="container">
+      <h2>Why Bible Copilot is different.</h2>
+      <div class="why-grid">
+        <div class="why-item">
+          <strong>Scripture-cited explanations.</strong>
+          <span>Keep the passage and cited Scriptures in view as you study.</span>
+        </div>
+        <div class="why-item">
+          <strong>Six study modes.</strong>
+          <span>Observe · Interpret · Theology · Apply · Apologetics · Summary.</span>
+        </div>
+        <div class="why-item">
+          <strong>Verse-anchored study.</strong>
+          <span>Bring your next Bible question to the text instead of generic chat.</span>
+        </div>
+        <div class="why-item">
+          <strong>No account required.</strong>
+          <span>No account required. No ads. Free tier: 3 questions a day.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="container">
+      <h2>Start free. Upgrade if you love it.</h2>
+      <p>Ask three questions free each day. The annual Pro plan includes a seven-day trial.</p>
+      <a class="cta" data-gospel-funnel-cta data-cta-location="final_offer" href="https://apps.apple.com/us/app/bible-copilot-ai-bible-study/id6758913373?pt=128532000&ct=gospelbriefing_podcast&mt=8">Get Bible Copilot</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p><a href="/">← Back to mybiblecopilot.com</a> &nbsp;·&nbsp; <a href="mailto:support@mybiblecopilot.com">support@mybiblecopilot.com</a></p>
+      <p style="margin-top: 12px; color: #999;">Verse-anchored Bible study from Republic Publishing.</p>
+    </div>
+  </footer>
+
+<script src="/assets/revenue-config.js"></script>
+<script defer src="/assets/revenue.js"></script>
+</body>
+</html>

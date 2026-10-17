@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="robots" content="index, follow">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TL50DGZ82K"></script>
+<script>
+ window.dataLayer = window.dataLayer || [];
+ function gtag(){dataLayer.push(arguments);}
+ gtag('js', new Date());
+ gtag('config', 'G-TL50DGZ82K');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bible Verse Generator — Find Verses by Topic | Bible Copilot</title>
+  <meta name="description" content="Find Bible verses for any situation or emotion. Search by topic: anxiety, grief, hope, strength, love, fear and more.">
+  <link rel="canonical" href="https://mybiblecopilot.com/tools/verse-generator/">
+  <meta property="og:title" content="Bible Verse Generator — Find Verses by Topic | Bible Copilot">
+  <meta property="og:description" content="Find Bible verses for any situation or emotion. Search by topic: anxiety, grief, hope, strength, love, fear and more.">
+  <meta property="og:url" content="https://mybiblecopilot.com/tools/verse-generator/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bible Verse Generator — Find Verses by Topic | Bible Copilot">
+  <meta name="twitter:description" content="Find Bible verses for any situation or emotion. Search by topic: anxiety, grief, hope, strength, love, fear and more.">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What Bible verses help with anxiety?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Philippians 4:6-7 is a key verse: 'Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God.' Also 1 Peter 5:7: 'Cast all your anxiety on him because he cares for you,' and John 14:27 which offers Jesus' promise of peace."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What Bible verses offer hope during difficult times?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Jeremiah 29:11 is among the most beloved: 'For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, plans to give you hope and a future.' Romans 15:13 and Lamentations 3:22-23 also provide powerful encouragement."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where does the Bible talk about strength?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Philippians 4:13 says 'I can do all this through him who gives me strength.' Isaiah 40:31 promises renewed strength to those who hope in the Lord, and Psalm 46:1 calls God 'our refuge and strength, an ever-present help in trouble.'"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What does the Bible say about grief and loss?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Psalm 34:18 assures us 'The Lord is close to the brokenhearted and saves those who are crushed in spirit.' Revelation 21:4 promises that one day God 'will wipe every tear from their eyes.' Matthew 5:4 offers comfort: 'Blessed are those who mourn, for they will be comforted.'"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What Bible verses are about love?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "1 Corinthians 13:4-7 gives the famous definition of love. John 3:16 speaks to God's love for the world, and Romans 8:38-39 assures that nothing can separate us from God's love."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What Bible verses help with fear?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Isaiah 41:10 says 'So do not fear, for I am with you.' Joshua 1:9 commands courage: 'Be strong and courageous. Do not be afraid.' 2 Timothy 1:7 reminds us that God has given us power, love, and self-discipline rather than a spirit of timidity."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How can I find the right Bible verse for my situation?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Use the topic buttons on this page to find curated Bible verses for your specific situation — whether you're dealing with anxiety, grief, fear, loneliness, or seeking hope, strength, or purpose. For deeper study and personalized insights, download the Bible Copilot app."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-deep: #0a0e1a;
+      --bg-card: #141c34;
+      --bg-mid: #1a2444;
+      --border: #1e2a4a;
+      --gold: #d4af5f;
+      --gold-light: #e8c97a;
+      --gold-dim: rgba(212, 175, 95, 0.15);
+      --text-primary: #ffffff;
+      --text-secondary: #99aabb;
+      --text-dim: #667788;
+      --radius-card: 20px;
+      --radius-pill: 100px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+      background-color: var(--bg-deep);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 14, 26, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .nav-logo {
+      text-decoration: none;
+      color: var(--gold);
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .nav-logo:hover {
+      color: var(--gold-light);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav-link:hover {
+      color: var(--text-primary);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .nav-link-cta {
+      color: #0a0e1a;
+      background: var(--gold);
+      font-weight: 600;
+    }
+
+    .nav-link-cta:hover {
+      background: var(--gold-light);
+      color: #0a0e1a;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      text-align: center;
+      padding: 80px 24px 56px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: var(--gold-dim);
+      border: 1px solid rgba(212, 175, 95, 0.3);
+      padding: 6px 16px;
+      border-radius: var(--radius-pill);
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #fff 40%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ===== TOPIC GRID ===== */
+    .topics-section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    .topics-label {
+      text-align: center;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 20px;
+    }
+
+    .topics-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .topic-btn {
+      cursor: pointer;
+      background: transparent;
+      border: 1.5px solid rgba(212, 175, 95, 0.45);
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 0.92rem;
+      font-weight: 500;
+      padding: 10px 22px;
+      border-radius: var(--radius-pill);
+      transition: all 0.2s ease;
+      outline: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .topic-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold-dim);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .topic-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold-light);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(212, 175, 95, 0.15);
+    }
+
+    .topic-btn:hover::before {
+      opacity: 1;
+    }
+
+    .topic-btn.active {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: #0a0e1a;
+      font-weight: 700;
+      box-shadow: 0 4px 24px rgba(212, 175, 95, 0.35);
+      transform: translateY(-1px);
+    }
+
+    .topic-btn.active::before {
+      opacity: 0;
+    }
+
+    /* ===== RESULTS ===== */
+    .results-section {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    .results-empty {
+      text-align: center;
+      padding: 60px 24px;
+      color: var(--text-dim);
+    }
+
+    .results-empty-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      opacity: 0.4;
+    }
+
+    .results-empty p {
+      font-size: 1rem;
+    }
+
+    .results-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .results-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .results-title span {
+      color: var(--gold);
+    }
+
+    .results-count {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      font-weight: 500;
+    }
+
+    .verse-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      animation: fadeUp 0.35s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .verse-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 28px 32px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .verse-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--gold), rgba(212, 175, 95, 0.3));
+      border-radius: 4px 0 0 4px;
+    }
+
+    .verse-card:hover {
+      border-color: rgba(212, 175, 95, 0.3);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    .verse-quote-mark {
+      font-size: 3rem;
+      line-height: 1;
+      color: var(--gold);
+      opacity: 0.2;
+      font-family: Georgia, serif;
+      position: absolute;
+      top: 12px;
+      right: 24px;
+    }
+
+    .verse-text {
+      font-size: 1.05rem;
+      color: var(--text-primary);
+      line-height: 1.75;
+      font-style: italic;
+      margin-bottom: 16px;
+      padding-right: 32px;
+    }
+
+    .verse-reference {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.02em;
+    }
+
+    /* ===== CTA ===== */
+    .cta-section {
+      background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-mid) 100%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 72px 24px;
+      text-align: center;
+    }
+
+    .cta-inner {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .cta-icon {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+    }
+
+    .cta-section h2 {
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #fff 40%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .cta-section p {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+
+    .app-store-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--gold);
+      color: #0a0e1a;
+      text-decoration: none;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 16px 36px;
+      border-radius: var(--radius-pill);
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 24px rgba(212, 175, 95, 0.3);
+    }
+
+    .app-store-btn:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 36px rgba(212, 175, 95, 0.45);
+    }
+
+    .cta-sub {
+      margin-top: 16px;
+      font-size: 0.82rem;
+      color: var(--text-dim);
+    }
+
+    /* ===== FAQ ===== */
+    .faq-section {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 72px 24px 64px;
+    }
+
+    .faq-section h2 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      text-align: left;
+      padding: 20px 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      transition: color 0.2s;
+    }
+
+    .faq-question:hover {
+      color: var(--gold);
+    }
+
+    .faq-chevron {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      color: var(--text-dim);
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item.open .faq-chevron {
+      transform: rotate(180deg);
+      color: var(--gold);
+    }
+
+    .faq-answer {
+      display: none;
+      padding: 0 0 20px;
+      color: var(--text-secondary);
+      font-size: 0.97rem;
+      line-height: 1.75;
+    }
+
+    .faq-item.open .faq-answer {
+      display: block;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .footer-logo {
+      color: var(--gold);
+      font-size: 1rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .footer-link {
+      text-decoration: none;
+      color: var(--text-dim);
+      font-size: 0.88rem;
+      transition: color 0.2s;
+    }
+
+    .footer-link:hover {
+      color: var(--text-secondary);
+    }
+
+    .footer-copy {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      width: 100%;
+      text-align: center;
+      margin-top: 8px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 600px) {
+      .hero {
+        padding: 56px 20px 40px;
+      }
+
+      .verse-card {
+        padding: 22px 20px;
+      }
+
+      .verse-text {
+        font-size: 1rem;
+        padding-right: 0;
+      }
+
+      .nav-inner {
+        padding: 0 16px;
+        gap: 12px;
+      }
+
+      .nav-link {
+        font-size: 0.82rem;
+        padding: 6px 10px;
+      }
+
+      .topic-btn {
+        font-size: 0.85rem;
+        padding: 9px 18px;
+      }
+
+      .results-section {
+        padding: 0 16px 60px;
+      }
+
+      .topics-section {
+        padding: 0 16px 40px;
+      }
+    }
+  </style>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/monetization.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">&#10011; Bible Copilot</a>
+    <div class="nav-links">
+      <a href="/blog/" class="nav-link">Blog</a>
+      <a href="https://apps.apple.com/us/app/bible-copilot-ai-bible-study/id6758913373" class="nav-link nav-link-cta" target="_blank" rel="noopener">App Store</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">Free Bible Tool</div>
+  <h1>Find the Perfect Bible Verse</h1>
+  <p class="hero-sub">Choose a topic below to discover curated Scripture for whatever you&#8217;re facing &#8212; anxiety, grief, fear, hope, and more. Every verse is drawn from the NIV translation.</p>
+</section>
+
+<!-- TOPICS -->
+<section class="topics-section">
+  <p class="topics-label">Choose a topic</p>
+  <div class="topics-grid" id="topicsGrid">
+    <button class="topic-btn" data-topic="anxiety">Anxiety</button>
+    <button class="topic-btn" data-topic="grief">Grief</button>
+    <button class="topic-btn" data-topic="hope">Hope</button>
+    <button class="topic-btn" data-topic="strength">Strength</button>
+    <button class="topic-btn" data-topic="love">Love</button>
+    <button class="topic-btn" data-topic="fear">Fear</button>
+    <button class="topic-btn" data-topic="peace">Peace</button>
+    <button class="topic-btn" data-topic="forgiveness">Forgiveness</button>
+    <button class="topic-btn" data-topic="courage">Courage</button>
+    <button class="topic-btn" data-topic="healing">Healing</button>
+    <button class="topic-btn" data-topic="joy">Joy</button>
+    <button class="topic-btn" data-topic="purpose">Purpose</button>
+    <button class="topic-btn" data-topic="loneliness">Loneliness</button>
+    <button class="topic-btn" data-topic="marriage">Marriage</button>
+    <button class="topic-btn" data-topic="depression">Depression</button>
+    <button class="topic-btn" data-topic="faith">Faith</button>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="results-section" id="resultsSection">
+  <div class="results-empty" id="resultsEmpty">
+    <div class="results-empty-icon">&#10022;</div>
+    <p>Select a topic above to see Bible verses</p>
+  </div>
+  <div id="resultsContent" style="display:none;">
+    <div class="results-header">
+      <div class="results-title">Verses for <span id="resultsTopicLabel"></span></div>
+      <div class="results-count" id="resultsCount"></div>
+    </div>
+    <div class="verse-cards" id="verseCards"></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <div class="cta-icon">&#10011;</div>
+    <h2>Go Deeper with Bible Copilot</h2>
+    <p>Explore the full Bible with AI-powered insights, personalized verse recommendations, guided devotionals, and study tools &#8212; all in one beautiful app.</p>
+    <a href="https://apps.apple.com/us/app/bible-copilot-ai-bible-study/id6758913373" class="app-store-btn" target="_blank" rel="noopener">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+      </svg>
+      Download on the App Store
+    </a>
+    <p class="cta-sub">Free to download &bull; Available on iPhone &amp; iPad</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <h2>Frequently Asked Questions</h2>
+
+  <div class="faq-item">
+    <button class="faq-question" aria-expanded="false">
+      What Bible verses help with anxiety?
+      <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </button>
+    <div class="faq-answer">Philippians 4:6-7 is a foundational verse: &#8220;Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God.&#8221; Also powerful are 1 Peter 5:7 &#8212; &#8220;Cast all your anxiety on him because he cares for you&#8221; &#8212; and John 14:27, where Jesus promises his peace directly.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" aria-expanded="false">
+      What Bible verses offer hope during difficult times?
+      <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </button>
+    <div class="faq-answer">Jeremiah 29:11 is among the most beloved hope verses: &#8220;For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, plans to give you hope and a future.&#8221; Romans 15:13 and Lamentations 3:22-23 are also treasured passages of encouragement.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" aria-expanded="false">
+      Where does the Bible talk about strength?
+      <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </button>
+    <div class="faq-answer">Philippians 4:13 is the most quoted: &#8220;I can do all this through him who gives me strength.&#8221; Isaiah 40:31 promises that those who hope in the Lord will renew their strength, and Psalm 46:1 declares God to be &#8220;our refuge and strength, an ever-present help in trouble.&#8221;</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" aria-expanded="false">
+      What does the Bible say about grief and loss?
+      <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </button>
+    <div class="faq-answer">Psalm 34:18 offers direct comfort: &#8220;The Lord is close to the brokenhearted and saves those who are crushed in spirit.&#8221; Revelation 21:4 looks to eternal hope, while Matthew 5:4 &#8212; &#8220;Blessed are those who mourn, for they will be comforted&#8221; &#8212; shows that grief is acknowledged and honored by God.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" aria-expanded="false">
+      What Bible verses are about love?
+      <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </button>
+    <div class="faq-answer">1 Corinthians 13:4-7 provides the Bible&#8217;s most complete picture of love. John 3:16 captures God&#8217;s love for humanity, and Romans 8:38-39 is a powerful assurance that nothing in creation can separate us from God&#8217;s love in Christ Jesus.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" aria-expanded="false">
+      What Bible verses help with fear?
+      <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </button>
+    <div class="faq-answer">Isaiah 41:10 speaks directly: &#8220;So do not fear, for I am with you.&#8221; Joshua 1:9 is a command to courage, and 2 Timothy 1:7 reminds us that God&#8217;s Spirit produces power, love, and self-discipline rather than fear. 1 John 4:18 also teaches that perfect love drives out fear.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" aria-expanded="false">
+      How can I find the right Bible verse for my situation?
+      <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </button>
+    <div class="faq-answer">Use the topic buttons on this page to find curated Scripture for your specific situation. For deeper, personalized Bible study &#8212; including AI-guided insights, devotionals, and the ability to ask questions about any passage &#8212; download the Bible Copilot app for iPhone and iPad.</div>
+  </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="footer-logo">&#10011; Bible Copilot</a>
+    <div class="footer-links">
+      <a href="/blog/" class="footer-link">Blog</a>
+      <a href="/tools/" class="footer-link">Tools</a>
+      <a href="/privacy/" class="footer-link">Privacy</a>
+      <a href="/terms/" class="footer-link">Terms</a>
+      <a href="https://apps.apple.com/us/app/bible-copilot-ai-bible-study/id6758913373" class="footer-link" target="_blank" rel="noopener">App Store</a>
+    </div>
+    <p class="footer-copy">&copy; 2025 Bible Copilot. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  var VERSES = {
+    anxiety: [
+      {
+        ref: "Philippians 4:6-7",
+        text: "Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God. And the peace of God, which transcends all understanding, will guard your hearts and your minds in Christ Jesus."
+      },
+      {
+        ref: "Matthew 6:34",
+        text: "Therefore do not worry about tomorrow, for tomorrow will worry about itself. Each day has enough trouble of its own."
+      },
+      {
+        ref: "1 Peter 5:7",
+        text: "Cast all your anxiety on him because he cares for you."
+      },
+      {
+        ref: "Psalm 94:19",
+        text: "When anxiety was great within me, your consolation brought me joy."
+      },
+      {
+        ref: "John 14:27",
+        text: "Peace I leave with you; my peace I give you. I do not give to you as the world gives. Do not let your hearts be troubled and do not be afraid."
+      }
+    ],
+    grief: [
+      {
+        ref: "Psalm 34:18",
+        text: "The Lord is close to the brokenhearted and saves those who are crushed in spirit."
+      },
+      {
+        ref: "Revelation 21:4",
+        text: "He will wipe every tear from their eyes. There will be no more death or mourning or crying or pain, for the old order of things has passed away."
+      },
+      {
+        ref: "Matthew 5:4",
+        text: "Blessed are those who mourn, for they will be comforted."
+      },
+      {
+        ref: "Romans 8:18",
+        text: "I consider that our present sufferings are not worth comparing with the glory that will be revealed in us."
+      },
+      {
+        ref: "2 Corinthians 1:3-4",
+        text: "Praise be to the God and Father of our Lord Jesus Christ, the Father of compassion and the God of all comfort, who comforts us in all our troubles, so that we can comfort those in any trouble with the comfort we ourselves receive from God."
+      }
+    ],
+    hope: [
+      {
+        ref: "Jeremiah 29:11",
+        text: "For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, plans to give you hope and a future."
+      },
+      {
+        ref: "Romans 15:13",
+        text: "May the God of hope fill you with all joy and peace as you trust in him, so that you may overflow with hope by the power of the Holy Spirit."
+      },
+      {
+        ref: "Psalm 62:5",
+        text: "Yes, my soul, find rest in God; my hope comes from him."
+      },
+      {
+        ref: "Lamentations 3:22-23",
+        text: "Because of the Lord's great love we are not consumed, for his compassions never fail. They are new every morning; great is your faithfulness."
+      },
+      {
+        ref: "Romans 8:28",
+        text: "And we know that in all things God works for the good of those who love him, who have been called according to his purpose."
+      }
+    ],
+    strength: [
+      {
+        ref: "Philippians 4:13",
+        text: "I can do all this through him who gives me strength."
+      },
+      {
+        ref: "Isaiah 40:31",
+        text: "But those who hope in the Lord will renew their strength. They will soar on wings like eagles; they will run and not grow weary, they will walk and not be faint."
+      },
+      {
+        ref: "Psalm 46:1",
+        text: "God is our refuge and strength, an ever-present help in trouble."
+      },
+      {
+        ref: "2 Timothy 1:7",
+        text: "For the Spirit God gave us does not make us timid, but gives us power, love and self-discipline."
+      },
+      {
+        ref: "Ephesians 6:10",
+        text: "Finally, be strong in the Lord and in his mighty power."
+      }
+    ],
+    love: [
+      {
+        ref: "1 Corinthians 13:4-7",
+        text: "Love is patient, love is kind. It does not envy, it does not boast, it is not proud. It does not dishonor others, it is not self-seeking, it is not easily angered, it keeps no record of wrongs. Love does not delight in evil but rejoices with the truth. It always protects, always trusts, always hopes, always perseveres."
+      },
+      {
+        ref: "John 3:16",
+        text: "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life."
+      },
+      {
+        ref: "Romans 8:38-39",
+        text: "For I am convinced that neither death nor life, neither angels nor demons, neither the present nor the future, nor any powers, neither height nor depth, nor anything else in all creation, will be able to separate us from the love of God that is in Christ Jesus our Lord."
+      },
+      {
+        ref: "1 John 4:19",
+        text: "We love because he first loved us."
+      },
+      {
+        ref: "John 15:13",
+        text: "Greater love has no one than this: to lay down one's life for one's friends."
+      }
+    ],
+    fear: [
+      {
+        ref: "2 Timothy 1:7",
+        text: "For the Spirit God gave us does not make us timid, but gives us power, love and self-discipline."
+      },
+      {
+        ref: "Isaiah 41:10",
+        text: "So do not fear, for I am with you; do not be dismayed, for I am your God. I will strengthen you and help you; I will uphold you with my righteous right hand."
+      },
+      {
+        ref: "Psalm 56:3",
+        text: "When I am afraid, I put my trust in you."
+      },
+      {
+        ref: "1 John 4:18",
+        text: "There is no fear in love. But perfect love drives out fear, because fear has to do with punishment. The one who fears is not made perfect in love."
+      },
+      {
+        ref: "Joshua 1:9",
+        text: "Have I not commanded you? Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go."
+      }
+    ],
+    peace: [
+      {
+        ref: "John 14:27",
+        text: "Peace I leave with you; my peace I give you. I do not give to you as the world gives. Do not let your hearts be troubled and do not be afraid."
+      },
+      {
+        ref: "Philippians 4:7",
+        text: "And the peace of God, which transcends all understanding, will guard your hearts and your minds in Christ Jesus."
+      },
+      {
+        ref: "Isaiah 26:3",
+        text: "You will keep in perfect peace those whose minds are steadfast, because they trust in you."
+      },
+      {
+        ref: "Psalm 29:11",
+        text: "The Lord gives strength to his people; the Lord blesses his people with peace."
+      },
+      {
+        ref: "Colossians 3:15",
+        text: "Let the peace of Christ rule in your hearts, since as members of one body you were called to peace. And be thankful."
+      }
+    ],
+    forgiveness: [
+      {
+        ref: "1 John 1:9",
+        text: "If we confess our sins, he is faithful and just and will forgive us our sins and purify us from all unrighteousness."
+      },
+      {
+        ref: "Ephesians 4:32",
+        text: "Be kind and compassionate to one another, forgiving each other, just as in Christ God forgave you."
+      },
+      {
+        ref: "Colossians 3:13",
+        text: "Bear with each other and forgive one another if any of you has a grievance against someone. Forgive as the Lord forgave you."
+      },
+      {
+        ref: "Psalm 103:12",
+        text: "As far as the east is from the west, so far has he removed our transgressions from us."
+      },
+      {
+        ref: "Matthew 6:14",
+        text: "For if you forgive other people when they sin against you, your heavenly Father will also forgive you."
+      }
+    ],
+    courage: [
+      {
+        ref: "Joshua 1:9",
+        text: "Have I not commanded you? Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go."
+      },
+      {
+        ref: "Isaiah 41:10",
+        text: "So do not fear, for I am with you; do not be dismayed, for I am your God. I will strengthen you and help you; I will uphold you with my righteous right hand."
+      },
+      {
+        ref: "Psalm 27:1",
+        text: "The Lord is my light and my salvation \u2014 whom shall I fear? The Lord is the stronghold of my life \u2014 of whom shall I be afraid?"
+      },
+      {
+        ref: "2 Timothy 1:7",
+        text: "For the Spirit God gave us does not make us timid, but gives us power, love and self-discipline."
+      },
+      {
+        ref: "Deuteronomy 31:6",
+        text: "Be strong and courageous. Do not be afraid or terrified because of them, for the Lord your God goes with you; he will never leave you nor forsake you."
+      }
+    ],
+    healing: [
+      {
+        ref: "Psalm 147:3",
+        text: "He heals the brokenhearted and binds up their wounds."
+      },
+      {
+        ref: "Jeremiah 17:14",
+        text: "Heal me, Lord, and I will be healed; save me and I will be saved, for you are the one I praise."
+      },
+      {
+        ref: "James 5:15",
+        text: "And the prayer offered in faith will make the sick person well; the Lord will raise them up."
+      },
+      {
+        ref: "Isaiah 53:5",
+        text: "But he was pierced for our transgressions, he was crushed for our iniquities; the punishment that brought us peace was on him, and by his wounds we are healed."
+      },
+      {
+        ref: "Psalm 30:2",
+        text: "Lord my God, I called to you for help, and you healed me."
+      }
+    ],
+    joy: [
+      {
+        ref: "Psalm 16:11",
+        text: "You make known to me the path of life; you will fill me with joy in your presence, with eternal pleasures at your right hand."
+      },
+      {
+        ref: "John 15:11",
+        text: "I have told you this so that my joy may be in you and your joy may be complete."
+      },
+      {
+        ref: "Romans 15:13",
+        text: "May the God of hope fill you with all joy and peace as you trust in him, so that you may overflow with hope by the power of the Holy Spirit."
+      },
+      {
+        ref: "Nehemiah 8:10",
+        text: "Do not grieve, for the joy of the Lord is your strength."
+      },
+      {
+        ref: "Psalm 30:5",
+        text: "For his anger lasts only a moment, but his favor lasts a lifetime; weeping may stay for the night, but rejoicing comes in the morning."
+      }
+    ],
+    purpose: [
+      {
+        ref: "Jeremiah 29:11",
+        text: "For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, plans to give you hope and a future."
+      },
+      {
+        ref: "Romans 8:28",
+        text: "And we know that in all things God works for the good of those who love him, who have been called according to his purpose."
+      },
+      {
+        ref: "Ephesians 2:10",
+        text: "For we are God's handiwork, created in Christ Jesus to do good works, which God prepared in advance for us to do."
+      },
+      {
+        ref: "Psalm 138:8",
+        text: "The Lord will vindicate me; your love, Lord, endures forever \u2014 do not abandon the works of your hands."
+      },
+      {
+        ref: "Philippians 1:6",
+        text: "Being confident of this, that he who began a good work in you will carry it on to completion until the day of Christ Jesus."
+      }
+    ],
+    loneliness: [
+      {
+        ref: "Deuteronomy 31:6",
+        text: "Be strong and courageous. Do not be afraid or terrified because of them, for the Lord your God goes with you; he will never leave you nor forsake you."
+      },
+      {
+        ref: "Psalm 68:6",
+        text: "God sets the lonely in families, he leads out the prisoners with singing; but the rebellious live in a sun-scorched land."
+      },
+      {
+        ref: "Isaiah 41:10",
+        text: "So do not fear, for I am with you; do not be dismayed, for I am your God. I will strengthen you and help you; I will uphold you with my righteous right hand."
+      },
+      {
+        ref: "Matthew 28:20",
+        text: "And surely I am with you always, to the very end of the age."
+      },
+      {
+        ref: "Hebrews 13:5",
+        text: "Keep your lives free from the love of money and be content with what you have, because God has said, 'Never will I leave you; never will I forsake you.'"
+      }
+    ],
+    marriage: [
+      {
+        ref: "Genesis 2:24",
+        text: "That is why a man leaves his father and mother and is united to his wife, and they become one flesh."
+      },
+      {
+        ref: "Ephesians 5:25",
+        text: "Husbands, love your wives, just as Christ loved the church and gave himself up for her."
+      },
+      {
+        ref: "1 Corinthians 13:4-7",
+        text: "Love is patient, love is kind. It does not envy, it does not boast, it is not proud. It does not dishonor others, it is not self-seeking, it is not easily angered, it keeps no record of wrongs. Love does not delight in evil but rejoices with the truth. It always protects, always trusts, always hopes, always perseveres."
+      },
+      {
+        ref: "Proverbs 18:22",
+        text: "He who finds a wife finds what is good and receives favor from the Lord."
+      },
+      {
+        ref: "Colossians 3:14",
+        text: "And over all these virtues put on love, which binds them all together in perfect unity."
+      }
+    ],
+    depression: [
+      {
+        ref: "Psalm 34:18",
+        text: "The Lord is close to the brokenhearted and saves those who are crushed in spirit."
+      },
+      {
+        ref: "Isaiah 40:31",
+        text: "But those who hope in the Lord will renew their strength. They will soar on wings like eagles; they will run and not grow weary, they will walk and not be faint."
+      },
+      {
+        ref: "Matthew 11:28",
+        text: "Come to me, all you who are weary and burdened, and I will give you rest."
+      },
+      {
+        ref: "Psalm 42:11",
+        text: "Why, my soul, are you downcast? Why so disturbed within me? Put your hope in God, for I will yet praise him, my Savior and my God."
+      },
+      {
+        ref: "Philippians 4:13",
+        text: "I can do all this through him who gives me strength."
+      }
+    ],
+    faith: [
+      {
+        ref: "Hebrews 11:1",
+        text: "Now faith is confidence in what we hope for and assurance about what we do not see."
+      },
+      {
+        ref: "Mark 11:24",
+        text: "Therefore I tell you, whatever you ask for in prayer, believe that you have received it, and it will be yours."
+      },
+      {
+        ref: "Romans 10:17",
+        text: "Consequently, faith comes from hearing the message, and the message is heard through the word about Christ."
+      },
+      {
+        ref: "Matthew 17:20",
+        text: "He replied, 'Because you have so little faith. Truly I tell you, if you have faith as small as a mustard seed, you can say to this mountain, Move from here to there, and it will move. Nothing will be impossible for you.'"
+      },
+      {
+        ref: "2 Corinthians 5:7",
+        text: "For we live by faith, not by sight."
+      }
+    ]
+  };
+
+  var TOPIC_LABELS = {
+    anxiety: "Anxiety", grief: "Grief", hope: "Hope", strength: "Strength",
+    love: "Love", fear: "Fear", peace: "Peace", forgiveness: "Forgiveness",
+    courage: "Courage", healing: "Healing", joy: "Joy", purpose: "Purpose",
+    loneliness: "Loneliness", marriage: "Marriage", depression: "Depression", faith: "Faith"
+  };
+
+  var currentTopic = null;
+
+  function escapeHtml(str) {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  function showVerses(topic) {
+    var verses = VERSES[topic];
+    var label = TOPIC_LABELS[topic];
+    var empty = document.getElementById('resultsEmpty');
+    var content = document.getElementById('resultsContent');
+    var topicLabel = document.getElementById('resultsTopicLabel');
+    var countEl = document.getElementById('resultsCount');
+    var cards = document.getElementById('verseCards');
+
+    empty.style.display = 'none';
+    content.style.display = 'block';
+    topicLabel.textContent = label;
+    countEl.textContent = verses.length + ' verses';
+
+    cards.style.animation = 'none';
+    void cards.offsetHeight;
+    cards.style.animation = '';
+
+    cards.innerHTML = verses.map(function(v) {
+      return '<div class="verse-card">'
+        + '<div class="verse-quote-mark">\u201C</div>'
+        + '<p class="verse-text">' + escapeHtml(v.text) + '</p>'
+        + '<p class="verse-reference">' + escapeHtml(v.ref) + '</p>'
+        + '</div>';
+    }).join('');
+
+    if (window.innerWidth < 700) {
+      setTimeout(function() {
+        document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 60);
+    }
+  }
+
+  document.getElementById('topicsGrid').addEventListener('click', function(e) {
+    var btn = e.target.closest ? e.target.closest('.topic-btn') : (e.target.classList.contains('topic-btn') ? e.target : null);
+    if (!btn) return;
+
+    var topic = btn.getAttribute('data-topic');
+
+    if (currentTopic === topic) {
+      currentTopic = null;
+      btn.classList.remove('active');
+      document.getElementById('resultsEmpty').style.display = '';
+      document.getElementById('resultsContent').style.display = 'none';
+      return;
+    }
+
+    var allBtns = document.querySelectorAll('.topic-btn');
+    for (var i = 0; i < allBtns.length; i++) {
+      allBtns[i].classList.remove('active');
+    }
+    btn.classList.add('active');
+    currentTopic = topic;
+
+    showVerses(topic);
+  });
+
+  var faqQuestions = document.querySelectorAll('.faq-question');
+  for (var q = 0; q < faqQuestions.length; q++) {
+    faqQuestions[q].addEventListener('click', function() {
+      var item = this.parentElement;
+      var isOpen = item.classList.contains('open');
+
+      var allItems = document.querySelectorAll('.faq-item');
+      for (var j = 0; j < allItems.length; j++) {
+        allItems[j].classList.remove('open');
+        allItems[j].querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+      }
+
+      if (!isOpen) {
+        item.classList.add('open');
+        this.setAttribute('aria-expanded', 'true');
+      }
+    });
+  }
+</script>
+
+<script src="/assets/revenue-config.js"></script>
+<script defer src="/assets/revenue.js"></script>
+</body>
+</html>

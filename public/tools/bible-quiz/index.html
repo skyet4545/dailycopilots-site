@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="robots" content="index, follow">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TL50DGZ82K"></script>
+<script>
+ window.dataLayer = window.dataLayer || [];
+ function gtag(){dataLayer.push(arguments);}
+ gtag('js', new Date());
+ gtag('config', 'G-TL50DGZ82K');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bible Quiz — Test Your Bible Knowledge | Bible Copilot</title>
+  <meta name="description" content="Take our free Bible quiz! Test your knowledge of Scripture with 10 questions. From beginner to expert levels.">
+  <link rel="canonical" href="https://mybiblecopilot.com/tools/bible-quiz/">
+  <meta property="og:title" content="Bible Quiz — Test Your Bible Knowledge | Bible Copilot">
+  <meta property="og:description" content="Take our free Bible quiz! Test your knowledge of Scripture with 10 questions. From beginner to expert levels.">
+  <meta property="og:url" content="https://mybiblecopilot.com/tools/bible-quiz/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bible Quiz — Test Your Bible Knowledge | Bible Copilot">
+  <meta name="twitter:description" content="Take our free Bible quiz! Test your knowledge of Scripture with 10 questions. From beginner to expert levels.">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Quiz",
+    "name": "Bible Quiz — Test Your Bible Knowledge",
+    "description": "Take our free Bible quiz! Test your knowledge of Scripture with 10 questions covering beginner, intermediate, and advanced levels.",
+    "url": "https://mybiblecopilot.com/tools/bible-quiz/",
+    "provider": {
+      "@type": "Organization",
+      "name": "Bible Copilot",
+      "url": "https://mybiblecopilot.com"
+    },
+    "educationalLevel": ["Beginner", "Intermediate", "Advanced"],
+    "about": {
+      "@type": "Thing",
+      "name": "Bible",
+      "description": "Christian Scripture"
+    }
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-primary: #0a0e1a;
+      --bg-secondary: #141c34;
+      --bg-card: #141c34;
+      --border-color: #1e2a4a;
+      --accent-gold: #d4af5f;
+      --accent-gold-hover: #e8c96d;
+      --text-primary: #ffffff;
+      --text-muted: #99aabb;
+      --correct: #2ecc71;
+      --correct-bg: rgba(46, 204, 113, 0.12);
+      --wrong: #e74c3c;
+      --wrong-bg: rgba(231, 76, 60, 0.12);
+      --radius-card: 20px;
+      --radius-btn: 12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: rgba(10, 14, 26, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--accent-gold);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      padding: 6px 12px;
+      border-radius: 8px;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text-primary); background: rgba(255,255,255,0.06); }
+
+    .nav-links .btn-nav {
+      background: var(--accent-gold);
+      color: #0a0e1a;
+      font-weight: 600;
+      padding: 7px 16px;
+      border-radius: 8px;
+    }
+
+    .nav-links .btn-nav:hover {
+      background: var(--accent-gold-hover);
+      color: #0a0e1a;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 64px 20px 40px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(212, 175, 95, 0.12);
+      color: var(--accent-gold);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1px solid rgba(212, 175, 95, 0.25);
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 span { color: var(--accent-gold); }
+
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 520px;
+      margin: 0 auto 36px;
+    }
+
+    /* ── DIFFICULTY PICKER ── */
+    #difficulty-screen { max-width: 700px; margin: 0 auto; padding: 0 20px 80px; }
+
+    .difficulty-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 580px) {
+      .difficulty-grid { grid-template-columns: 1fr; }
+    }
+
+    .diff-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-card);
+      padding: 28px 20px;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .diff-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(212,175,95,0.04) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .diff-card:hover::before { opacity: 1; }
+    .diff-card:hover {
+      border-color: var(--accent-gold);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(212,175,95,0.12);
+    }
+
+    .diff-icon { font-size: 2.4rem; margin-bottom: 12px; display: block; }
+
+    .diff-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--text-primary);
+    }
+
+    .diff-card p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .diff-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+    }
+
+    .tag-beginner { background: rgba(46,204,113,0.15); color: #2ecc71; }
+    .tag-intermediate { background: rgba(212,175,95,0.15); color: var(--accent-gold); }
+    .tag-advanced { background: rgba(231,76,60,0.15); color: #e74c3c; }
+
+    /* ── QUIZ SCREEN ── */
+    #quiz-screen {
+      display: none;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 0 20px 80px;
+    }
+
+    .quiz-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .quiz-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-muted);
+    }
+
+    .quiz-counter {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--accent-gold);
+    }
+
+    /* Progress bar */
+    .progress-track {
+      height: 6px;
+      background: var(--border-color);
+      border-radius: 99px;
+      overflow: hidden;
+      margin-bottom: 28px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #d4af5f, #e8c96d);
+      border-radius: 99px;
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+
+    .question-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-card);
+      padding: 32px;
+      margin-bottom: 16px;
+    }
+
+    .question-num {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-gold);
+      margin-bottom: 14px;
+    }
+
+    .question-text {
+      font-size: 1.18rem;
+      font-weight: 600;
+      line-height: 1.45;
+      color: var(--text-primary);
+    }
+
+    .options-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .option-btn {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-btn);
+      padding: 14px 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-align: left;
+      transition: border-color 0.18s, background 0.18s, transform 0.15s;
+      color: var(--text-primary);
+      font-size: 0.97rem;
+      font-family: inherit;
+      width: 100%;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      border-color: var(--accent-gold);
+      background: rgba(212,175,95,0.07);
+      transform: translateX(3px);
+    }
+
+    .option-btn:disabled { cursor: default; transform: none; }
+
+    .option-letter {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: var(--border-color);
+      font-size: 0.8rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      transition: background 0.18s, color 0.18s;
+      color: var(--text-muted);
+    }
+
+    .option-btn.correct {
+      border-color: var(--correct);
+      background: var(--correct-bg);
+    }
+
+    .option-btn.correct .option-letter {
+      background: var(--correct);
+      color: #fff;
+    }
+
+    .option-btn.wrong {
+      border-color: var(--wrong);
+      background: var(--wrong-bg);
+    }
+
+    .option-btn.wrong .option-letter {
+      background: var(--wrong);
+      color: #fff;
+    }
+
+    .option-btn.dimmed {
+      opacity: 0.4;
+    }
+
+    /* Explanation */
+    .explanation-box {
+      background: rgba(212,175,95,0.07);
+      border: 1px solid rgba(212,175,95,0.2);
+      border-radius: var(--radius-btn);
+      padding: 14px 18px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      display: none;
+      margin-top: 16px;
+    }
+
+    .explanation-box.show { display: block; animation: fadeUp 0.3s ease; }
+
+    .explanation-box strong {
+      color: var(--accent-gold);
+      display: block;
+      margin-bottom: 4px;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* ── RESULT SCREEN ── */
+    #result-screen {
+      display: none;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 0 20px 80px;
+    }
+
+    .result-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-card);
+      padding: 40px 32px;
+      text-align: center;
+    }
+
+    .result-emoji { font-size: 4rem; margin-bottom: 16px; display: block; line-height: 1; }
+
+    .result-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--accent-gold);
+      margin-bottom: 8px;
+    }
+
+    .result-score-line {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+
+    .score-circle {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: conic-gradient(var(--accent-gold) var(--pct), var(--border-color) 0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 28px;
+      position: relative;
+    }
+
+    .score-circle::after {
+      content: '';
+      position: absolute;
+      width: 82px;
+      height: 82px;
+      background: var(--bg-card);
+      border-radius: 50%;
+    }
+
+    .score-inner {
+      position: relative;
+      z-index: 1;
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+
+    .score-inner small {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .result-breakdown {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .breakdown-item { text-align: center; }
+
+    .breakdown-num {
+      font-size: 1.5rem;
+      font-weight: 800;
+    }
+
+    .breakdown-num.correct { color: var(--correct); }
+    .breakdown-num.wrong { color: var(--wrong); }
+
+    .breakdown-label { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+
+    .result-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--accent-gold);
+      color: #0a0e1a;
+      font-weight: 700;
+      font-size: 0.97rem;
+      padding: 14px 24px;
+      border-radius: var(--radius-btn);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      font-family: inherit;
+    }
+
+    .btn-primary:hover { background: var(--accent-gold-hover); transform: translateY(-1px); }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 13px 24px;
+      border-radius: var(--radius-btn);
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      font-family: inherit;
+    }
+
+    .btn-secondary:hover {
+      border-color: rgba(255,255,255,0.2);
+      color: var(--text-primary);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .cta-block {
+      background: linear-gradient(135deg, rgba(212,175,95,0.1) 0%, rgba(212,175,95,0.04) 100%);
+      border: 1px solid rgba(212,175,95,0.2);
+      border-radius: 16px;
+      padding: 24px;
+      margin-top: 4px;
+    }
+
+    .cta-block p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 14px;
+    }
+
+    .cta-block strong { color: var(--text-primary); display: block; font-size: 1.05rem; margin-bottom: 6px; }
+
+    /* Copied toast */
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #1e2a4a;
+      border: 1px solid var(--accent-gold);
+      color: var(--accent-gold);
+      padding: 10px 22px;
+      border-radius: 30px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s, transform 0.25s;
+      z-index: 999;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 32px 20px;
+      text-align: center;
+    }
+
+    .footer-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--accent-gold); }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: #556;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.92); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .animate-pop { animation: popIn 0.35s cubic-bezier(0.34,1.56,0.64,1) both; }
+
+    .section-enter { animation: fadeUp 0.4s ease both; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 480px) {
+      .question-card { padding: 22px 18px; }
+      .result-card { padding: 28px 20px; }
+      .result-breakdown { gap: 14px; }
+    }
+  </style>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/monetization.css">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a class="nav-logo" href="/">✝ Bible Copilot</a>
+      <ul class="nav-links">
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="https://apps.apple.com/us/app/bible-copilot-ai-bible-study/id6758913373" class="btn-nav" target="_blank" rel="noopener">App Store</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero section-enter">
+    <div class="hero-badge">Free Bible Quiz</div>
+    <h1>How Well Do You Know <span>the Bible?</span></h1>
+    <p>10 questions, three levels of difficulty. Test your knowledge and discover how deep your Scripture roots go.</p>
+  </div>
+
+  <!-- DIFFICULTY SCREEN -->
+  <div id="difficulty-screen" class="section-enter">
+    <div class="difficulty-grid">
+      <div class="diff-card" onclick="startQuiz('beginner')">
+        <span class="diff-tag tag-beginner">Beginner</span>
+        <span class="diff-icon">📖</span>
+        <h3>Beginner</h3>
+        <p>Core stories and foundational facts everyone should know</p>
+      </div>
+      <div class="diff-card" onclick="startQuiz('intermediate')">
+        <span class="diff-tag tag-intermediate">Intermediate</span>
+        <span class="diff-icon">🌟</span>
+        <h3>Intermediate</h3>
+        <p>Dive deeper into people, places, and events of Scripture</p>
+      </div>
+      <div class="diff-card" onclick="startQuiz('advanced')">
+        <span class="diff-tag tag-advanced">Advanced</span>
+        <span class="diff-icon">📚</span>
+        <h3>Advanced</h3>
+        <p>Challenge yourself with detailed biblical knowledge</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ SCREEN -->
+  <div id="quiz-screen">
+    <div class="quiz-meta">
+      <span class="quiz-label" id="quiz-level-label">Beginner</span>
+      <span class="quiz-counter" id="quiz-counter">Question 1 of 10</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <div class="question-card animate-pop" id="question-card">
+      <div class="question-num" id="question-num">Question 1</div>
+      <div class="question-text" id="question-text"></div>
+    </div>
+    <div class="options-grid" id="options-grid"></div>
+    <div class="explanation-box" id="explanation-box">
+      <strong>Explanation</strong>
+      <span id="explanation-text"></span>
+    </div>
+  </div>
+
+  <!-- RESULT SCREEN -->
+  <div id="result-screen">
+    <div class="result-card animate-pop">
+      <span class="result-emoji" id="result-emoji">🏆</span>
+      <div class="result-title" id="result-title">Bible Champion</div>
+      <div class="result-score-line" id="result-score-line">You answered all 10 questions correctly!</div>
+
+      <div class="score-circle" id="score-circle">
+        <div class="score-inner">
+          <span id="score-num">10</span>
+          <small>out of 10</small>
+        </div>
+      </div>
+
+      <div class="result-breakdown">
+        <div class="breakdown-item">
+          <div class="breakdown-num correct" id="breakdown-correct">10</div>
+          <div class="breakdown-label">Correct</div>
+        </div>
+        <div class="breakdown-item">
+          <div class="breakdown-num wrong" id="breakdown-wrong">0</div>
+          <div class="breakdown-label">Incorrect</div>
+        </div>
+      </div>
+
+      <div class="result-actions">
+        <button class="btn-primary" onclick="copyResult()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy Result
+        </button>
+        <button class="btn-secondary" onclick="restartQuiz()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.46"/></svg>
+          Try Another Level
+        </button>
+      </div>
+
+      <div class="cta-block">
+        <strong>Want to go deeper in Scripture?</strong>
+        <p>Download Bible Copilot — AI-powered Bible study, verse by verse.</p>
+        <a href="https://apps.apple.com/us/app/bible-copilot-ai-bible-study/id6758913373" class="btn-primary" target="_blank" rel="noopener">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          Download on the App Store
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">Copied to clipboard!</div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/blog/">Blog</a>
+        <a href="/privacy/">Privacy Policy</a>
+        <a href="/terms/">Terms of Service</a>
+        <a href="https://apps.apple.com/us/app/bible-copilot-ai-bible-study/id6758913373" target="_blank" rel="noopener">App Store</a>
+      </div>
+      <div class="footer-copy">&copy; 2025 Bible Copilot. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    const QUESTIONS = {
+      beginner: [
+        {
+          q: "How many disciples did Jesus have?",
+          options: ["10", "12", "7", "15"],
+          answer: 1,
+          explanation: "Jesus chose 12 apostles to be His closest followers and spread His teachings."
+        },
+        {
+          q: "What is the first book of the Bible?",
+          options: ["Genesis", "Exodus", "Matthew", "Psalms"],
+          answer: 0,
+          explanation: "Genesis means 'beginning' and tells the story of creation."
+        },
+        {
+          q: "Who built the ark?",
+          options: ["Moses", "David", "Noah", "Abraham"],
+          answer: 2,
+          explanation: "God instructed Noah to build an ark to survive the great flood (Genesis 6–9)."
+        },
+        {
+          q: "In what city was Jesus born?",
+          options: ["Jerusalem", "Nazareth", "Bethlehem", "Jericho"],
+          answer: 2,
+          explanation: "Jesus was born in Bethlehem of Judea, fulfilling the prophecy in Micah 5:2."
+        },
+        {
+          q: "How many days did God take to create the world?",
+          options: ["5", "6", "7", "10"],
+          answer: 1,
+          explanation: "God created the world in 6 days and rested on the 7th day (Genesis 1–2)."
+        },
+        {
+          q: "Who was swallowed by a great fish?",
+          options: ["Elijah", "Jonah", "Daniel", "Isaiah"],
+          answer: 1,
+          explanation: "Jonah was swallowed by a great fish after fleeing from God's command (Jonah 1:17)."
+        },
+        {
+          q: "What river was Jesus baptized in?",
+          options: ["Nile", "Euphrates", "Jordan", "Tigris"],
+          answer: 2,
+          explanation: "John the Baptist baptized Jesus in the Jordan River (Matthew 3:13)."
+        },
+        {
+          q: "Who was the mother of Jesus?",
+          options: ["Ruth", "Esther", "Mary", "Sarah"],
+          answer: 2,
+          explanation: "Mary was chosen by God to be the mother of Jesus (Luke 1:30–31)."
+        },
+        {
+          q: "What did David use to defeat Goliath?",
+          options: ["Sword", "Spear", "Sling and stone", "Arrow"],
+          answer: 2,
+          explanation: "David defeated Goliath with a sling and a single stone (1 Samuel 17:49)."
+        },
+        {
+          q: "How many books are in the Bible?",
+          options: ["60", "63", "66", "72"],
+          answer: 2,
+          explanation: "The Bible contains 66 books — 39 in the Old Testament and 27 in the New Testament."
+        }
+      ],
+      intermediate: [
+        {
+          q: "Who wrote most of the Psalms?",
+          options: ["Solomon", "Moses", "David", "Asaph"],
+          answer: 2,
+          explanation: "King David is credited with writing about 73 of the 150 Psalms."
+        },
+        {
+          q: "What was Paul's name before his conversion?",
+          options: ["Peter", "Saul", "Simon", "Stephen"],
+          answer: 1,
+          explanation: "Saul of Tarsus became Paul after his dramatic conversion on the road to Damascus (Acts 9)."
+        },
+        {
+          q: "How many plagues struck Egypt?",
+          options: ["7", "8", "10", "12"],
+          answer: 2,
+          explanation: "God sent 10 plagues upon Egypt to free the Israelites from slavery (Exodus 7–12)."
+        },
+        {
+          q: "Who was thrown into the lion's den?",
+          options: ["Elijah", "Ezekiel", "Daniel", "Jeremiah"],
+          answer: 2,
+          explanation: "Daniel was thrown into the lion's den for praying to God, but God shut the lions' mouths (Daniel 6)."
+        },
+        {
+          q: "What is the shortest verse in the Bible?",
+          options: ["\"Pray without ceasing\"", "\"Jesus wept\"", "\"Amen\"", "\"Fear not\""],
+          answer: 1,
+          explanation: "\"Jesus wept\" (John 11:35) is the shortest verse, showing Jesus' compassion at Lazarus' tomb."
+        },
+        {
+          q: "Who betrayed Jesus?",
+          options: ["Peter", "Thomas", "Judas", "Bartholomew"],
+          answer: 2,
+          explanation: "Judas Iscariot betrayed Jesus for 30 pieces of silver (Matthew 26:14–16)."
+        },
+        {
+          q: "How many days was Jesus in the wilderness being tempted?",
+          options: ["7", "14", "40", "30"],
+          answer: 2,
+          explanation: "Jesus fasted and was tempted by Satan for 40 days in the wilderness (Matthew 4:1–2)."
+        },
+        {
+          q: "What did the prodigal son ask his father for?",
+          options: ["Forgiveness", "His inheritance", "A job", "Land"],
+          answer: 1,
+          explanation: "The prodigal son asked for his share of the inheritance, then squandered it (Luke 15:12)."
+        },
+        {
+          q: "Which woman hid the Israelite spies in Jericho?",
+          options: ["Delilah", "Rahab", "Deborah", "Bathsheba"],
+          answer: 1,
+          explanation: "Rahab hid the spies and was spared when Jericho fell (Joshua 2)."
+        },
+        {
+          q: "Who was the first king of Israel?",
+          options: ["David", "Solomon", "Saul", "Samuel"],
+          answer: 2,
+          explanation: "Saul was anointed by Samuel as the first king of Israel (1 Samuel 10:1)."
+        }
+      ],
+      advanced: [
+        {
+          q: "Who was Methuselah's father?",
+          options: ["Noah", "Enoch", "Lamech", "Seth"],
+          answer: 1,
+          explanation: "Enoch, who 'walked with God,' was the father of Methuselah, the longest-lived person in the Bible (Genesis 5:21)."
+        },
+        {
+          q: "In which book does the phrase 'vanity of vanities' appear?",
+          options: ["Proverbs", "Job", "Ecclesiastes", "Psalms"],
+          answer: 2,
+          explanation: "The Teacher in Ecclesiastes opens with 'Vanity of vanities! All is vanity' (Ecclesiastes 1:2)."
+        },
+        {
+          q: "What were the names of Job's three friends?",
+          options: [
+            "Eliphaz, Bildad, Zophar",
+            "Shadrach, Meshach, Abednego",
+            "Shem, Ham, Japheth",
+            "James, John, Peter"
+          ],
+          answer: 0,
+          explanation: "Eliphaz, Bildad, and Zophar came to comfort Job but ended up debating with him (Job 2:11)."
+        },
+        {
+          q: "How many years did the Israelites wander in the desert?",
+          options: ["20", "30", "40", "50"],
+          answer: 2,
+          explanation: "The Israelites wandered for 40 years due to their disobedience and lack of faith (Numbers 14:33–34)."
+        },
+        {
+          q: "Who was the Roman governor who sentenced Jesus to death?",
+          options: ["Herod", "Caesar", "Pontius Pilate", "Felix"],
+          answer: 2,
+          explanation: "Pontius Pilate, the Roman governor of Judea, sentenced Jesus to crucifixion (Matthew 27:26)."
+        },
+        {
+          q: "What was the name of Abraham's first son?",
+          options: ["Isaac", "Jacob", "Ishmael", "Esau"],
+          answer: 2,
+          explanation: "Ishmael was born to Abraham and Hagar before Isaac was born to Abraham and Sarah (Genesis 16:15)."
+        },
+        {
+          q: "In Revelation, what are the four living creatures around the throne?",
+          options: [
+            "Lion, ox, eagle, man",
+            "Horse, lion, bear, eagle",
+            "Cherub, seraph, angel, archangel",
+            "Lion, lamb, dove, fish"
+          ],
+          answer: 0,
+          explanation: "The four living creatures had faces like a lion, ox, man, and eagle (Revelation 4:7)."
+        },
+        {
+          q: "Who wrote the book of Revelation?",
+          options: ["Paul", "Peter", "John", "James"],
+          answer: 2,
+          explanation: "The Apostle John wrote Revelation while exiled on the island of Patmos (Revelation 1:9)."
+        },
+        {
+          q: "What is the last word of the Bible?",
+          options: ["Amen", "Lord", "Jesus", "Hallelujah"],
+          answer: 0,
+          explanation: "The Bible ends with 'The grace of the Lord Jesus be with God\u2019s people. Amen.' (Revelation 22:21)."
+        },
+        {
+          q: "How many letters did Paul write in the New Testament?",
+          options: ["11", "12", "13", "14"],
+          answer: 2,
+          explanation: "Paul is credited with writing 13 epistles, from Romans through Philemon."
+        }
+      ]
+    };
+
+    const LETTERS = ['A', 'B', 'C', 'D'];
+
+    const RESULTS = [
+      { min: 0,  max: 3,  title: "Bible Beginner",   emoji: "📖", line: "Keep exploring — every journey starts with a single step!" },
+      { min: 4,  max: 6,  title: "Scripture Student", emoji: "🌟", line: "Great foundation! Keep digging into God's Word." },
+      { min: 7,  max: 9,  title: "Bible Scholar",     emoji: "📚", line: "Impressive knowledge of Scripture. Well done!" },
+      { min: 10, max: 10, title: "Bible Champion",    emoji: "🏆", line: "Perfect score! You know the Bible inside and out." }
+    ];
+
+    let state = {
+      level: null,
+      questions: [],
+      current: 0,
+      score: 0,
+      answered: false,
+      advancing: false
+    };
+
+    function startQuiz(level) {
+      state.level = level;
+      state.questions = QUESTIONS[level];
+      state.current = 0;
+      state.score = 0;
+      state.answered = false;
+      state.advancing = false;
+
+      document.getElementById('difficulty-screen').style.display = 'none';
+      document.getElementById('result-screen').style.display = 'none';
+
+      const qs = document.getElementById('quiz-screen');
+      qs.style.display = 'block';
+      qs.classList.remove('section-enter');
+      void qs.offsetWidth;
+      qs.classList.add('section-enter');
+
+      const labels = { beginner: 'Beginner', intermediate: 'Intermediate', advanced: 'Advanced' };
+      document.getElementById('quiz-level-label').textContent = labels[level];
+
+      renderQuestion();
+      scrollToTop();
+    }
+
+    function renderQuestion() {
+      const q = state.questions[state.current];
+      const total = state.questions.length;
+      const idx = state.current;
+
+      // meta
+      document.getElementById('quiz-counter').textContent = `Question ${idx + 1} of ${total}`;
+      document.getElementById('question-num').textContent = `Question ${idx + 1}`;
+      document.getElementById('question-text').textContent = q.q;
+
+      // progress
+      const pct = (idx / total) * 100;
+      document.getElementById('progress-fill').style.width = pct + '%';
+
+      // reset explanation
+      const expl = document.getElementById('explanation-box');
+      expl.classList.remove('show');
+
+      // animate card
+      const card = document.getElementById('question-card');
+      card.classList.remove('animate-pop');
+      void card.offsetWidth;
+      card.classList.add('animate-pop');
+
+      // options
+      const grid = document.getElementById('options-grid');
+      grid.innerHTML = '';
+
+      q.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.setAttribute('aria-label', `Option ${LETTERS[i]}: ${opt}`);
+        btn.innerHTML = `<span class="option-letter">${LETTERS[i]}</span><span>${opt}</span>`;
+        btn.addEventListener('click', () => selectAnswer(i));
+        grid.appendChild(btn);
+      });
+
+      state.answered = false;
+      state.advancing = false;
+    }
+
+    function selectAnswer(chosen) {
+      if (state.answered || state.advancing) return;
+      state.answered = true;
+
+      const q = state.questions[state.current];
+      const btns = document.querySelectorAll('.option-btn');
+      const correct = q.answer;
+
+      btns.forEach((btn, i) => {
+        btn.disabled = true;
+        if (i === correct) {
+          btn.classList.add('correct');
+        } else if (i === chosen && chosen !== correct) {
+          btn.classList.add('wrong');
+        } else {
+          btn.classList.add('dimmed');
+        }
+      });
+
+      if (chosen === correct) state.score++;
+
+      // show explanation
+      document.getElementById('explanation-text').textContent = q.explanation;
+      const expl = document.getElementById('explanation-box');
+      expl.classList.add('show');
+
+      // auto-advance
+      state.advancing = true;
+      setTimeout(() => {
+        state.current++;
+        if (state.current < state.questions.length) {
+          renderQuestion();
+        } else {
+          showResult();
+        }
+      }, 1800);
+    }
+
+    function showResult() {
+      document.getElementById('quiz-screen').style.display = 'none';
+
+      const score = state.score;
+      const result = RESULTS.find(r => score >= r.min && score <= r.max);
+
+      document.getElementById('result-emoji').textContent = result.emoji;
+      document.getElementById('result-title').textContent = result.title;
+      document.getElementById('result-score-line').textContent = result.line;
+      document.getElementById('score-num').textContent = score;
+      document.getElementById('breakdown-correct').textContent = score;
+      document.getElementById('breakdown-wrong').textContent = 10 - score;
+
+      // conic gradient percent
+      const pct = (score / 10) * 360;
+      document.getElementById('score-circle').style.setProperty('--pct', pct + 'deg');
+
+      const rs = document.getElementById('result-screen');
+      rs.style.display = 'block';
+      rs.classList.remove('section-enter');
+      void rs.offsetWidth;
+      rs.classList.add('section-enter');
+
+      // complete progress bar
+      document.getElementById('progress-fill').style.width = '100%';
+
+      scrollToTop();
+    }
+
+    function restartQuiz() {
+      document.getElementById('result-screen').style.display = 'none';
+
+      const ds = document.getElementById('difficulty-screen');
+      ds.style.display = 'block';
+      ds.classList.remove('section-enter');
+      void ds.offsetWidth;
+      ds.classList.add('section-enter');
+
+      scrollToTop();
+    }
+
+    function copyResult() {
+      const score = state.score;
+      const text = `I scored ${score}/10 on the Bible Quiz! Try it: mybiblecopilot.com/tools/bible-quiz/`;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(showToast).catch(() => fallbackCopy(text));
+      } else {
+        fallbackCopy(text);
+      }
+    }
+
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch(e) {}
+      document.body.removeChild(ta);
+      showToast();
+    }
+
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2400);
+    }
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+
+<script src="/assets/revenue-config.js"></script>
+<script defer src="/assets/revenue.js"></script>
+</body>
+</html>
