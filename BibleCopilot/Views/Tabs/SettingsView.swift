@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct SettingsView: View {
     @Environment(SubscriptionService.self) private var subscriptionService
@@ -265,6 +266,31 @@ struct SettingsView: View {
                     Text("Your Progress")
                 }
 
+                if !SiblingApps.promotable.isEmpty {
+                    Section {
+                        ForEach(SiblingApps.promotable) { app in
+                            Button {
+                                SiblingApps.present(app)
+                            } label: {
+                                HStack {
+                                    Image(systemName: "square.and.arrow.up.on.square")
+                                        .foregroundColor(AppTheme.accent)
+                                    Text(app.name)
+                                        .foregroundColor(AppTheme.textPrimary)
+                                    Spacer()
+                                    Image(systemName: "chevron.right")
+                                        .font(.caption)
+                                        .foregroundColor(AppTheme.textMuted)
+                                }
+                            }
+                        }
+                    } header: {
+                        Text("More from Bible Copilot's makers")
+                    } footer: {
+                        Text("Other apps from the same maker. Opens in the App Store.")
+                    }
+                }
+
                 // About
                 Section {
                     HStack {
@@ -320,5 +346,47 @@ struct SettingsView: View {
                 Text(restoreAlertMessage)
             }
         }
+    }
+}
+
+/// Cross-promo catalog. Ids checked against the iTunes Lookup API on 2026-10-26.
+/// A row is omitted if its id is ever cleared or non-numeric.
+enum SiblingApps {
+    /// Campaign token on every Settings cross-promo link (`ct`).
+    static let campaignToken = "bc_crosspromo_settings"
+
+    struct AppPromo: Identifiable, Equatable {
+        let id: String
+        let name: String
+        /// Numeric App Store id.
+        let appStoreID: String
+    }
+
+    static let catalog: [AppPromo] = [
+        AppPromo(id: "prayer_copilot", name: "Prayer Copilot", appStoreID: "6761485209"),
+        AppPromo(id: "stoic_copilot", name: "Stoic Copilot", appStoreID: "6761389396"),
+        AppPromo(id: "gita_copilot", name: "Gita Copilot", appStoreID: "6761395731"),
+        AppPromo(id: "wisdom_copilot", name: "Wisdom Copilot", appStoreID: "6761395984"),
+        AppPromo(id: "torah_copilot", name: "Torah Copilot", appStoreID: "6761395920"),
+        AppPromo(id: "constitution_copilot", name: "Constitution Copilot", appStoreID: "6761391729"),
+    ]
+
+    static var promotable: [AppPromo] {
+        catalog.filter { app in
+            !app.appStoreID.isEmpty && app.appStoreID.allSatisfy(\.isNumber)
+        }
+    }
+
+    static func appStoreURL(for app: AppPromo) -> URL? {
+        guard promotable.contains(app) else { return nil }
+        return URL(string: "https://apps.apple.com/app/id\(app.appStoreID)?ct=\(campaignToken)")
+    }
+
+    /// Opens the App Store campaign link. `SKOverlay` cannot carry a `ct` token,
+    /// so the row uses the URL and the token is actually recorded.
+    static func present(_ app: AppPromo) {
+        guard let url = appStoreURL(for: app) else { return }
+        AnalyticsService.shared.track(AnalyticsEvent.crossPromoTapped, ["app": app.id, "campaign": campaignToken])
+        UIApplication.shared.open(url)
     }
 }

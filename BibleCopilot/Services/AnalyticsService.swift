@@ -112,6 +112,8 @@ enum AnalyticsEvent {
     static let planSelected = "plan_selected"
     static let planOpened = "plan_opened"
     static let verseShared = "verse_shared"
+    static let explanationShared = "explanation_shared"
+    static let crossPromoTapped = "cross_promo_tapped"
     static let shareComposerOpened = "share_composer_opened"
     static let reviewPromptRequested = "review_prompt_requested"
     static let tiktokShareStarted = "tiktok_share_started"

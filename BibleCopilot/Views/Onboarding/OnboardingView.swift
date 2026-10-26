@@ -1053,6 +1053,10 @@ struct OnboardingView: View {
     }
 
     // MARK: - Paywall Slide
+    //
+    // Not on the live path (welcome → aha → attribution → app). The strings below
+    // stay honest so this screen cannot advertise five modes, a seminary claim,
+    // or a day-5 trial reminder the app does not send.
 
     private var selectedOnboardingProduct: Product? {
         if selectedPlanId == subscriptionService.monthlyProductID {
@@ -1128,15 +1132,9 @@ struct OnboardingView: View {
                     VStack(spacing: 0) {
                         trialTimelineRow(
                             day: "Today",
-                            label: "Full access — explore all study modes",
+                            label: "Unlimited Scripture-cited answers start today",
                             icon: "checkmark.circle.fill",
                             color: AppTheme.success
-                        )
-                        trialTimelineRow(
-                            day: "Day 5",
-                            label: "Reminder before trial ends",
-                            icon: "bell.fill",
-                            color: AppTheme.gold
                         )
                         trialTimelineRow(
                             day: "Day 7",
@@ -1151,10 +1149,9 @@ struct OnboardingView: View {
 
                 // Features
                 VStack(alignment: .leading, spacing: 12) {
-                    onboardingFeatureRow(icon: "infinity", text: "Unlimited questions & answers")
-                    onboardingFeatureRow(icon: "book.fill", text: "All 5 study modes")
-                    onboardingFeatureRow(icon: "bookmark.fill", text: "Save to your study journal")
-                    onboardingFeatureRow(icon: "text.book.closed", text: "Guided reading plans")
+                    onboardingFeatureRow(icon: "infinity", text: "Unlimited Scripture-cited answers")
+                    onboardingFeatureRow(icon: "bookmark.fill", text: "A study journal you can reopen")
+                    onboardingFeatureRow(icon: "text.book.closed", text: "Reading plans beyond the free Gospel of John")
                 }
                 .padding(.horizontal, 32)
 
@@ -1167,7 +1164,11 @@ struct OnboardingView: View {
                             onboardingPlanCard(
                                 title: "Annual",
                                 price: annual.displayPrice + "/year",
-                                subtitle: onboardingVisibleTrialLength(for: annual) == nil ? "Billed annually" : "7-day free trial included",
+                                subtitle: PaywallView.trialThenPrice(
+                                    lengthLabel: onboardingVisibleTrialLength(for: annual),
+                                    displayPrice: annual.displayPrice,
+                                    periodWord: "year"
+                                ),
                                 badge: "BEST VALUE",
                                 isSelected: selectedPlanId == annual.id || selectedPlanId.isEmpty
                             )
@@ -1181,7 +1182,11 @@ struct OnboardingView: View {
                                 onboardingPlanCard(
                                     title: "Monthly",
                                     price: monthly.displayPrice + "/month",
-                                    subtitle: "Billed monthly",
+                                    subtitle: PaywallView.trialThenPrice(
+                                        lengthLabel: onboardingVisibleTrialLength(for: monthly),
+                                        displayPrice: monthly.displayPrice,
+                                        periodWord: "month"
+                                    ),
                                     badge: nil,
                                     isSelected: selectedPlanId == monthly.id
                                 )

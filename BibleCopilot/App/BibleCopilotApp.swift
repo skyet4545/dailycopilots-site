@@ -27,6 +27,7 @@ struct BibleCopilotApp: App {
                     AnalyticsService.shared.track(AnalyticsEvent.appOpen)
                 }
                 .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+                    usageService.refreshForDisplay()
                     guard reminderEnabled else { return }
                     NotificationService.shared.scheduleStreakReminder()
                 }

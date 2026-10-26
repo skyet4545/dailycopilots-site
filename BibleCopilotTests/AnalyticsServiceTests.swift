@@ -94,4 +94,51 @@ final class ReviewServiceTests: XCTestCase {
         XCTAssertNil(service.recordStudyAndPromptIfReady())
         XCTAssertEqual(requested, 0)
     }
+
+    func testSavePromptIsOnceAndDoesNotStackOnAMilestoneRequest() {
+        var requested = 0
+        var saveTracked = 0
+        let service = ReviewService(
+            defaults: defaults,
+            requestReviewAction: { requested += 1 },
+            trackPromptRequest: { _ in },
+            trackSavePromptRequest: { saveTracked += 1 }
+        )
+
+        XCTAssertTrue(service.recordSavedStudyAndPromptIfReady())
+        XCTAssertFalse(service.recordSavedStudyAndPromptIfReady())
+        XCTAssertEqual(requested, 1)
+        XCTAssertEqual(saveTracked, 1)
+
+        let afterMilestone = ReviewService(
+            defaults: defaults,
+            requestReviewAction: { requested += 1 },
+            trackPromptRequest: { _ in },
+            trackSavePromptRequest: { saveTracked += 1 }
+        )
+        for _ in 1...3 {
+            _ = afterMilestone.recordStudyAndPromptIfReady()
+        }
+        XCTAssertEqual(requested, 2)
+        XCTAssertFalse(afterMilestone.recordSavedStudyAndPromptIfReady())
+        XCTAssertEqual(saveTracked, 1)
+    }
+
+    func testSavePromptSkipsWhenThisProcessAlreadyRequestedReview() {
+        var requested = 0
+        let service = ReviewService(
+            defaults: defaults,
+            requestReviewAction: { requested += 1 },
+            trackPromptRequest: { _ in },
+            trackSavePromptRequest: { XCTFail("Save prompt must not track when a review was already requested") }
+        )
+
+        for _ in 1...3 {
+            _ = service.recordStudyAndPromptIfReady()
+        }
+        XCTAssertEqual(requested, 1)
+        XCTAssertFalse(service.recordSavedStudyAndPromptIfReady())
+        XCTAssertEqual(requested, 1)
+        XCTAssertFalse(defaults.bool(forKey: "review_promptedForSave"))
+    }
 }

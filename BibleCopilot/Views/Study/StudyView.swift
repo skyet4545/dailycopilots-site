@@ -5,9 +5,11 @@ struct StudyView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     @Environment(SubscriptionService.self) private var subscriptionService
+    @Environment(UsageService.self) private var usageService
     @State private var viewModel: StudyViewModel
-    @State private var showShareSheet = false
-    @State private var showReminderPrompt = false
+    @State private var activeSheet: StudySheet?
+    /// Set while the soft paywall is up so the reminder can follow its dismiss.
+    @State private var presentReminderAfterPaywall = false
 
     let onShowPaywall: () -> Void
 
@@ -20,6 +22,10 @@ struct StudyView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
+                    if !subscriptionService.isPro {
+                        FreeQuestionsStatus(remaining: usageService.freeQuestionsRemaining)
+                    }
+
                     // Verse Card
                     VerseCardView(
                         reference: viewModel.verse,
@@ -28,7 +34,7 @@ struct StudyView: View {
                         isBookmarked: viewModel.isBookmarked,
                         onBookmark: { viewModel.savePassage(context: modelContext) },
                         onShare: {
-                            showShareSheet = true
+                            activeSheet = .verse
                         }
                     )
 
@@ -48,13 +54,33 @@ struct StudyView: View {
                             response: viewModel.aiResponse,
                             isLoading: viewModel.aiLoading,
                             error: viewModel.aiError,
-                            onSaveToJournal: { viewModel.saveToJournal(context: modelContext) }
+                            onSaveToJournal: { viewModel.saveToJournal(context: modelContext) },
+                            onShareExplanation: {
+                                AnalyticsService.shared.track(AnalyticsEvent.explanationShared, [
+                                    "campaign": ExplanationShare.campaign,
+                                    "reference": viewModel.verse,
+                                ])
+                                activeSheet = .explanation
+                            }
                         )
                     }
 
                     // Follow-up question
                     if viewModel.showFollowUp && !viewModel.aiLoading {
                         VStack(spacing: 8) {
+                            if !subscriptionService.isPro {
+                                if usageService.freeQuestionsRemaining == 1 {
+                                    LastFreeQuestionNudge {
+                                        activeSheet = .nudgePaywall
+                                    }
+                                } else {
+                                    Text(UsageService.remainingQuestionsLabel(remaining: usageService.freeQuestionsRemaining))
+                                        .font(.caption.weight(.semibold))
+                                        .foregroundColor(AppTheme.textMuted)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                }
+                            }
+
                             if let suggestion = viewModel.suggestedFollowUpQuestion {
                                 Button {
                                     Task {
@@ -173,18 +199,80 @@ struct StudyView: View {
             )
         }
         .onDisappear { viewModel.cancelStream() }
+        .onAppear { usageService.refreshForDisplay() }
         .onChange(of: viewModel.shouldOfferDailyReminder) { _, shouldOffer in
             guard shouldOffer else { return }
-            AnalyticsService.shared.track(AnalyticsEvent.reminderPromptShown, ["context": "post_first_successful_question"])
-            showReminderPrompt = true
             viewModel.shouldOfferDailyReminder = false
+            AnalyticsService.shared.track(AnalyticsEvent.reminderPromptShown, ["context": "post_first_successful_question"])
+            activeSheet = .reminder
         }
-        .sheet(isPresented: $showShareSheet) {
-            let text = "\(viewModel.verse)\n\n\(viewModel.verseText)\n\n— Studied with Bible Copilot"
-            ActivityView(activityItems: [text])
+        .onChange(of: viewModel.shouldOfferSoftPaywall) { _, shouldOffer in
+            guard shouldOffer else { return }
+            viewModel.shouldOfferSoftPaywall = false
+            presentReminderAfterPaywall = viewModel.deferDailyReminder
+            viewModel.deferDailyReminder = false
+            activeSheet = .softPaywall
         }
-        .sheet(isPresented: $showReminderPrompt) {
-            PostStudyReminderView(reference: viewModel.verse, mode: viewModel.selectedMode)
+        .sheet(item: $activeSheet, onDismiss: {
+            guard presentReminderAfterPaywall else { return }
+            presentReminderAfterPaywall = false
+            AnalyticsService.shared.track(AnalyticsEvent.reminderPromptShown, ["context": "post_first_successful_question"])
+            Task { @MainActor in
+                activeSheet = .reminder
+            }
+        }) { sheet in
+            StudySheetContent(
+                sheet: sheet,
+                verse: viewModel.verse,
+                verseText: viewModel.verseText,
+                explanation: viewModel.aiResponse,
+                mode: viewModel.selectedMode
+            )
+        }
+    }
+}
+
+private enum StudySheet: Identifiable, Equatable {
+    case verse
+    case explanation
+    case reminder
+    case softPaywall
+    case nudgePaywall
+
+    var id: String {
+        switch self {
+        case .verse: return "verse"
+        case .explanation: return "explanation"
+        case .reminder: return "reminder"
+        case .softPaywall: return "softPaywall"
+        case .nudgePaywall: return "nudgePaywall"
+        }
+    }
+}
+
+private struct StudySheetContent: View {
+    let sheet: StudySheet
+    let verse: String
+    let verseText: String
+    let explanation: String
+    let mode: StudyMode?
+
+    var body: some View {
+        switch sheet {
+        case .verse:
+            ActivityView(activityItems: [
+                "\(verse)\n\n\(verseText)\n\n— Studied with Bible Copilot"
+            ])
+        case .explanation:
+            ActivityView(activityItems: [
+                ExplanationShare.message(reference: verse, answer: explanation)
+            ])
+        case .reminder:
+            PostStudyReminderView(reference: verse, mode: mode)
+        case .softPaywall:
+            PaywallView(trigger: .softFirstAnswer)
+        case .nudgePaywall:
+            PaywallView(trigger: .softLastFree)
         }
     }
 }

@@ -5,14 +5,19 @@ final class ReviewService {
 
     private let studyCountKey = "review_studyCount"
     private let lastPromptMilestoneKey = "review_lastPromptMilestone"
+    private let savePromptKey = "review_promptedForSave"
     private let defaults: UserDefaults
     private let requestReviewAction: () -> Void
     private let trackPromptRequest: (Int) -> Void
+    private let trackSavePromptRequest: () -> Void
+    /// Stops a save-triggered request from stacking on a milestone request in this process.
+    private var requestedThisProcess = false
 
     init(
         defaults: UserDefaults = .standard,
         requestReviewAction: (() -> Void)? = nil,
-        trackPromptRequest: ((Int) -> Void)? = nil
+        trackPromptRequest: ((Int) -> Void)? = nil,
+        trackSavePromptRequest: (() -> Void)? = nil
     ) {
         self.defaults = defaults
         self.requestReviewAction = requestReviewAction ?? Self.requestReviewInActiveScene
@@ -20,6 +25,12 @@ final class ReviewService {
             AnalyticsService.shared.track(
                 AnalyticsEvent.reviewPromptRequested,
                 ["study_milestone": "\(milestone)"]
+            )
+        }
+        self.trackSavePromptRequest = trackSavePromptRequest ?? {
+            AnalyticsService.shared.track(
+                AnalyticsEvent.reviewPromptRequested,
+                ["source": "saved_study"]
             )
         }
     }
@@ -37,11 +48,25 @@ final class ReviewService {
         let milestones = [3, 10, 30]
         if milestones.contains(count) && count > lastMilestone {
             trackPromptRequest(count)
+            requestedThisProcess = true
             requestReviewAction()
             defaults.set(count, forKey: lastPromptMilestoneKey)
             return count
         }
         return nil
+    }
+
+    /// A saved passage or journal entry is a positive moment. Ask once ever, and
+    /// skip it when this process already requested a review for a study milestone.
+    @discardableResult
+    func recordSavedStudyAndPromptIfReady() -> Bool {
+        guard !requestedThisProcess else { return false }
+        guard !defaults.bool(forKey: savePromptKey) else { return false }
+        defaults.set(true, forKey: savePromptKey)
+        requestedThisProcess = true
+        trackSavePromptRequest()
+        requestReviewAction()
+        return true
     }
 
     private static func requestReviewInActiveScene() {

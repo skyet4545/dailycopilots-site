@@ -5,6 +5,7 @@ struct AIResponseView: View {
     let isLoading: Bool
     let error: String?
     let onSaveToJournal: () -> Void
+    var onShareExplanation: (() -> Void)? = nil
     @State private var showCopied = false
 
     var body: some View {
@@ -79,6 +80,24 @@ struct AIResponseView: View {
                         .font(.caption2)
                         .foregroundColor(AppTheme.textMuted.opacity(0.7))
                         .padding(.top, 4)
+
+                    if let onShareExplanation {
+                        Button(action: onShareExplanation) {
+                            HStack(spacing: 6) {
+                                Image(systemName: "square.and.arrow.up")
+                                Text("Share this explanation")
+                            }
+                            .font(.subheadline.weight(.semibold))
+                            .foregroundColor(AppTheme.accent)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 10)
+                            .background(AppTheme.accent.opacity(0.12))
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                        }
+                        .buttonStyle(.plain)
+                        .padding(.top, 4)
+                        .accessibilityLabel("Share this explanation")
+                    }
                 }
             }
         }
@@ -89,5 +108,40 @@ struct AIResponseView: View {
             RoundedRectangle(cornerRadius: AppTheme.cornerRadiusLarge)
                 .stroke(AppTheme.cardBorder, lineWidth: 1)
         )
+    }
+}
+
+/// Verse + short answer + App Store link for the system share sheet.
+enum ExplanationShare {
+    static let appStoreID = "6758913373"
+    static let campaign = "app_share"
+    /// App Store Connect provider token (`pt`).
+    static let providerToken = "128532000"
+
+    /// Canonical share link, including `mt=8` (iPhone).
+    static let appStoreURLString = "https://apps.apple.com/app/apple-store/id\(appStoreID)?pt=\(providerToken)&ct=\(campaign)&mt=8"
+
+    static func message(reference: String, answer: String) -> String {
+        let excerpt = excerpt(from: answer)
+        return """
+        \(reference)
+
+        \(excerpt)
+
+        Studied with Bible Copilot — a Scripture study aid
+        \(appStoreURLString)
+        """
+    }
+
+    /// First ~280 characters, broken on a word when that still leaves a useful excerpt.
+    static func excerpt(from answer: String, limit: Int = 280) -> String {
+        let trimmed = answer.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard trimmed.count > limit else { return trimmed }
+        let slice = trimmed.prefix(limit)
+        if let lastSpace = slice.lastIndex(of: " "),
+           slice.distance(from: slice.startIndex, to: lastSpace) > limit / 2 {
+            return String(slice[..<lastSpace]).trimmingCharacters(in: .whitespacesAndNewlines) + "…"
+        }
+        return String(slice).trimmingCharacters(in: .whitespacesAndNewlines) + "…"
     }
 }

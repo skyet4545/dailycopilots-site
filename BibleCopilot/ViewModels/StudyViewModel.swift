@@ -23,6 +23,10 @@ final class StudyViewModel {
     var followUpText = ""
     var showFollowUp = false
     var shouldOfferDailyReminder = false
+    /// Dismissible paywall after the first successful answer, for people who are not Pro.
+    var shouldOfferSoftPaywall = false
+    /// Daily-reminder offer waits until that soft paywall is dismissed.
+    var deferDailyReminder = false
 
     var suggestedFollowUpQuestion: String? {
         guard let selectedMode, !aiLoading, !aiResponse.isEmpty else { return nil }
@@ -121,9 +125,10 @@ final class StudyViewModel {
                     chatHistory = Array(chatHistory.suffix(6))
                 }
 
+                usageService.recordStudyContext(reference: verse, prompt: mode.label)
                 let completedFirstQuestion = usageService.recordQuestion()
                 if completedFirstQuestion {
-                    shouldOfferDailyReminder = NotificationService.shared.shouldOfferDailyReminderAfterFirstStudy()
+                    offerFirstAnswerFollowUp(isPro: isPro)
                 }
                 StreakService.shared.recordStudy()
                 ReviewService.shared.recordStudyAndPromptIfReady()
@@ -196,9 +201,10 @@ final class StudyViewModel {
                 if chatHistory.count > 6 {
                     chatHistory = Array(chatHistory.suffix(6))
                 }
+                usageService.recordStudyContext(reference: verse, prompt: question)
                 let completedFirstQuestion = usageService.recordQuestion()
                 if completedFirstQuestion {
-                    shouldOfferDailyReminder = NotificationService.shared.shouldOfferDailyReminderAfterFirstStudy()
+                    offerFirstAnswerFollowUp(isPro: isPro)
                 }
                 ReviewService.shared.recordStudyAndPromptIfReady()
                 NotificationService.shared.updateDailyReminderContext(reference: verse, mode: mode)
@@ -241,6 +247,7 @@ final class StudyViewModel {
         context.insert(passage)
         isBookmarked = true
         HapticService.success()
+        ReviewService.shared.recordSavedStudyAndPromptIfReady()
     }
 
     func saveToJournal(context: ModelContext) {
@@ -253,11 +260,40 @@ final class StudyViewModel {
         )
         context.insert(entry)
         HapticService.success()
+        ReviewService.shared.recordSavedStudyAndPromptIfReady()
+    }
+
+    /// Soft paywall on the first real answer. The reminder sheet waits so the two
+    /// don't stack. Pro subscribers only see the reminder.
+    private func offerFirstAnswerFollowUp(isPro: Bool) {
+        let decision = FirstAnswerFollowUp.decide(
+            isPro: isPro,
+            wantsReminder: NotificationService.shared.shouldOfferDailyReminderAfterFirstStudy()
+        )
+        shouldOfferSoftPaywall = decision.showSoftPaywall
+        shouldOfferDailyReminder = decision.showReminder
+        deferDailyReminder = decision.deferReminder
     }
 
     // MARK: - Cleanup
 
     func cancelStream() {
         streamTask?.cancel()
+    }
+}
+
+/// What to present after the first successful in-app answer.
+enum FirstAnswerFollowUp {
+    struct Decision: Equatable {
+        var showSoftPaywall: Bool
+        var showReminder: Bool
+        var deferReminder: Bool
+    }
+
+    static func decide(isPro: Bool, wantsReminder: Bool) -> Decision {
+        if isPro {
+            return Decision(showSoftPaywall: false, showReminder: wantsReminder, deferReminder: false)
+        }
+        return Decision(showSoftPaywall: true, showReminder: false, deferReminder: wantsReminder)
     }
 }

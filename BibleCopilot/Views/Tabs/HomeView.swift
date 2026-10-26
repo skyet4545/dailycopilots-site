@@ -1,9 +1,12 @@
 import SwiftUI
 
 struct HomeView: View {
+    @Environment(SubscriptionService.self) private var subscriptionService
+    @Environment(UsageService.self) private var usageService
     @State private var viewModel = HomeViewModel()
     @State private var streakService = StreakService.shared
     @State private var showShareComposer = false
+    @State private var showNudgePaywall = false
     // v2.4 activation: show a one-tap "first question" hero until the user's first study.
     // 2/3 of new users were never asking a single question — this hands them an instant win.
     @AppStorage("hasCompletedFirstQuestion") private var firstStudyDone = false
@@ -48,6 +51,15 @@ struct HomeView: View {
                         }
                     }
                     .padding(.top, 12)
+
+                    if !subscriptionService.isPro {
+                        FreeQuestionsStatus(
+                            remaining: usageService.freeQuestionsRemaining,
+                            showsLastQuestionNudge: usageService.freeQuestionsRemaining == 1,
+                            onSeePro: { showNudgePaywall = true }
+                        )
+                        .padding(.horizontal)
+                    }
 
                     // v2.4 first-question hero — the single clearest first action for a new user.
                     if !firstStudyDone {
@@ -182,6 +194,10 @@ struct HomeView: View {
             }
             .background(AppTheme.background)
             .scrollDismissesKeyboard(.immediately)
+            .onAppear { usageService.refreshForDisplay() }
+            .sheet(isPresented: $showNudgePaywall) {
+                PaywallView(trigger: .softLastFree)
+            }
             .sheet(isPresented: $showShareComposer) {
                 VerseShareComposerView(
                     reference: viewModel.dailyVerseRef,
@@ -200,6 +216,55 @@ struct HomeView: View {
         if let verse = viewModel.searchVerse() {
             study(verse, nil)
         }
+    }
+}
+
+// MARK: - Free question counter
+
+struct FreeQuestionsStatus: View {
+    let remaining: Int
+    var showsLastQuestionNudge: Bool = false
+    var onSeePro: (() -> Void)? = nil
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(UsageService.remainingQuestionsLabel(remaining: remaining))
+                .font(.subheadline.weight(.semibold))
+                .foregroundColor(AppTheme.textPrimary)
+            if showsLastQuestionNudge {
+                Text("Your next answer is still free. Pro continues after that with unlimited Scripture-cited answers.")
+                    .font(.caption)
+                    .foregroundColor(AppTheme.textMuted)
+                    .fixedSize(horizontal: false, vertical: true)
+                if let onSeePro {
+                    Button("See Pro plans", action: onSeePro)
+                        .font(.caption.weight(.semibold))
+                        .foregroundColor(AppTheme.accent)
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(14)
+        .background(remaining == 1 ? AppTheme.gold.opacity(0.12) : AppTheme.surfaceLight)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(remaining == 1 ? AppTheme.gold.opacity(0.7) : AppTheme.surfaceBorder, lineWidth: 1)
+        )
+        .accessibilityElement(children: .combine)
+    }
+}
+
+/// Inline nudge at 2 of 3 used. It does not cover the follow-up field.
+struct LastFreeQuestionNudge: View {
+    let onSeePro: () -> Void
+
+    var body: some View {
+        FreeQuestionsStatus(
+            remaining: 1,
+            showsLastQuestionNudge: true,
+            onSeePro: onSeePro
+        )
     }
 }
 
