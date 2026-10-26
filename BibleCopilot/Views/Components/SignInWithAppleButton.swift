@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 import AuthenticationServices
 
 struct AppleSignInButtonView: UIViewRepresentable {
@@ -10,8 +11,15 @@ struct AppleSignInButtonView: UIViewRepresentable {
 }
 
 struct AccountSection: View {
+    @Environment(\.modelContext) private var modelContext
     @State private var authService = AuthService.shared
     @State private var showEmailAuth = false
+    @State private var showDeleteExplanation = false
+    @State private var showDeleteConfirmation = false
+    @State private var showDeletionResult = false
+    @State private var isDeleting = false
+    @State private var deletionResultTitle = ""
+    @State private var deletionResultMessage = ""
 
     var body: some View {
         if authService.isSignedIn {
@@ -36,9 +44,50 @@ struct AccountSection: View {
             }
 
             Button("Sign Out", role: .destructive) {
-                Task { await authService.signOut() }
+                authService.signOut()
             }
             .font(.subheadline)
+
+            Button(role: .destructive) {
+                showDeleteExplanation = true
+            } label: {
+                HStack {
+                    if isDeleting {
+                        ProgressView()
+                    }
+                    Text(isDeleting ? "Deleting Account…" : "Delete Account")
+                }
+            }
+            .disabled(isDeleting)
+            .font(.subheadline)
+            .confirmationDialog(
+                "Delete your Bible Copilot account?",
+                isPresented: $showDeleteExplanation,
+                titleVisibility: .visible
+            ) {
+                Button("Continue", role: .destructive) {
+                    showDeleteConfirmation = true
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("This permanently deletes your synced passages, journal entries, reading-plan progress, profile, and Bible Copilot membership. It does not cancel an App Store subscription, which you manage separately in Apple Subscriptions.")
+            }
+            .alert("Permanently delete everything?", isPresented: $showDeleteConfirmation) {
+                Button("Delete My Account", role: .destructive) {
+                    Task { await deleteAccount() }
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("This cannot be undone. Bible Copilot will remove its cloud and on-device account data and sign you out after the server confirms deletion.")
+            }
+            .alert(deletionResultTitle, isPresented: $showDeletionResult) {
+                Button("OK", role: .cancel) {}
+                if deletionResultTitle == "Account Deleted" {
+                    Link("Manage Apple Subscription", destination: URL(string: "https://apps.apple.com/account/subscriptions")!)
+                }
+            } message: {
+                Text(deletionResultMessage)
+            }
         } else {
             VStack(spacing: 12) {
                 HStack(spacing: 12) {
@@ -94,6 +143,68 @@ struct AccountSection: View {
                     .padding(.horizontal, 4)
             }
         }
+    }
+
+    @MainActor
+    private func deleteAccount() async {
+        guard !isDeleting else { return }
+        isDeleting = true
+        defer { isDeleting = false }
+
+        do {
+            let result = try await authService.deleteBibleCopilotAccount()
+            let localDataCleared: Bool
+            do {
+                try clearLocalAccountData()
+                localDataCleared = true
+            } catch {
+                localDataCleared = false
+            }
+            authService.signOut()
+
+            deletionResultTitle = "Account Deleted"
+            if !localDataCleared {
+                deletionResultMessage = "Your Bible Copilot cloud account was deleted and you were signed out, but the app could not confirm removal of all saved data on this device. Delete Bible Copilot from this device to remove its remaining local data. Any App Store subscription continues until you cancel it in Apple Subscriptions."
+            } else if result.appleManualRevocationRequired {
+                deletionResultMessage = "Your Bible Copilot account and data were deleted. To finish disconnecting Sign in with Apple, open Settings, tap your name, choose Sign in with Apple, select Bible Copilot, and tap Delete. Any App Store subscription continues until you cancel it in Apple Subscriptions."
+            } else if result.scope == "app_data_only", result.remainingMemberships > 0 {
+                deletionResultMessage = "Your Bible Copilot account and data were deleted. Your shared sign-in remains available for your other Copilot apps. Any App Store subscription continues until you cancel it in Apple Subscriptions."
+            } else {
+                deletionResultMessage = "Your Bible Copilot account and data were deleted, and you have been signed out. Any App Store subscription continues until you cancel it in Apple Subscriptions."
+            }
+            HapticService.success()
+        } catch {
+            deletionResultTitle = "Deletion Not Confirmed"
+            deletionResultMessage = (error as? LocalizedError)?.errorDescription
+                ?? "Bible Copilot could not confirm account deletion. Your local data was kept."
+        }
+        showDeletionResult = true
+    }
+
+    @MainActor
+    private func clearLocalAccountData() throws {
+        for passage in try modelContext.fetch(FetchDescriptor<SavedPassage>()) {
+            modelContext.delete(passage)
+        }
+        for entry in try modelContext.fetch(FetchDescriptor<JournalEntry>()) {
+            modelContext.delete(entry)
+        }
+        for progress in try modelContext.fetch(FetchDescriptor<ReadingPlanProgress>()) {
+            modelContext.delete(progress)
+        }
+        try modelContext.save()
+
+        StreakService.shared.resetLocalProgress()
+        AnalyticsService.shared.setEnabled(false, context: "account_deleted")
+        let defaults = UserDefaults.standard
+        [
+            "onboarding_goals",
+            "onboarding_experience",
+            "onboarding_denomination",
+            "onboarding_heard_about",
+            "onboarding_translation",
+            "onboarding_struggles"
+        ].forEach { defaults.removeObject(forKey: $0) }
     }
 }
 

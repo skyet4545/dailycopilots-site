@@ -18,6 +18,7 @@ const expected = {
   freeQuestions: 3,
   monthlyUsd: 9.99,
   annualUsd: 49.99,
+  monthlyTrialDays: 7,
   annualTrialDays: 7,
   studyModes: ["Summary", "Observe", "Interpret", "Theology", "Apply", "Apologetics"]
 };
@@ -31,6 +32,7 @@ check(truth.product?.app_store_id === expected.appStoreId, "Unexpected App Store
 check(truth.free_tier?.questions_per_day === expected.freeQuestions, "Free question limit drifted");
 check(truth.pro?.monthly_usd === expected.monthlyUsd, "Monthly price drifted");
 check(truth.pro?.annual_usd === expected.annualUsd, "Annual price drifted");
+check(truth.pro?.monthly_trial_days === expected.monthlyTrialDays, "Monthly trial length drifted");
 check(truth.pro?.annual_trial_days === expected.annualTrialDays, "Annual trial length drifted");
 check(
   JSON.stringify(truth.study_modes) === JSON.stringify(expected.studyModes),

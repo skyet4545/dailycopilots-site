@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "mode": "standard_gated_autonomous",
+  "uploadPostProfile": "BibleCopilot",
+  "platforms": ["tiktok", "instagram", "youtube"],
+  "series": "The Verse Behind It",
+  "narration": {
+    "provider": "fish_audio",
+    "referenceId": "933563129e564b19a115bedd57b7406a",
+    "voiceName": "Sarah",
+    "direction": "Warm, calm, conversational narration. Keep a measured pace; do not sound like a sermon or an advertisement.",
+    "model": "s2.1-pro-free",
+    "reviewRequired": false
+  },
+  "publishingRule": "An item may be sent to Upload-Post only after policy 2026-07-30-v1 produces eligible_for_delivery and its landing page is verified live. No human publication approval is required.",
+  "posts": [
+    {
+      "id": "bcv_001",
+      "status": "candidate_for_validation",
+      "topic": "philippians_4_13",
+      "hook": "Philippians 4:13 is not a promise that every ambition will succeed.",
+      "landingPath": "/social/verse-behind-it/philippians-4-13/",
+      "studyMode": "Interpret",
+      "cta": "Study Philippians 4:13 in Bible Copilot",
+      "utm": "utm_source={platform}&utm_medium=organic_social&utm_campaign=bible_verse_behind_it&utm_content=bcv_001"
+    },
+    {
+      "id": "bcv_002",
+      "status": "candidate_for_validation",
+      "topic": "jeremiah_29_11",
+      "hook": "Jeremiah 29:11 was written to people in exile. That changes how we read the promise.",
+      "landingPath": "/social/verse-behind-it/jeremiah-29-11/",
+      "studyMode": "Interpret",
+      "cta": "Study Jeremiah 29:11 in context",
+      "utm": "utm_source={platform}&utm_medium=organic_social&utm_campaign=bible_verse_behind_it&utm_content=bcv_002"
+    },
+    {
+      "id": "bcv_003",
+      "status": "candidate_for_validation",
+      "topic": "matthew_7_1",
+      "hook": "Does 'judge not' mean Christians should never name what is wrong? Read the next verses.",
+      "landingPath": "/social/verse-behind-it/matthew-7-1/",
+      "studyMode": "Interpret",
+      "cta": "Study Matthew 7 in context",
+      "utm": "utm_source={platform}&utm_medium=organic_social&utm_campaign=bible_verse_behind_it&utm_content=bcv_003"
+    },
+    {
+      "id": "bcv_004",
+      "status": "candidate_for_validation",
+      "topic": "romans_8_28",
+      "hook": "Romans 8:28 is not permission to minimize pain. Paul says it in the middle of suffering.",
+      "landingPath": "/social/verse-behind-it/romans-8-28/",
+      "studyMode": "Theology",
+      "cta": "Study Romans 8 in context",
+      "utm": "utm_source={platform}&utm_medium=organic_social&utm_campaign=bible_verse_behind_it&utm_content=bcv_004"
+    }
+  ]
+}

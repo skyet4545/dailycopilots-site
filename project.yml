@@ -33,10 +33,11 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.scripturecopilot.app
         PRODUCT_NAME: Bible Copilot
+        PRODUCT_MODULE_NAME: BibleCopilot
         SWIFT_VERSION: "5.0"
         TARGETED_DEVICE_FAMILY: "1,2"
-        MARKETING_VERSION: "2.4.2"
-        CURRENT_PROJECT_VERSION: "127"
+        MARKETING_VERSION: "2.4.5"
+        CURRENT_PROJECT_VERSION: "131"
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS: "YES"
         CODE_SIGN_STYLE: Automatic
@@ -75,3 +76,29 @@ targets:
           - UIInterfaceOrientationLandscapeLeft
           - UIInterfaceOrientationLandscapeRight
         ITSAppUsesNonExemptEncryption: false
+
+  BibleCopilotTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - path: BibleCopilotTests
+    dependencies:
+      - target: BibleCopilot
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.scripturecopilot.app.tests
+        SWIFT_VERSION: "5.0"
+        GENERATE_INFOPLIST_FILE: "YES"
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/Bible Copilot.app/Bible Copilot"
+        BUNDLE_LOADER: "$(TEST_HOST)"
+
+schemes:
+  BibleCopilot:
+    build:
+      targets:
+        BibleCopilot: all
+        BibleCopilotTests: [test]
+    test:
+      targets:
+        - BibleCopilotTests

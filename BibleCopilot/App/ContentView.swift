@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(SubscriptionService.self) private var subscriptionService
     @AppStorage("onboardingComplete") private var onboardingComplete = false
     @State private var selectedTab = 0
     @State private var studyRequest: StudyRequest?
@@ -10,8 +11,17 @@ struct ContentView: View {
     var body: some View {
         Group {
             if !onboardingComplete {
-                OnboardingView {
+                OnboardingView { intent in
                     onboardingComplete = true
+                    switch intent {
+                    case .enterHome:
+                        break
+                    case let .startStudy(reference, mode):
+                        // Fulfill the action the reader just chose. Set the mode
+                        // before presenting so StudyView can run it immediately.
+                        studyMode = mode
+                        studyRequest = StudyRequest(verse: reference)
+                    }
                 }
             } else {
                 mainTabView
@@ -69,9 +79,30 @@ struct ContentView: View {
         }
         .onAppear {
             configureTabBarAppearance()
+            openPendingStudyReminder()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: NotificationService.studyReminderOpenedNotification)) { _ in
+            openPendingStudyReminder()
         }
         .onChange(of: ThemeManager.shared.themeMode) {
             configureTabBarAppearance()
+        }
+    }
+
+    private func openPendingStudyReminder() {
+        guard let resume = NotificationService.shared.consumePendingStudyResume() else { return }
+        Task { @MainActor in
+            // Resolve current StoreKit entitlement before deciding whether the
+            // reminder can auto-run a study mode. Free users still return to
+            // the passage without consuming a question.
+            await subscriptionService.checkSubscriptionStatus()
+            studyRequest = StudyRequest(verse: resume.reference)
+            studyMode = subscriptionService.isPro ? resume.mode : nil
+            AnalyticsService.shared.track(AnalyticsEvent.studyReminderOpened, [
+                "has_context": "true",
+                "is_pro": subscriptionService.isPro ? "true" : "false",
+                "mode": resume.mode?.rawValue ?? "none"
+            ])
         }
     }
 
@@ -94,6 +125,18 @@ struct ContentView: View {
 
         UITabBar.appearance().standardAppearance = appearance
         UITabBar.appearance().scrollEdgeAppearance = appearance
+    }
+}
+
+enum OnboardingCompletionIntent: Equatable {
+    case enterHome
+    case startStudy(reference: String, mode: StudyMode)
+
+    var analyticsValue: String {
+        switch self {
+        case .enterHome: return "enter_home"
+        case .startStudy: return "start_selected_study"
+        }
     }
 }
 

@@ -66,9 +66,9 @@ final class UsageServiceTests: XCTestCase {
     }
 
     func testRemainingDecrements() {
-        XCTAssertEqual(service.remainingQuestions(isPro: false), 10)
+        XCTAssertEqual(service.remainingQuestions(isPro: false), 3)
         service.recordQuestion()
-        XCTAssertEqual(service.remainingQuestions(isPro: false), 9)
+        XCTAssertEqual(service.remainingQuestions(isPro: false), 2)
     }
 
     // MARK: - Midnight Reset
@@ -92,5 +92,15 @@ final class UsageServiceTests: XCTestCase {
     func testOnlyFirstSuccessfulQuestionReturnsTrue() {
         XCTAssertTrue(service.recordQuestion())
         XCTAssertFalse(service.recordQuestion())
+    }
+
+    func testOnboardingStudyIntentPreservesSelectedReferenceAndMode() {
+        let intent = OnboardingCompletionIntent.startStudy(reference: "Romans 8:28", mode: .summary)
+        XCTAssertEqual(intent, .startStudy(reference: "Romans 8:28", mode: .summary))
+        XCTAssertEqual(intent.analyticsValue, "start_selected_study")
+    }
+
+    func testOnboardingSkipIntentEntersHome() {
+        XCTAssertEqual(OnboardingCompletionIntent.enterHome.analyticsValue, "enter_home")
     }
 }

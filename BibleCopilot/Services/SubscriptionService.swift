@@ -21,6 +21,9 @@ final class SubscriptionService {
     @ObservationIgnored
     private var isLoadingProducts = false
 
+    @ObservationIgnored
+    private var lastTrackedEntitlementFingerprint: String?
+
     init() {
         updateTask = Task { [weak self] in
             await self?.listenForTransactions()
@@ -93,7 +96,7 @@ final class SubscriptionService {
     // MARK: - Purchase
 
     @MainActor
-    func purchase(_ product: Product) async throws {
+    func purchase(_ product: Product) async throws -> PurchaseOutcome {
         isLoading = true
         defer { isLoading = false }
 
@@ -103,38 +106,42 @@ final class SubscriptionService {
             let transaction = try checkVerified(verification)
             await transaction.finish()
             isPro = true
+            return .purchased
         case .userCancelled:
-            break
+            return .cancelled
         case .pending:
-            break
+            return .pending
         @unknown default:
-            break
+            return .unknown
         }
     }
 
     // MARK: - Restore
 
     @MainActor
-    func restore() async {
+    func restore() async throws -> Bool {
         isLoading = true
         defer { isLoading = false }
-        try? await AppStore.sync()
+        try await AppStore.sync()
         await checkSubscriptionStatus()
+        return isPro
     }
 
     // MARK: - Status
 
     @MainActor
     func checkSubscriptionStatus() async {
+        var activeProductID: String?
         for await result in Transaction.currentEntitlements {
             if let transaction = try? checkVerified(result) {
                 if transaction.productID == monthlyProductID || transaction.productID == annualProductID {
-                    isPro = true
-                    return
+                    activeProductID = transaction.productID
+                    break
                 }
             }
         }
-        isPro = false
+        isPro = activeProductID != nil
+        trackEntitlementObservation(productID: activeProductID)
     }
 
     // MARK: - Transaction Listener
@@ -159,6 +166,19 @@ final class SubscriptionService {
         }
     }
 
+    @MainActor
+    private func trackEntitlementObservation(productID: String?) {
+        guard AnalyticsService.shared.isEnabled else { return }
+        let observation = EntitlementObservation(
+            productID: productID,
+            monthlyProductID: monthlyProductID,
+            annualProductID: annualProductID
+        )
+        guard observation.fingerprint != lastTrackedEntitlementFingerprint else { return }
+        AnalyticsService.shared.track(AnalyticsEvent.entitlementStateObserved, observation.properties)
+        lastTrackedEntitlementFingerprint = observation.fingerprint
+    }
+
     var annualProduct: Product? {
         products.first { $0.id == annualProductID }
     }
@@ -166,6 +186,42 @@ final class SubscriptionService {
     var monthlyProduct: Product? {
         products.first { $0.id == monthlyProductID }
     }
+}
+
+struct EntitlementObservation: Equatable {
+    let state: String
+    let plan: String
+
+    init(productID: String?, monthlyProductID: String, annualProductID: String) {
+        switch productID {
+        case monthlyProductID:
+            state = "active"
+            plan = "monthly"
+        case annualProductID:
+            state = "active"
+            plan = "annual"
+        default:
+            state = "inactive"
+            plan = "none"
+        }
+    }
+
+    var properties: [String: String] {
+        [
+            "state": state,
+            "plan": plan,
+            "source": "storekit_current_entitlements",
+        ]
+    }
+
+    var fingerprint: String { "\(state)|\(plan)" }
+}
+
+enum PurchaseOutcome: Equatable {
+    case purchased
+    case cancelled
+    case pending
+    case unknown
 }
 
 enum SubscriptionError: LocalizedError {

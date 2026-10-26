@@ -61,8 +61,8 @@ const handleQuestion = async () => {
 
 1. **Go to:** https://app.revenuecat.com
 2. **Products → Add Products:**
-   - `monthly` — $4.99/month
-   - `yearly` — $39.99/year  
+   - `monthly` — $9.99/month
+   - `yearly` — $49.99/year
    - `lifetime` — $99.99 (one-time)
 3. **Entitlements → Create:**
    - ID: `pro`
@@ -90,4 +90,3 @@ npm start
 
 
 ---
-

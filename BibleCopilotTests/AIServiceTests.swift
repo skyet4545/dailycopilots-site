@@ -12,7 +12,7 @@ final class AIServiceTests: XCTestCase {
     }
 
     func testStudyModeLabels() {
-        // Verify all 5 study modes have correct labels for API calls
+        // Verify all non-summary study modes have correct labels for API calls.
         XCTAssertEqual(StudyMode.observe.rawValue, "observe")
         XCTAssertEqual(StudyMode.interpret.rawValue, "interpret")
         XCTAssertEqual(StudyMode.theology.rawValue, "theology")
@@ -21,7 +21,7 @@ final class AIServiceTests: XCTestCase {
     }
 
     func testStudyModeCount() {
-        XCTAssertEqual(StudyMode.allCases.count, 5)
+        XCTAssertEqual(StudyMode.allCases.count, 6)
     }
 
     func testStudyModeHasIcon() {

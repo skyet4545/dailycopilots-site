@@ -272,7 +272,7 @@ h2: Bible Copilot vs. the apps you already use
 | **Reading plans** | Yes — 5 plans (Free: John; Pro: all 5) | Yes — extensive | No | Limited | No |
 | **Personal study journal** | Yes (Pro) | Yes | No | Yes | No |
 | **iOS native** | Yes (iOS 17+, SwiftUI) | Yes | Web-first | Yes | Web/app |
-| **Price** | Free (15 Q/day) · $9.99/mo · $49.99/yr | Free | Free | $9.99–$49.99/yr+ | Free / $20/mo |
+| **Price** | Free (3 Q/day) · $9.99/mo · $49.99/yr | Free | Free | $4.99–$49.99/yr+ | Free / $20/mo |
 | **Free trial** | 1-week free trial (annual) | N/A | N/A | Varies | N/A |
 | **No ads** | Yes | Ads on free tier | Ads | No ads | No ads |
 
@@ -364,7 +364,7 @@ The existing pricing card should include a hidden-but-crawlable `<dl>` pricing s
 ```html
 <dl id="pricing-details" aria-label="Bible Copilot pricing">
   <dt>Free tier</dt>
-  <dd>15 questions per day. Gospel of John reading plan. No ads. No credit card required.</dd>
+  <dd>3 questions per day. Gospel of John reading plan. No ads. No credit card required.</dd>
   <dt>Pro Monthly</dt>
   <dd>$9.99 per month. Unlimited questions. All six study modes. All five reading plans. 
       Personal journal. Cancel anytime via Apple Settings.</dd>
@@ -471,7 +471,7 @@ The current `MobileApplication` schema is complete. Add a second `<script type="
       "name": "How much does Bible Copilot cost?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Free tier: 15 questions per day, no credit card required. Pro Monthly: $9.99/month. Pro Annual: $49.99/year ($4.17/month equivalent) with a 1-week free trial. App Store ID: 6758913373."
+        "text": "Free tier: 3 questions per day, no credit card required. Pro Monthly: $9.99/month. Pro Annual: $49.99/year ($4.17/month equivalent) with a 1-week free trial. App Store ID: 6758913373."
       }
     }
   ]

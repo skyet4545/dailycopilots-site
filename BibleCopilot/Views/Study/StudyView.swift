@@ -121,13 +121,17 @@ struct StudyView: View {
                     }
 
                     // Cross References
-                    if !viewModel.crossReferences.isEmpty {
-                        CrossReferencesView(references: viewModel.crossReferences) { ref in
+                    if !viewModel.crossReferences.isEmpty || viewModel.referenceVerificationNote != nil {
+                        CrossReferencesView(
+                            references: viewModel.crossReferences,
+                            verificationNote: viewModel.referenceVerificationNote
+                        ) { ref in
                             // Navigate to new study for this reference & auto-trigger AI
                             let currentMode = viewModel.selectedMode ?? .observe
                             viewModel.verse = ref
                             viewModel.aiResponse = ""
                             viewModel.crossReferences = []
+                            viewModel.referenceVerificationNote = nil
                             Task {
                                 await viewModel.fetchVerse()
                                 await viewModel.selectMode(
@@ -162,7 +166,12 @@ struct StudyView: View {
                 }
             }
         }
-        .task { await viewModel.fetchVerse() }
+        .task {
+            await viewModel.fetchVerse(
+                isPro: subscriptionService.isPro,
+                onShowPaywall: onShowPaywall
+            )
+        }
         .onDisappear { viewModel.cancelStream() }
         .onChange(of: viewModel.shouldOfferDailyReminder) { _, shouldOffer in
             guard shouldOffer else { return }
@@ -175,7 +184,7 @@ struct StudyView: View {
             ActivityView(activityItems: [text])
         }
         .sheet(isPresented: $showReminderPrompt) {
-            PostStudyReminderView()
+            PostStudyReminderView(reference: viewModel.verse, mode: viewModel.selectedMode)
         }
     }
 }
@@ -184,6 +193,13 @@ struct PostStudyReminderView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var reminderTime = Calendar.current.date(from: DateComponents(hour: 8, minute: 0)) ?? Date()
     @State private var isSaving = false
+    let reference: String?
+    let mode: StudyMode?
+
+    init(reference: String? = nil, mode: StudyMode? = nil) {
+        self.reference = reference
+        self.mode = mode
+    }
 
     var body: some View {
         NavigationStack {
@@ -226,7 +242,12 @@ struct PostStudyReminderView: View {
     private func saveReminder() async {
         isSaving = true
         let components = Calendar.current.dateComponents([.hour, .minute], from: reminderTime)
-        _ = await NotificationService.shared.enableDailyReminder(hour: components.hour ?? 8, minute: components.minute ?? 0)
+        _ = await NotificationService.shared.enableDailyReminder(
+            hour: components.hour ?? 8,
+            minute: components.minute ?? 0,
+            reference: reference,
+            mode: mode
+        )
         isSaving = false
         dismiss()
     }

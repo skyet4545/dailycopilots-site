@@ -51,7 +51,7 @@ GUIDED READING PLANS
 Follow structured plans that build lasting habits. Start with the Gospel of John — completely free, no Pro required. Additional plans cover Romans, Psalms, Genesis, and Sermon on the Mount.
 
 FREE TO START
-15 AI-powered questions every day, completely free. No account required. No ads. No data collected.
+3 AI-powered questions every day, completely free. No account required. No ads. No data collected.
 
 BIBLE COPILOT PRO
 Unlock the full experience:
@@ -60,10 +60,10 @@ Unlock the full experience:
 - All 5 reading plans
 - Study journal with full history
 - Priority AI responses
-- 1-week free trial on annual plan
+- 7-day free trial on monthly and annual plans
 
-Monthly: $4.99/month
-Annual: $29.99/year (save ~50%)
+Monthly: $9.99/month
+Annual: $49.99/year (save ~58%)
 
 Whether you are a seminary student, small group leader, or someone exploring faith for the first time — Bible Copilot meets you where you are.
 
@@ -144,4 +144,4 @@ https://mybiblecopilot.com/privacy
 3. "Verse-by-Verse AI Commentary with Cross-References"
 4. "Insights from Trusted Biblical Scholars"
 5. "Daily Streak — Build Your Bible Study Habit"
-6. "Start Free — 15 Questions Every Day"
+6. "Start Free — 3 Questions Every Day"

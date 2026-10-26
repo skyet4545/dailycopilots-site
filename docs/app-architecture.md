@@ -56,7 +56,7 @@ scripture-app/
 4. **Settings** - Translation selection, appearance
 
 ### Free vs Pro
-- **Free:** 15 questions/day, all 4 study modes
+- **Free:** 3 questions/day, all study modes
 - **Pro:** Unlimited questions, advanced features
 
 ---
@@ -165,8 +165,8 @@ if (!settings.themeId) {
 ## 💰 Monetization
 
 ### Revenue Model
-- **Free Tier:** 15 questions/day
-- **Pro Tier:** $4.99/month or $39.99/year
+- **Free Tier:** 3 questions/day
+- **Pro Tier:** $9.99/month or $49.99/year
 - **Break-even:** 30 subscribers (~Month 2)
 - **Target:** $2.5K/mo by Month 12
 
@@ -218,4 +218,3 @@ See: [Monetization Strategy](../MONETIZATION-STRATEGY.md)
 
 
 ---
-

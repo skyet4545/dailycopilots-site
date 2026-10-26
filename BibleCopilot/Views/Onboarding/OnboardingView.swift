@@ -6,13 +6,16 @@ struct OnboardingView: View {
     @State private var currentStep = 0
     @State private var isLoading = false
     @State private var errorMessage: String?
+    @State private var purchaseStatusMessage: String?
     @State private var selectedPlanId: String = ""
+    @State private var introOfferEligibility: [String: Bool] = [:]
 
     // Personalization state
     @State private var selectedGoals: Set<String> = []
     @State private var selectedLevel: ExperienceLevel?
     @State private var selectedDenomination: Denomination?
     @State private var selectedAttribution: AttributionSource?
+    @AppStorage(AnalyticsService.consentKey) private var analyticsConsentGranted = false
     @State private var selectedTranslation: BibleTranslation?
     @State private var selectedStruggles: Set<String> = []
     @State private var planBuildProgress: Double = 0
@@ -22,6 +25,7 @@ struct OnboardingView: View {
     @State private var ahaInsight: String?
     @State private var isLoadingInsight = false
     @State private var selectedAhaVerse: String = "John 1:1"
+    @State private var completionIntent: OnboardingCompletionIntent = .enterHome
 
     // Notification step state
     @State private var notificationRequested = false
@@ -29,7 +33,7 @@ struct OnboardingView: View {
     @AppStorage("reminderHour") private var reminderHour: Int = 8
     @AppStorage("reminderMinute") private var reminderMinute: Int = 0
 
-    let onComplete: () -> Void
+    let onComplete: (OnboardingCompletionIntent) -> Void
 
     private let slides = OnboardingSlide.slides
 
@@ -131,20 +135,28 @@ struct OnboardingView: View {
                 await subscriptionService.loadProducts()
             }
         }
+        .task(id: subscriptionService.products.map(\.id).sorted().joined(separator: "|")) {
+            await refreshIntroOfferEligibility()
+        }
         .onChange(of: currentStep) { _, newStep in
             AnalyticsService.shared.track(AnalyticsEvent.onboardingStep, ["step": stepName(newStep)])
             if newStep == buildPlanStep { runPlanBuild() }
             if newStep == paywallStep {
-                AnalyticsService.shared.track(AnalyticsEvent.paywallView, ["source": "onboarding"])
+                let product = selectedOnboardingProduct
+                AnalyticsService.shared.track(AnalyticsEvent.paywallView, ["source": "onboarding", "trial_eligibility": onboardingEligibilityState(for: product), "offer_type": onboardingVisibleTrialLength(for: product) == nil ? "subscription" : "free_trial"])
             }
         }
     }
 
     /// Finish onboarding and enter the app. v2.4: onboarding now ends at the aha moment
     /// (welcome → value → app), so this is the single completion path for the free flow.
-    private func completeOnboarding(pro: Bool) {
-        AnalyticsService.shared.track(AnalyticsEvent.onboardingComplete, ["pro": pro ? "true" : "false"])
-        onComplete()
+    private func completeOnboarding(pro: Bool, intent: OnboardingCompletionIntent? = nil) {
+        let resolvedIntent = intent ?? completionIntent
+        AnalyticsService.shared.track(AnalyticsEvent.onboardingComplete, [
+            "pro": pro ? "true" : "false",
+            "next_action": resolvedIntent.analyticsValue
+        ])
+        onComplete(resolvedIntent)
     }
 
     private func stepName(_ step: Int) -> String {
@@ -460,6 +472,26 @@ struct OnboardingView: View {
                 .padding(.bottom, 12)
             }
 
+            Toggle(isOn: $analyticsConsentGranted) {
+                VStack(alignment: .leading, spacing: 3) {
+                    Text("Share Usage Analytics")
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundColor(AppTheme.textPrimary)
+                    Text("Share feature and purchase-flow events to help improve Bible Copilot. Bible text, study questions, journal entries, your name, and your email are excluded.")
+                        .font(.caption)
+                        .foregroundColor(AppTheme.textMuted)
+                }
+            }
+            .tint(AppTheme.accent)
+            .padding(.horizontal, 24)
+            .padding(.vertical, 10)
+            .background(AppTheme.cardBackground)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .padding(.horizontal, 24)
+            .onChange(of: analyticsConsentGranted) { _, enabled in
+                AnalyticsService.shared.setEnabled(enabled, context: "onboarding_attribution")
+            }
+
             // Last step: saving the answer completes onboarding straight into the app.
             continueButton(disabled: selectedAttribution == nil) {
                 if let a = selectedAttribution {
@@ -744,14 +776,14 @@ struct OnboardingView: View {
 
                 VStack(alignment: .leading, spacing: 16) {
                     socialProofRow(icon: "graduationcap.fill",
-                                   title: "Seminary-grade method",
-                                   detail: "The same inductive framework taught in seminaries: Observe, Interpret, Theology, Apply, Apologetics.")
+                                   title: "A structured study method",
+                                   detail: "Use Summary, Observe, Interpret, Theology, Apply, and Apologetics to examine a passage from different angles.")
                     socialProofRow(icon: "quote.opening",
-                                   title: "Every answer cites Scripture",
-                                   detail: "Verse-anchored responses with cross-references — never vague spiritual advice.")
+                                   title: "References you can check",
+                                   detail: "Open cited passages and compare the response with Scripture in context.")
                     socialProofRow(icon: "person.2.fill",
-                                   title: "Denominationally humble",
-                                   detail: "On contested doctrine, you get the major views fairly presented — not one tradition's spin.")
+                                   title: "Compare interpretations",
+                                   detail: "Theology mode aims to identify major Christian views. Review important conclusions with Scripture and trusted teachers.")
                 }
                 .padding(.horizontal, 28)
             }
@@ -905,13 +937,14 @@ struct OnboardingView: View {
                 // notifications screen, unlocking nothing.)
                 if ahaInsight != nil {
                     continueButtonInline(label: "Start studying — it's free") {
+                        completionIntent = .startStudy(reference: selectedAhaVerse, mode: .summary)
                         withAnimation { currentStep = attributionStep }
                     }
                 }
 
                 // Always-available exit so a failed insight can never trap the user on the last step.
                 Button {
-                    completeOnboarding(pro: false)
+                    completeOnboarding(pro: false, intent: .enterHome)
                 } label: {
                     Text(ahaInsight != nil ? "Maybe later" : "Skip for now")
                         .font(.subheadline)
@@ -948,7 +981,7 @@ struct OnboardingView: View {
                         .foregroundColor(AppTheme.textPrimary)
                         .multilineTextAlignment(.center)
 
-                    Text("People who study Scripture daily remember 3× more. Get a gentle reminder so you never miss a day.")
+                    Text("Choose a gentle reminder time that helps you return to Scripture each day.")
                         .font(.body)
                         .foregroundColor(AppTheme.textMuted)
                         .multilineTextAlignment(.center)
@@ -1021,6 +1054,52 @@ struct OnboardingView: View {
 
     // MARK: - Paywall Slide
 
+    private var selectedOnboardingProduct: Product? {
+        if selectedPlanId == subscriptionService.monthlyProductID {
+            return subscriptionService.monthlyProduct
+        }
+        return subscriptionService.annualProduct
+    }
+
+    private func onboardingConfiguredTrialLength(for product: Product?) -> String? {
+        guard let offer = product?.subscription?.introductoryOffer,
+              offer.paymentMode == .freeTrial else { return nil }
+        let n = offer.period.value
+        switch offer.period.unit {
+        case .day:   return "\(n)-Day"
+        case .week:  return "\(n * 7)-Day"
+        case .month: return "\(n)-Month"
+        case .year:  return "\(n)-Year"
+        @unknown default: return nil
+        }
+    }
+
+    private func onboardingVisibleTrialLength(for product: Product?) -> String? {
+        guard let product else { return nil }
+        return PaywallView.visibleTrialLength(
+            configured: onboardingConfiguredTrialLength(for: product),
+            isEligible: introOfferEligibility[product.id]
+        )
+    }
+
+    private func onboardingEligibilityState(for product: Product?) -> String {
+        guard let product,
+              onboardingConfiguredTrialLength(for: product) != nil else { return "no_free_trial" }
+        guard let eligible = introOfferEligibility[product.id] else { return "unknown" }
+        return eligible ? "eligible" : "ineligible"
+    }
+
+    @MainActor
+    private func refreshIntroOfferEligibility() async {
+        var refreshed: [String: Bool] = [:]
+        for product in subscriptionService.products {
+            guard onboardingConfiguredTrialLength(for: product) != nil,
+                  let subscription = product.subscription else { continue }
+            refreshed[product.id] = await subscription.isEligibleForIntroOffer
+        }
+        introOfferEligibility = refreshed
+    }
+
     private var paywallSlideView: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 20) {
@@ -1033,7 +1112,7 @@ struct OnboardingView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 16))
                         .shadow(color: AppTheme.gold.opacity(0.3), radius: 8, y: 4)
 
-                    Text("Try Bible Copilot\nFree for 7 Days")
+                    Text(onboardingVisibleTrialLength(for: selectedOnboardingProduct) == "7-Day" ? "Try Bible Copilot\nFree for 7 Days" : "Unlock Bible Copilot Pro")
                         .font(.title2.bold())
                         .foregroundColor(AppTheme.textPrimary)
                         .multilineTextAlignment(.center)
@@ -1044,29 +1123,31 @@ struct OnboardingView: View {
                 }
                 .padding(.top, 8)
 
-                // Trial timeline
-                VStack(spacing: 0) {
-                    trialTimelineRow(
-                        day: "Today",
-                        label: "Full access — explore all study modes",
-                        icon: "checkmark.circle.fill",
-                        color: AppTheme.success
-                    )
-                    trialTimelineRow(
-                        day: "Day 5",
-                        label: "Reminder before trial ends",
-                        icon: "bell.fill",
-                        color: AppTheme.gold
-                    )
-                    trialTimelineRow(
-                        day: "Day 7",
-                        label: "Trial ends — only charged if you stay",
-                        icon: "calendar",
-                        color: AppTheme.accent,
-                        isLast: true
-                    )
+                // Show the seven-day timeline only after StoreKit confirms eligibility.
+                if onboardingVisibleTrialLength(for: selectedOnboardingProduct) == "7-Day" {
+                    VStack(spacing: 0) {
+                        trialTimelineRow(
+                            day: "Today",
+                            label: "Full access — explore all study modes",
+                            icon: "checkmark.circle.fill",
+                            color: AppTheme.success
+                        )
+                        trialTimelineRow(
+                            day: "Day 5",
+                            label: "Reminder before trial ends",
+                            icon: "bell.fill",
+                            color: AppTheme.gold
+                        )
+                        trialTimelineRow(
+                            day: "Day 7",
+                            label: "Trial ends — only charged if you stay",
+                            icon: "calendar",
+                            color: AppTheme.accent,
+                            isLast: true
+                        )
+                    }
+                    .padding(.horizontal, 32)
                 }
-                .padding(.horizontal, 32)
 
                 // Features
                 VStack(alignment: .leading, spacing: 12) {
@@ -1086,7 +1167,7 @@ struct OnboardingView: View {
                             onboardingPlanCard(
                                 title: "Annual",
                                 price: annual.displayPrice + "/year",
-                                subtitle: "7-day free trial included",
+                                subtitle: onboardingVisibleTrialLength(for: annual) == nil ? "Billed annually" : "7-day free trial included",
                                 badge: "BEST VALUE",
                                 isSelected: selectedPlanId == annual.id || selectedPlanId.isEmpty
                             )
@@ -1119,9 +1200,8 @@ struct OnboardingView: View {
                         if isLoading {
                             ProgressView().tint(.white)
                         } else {
-                            Text(selectedPlanId == subscriptionService.monthlyProductID
-                                 ? "Subscribe Monthly"
-                                 : "Start Free Trial")
+                            Text(onboardingVisibleTrialLength(for: selectedOnboardingProduct).map { "Start \($0) Free Trial" }
+                                 ?? (selectedPlanId == subscriptionService.monthlyProductID ? "Subscribe Monthly" : "Subscribe Annually"))
                                 .font(.headline)
                         }
                     }
@@ -1140,12 +1220,20 @@ struct OnboardingView: View {
                         .foregroundColor(AppTheme.error)
                 }
 
+                if let status = purchaseStatusMessage {
+                    Text(status)
+                        .font(.caption)
+                        .foregroundColor(AppTheme.textMuted)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 24)
+                }
+
                 // Skip — made a clear, visible secondary button. It was tiny muted underlined
                 // text; ~10 of ~30 onboarding quitters bailed on this screen instead of
                 // continuing free, so make the free path obvious and un-trapped.
                 Button {
                     AnalyticsService.shared.track(AnalyticsEvent.onboardingComplete, ["pro": "false"])
-                    onComplete()
+                    onComplete(.enterHome)
                 } label: {
                     Text("Continue with 3 free questions a day")
                         .font(.subheadline.bold())
@@ -1160,7 +1248,9 @@ struct OnboardingView: View {
 
                 // Legal
                 VStack(spacing: 4) {
-                    Text("No charge today. Cancel anytime before your trial ends.")
+                    Text(onboardingVisibleTrialLength(for: selectedOnboardingProduct) == nil
+                         ? "Subscription renews automatically. Cancel anytime in App Store Settings."
+                         : "No charge today. Cancel anytime before your trial ends.")
                         .font(.caption2)
                         .foregroundColor(AppTheme.textMuted.opacity(0.7))
 
@@ -1395,17 +1485,29 @@ struct OnboardingView: View {
         Task {
             isLoading = true
             errorMessage = nil
-            AnalyticsService.shared.track(AnalyticsEvent.trialStartTap, ["product": product.id])
+            purchaseStatusMessage = nil
+            let eligibleTrial = onboardingVisibleTrialLength(for: product) != nil
+            let properties = ["product": product.id, "source": "onboarding", "trial_eligibility": onboardingEligibilityState(for: product), "offer_type": eligibleTrial ? "free_trial" : "subscription", "purchase_attempt_id": UUID().uuidString]
+            AnalyticsService.shared.track(AnalyticsEvent.trialStartTap, properties)
             do {
-                try await subscriptionService.purchase(product)
-                if subscriptionService.isPro {
-                    AnalyticsService.shared.track(AnalyticsEvent.purchaseSuccess, ["product": product.id, "source": "onboarding"])
+                let outcome = try await subscriptionService.purchase(product)
+                switch outcome {
+                case .purchased:
+                    AnalyticsService.shared.track(AnalyticsEvent.purchaseSuccess, properties)
                     AnalyticsService.shared.track(AnalyticsEvent.onboardingComplete, ["pro": "true"])
                     HapticService.success()
-                    onComplete()
+                    onComplete(.enterHome)
+                case .cancelled:
+                    AnalyticsService.shared.track(AnalyticsEvent.purchaseCancelled, properties)
+                case .pending:
+                    AnalyticsService.shared.track(AnalyticsEvent.purchasePending, properties)
+                    purchaseStatusMessage = "Your purchase is pending Apple approval. Pro will unlock automatically when it completes."
+                case .unknown:
+                    AnalyticsService.shared.track(AnalyticsEvent.purchaseUnknown, properties)
+                    errorMessage = "Apple did not complete the purchase. Please try again."
                 }
             } catch {
-                AnalyticsService.shared.track(AnalyticsEvent.purchaseFailed, ["product": product.id, "error": String(describing: error).prefix(120).description])
+                AnalyticsService.shared.track(AnalyticsEvent.purchaseFailed, properties.merging(["error": String(describing: error).prefix(120).description]) { current, _ in current })
                 errorMessage = "Something went wrong. Try again."
             }
             isLoading = false

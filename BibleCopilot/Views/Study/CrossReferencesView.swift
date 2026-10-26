@@ -2,14 +2,22 @@ import SwiftUI
 
 struct CrossReferencesView: View {
     let references: [String]
+    let verificationNote: String?
     let onTap: (String) -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Cross References")
+            Text(references.isEmpty ? "Reference Check" : "Cross References")
                 .font(.caption.bold())
                 .foregroundColor(AppTheme.textMuted)
                 .tracking(0.8)
+
+            if let verificationNote {
+                Label(verificationNote, systemImage: "checkmark.shield")
+                    .font(.caption2)
+                    .foregroundColor(AppTheme.textMuted)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
 
             FlowLayout(spacing: 8) {
                 ForEach(references, id: \.self) { ref in

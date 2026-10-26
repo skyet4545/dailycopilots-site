@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "1.0",
+  "rootRunId": "2026-08-10:bible-copilot-facebook-publishing:7fea2005-ee9d-4805-b248-5d4283309cd1",
+  "runId": "2026-08-10:bible-copilot-facebook-publishing:7fea2005-ee9d-4805-b248-5d4283309cd1:published",
+  "producer": {
+    "scheduler": "codex-desktop-automation",
+    "jobId": "bible-copilot-facebook-publishing",
+    "startedAt": "2026-08-10T15:31:17Z",
+    "completedAt": "2026-08-10T15:32:27Z"
+  },
+  "upstream": {
+    "runId": "editorial-queue:bible-copilot-2026-W33-a-christians-guide-to-gossip-what-the-bible-teaches-mon-1130",
+    "artifactPath": "/Users/carlosreyes/.config/social-editorial/queues/bible-copilot-2026-W33.json",
+    "sha256": "9ca60643c0e4fb6b3bcc31a51e3e94cbf87a73cb8b1dce0393e5356759c2cef6"
+  },
+  "status": "published_verified",
+  "output": {
+    "kind": "publication-receipt",
+    "artifact": "automation custody receipt",
+    "requiredFields": {
+      "queueItemId": "bible-copilot-2026-W33-a-christians-guide-to-gossip-what-the-bible-teaches-mon-1130",
+      "isPublished": true,
+      "postId": "1167712496420391_122133889923352786",
+      "permalinkUrl": "https://www.facebook.com/122101394553352786/posts/122133889923352786",
+      "skipReason": null
+    }
+  },
+  "validation": {
+    "contractVersion": "1.0",
+    "passed": true,
+    "checks": [
+      "editorial_queue_validate_ok",
+      "editorial_queue_due_ok",
+      "meta_preflight_ok",
+      "recent_cooldown_clear",
+      "recent_duplicate_check_clear",
+      "approval_hash_valid",
+      "source_links_reverified",
+      "meta_publish_verified"
+    ]
+  },
+  "recovery": {
+    "idempotencyKey": "bible-copilot-2026-W33-a-christians-guide-to-gossip-what-the-bible-teaches-mon-1130",
+    "rollbackRef": "meta-pages-log:bible-copilot:bible-copilot-2026-W33-a-christians-guide-to-gossip-what-the-bible-teaches-mon-1130"
+  },
+  "externalEffects": [
+    {
+      "type": "facebook_page_post",
+      "page": "bible-copilot",
+      "postId": "1167712496420391_122133889923352786",
+      "permalinkUrl": "https://www.facebook.com/122101394553352786/posts/122133889923352786",
+      "verifiedPublished": true,
+      "recordedAt": "2026-08-10T15:32:27Z",
+      "idempotencyKey": "bible-copilot-2026-W33-a-christians-guide-to-gossip-what-the-bible-teaches-mon-1130"
+    }
+  ],
+  "artifactVersion": "1b4ded50214e747301f8597ed008698c72e27d7b24ed0883ee7aea60d006d53e"
+}

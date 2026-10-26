@@ -19,15 +19,15 @@ struct OnboardingSlide: Identifiable {
             id: 1,
             icon: "brain.head.profile",
             iconColor: Color(hex: "A78BFA"),
-            title: "Scripture-Grounded\nInsight",
-            subtitle: "Every answer is rooted in the Bible. Cross-references, original languages, and historical context — all at your fingertips."
+            title: "Scripture-Referenced\nInsight",
+            subtitle: "AI explanations are designed to include Bible references you can open, compare, and check in context."
         ),
         OnboardingSlide(
             id: 2,
             icon: "safari",
             iconColor: Color(hex: "34D399"),
-            title: "Five Study\nModes",
-            subtitle: "Observation, interpretation, theology, application, and apologetics — guided by time-tested methods."
+            title: "Six Study\nModes",
+            subtitle: "Summary, observation, interpretation, theology, application, and apologetics — six ways to examine a passage."
         )
     ]
 }
@@ -42,8 +42,12 @@ struct AttributionSource: Identifiable, Hashable {
     static let sources: [AttributionSource] = [
         AttributionSource(id: "podcast_gospel_briefing", icon: "mic.fill", label: "The Gospel Briefing"),
         AttributionSource(id: "app_store_search", icon: "magnifyingglass", label: "App Store search"),
+        AttributionSource(id: "organic_search", icon: "magnifyingglass", label: "Google or another search engine"),
+        AttributionSource(id: "youtube", icon: "play.rectangle.fill", label: "YouTube"),
         AttributionSource(id: "friend_church", icon: "person.2.fill", label: "Friend or church"),
         AttributionSource(id: "social_media", icon: "play.rectangle.fill", label: "Social media"),
+        AttributionSource(id: "website_article", icon: "doc.text.fill", label: "A Bible Copilot article"),
+        AttributionSource(id: "email_newsletter", icon: "envelope.fill", label: "An email newsletter"),
         AttributionSource(id: "other", icon: "ellipsis.circle.fill", label: "Other")
     ]
 }

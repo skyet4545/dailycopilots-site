@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Bible Copilot — Message-refined site concept</title><style>html,body,iframe{width:100%;height:100%;margin:0;border:0;background:#070b13}iframe{display:block}</style></head>
+<body><iframe id="site" src="full-site-refined.html" title="Bible Copilot message-refined marketing-site mockup"></iframe><script>
+const frame=document.getElementById('site');
+frame.addEventListener('load',()=>{const d=frame.contentDocument;const section=d.querySelectorAll('main section');
+  section[1].querySelector('.eyebrow').textContent='When a verse stops you';
+  section[1].querySelector('h2').textContent='Bring the question that brought you here.';
+  section[1].querySelector('.lead').textContent='You may have one difficult phrase, a passage you cannot place, or a question you have carried for years. Start there.';
+  const journey=section[1].querySelectorAll('.journey article');
+  journey[0].querySelector('h3').textContent='Ask about the verse.';journey[0].querySelector('p').textContent='Type the passage or question you are already thinking about. Start free, with no account required.';
+  journey[1].querySelector('h3').textContent='See the passage in context.';journey[1].querySelector('p').textContent='Move beyond an isolated answer and look at what the words, setting, and larger story reveal.';
+  journey[2].querySelector('h3').textContent='Choose how to go deeper.';journey[2].querySelector('p').textContent='Use the lens that fits your question, then follow the thread wherever the passage leads.';
+  section[2].querySelector('.eyebrow').textContent='One passage. More than one question.';
+  section[2].querySelector('h2').textContent='Six ways to understand what you are reading.';
+  section[2].querySelector('.lead').textContent='The modes are not features to collect. They are different ways to remain close to the same text.';
+  section[3].querySelector('h2').textContent='When one question leads to another, keep studying.';
+  section[3].querySelector('p').textContent='Bible Copilot Pro is for the moments when a brief answer is not enough and you want room to continue the study.';
+  section[4].querySelector('h2').textContent='Start with the verse in front of you.';
+  section[4].querySelector('p').textContent='Ask the question you already have. Bible Copilot will help you take the next step with Scripture in view.';
+});
+</script></body></html>

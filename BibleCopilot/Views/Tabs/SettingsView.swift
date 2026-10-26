@@ -8,6 +8,9 @@ struct SettingsView: View {
     @AppStorage("dailyReminderEnabled") private var reminderEnabled: Bool = false
     @AppStorage("reminderHour") private var reminderHour: Int = 8
     @AppStorage("reminderMinute") private var reminderMinute: Int = 0
+    @AppStorage(AnalyticsService.consentKey) private var analyticsConsentGranted = false
+    @State private var restoreAlertMessage = ""
+    @State private var showingRestoreAlert = false
 
     let onShowPaywall: () -> Void
 
@@ -180,6 +183,24 @@ struct SettingsView: View {
                     Text("Preferences")
                 }
 
+                Section {
+                    Toggle(isOn: $analyticsConsentGranted) {
+                        VStack(alignment: .leading, spacing: 3) {
+                            Text("Share Usage Analytics")
+                                .foregroundColor(AppTheme.textPrimary)
+                            Text("Share app interactions and purchase events to help improve Bible Copilot. Bible text, study questions, journal entries, your name, and your email are excluded.")
+                                .font(.caption)
+                                .foregroundColor(AppTheme.textMuted)
+                        }
+                    }
+                    .tint(AppTheme.accent)
+                    .onChange(of: analyticsConsentGranted) { _, enabled in
+                        AnalyticsService.shared.setEnabled(enabled, context: "settings")
+                    }
+                } header: {
+                    Text("Privacy")
+                }
+
                 // Legal (required by App Store 3.1.2)
                 Section {
                     Link(destination: URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!) {
@@ -264,7 +285,23 @@ struct SettingsView: View {
                     }
 
                     Button {
-                        Task { await subscriptionService.restore() }
+                        Task {
+                            let restoreProperties = ["source": "settings", "restore_attempt_id": UUID().uuidString]
+                            AnalyticsService.shared.track(AnalyticsEvent.restoreStarted, restoreProperties)
+                            do {
+                                if try await subscriptionService.restore() {
+                                    AnalyticsService.shared.track(AnalyticsEvent.restoreSucceeded, restoreProperties)
+                                    restoreAlertMessage = "Bible Copilot Pro has been restored."
+                                } else {
+                                    AnalyticsService.shared.track(AnalyticsEvent.restoreNoEntitlement, restoreProperties)
+                                    restoreAlertMessage = "No active Bible Copilot Pro purchase was found for this Apple ID."
+                                }
+                            } catch {
+                                AnalyticsService.shared.track(AnalyticsEvent.restoreFailed, restoreProperties.merging(["error": String(describing: error).prefix(120).description]) { current, _ in current })
+                                restoreAlertMessage = "Apple could not restore purchases. Check your connection and try again."
+                            }
+                            showingRestoreAlert = true
+                        }
                     } label: {
                         Text("Restore Purchases")
                             .foregroundColor(AppTheme.accent)
@@ -277,6 +314,11 @@ struct SettingsView: View {
             .background(AppTheme.background)
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.large)
+            .alert("Restore Purchases", isPresented: $showingRestoreAlert) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(restoreAlertMessage)
+            }
         }
     }
 }

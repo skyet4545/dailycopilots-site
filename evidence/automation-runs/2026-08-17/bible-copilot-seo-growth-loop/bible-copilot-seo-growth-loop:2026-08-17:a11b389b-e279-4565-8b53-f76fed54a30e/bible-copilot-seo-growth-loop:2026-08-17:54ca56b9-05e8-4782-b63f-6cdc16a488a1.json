@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "1.0",
+  "rootRunId": "bible-copilot-seo-growth-loop:2026-08-17:a11b389b-e279-4565-8b53-f76fed54a30e",
+  "runId": "bible-copilot-seo-growth-loop:2026-08-17:54ca56b9-05e8-4782-b63f-6cdc16a488a1",
+  "producer": {
+    "scheduler": "codex-desktop",
+    "jobId": "bible-copilot-seo-growth-loop",
+    "startedAt": "2026-08-17T09:55:00Z",
+    "completedAt": "2026-08-17T10:43:31Z"
+  },
+  "upstream": {
+    "runId": "bible-copilot-weekly-performance-review:2026-08-17:814e062f-1763-4449-88e6-91117a742aad",
+    "artifactPath": "/Users/carlosreyes/Desktop/Projects/Apps/biblecopilot/marketing/weekly-scorecards/2026-08-17.md",
+    "sha256": "29da09a11cccca9411272a9a9e87ba88cbf3a0e1d93e50cba2eefa349c7c574a"
+  },
+  "status": "deferred_with_exact_requirement",
+  "output": {
+    "kind": "demand-manifest",
+    "artifact": "bible-copilot-authority-system/weeks/YYYY-Www/cluster-manifest.json",
+    "artifactPath": "/Users/carlosreyes/Documents/Codex/2026-07-27/i-ve-logged/outputs/bible-copilot-authority-system/weeks/2026-W34/cluster-manifest.json",
+    "sha256": "5b0256cb879fc4b1d0d968f5f2321b7b2be465c0e9b348cecfcab7789df96298",
+    "requiredFields": {
+      "selectedCluster": "genesis-1-1-hebrew-original-language",
+      "baseline": "GA4 linked Search Console range 2026-07-20 through 2026-08-16 versus 2026-06-22 through 2026-07-19, plus direct Search Console query evidence and a verified live drift audit.",
+      "productionActions": "Blocked before edit because the declared live repository main branch is stale relative to verified live production.",
+      "deploymentVerification": "not_attempted; deploying from origin/main would risk deleting or regressing verified live routes.",
+      "evaluationDates": "2026-08-24, 2026-08-31, 2026-09-14"
+    }
+  },
+  "validation": {
+    "contractVersion": "1.0",
+    "passed": true,
+    "checks": [
+      "selected_one_cluster",
+      "authenticated_search_and_analytics_evidence_collected",
+      "live_repository_and_production_topology_compared",
+      "safe_terminal_state",
+      "no_deploy_under_source_of_truth_drift"
+    ]
+  },
+  "recovery": {
+    "idempotencyKey": "bible-copilot-seo-growth-loop:2026-W34:genesis-1-1-hebrew-original-language",
+    "rollbackRef": "No repository or production mutation occurred; next action is repository parity repair before any deploy attempt."
+  },
+  "externalEffects": [
+    {
+      "type": "telegram_exception",
+      "helper": "send-optimus-telegram-exception.mjs",
+      "automationId": "bible-copilot-seo-growth-loop",
+      "event": "repair_blocked",
+      "severity": "P1",
+      "payloadHash": "b8f1128ab0c24161f9414d5f761b79ce6585bafb2e519faa73b8c6720b76cf8f",
+      "messageIds": [
+        24172
+      ],
+      "receiptPath": "/Users/carlosreyes/Documents/Codex/2026-07-27/i-ve-logged/outputs/portfolio-control-system/evidence/automation-alerts/2026-08-17/bible-copilot-seo-growth-loop/b8f1128ab0c24161f9414d5f761b79ce6585bafb2e519faa73b8c6720b76cf8f.json"
+    }
+  ],
+  "artifactVersion": "858c77142942b41ef9b3cabf4e44bf96c855881564708a30626449b39ce6b509"
+}

@@ -47,4 +47,77 @@ final class SubscriptionServiceTests: XCTestCase {
         _ = service.annualProduct
         _ = service.monthlyProduct
     }
+
+    // MARK: - Paywall trial presentation
+
+    func testEligibleConfiguredTrialIsVisible() {
+        XCTAssertEqual(
+            PaywallView.visibleTrialLength(configured: "7-Day", isEligible: true),
+            "7-Day"
+        )
+    }
+
+    func testIneligibleConfiguredTrialIsHidden() {
+        XCTAssertNil(PaywallView.visibleTrialLength(configured: "7-Day", isEligible: false))
+    }
+
+    func testUnknownEligibilityDefaultsToNoTrialPromise() {
+        XCTAssertNil(PaywallView.visibleTrialLength(configured: "7-Day", isEligible: nil))
+    }
+
+    func testMissingIntroOfferIsHiddenEvenWhenEligible() {
+        XCTAssertNil(PaywallView.visibleTrialLength(configured: nil, isEligible: true))
+    }
+
+    // MARK: - Privacy-safe entitlement observation
+
+    func testAnnualEntitlementObservationUsesPlanClassWithoutTransactionData() {
+        let observation = EntitlementObservation(
+            productID: "biblecopilot_pro_annual",
+            monthlyProductID: "biblecopilot_pro_monthly",
+            annualProductID: "biblecopilot_pro_annual"
+        )
+
+        XCTAssertEqual(observation.state, "active")
+        XCTAssertEqual(observation.plan, "annual")
+        XCTAssertEqual(observation.properties, [
+            "state": "active",
+            "plan": "annual",
+            "source": "storekit_current_entitlements",
+        ])
+    }
+
+    func testMonthlyEntitlementObservationUsesPlanClassWithoutTransactionData() {
+        let observation = EntitlementObservation(
+            productID: "biblecopilot_pro_monthly",
+            monthlyProductID: "biblecopilot_pro_monthly",
+            annualProductID: "biblecopilot_pro_annual"
+        )
+
+        XCTAssertEqual(observation.state, "active")
+        XCTAssertEqual(observation.plan, "monthly")
+    }
+
+    func testNoCurrentEntitlementIsRecordedAsInactive() {
+        let observation = EntitlementObservation(
+            productID: nil,
+            monthlyProductID: "biblecopilot_pro_monthly",
+            annualProductID: "biblecopilot_pro_annual"
+        )
+
+        XCTAssertEqual(observation.state, "inactive")
+        XCTAssertEqual(observation.plan, "none")
+        XCTAssertEqual(observation.fingerprint, "inactive|none")
+    }
+
+    func testUnknownProductCannotBeReportedAsPro() {
+        let observation = EntitlementObservation(
+            productID: "unrecognized_product",
+            monthlyProductID: "biblecopilot_pro_monthly",
+            annualProductID: "biblecopilot_pro_annual"
+        )
+
+        XCTAssertEqual(observation.state, "inactive")
+        XCTAssertEqual(observation.plan, "none")
+    }
 }

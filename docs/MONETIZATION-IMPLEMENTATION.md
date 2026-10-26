@@ -308,14 +308,14 @@ When submitting Build 60 with monetization:
 **In App Review Information:**
 - Add note:
   ```
-  This app offers a Pro subscription ($4.99/month or $39.99/year) 
+  This app offers a Pro subscription ($9.99/month or $49.99/year)
   with the following features:
   - Unlimited AI questions
   - Study journal
   - Reading plans
   - All Bible translations
   
-  Free tier includes 10 AI questions per day.
+  Free tier includes 3 AI questions per day.
   
   Test account for review team:
   Email: [sandbox tester email]
@@ -400,4 +400,3 @@ When submitting Build 60 with monetization:
 
 
 ---
-

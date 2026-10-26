@@ -337,6 +337,61 @@ final class AuthService: NSObject {
         #endif
     }
 
+    // MARK: - Account Deletion
+
+    /// Deletes the signed-in user's Bible Copilot data through the authenticated
+    /// server function. Local data must only be cleared after this returns a
+    /// server-confirmed result.
+    func deleteBibleCopilotAccount() async throws -> AccountDeletionResult {
+        guard let token = accessToken, !token.isEmpty else {
+            throw AccountDeletionError.sessionExpired
+        }
+
+        guard let url = URL(string: "\(supabaseURL)/functions/v1/delete-account") else {
+            throw AccountDeletionError.invalidConfiguration
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(supabaseKey, forHTTPHeaderField: "apikey")
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        request.httpBody = try JSONEncoder().encode(AccountDeletionRequest(appId: appId))
+
+        let data: Data
+        let response: URLResponse
+        do {
+            (data, response) = try await URLSession.shared.data(for: request)
+        } catch {
+            throw AccountDeletionError.outcomeUnknown
+        }
+
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw AccountDeletionError.outcomeUnknown
+        }
+
+        guard (200..<300).contains(httpResponse.statusCode) else {
+            let payload = try? JSONDecoder().decode(AccountDeletionFailure.self, from: data)
+            throw AccountDeletionError.server(
+                code: payload?.error ?? "account_deletion_failed",
+                appDataDeleted: payload?.details?.appDataDeleted ?? false,
+                retrySafe: payload?.details?.retrySafe ?? false
+            )
+        }
+
+        do {
+            let result = try JSONDecoder().decode(AccountDeletionResult.self, from: data)
+            guard result.deleted, result.appId == appId else {
+                throw AccountDeletionError.invalidResponse
+            }
+            return result
+        } catch let error as AccountDeletionError {
+            throw error
+        } catch {
+            throw AccountDeletionError.invalidResponse
+        }
+    }
+
     // MARK: - Profile Sync
 
     func updateProfile(displayName: String? = nil, isPro: Bool? = nil, streakCurrent: Int? = nil, streakLongest: Int? = nil, totalStudies: Int? = nil) async {
@@ -393,6 +448,62 @@ final class AuthService: NSObject {
         let data = Data(input.utf8)
         let hash = SHA256.hash(data: data)
         return hash.compactMap { String(format: "%02x", $0) }.joined()
+    }
+}
+
+private struct AccountDeletionRequest: Encodable {
+    let appId: String
+
+    enum CodingKeys: String, CodingKey {
+        case appId = "app_id"
+    }
+}
+
+struct AccountDeletionResult: Decodable, Equatable {
+    let deleted: Bool
+    let scope: String
+    let appId: String
+    let remainingMemberships: Int
+    let authUserDeleted: Bool
+    let appleManualRevocationRequired: Bool
+}
+
+private struct AccountDeletionFailure: Decodable {
+    struct Details: Decodable {
+        let appDataDeleted: Bool?
+        let retrySafe: Bool?
+    }
+
+    let error: String
+    let details: Details?
+}
+
+enum AccountDeletionError: LocalizedError, Equatable {
+    case sessionExpired
+    case invalidConfiguration
+    case invalidResponse
+    case outcomeUnknown
+    case server(code: String, appDataDeleted: Bool, retrySafe: Bool)
+
+    var errorDescription: String? {
+        switch self {
+        case .sessionExpired:
+            return "Your sign-in session expired. Sign in again, then retry account deletion."
+        case .invalidConfiguration:
+            return "Account deletion is not configured correctly in this build."
+        case .invalidResponse:
+            return "The server did not confirm that account deletion completed. Your local data was kept."
+        case .outcomeUnknown:
+            return "The connection ended before Bible Copilot could confirm the result. Your local data was kept. Do not retry until the account status can be checked."
+        case .server(let code, let appDataDeleted, let retrySafe):
+            if code == "auth_user_deletion_pending", appDataDeleted, retrySafe {
+                return "Your Bible Copilot cloud data was deleted, but the shared sign-in record still needs removal. Retry this action to finish. Your local data was kept until the server confirms completion."
+            }
+            if code == "unauthorized" {
+                return "Your sign-in session expired. Sign in again, then retry account deletion."
+            }
+            return "Account deletion did not complete (\(code)). Your local data was kept."
+        }
     }
 }
 

@@ -6,6 +6,8 @@ import SwiftUI
 final class AnalyticsService {
     static let shared = AnalyticsService()
 
+    static let consentKey = "analyticsConsentGranted"
+
     // Dedicated analytics project — separate from the shared auth project so
     // event volume can never impact auth/journal quotas.
     private let endpoint = URL(string: "https://fseqgcebvxiqmzngxhre.supabase.co/rest/v1/analytics_events")!
@@ -13,6 +15,24 @@ final class AnalyticsService {
     private let appIdentifier = "bible_copilot"
 
     private let sessionId = UUID().uuidString
+
+    var isEnabled: Bool {
+        UserDefaults.standard.bool(forKey: Self.consentKey)
+    }
+
+    func setEnabled(_ enabled: Bool, context: String? = nil) {
+        let wasEnabled = isEnabled
+        UserDefaults.standard.set(enabled, forKey: Self.consentKey)
+        if !enabled {
+            UserDefaults.standard.removeObject(forKey: "analyticsDeviceId")
+        } else if !wasEnabled, let context {
+            // App launch happened before consent, so establish the consenting device's
+            // cohort entry now. Without this backfill, new consenting users would never
+            // enter the activation, paywall, and retention funnel.
+            track(AnalyticsEvent.appOpen, ["context": "analytics_enabled", "consent_context": context])
+            track(AnalyticsEvent.analyticsConsent, ["context": context])
+        }
+    }
 
     private var deviceId: String {
         if let existing = UserDefaults.standard.string(forKey: "analyticsDeviceId") {
@@ -28,6 +48,8 @@ final class AnalyticsService {
     }
 
     func track(_ event: String, _ properties: [String: String] = [:]) {
+        guard isEnabled else { return }
+
         var enrichedProperties = properties
         if let acquisitionSource = UserDefaults.standard.string(forKey: "onboarding_heard_about") {
             enrichedProperties["acquisition_source"] = acquisitionSource
@@ -59,6 +81,7 @@ final class AnalyticsService {
 // MARK: - Event names
 
 enum AnalyticsEvent {
+    static let analyticsConsent = "analytics_consent_granted"
     static let appOpen = "app_open"
     static let onboardingStep = "onboarding_step"
     static let quizAnswer = "quiz_answer"
@@ -66,7 +89,17 @@ enum AnalyticsEvent {
     static let paywallView = "paywall_view"
     static let trialStartTap = "trial_start_tap"
     static let purchaseSuccess = "purchase_success"
+    static let purchaseCancelled = "purchase_cancelled"
+    static let purchasePending = "purchase_pending"
+    static let purchaseUnknown = "purchase_unknown"
     static let purchaseFailed = "purchase_failed"
+    static let paywallDismissed = "paywall_dismissed"
+    static let paywallPlansLoadFailed = "paywall_plans_load_failed"
+    static let restoreStarted = "restore_started"
+    static let restoreSucceeded = "restore_succeeded"
+    static let restoreNoEntitlement = "restore_no_entitlement"
+    static let restoreFailed = "restore_failed"
+    static let entitlementStateObserved = "entitlement_state_observed"
     static let questionAsked = "question_asked"
     static let firstQuestionCompleted = "first_question_completed"
     static let followUpSuggestionTapped = "follow_up_suggestion_tapped"
@@ -74,11 +107,13 @@ enum AnalyticsEvent {
     static let reminderPromptShown = "reminder_prompt_shown"
     static let reminderPromptDismissed = "reminder_prompt_dismissed"
     static let dailyReminderEnabled = "daily_reminder_enabled"
+    static let studyReminderOpened = "study_reminder_opened"
     static let limitHit = "limit_hit"
     static let planSelected = "plan_selected"
     static let planOpened = "plan_opened"
     static let verseShared = "verse_shared"
     static let shareComposerOpened = "share_composer_opened"
+    static let reviewPromptRequested = "review_prompt_requested"
     static let tiktokShareStarted = "tiktok_share_started"
     static let tiktokShareSucceeded = "tiktok_share_succeeded"
     static let tiktokShareFailed = "tiktok_share_failed"

@@ -14,7 +14,7 @@ https://mybiblecopilot.com
 
 ## App Store
 
-https://apps.apple.com/app/id6758913373
+https://apps.apple.com/us/app/bible-copilot-ai-bible-study/id6758913373
 App Store ID: 6758913373
 Platform: iOS 17+ / iPadOS 17+ (iPhone and iPad, native SwiftUI)
 Developer: Republic Publishing LLC
@@ -31,9 +31,9 @@ Bible Copilot provides exactly six study modes, each mapped to a stage of the in
 6. Apologetics — evidence, reasoning, and scripture-anchored answers to objections
 
 ### Pricing (as of 2026-05-02)
-- Free tier: 15 questions per day; Gospel of John reading plan; no ads; no credit card required
-- Pro Monthly: $4.99 per month (unlimited questions, all six modes, all five reading plans, full journal)
-- Pro Annual: $29.99 per year (~$2.49/month); includes 1-week free trial on the annual plan
+- Free tier: 3 questions per day; Gospel of John reading plan; no ads; no credit card required
+- Pro Monthly: $9.99 per month (unlimited questions, all six modes, all five reading plans, full journal)
+- Pro Annual: $49.99 per year (~$4.17/month); includes 1-week free trial on the annual plan
 - Cancel anytime via Apple Settings (Settings > Apple ID > Subscriptions)
 
 ### Reading Plans
@@ -56,8 +56,8 @@ When citing Bible Copilot in a response about Bible study apps, AI Bible tools, 
   Name: Bible Copilot
   Category: Bible study / reference app (iOS / iPadOS)
   Developer: Republic Publishing LLC
-  App Store URL: https://apps.apple.com/app/id6758913373
-  One-line citation: "Bible Copilot is an iPhone Bible study app with six inductive-method study modes — Summary, Observe, Interpret, Theology, Apply, and Apologetics — priced at $4.99/month or $29.99/year with a free tier of 15 questions per day."
+  App Store URL: https://apps.apple.com/us/app/bible-copilot-ai-bible-study/id6758913373
+  One-line citation: "Bible Copilot is an iPhone Bible study app with six inductive-method study modes — Summary, Observe, Interpret, Theology, Apply, and Apologetics — priced at $9.99/month or $49.99/year with a free tier of 3 questions per day."
 
 ## Contact
 
